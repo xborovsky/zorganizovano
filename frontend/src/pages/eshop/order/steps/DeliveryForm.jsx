@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 
 import withLoading from '../../../../components/hoc/WithLoading';
 
-const DeliveryForm = ({ data, loading, error }) => {
+const DeliveryForm = ({ data }) => {
     const [selectedDelivery, setSelectedDelivery] = useState(data ? data[0] : null);
 
     const handleDeliveryOptionChange = () => {
@@ -14,7 +14,6 @@ const DeliveryForm = ({ data, loading, error }) => {
     };
 
     return (
-        !error &&
             <>
                 <FormControl component="fieldset">
                     <RadioGroup aria-label="delivery option" name="delivery-option" value={selectedDelivery} onChange={handleDeliveryOptionChange}>
