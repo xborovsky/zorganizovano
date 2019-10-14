@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/styles';
 
 import Header from './layout/Header';
 import Main from './layout/Main';
 import Footer from './layout/Footer';
-import { withStyles } from '@material-ui/styles';
+import Loader from './components/Loader';
 
 const Home = React.lazy(() => import('./pages/home'));
 const Types = React.lazy(() => import('./pages/types'));
@@ -27,7 +27,7 @@ const App = ({ classes }) => {
       <Router>
         <Header />
         <Main>
-          <Suspense fallback={<CircularProgress />}>
+          <Suspense fallback={<Loader />}>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/types" component={Types} />

@@ -6,7 +6,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import { withStyles } from '@material-ui/core';
 
 import CustomerForm from './steps/CustomerForm';
-import PaymentForm from './steps/PaymentForm';
+import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/OrderConfirmation';
 import WizardButtons from './components/WizardButtons';
 
@@ -15,7 +15,7 @@ const getSteps = () => ['Adresa', 'Platba', 'Potvrzení objednávky'];
 const getStepContent = step => {
     switch (step) {
         case 0: return <CustomerForm />;
-        case 1: return <PaymentForm />;
+        case 1: return <DeliveryForm />;
         case 2: return <OrderConfirmation />;
         default: throw new Error('Unknown step!');
     }
