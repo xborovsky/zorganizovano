@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, withStyles } from '@material-ui/core';
-import Chip from '@material-ui/core/Chip';
+import { Grid, withStyles, Button } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+
+import ProductSpec from './ProductSpec';
 
 const styles = theme => ({
     root : {
-        margin : '0 10vw'
+        margin : '0 10vw',
+        padding : '1rem 3rem'
     },
-    price : {
-        fontSize : '22pt',
-        padding : '1rem'
+    shoppingCartIcon : {
+        marginRight : 10
     }
 });
 
@@ -22,14 +25,10 @@ const ProductDetail = ({ product, classes }) => (
             </Grid>
             <Grid item xs={12} sm={6}>
                 <h1>{ product.name }</h1>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Chip label={product.price} className={classes.price} color="primary" />
-                    </Grid>
-                    <Grid item xs={12}>
-                        {product.description}
-                    </Grid>
-                </Grid>
+                <ProductSpec product={product} />
+                <Button variant="contained" color="primary">
+                    <FontAwesomeIcon icon={faShoppingCart} className={classes.shoppingCartIcon} />Vložit do košíku
+                </Button>
             </Grid>
         </Grid>
     </Paper>
