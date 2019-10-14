@@ -30,7 +30,7 @@ const CustomerForm = () => {
                         autoComplete="lname"
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         required
                         id="street"
@@ -43,21 +43,21 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                     <TextField
                         required
-                        id="city"
-                        name="city"
-                        label="Obec"
-                        fullWidth
-                        autoComplete="billing city"
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
                         id="psc"
                         name="psc"
                         label="PSČ"
                         fullWidth
                         autoComplete="billing psc"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="city"
+                        name="city"
+                        label="Obec"
+                        fullWidth
+                        autoComplete="billing city"
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
