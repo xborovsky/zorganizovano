@@ -16,7 +16,8 @@ const styles = theme => ({
     },
     price : {
         fontSize : '22pt',
-        padding : '1rem'
+        padding : '1.5rem 2rem',
+        borderRadius : 25
     },
     tableCell : {
         border : 'none'

@@ -15,12 +15,10 @@ const styles = theme => ({
 });
 
 const WizardButtons = ({
-    showPrev,
-    showNext,
-    showFinishOrder,
+    showPrev = true,
+    showNext = true,
+    showFinishOrder = false,
     onPrevClick,
-    onNextClick,
-    onFinishOrderClick,
     classes
 }) => (
     <Grid container className={classes.root}>
@@ -36,7 +34,7 @@ const WizardButtons = ({
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={onNextClick}>
+                    type="submit">
                     Další
                 </Button>
             }
@@ -44,7 +42,7 @@ const WizardButtons = ({
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={onFinishOrderClick}>
+                    type="submit">
                     Dokončit objednávku
                 </Button>
             }
@@ -53,12 +51,10 @@ const WizardButtons = ({
 );
 
 WizardButtons.propTypes = {
-    showPrev : PropTypes.bool.isRequired,
-    showNext : PropTypes.bool.isRequired,
-    showFinishOrder : PropTypes.bool.isRequired,
-    onPrevClick : PropTypes.func.isRequired,
-    onNextClick : PropTypes.func.isRequired,
-    onFinishOrderClick : PropTypes.func.isRequired
+    showPrev : PropTypes.bool,
+    showNext : PropTypes.bool,
+    showFinishOrder : PropTypes.bool,
+    onPrevClick : PropTypes.func
 };
 
 export default withStyles(styles)(WizardButtons);

@@ -8,18 +8,8 @@ import { withStyles } from '@material-ui/core';
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/OrderConfirmation';
-import WizardButtons from './components/WizardButtons';
 
-const getSteps = () => ['Adresa', 'Platba', 'Potvrzení objednávky'];
-
-const getStepContent = step => {
-    switch (step) {
-        case 0: return <CustomerForm />;
-        case 1: return <DeliveryForm />;
-        case 2: return <OrderConfirmation />;
-        default: throw new Error('Unknown step!');
-    }
-};
+const getSteps = () => ['Zákazník', 'Doprava', 'Potvrzení objednávky'];
 
 const styles = theme => ({
     root : {
@@ -28,6 +18,9 @@ const styles = theme => ({
         paddingBottom: theme.spacing(4),
         paddingLeft: theme.spacing(8),
         paddingRight: theme.spacing(8)
+    },
+    stepper : {
+        marginBottom : '3rem'
     }
 });
 
@@ -35,6 +28,15 @@ const OrderWizard = ({ classes }) => {
 
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
+
+    const getStepContent = step => {
+        switch (step) {
+            case 0: return <CustomerForm onGoToNextStep={goToNext} />;
+            case 1: return <DeliveryForm />;
+            case 2: return <OrderConfirmation />;
+            default: throw new Error('Unknown step!');
+        }
+    };
 
     const goToNext = () => {
         setCurrentStep(prevStep => prevStep + 1);
@@ -50,7 +52,7 @@ const OrderWizard = ({ classes }) => {
 
     return (
         <Paper className={classes.root}>
-            <Stepper activeStep={currentStep}>
+            <Stepper activeStep={currentStep} className={classes.stepper}>
                 {
                     steps.map(label => {
                         return (
@@ -62,14 +64,6 @@ const OrderWizard = ({ classes }) => {
                 }
             </Stepper>
             {getStepContent(currentStep)}
-            <WizardButtons
-                showPrev={currentStep > 0}
-                showNext={currentStep < steps.length - 1}
-                showFinishOrder={currentStep === steps.length - 1}
-                onPrevClick={goToPrev}
-                onNextClick={goToNext}
-                onFinishOrderClick={handleFinishOrder}
-            />
         </Paper>
     );
 };

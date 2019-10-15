@@ -28,6 +28,6 @@ const DeliveryForm = ({ data }) => {
     );
 };
 
-const DeliveryFormWithLoading = withLoading('/order/new/delivery-options')(DeliveryForm);
+const DeliveryFormWithLoading = withLoading('/order/delivery-options')(DeliveryForm);
 
 export default DeliveryFormWithLoading;
