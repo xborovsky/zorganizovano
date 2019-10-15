@@ -7,7 +7,7 @@ const styles = theme => ({
     footer : {
         padding: '3rem 1rem',
         marginTop: 'auto',
-        backgroundColor : '#efefef',
+        backgroundColor : '#48665e',
         textAlign : 'center'
     }
 });
@@ -15,7 +15,7 @@ const styles = theme => ({
 const Footer = ({ classes }) => (
     <footer className={classes.footer}>
         <Container maxWidth="sm">
-            <Typography variant="body1">TODO - footer</Typography>
+            <Typography variant="body2" color="secondary">TODO - footer</Typography>
         </Container>
     </footer>
 );
