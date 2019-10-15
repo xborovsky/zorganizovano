@@ -28,7 +28,7 @@ public class OrderAddress implements Serializable {
     private String psc;
     @Column(name = "country", nullable = false)
     private String country;
-    @OneToOne(mappedBy = "order_address_id", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "orderAddress", cascade = CascadeType.ALL)
     private Order order;
 
     public OrderAddress() {

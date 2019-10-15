@@ -25,10 +25,10 @@ public class Order implements Serializable {
     @Column(name = "id", nullable = false)
     private long id;
     @OneToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @OneToOne
-    @JoinColumn(name = "order_address_id")
+    @JoinColumn(name = "order_address_id", nullable = false)
     private OrderAddress orderAddress;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created")
@@ -42,7 +42,7 @@ public class Order implements Serializable {
     @Enumerated(EnumType.STRING)
     private ShipmentType shipmentType;
     @OneToOne
-    @JoinColumn(name = "shipment_address_id", nullable = true)
+    @JoinColumn(name = "shipment_address_id")
     private ShipmentAddress shipmentAddress;
     
     public Order() {}

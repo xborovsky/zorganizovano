@@ -1,7 +1,7 @@
 package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.CustomerBean;
-import cz.zorganizovano.backend.delivery.DeliveryOptions;
+import cz.zorganizovano.backend.entity.ShipmentType;
 import javax.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/order/new")
+@RequestMapping("/order")
 @Validated
-public class CreateOrderEndpoint {
+public class OrderEndpoint {
 
     @PostMapping("/customer")
     public void validateCustomer(@Valid @RequestBody CustomerBean customer) {
@@ -21,8 +21,8 @@ public class CreateOrderEndpoint {
     }
 
     @GetMapping("/delivery-options")
-    public DeliveryOptions[] getDeliveryOptions() {
-        return DeliveryOptions.values();
+    public ShipmentType[] getDeliveryOptions() {
+        return ShipmentType.values();
     }
 
 }
