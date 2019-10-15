@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import Header from './layout/Header';
+import Jumbotron from './layout/Jumbotron';
 import Main from './layout/Main';
 import Footer from './layout/Footer';
 import Loader from './components/Loader';
@@ -31,6 +32,7 @@ const App = ({ classes }) => {
       <ThemeProvider theme={zorganizovanoTheme}>
         <Router>
           <Header />
+          <Jumbotron img='https://source.unsplash.com/user/erondu' />
           <Main>
             <ErrorBoundary>
               <Suspense fallback={<Loader />}>
