@@ -3,6 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios';
+import join from 'url-join';
+
+var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
+
+axios.interceptors.request.use(config => {
+  // Concatenate base path if not an absolute URL
+  if ( !isAbsoluteURLRegex.test(config.url) ) {
+    config.url = join('http://localhost:8081', config.url);
+  }
+
+  return config;
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

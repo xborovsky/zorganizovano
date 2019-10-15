@@ -28,8 +28,8 @@ public class OrderAddress implements Serializable {
     private String psc;
     @Column(name = "country", nullable = false)
     private String country;
-    @OneToOne(mappedBy = "orderAddress", cascade = CascadeType.ALL)
-    private Order order;
+    //@OneToOne(mappedBy = "orderAddress", cascade = CascadeType.ALL)
+    //private Order order;
 
     public OrderAddress() {
     }
@@ -78,13 +78,13 @@ public class OrderAddress implements Serializable {
         this.country = country;
     }
 
-    public Order getOrder() {
+    /*public Order getOrder() {
         return order;
     }
 
     public void setOrder(Order order) {
         this.order = order;
-    }
+    }*/
 
     @Override
     public int hashCode() {

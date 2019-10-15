@@ -20,7 +20,8 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
     }
 
     protected void sendEmailToCustomer(Order order) {
-        String recipient = order.getCustomer().getEmail();
+        //String recipient = order.getCustomer().getEmail();
+        String recipient = "TODO";
         String subject = "Vaše objednávka byla přijata";
         String text = "TODO";
 

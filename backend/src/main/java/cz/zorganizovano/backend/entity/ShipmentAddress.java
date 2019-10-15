@@ -22,6 +22,8 @@ public class ShipmentAddress implements Serializable {
     private String city;
     @Column(name = "psc", nullable = false)
     private String psc;
+    @Column(name = "country", nullable = false)
+    private String country;
 
     public ShipmentAddress() {
     }
@@ -60,6 +62,14 @@ public class ShipmentAddress implements Serializable {
 
     public void setPsc(String psc) {
         this.psc = psc;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override

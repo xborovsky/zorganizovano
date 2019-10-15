@@ -26,11 +26,14 @@ public class Customer implements Serializable {
     private String lastName;
     @Column(name = "email", nullable = false)
     private String email;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Order order;
-    
-    public Customer() {}
-    
+    @Column(name = "phone_no", nullable = false)
+    private String phoneNo;
+    //@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    //private Order order;
+
+    public Customer() {
+    }
+
     public Customer(long id) {
         this.id = id;
     }
@@ -67,14 +70,21 @@ public class Customer implements Serializable {
         this.email = email;
     }
 
-    public Order getOrder() {
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    /*public Order getOrder() {
         return order;
     }
 
     public void setOrder(Order order) {
         this.order = order;
-    }
-
+    }*/
     @Override
     public int hashCode() {
         int hash = 7;

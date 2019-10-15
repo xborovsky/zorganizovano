@@ -57,6 +57,8 @@ const CustomerForm = ({ onGoToNextStep }) => {
             onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
                 console.log(values);
+                // TODO validace na serveru
+                onGoToNextStep();
                 return false;
             }}>
                 {({

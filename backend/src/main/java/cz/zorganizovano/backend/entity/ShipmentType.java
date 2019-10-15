@@ -1,8 +1,22 @@
 package cz.zorganizovano.backend.entity;
 
-public enum ShipmentType  {
+import cz.zorganizovano.backend.serializer.ShipmentTypeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-    ZASILKOVNA,
-    CESKA_POSTA
+@JsonSerialize(using = ShipmentTypeSerializer.class)
+public enum ShipmentType {
+
+    ZASILKOVNA("Zásilkovna"),
+    CESKA_POSTA("Česká pošta");
+
+    private final String readableName;
+
+    ShipmentType(String readableName) {
+        this.readableName = readableName;
+    }
+
+    public String getReadableName() {
+        return readableName;
+    }
 
 }
