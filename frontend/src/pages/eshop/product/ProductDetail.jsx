@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 import ProductSpec from './ProductSpec';
+import Price from '../../../components/Price';
 
 const styles = theme => ({
     root : {
@@ -14,6 +15,10 @@ const styles = theme => ({
     },
     shoppingCartIcon : {
         marginRight : 10
+    },
+    image : {
+        width : '70%',
+        marign : '0 auto'
     }
 });
 
@@ -21,7 +26,7 @@ const ProductDetail = ({ product, classes }) => (
     <Paper className={classes.root}>
         <Grid container>
             <Grid item xs={12} sm={6}>
-                TODO - obrazek
+                <img src="http://www.tracyhensel.com/wp-content/uploads/2016/01/FullSizeRender-4-1024x795.jpg" className={classes.image} />
             </Grid>
             <Grid item xs={12} sm={6}>
                 <h1>{ product.name }</h1>
@@ -29,6 +34,7 @@ const ProductDetail = ({ product, classes }) => (
                 <Button variant="contained" color="primary">
                     <FontAwesomeIcon icon={faShoppingCart} className={classes.shoppingCartIcon} />Vložit do košíku
                 </Button>
+                <Price value={product.price} />
             </Grid>
         </Grid>
     </Paper>

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/styles/withStyles';
-import Chip from '@material-ui/core/Chip';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
@@ -28,16 +27,19 @@ const ProductSpec = ({ product, classes }) => (
     <Table className={classes.root}>
         <TableBody>
             <TableRow>
-                <TableCell colSpan={2} className={classes.tableCell}>
-                    <Chip label={`${product.price},-`} className={classes.price} color="primary" />
+                <TableCell component="th" scope="row" className={classes.tableCell}>
+                    Popis
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                    {product.description}
                 </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell component="th" scope="row" className={classes.tableCell}>
-                    Description
+                    Rozměry (mm)
                 </TableCell>
                 <TableCell className={classes.tableCell}>
-                    {product.description}
+                    {product.dimensionX}x{product.dimensionY}x{product.dimensionZ}
                 </TableCell>
             </TableRow>
         </TableBody>
@@ -49,7 +51,10 @@ ProductSpec.propTypes = {
         id : PropTypes.number.isRequired,
         name : PropTypes.string.isRequired,
         description : PropTypes.string.isRequired,
-        price : PropTypes.number.isRequired
+        price : PropTypes.number.isRequired,
+        dimensionX : PropTypes.number.isRequired,
+        dimensionY : PropTypes.number.isRequired,
+        dimensionZ : PropTypes.number.isRequired
     }).isRequired
 };
 
