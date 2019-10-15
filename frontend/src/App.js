@@ -7,6 +7,7 @@ import Header from './layout/Header';
 import Main from './layout/Main';
 import Footer from './layout/Footer';
 import Loader from './components/Loader';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const Home = React.lazy(() => import('./pages/home'));
 const Types = React.lazy(() => import('./pages/types'));
@@ -27,13 +28,15 @@ const App = ({ classes }) => {
       <Router>
         <Header />
         <Main>
-          <Suspense fallback={<Loader />}>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/types" component={Types} />
-              <Route path="/eshop" component={Eshop} />
-            </Switch>
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<Loader />}>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/types" component={Types} />
+                <Route path="/eshop" component={Eshop} />
+              </Switch>
+            </Suspense>
+          </ErrorBoundary>
         </Main>
         <Footer />
       </Router>
