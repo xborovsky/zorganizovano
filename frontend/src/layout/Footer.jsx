@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
+
+import SocialLinks from '../components/SocialLinks';
 
 const styles = theme => ({
     footer : {
@@ -27,6 +27,7 @@ const styles = theme => ({
     nativeLink : {
         textDecoration : 'none',
         color : '#fff',
+        marginRight : 5,
         '&:active' : {
             textDecoration : 'none',
             color : '#fff'
@@ -51,12 +52,7 @@ const Footer = ({ classes }) => (
                 <Link to="/eshop/contact" className={classes.link}>
                     <Typography variant="body2" color="secondary">Kontakt</Typography>
                 </Link>
-                <a href="todo-facebook" className={classes.nativeLink}>
-                    <FacebookIcon />
-                </a>
-                <a href="todo-instagram" className={classes.nativeLink}>
-                    <InstagramIcon />
-                </a>
+                <SocialLinks linkClass={classes.nativeLink} />
             </Grid>
             <Grid item xs={12} sm={6}>
                 &copy; 2019
