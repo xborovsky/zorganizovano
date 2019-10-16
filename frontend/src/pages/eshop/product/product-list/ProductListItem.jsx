@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { productShape } from '../product-prop-type';
 import Price from '../../../../components/Price';
@@ -24,12 +24,15 @@ const styles = theme => ({
 
 const ProductListItem = ({ product, classes }) => {
 
+    const history = useHistory();
+    const location = useLocation();
+
     const goToDetail = () => {
-        console.log('TODO go to detail...');
+        history.push(`${location.pathname}/products/${product.id}`);
     };
 
     const addToShoppingCart = product => {
-        console.log('TODO - add to shopping cart');
+        console.log('TODO add to shopping cart...');
     };
 
     return (

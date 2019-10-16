@@ -32,7 +32,7 @@ const App = ({ classes }) => {
       <ThemeProvider theme={zorganizovanoTheme}>
         <Router>
           <Header />
-          <Jumbotron img='https://source.unsplash.com/user/erondu' />
+          {/*<Jumbotron img='https://source.unsplash.com/user/erondu' />*/}
           <Main>
             <ErrorBoundary>
               <Suspense fallback={<Loader />}>

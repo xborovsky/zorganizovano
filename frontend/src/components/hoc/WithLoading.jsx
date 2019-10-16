@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 import Loader from '../../components/Loader';
 import Alert from '../../components/Alert';
@@ -9,6 +10,8 @@ const withLoading = url => Component => props => {
     const [ error, setError ] = useState(undefined);
     const [ data, setData ] = useState(undefined);
     const [ statusCode, setStatusCode ] = useState(undefined);
+    const params = useParams();
+    console.log(params);
 
     useEffect(() => {
         axios.get(url)

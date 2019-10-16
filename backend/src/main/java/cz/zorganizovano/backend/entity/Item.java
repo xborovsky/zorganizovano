@@ -20,7 +20,9 @@ public class Item implements Serializable {
     private long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "description", nullable = false)
+    @Column(name = "subname", nullable = true)
+    private String subNname;
+    @Column(name = "description", nullable = false, columnDefinition = "text")
     private String description;
     @Column(name = "price", nullable = false)
     private double price;
@@ -54,6 +56,14 @@ public class Item implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSubNname() {
+        return subNname;
+    }
+
+    public void setSubNname(String subNname) {
+        this.subNname = subNname;
     }
 
     public String getDescription() {

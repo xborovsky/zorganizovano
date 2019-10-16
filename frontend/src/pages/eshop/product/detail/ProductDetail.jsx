@@ -20,6 +20,12 @@ const styles = theme => ({
     image : {
         width : '70%',
         marign : '0 auto'
+    },
+    priceWrapper : {
+        textAlign : 'center'
+    },
+    shoppingCartWrapper : {
+        textAlign : 'right'
     }
 });
 
@@ -32,10 +38,16 @@ const ProductDetail = ({ product, classes }) => (
             <Grid item xs={12} sm={6}>
                 <h1>{ product.name }</h1>
                 <ProductSpec product={product} />
-                <Button variant="contained" color="primary">
-                    <FontAwesomeIcon icon={faShoppingCart} className={classes.shoppingCartIcon} />Vložit do košíku
-                </Button>
-                <Price value={product.price} />
+                <Grid container>
+                    <Grid item xs={6} className={classes.priceWrapper}>
+                        <Price value={product.price} />
+                    </Grid>
+                    <Grid item xs={6} className={classes.shoppingCartWrapper}>
+                        <Button variant="contained" color="primary">
+                            <FontAwesomeIcon icon={faShoppingCart} className={classes.shoppingCartIcon} />Vložit do košíku
+                        </Button>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     </Paper>
