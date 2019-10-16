@@ -5,6 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import Link from '@material-ui/core/Link';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
     appBar: {
@@ -22,6 +26,13 @@ const styles = theme => ({
     }
 });
 
+const StyledBadge = withStyles(theme => ({
+    badge : {
+        backgroundColor : '#fbbd5c',
+        color : '#000'
+    }
+}))(Badge);
+
 const Header = ({ classes }) => (
     <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
@@ -33,7 +44,16 @@ const Header = ({ classes }) => (
                     <NavLink to="/types">Typy</NavLink>
                 </Link>
                 <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                <NavLink to="/eshop">Eshop</NavLink>
+                    <NavLink to="/eshop">Eshop</NavLink>
+                </Link>
+                <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                    <NavLink to="/shopping-cart">
+                        <IconButton aria-label="cart">
+                            <StyledBadge badgeContent={1} color="primary" className={classes.badge}>
+                                <FontAwesomeIcon icon={faShoppingCart} />
+                            </StyledBadge>
+                        </IconButton>
+                    </NavLink>
                 </Link>
             </nav>
         </Toolbar>
