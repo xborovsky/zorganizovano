@@ -8,6 +8,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import ProductSpec from './ProductSpec';
 import Price from '../../../../components/Price';
 import { productShape } from '../product-prop-type';
+import IdeaPrompt from '../../../../components/IdeaPrompt';
 
 const styles = theme => ({
     root : {
@@ -26,6 +27,9 @@ const styles = theme => ({
     },
     shoppingCartWrapper : {
         textAlign : 'right'
+    },
+    ideaPromptWrapper : {
+        marginTop : '10vh'
     }
 });
 
@@ -48,6 +52,9 @@ const ProductDetail = ({ product, classes }) => (
                         </Button>
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid item xs={12} className={classes.ideaPromptWrapper}>
+                <IdeaPrompt />
             </Grid>
         </Grid>
     </Paper>
