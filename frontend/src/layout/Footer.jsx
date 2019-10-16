@@ -18,7 +18,11 @@ const styles = theme => ({
         textAlign : 'left'
     },
     link : {
-        textDecoration : 'none'
+        textDecoration : 'none',
+        color : '#fff',
+        '&:hover' : {
+            textDecoration : 'underline'
+        }
     },
     nativeLink : {
         textDecoration : 'none',
@@ -38,13 +42,13 @@ const Footer = ({ classes }) => (
     <footer className={classes.footer}>
         <Grid container>
             <Grid item xs={12} sm={6} className={classes.left}>
-                <Link to="/terms" className={classes.link}>
+                <Link to="/eshop//terms" className={classes.link}>
                     <Typography variant="body2" color="secondary">Obchodní podmínky</Typography>
                 </Link>
-                <Link to="/faq" className={classes.link}>
+                <Link to="/eshop/faq" className={classes.link}>
                     <Typography variant="body2" color="secondary">FAQ</Typography>
                 </Link>
-                <Link to="/contact" className={classes.link}>
+                <Link to="/eshop//contact" className={classes.link}>
                     <Typography variant="body2" color="secondary">Kontakt</Typography>
                 </Link>
                 <a href="todo-facebook" className={classes.nativeLink}>

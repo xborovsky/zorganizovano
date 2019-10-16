@@ -22,6 +22,10 @@ let zorganizovanoTheme = createMuiTheme({
     },
     body2 : {
         fontSize : 13
+    },
+    h1 : {
+      fontSize : '4rem',
+      marginBottom : '1rem'
     }
   }
 });

@@ -5,6 +5,7 @@ import Loader from '../../components/Loader';
 
 const ProductListContainer = React.lazy(() => import('./product/product-list/ProductListContainer'));
 const ProductDetailContainer = React.lazy(() => import('./product/detail/ProductDetailContainer'));
+const Faq = React.lazy(() => import('./faq'));
 
 const Eshop = () => {
     let match = useRouteMatch();
@@ -14,6 +15,9 @@ const Eshop = () => {
             <Switch>
                 <Route path={`${match.path}/products/:id`}>
                     <ProductDetailContainer />
+                </Route>
+                <Route path={`${match.path}/faq`}>
+                    <Faq />
                 </Route>
                 <Route path={match.path}>
                     <ProductListContainer />
