@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 import ProductSpec from './ProductSpec';
-import Price from '../../../components/Price';
+import Price from '../../../../components/Price';
+import { productShape } from '../product-prop-type';
 
 const styles = theme => ({
     root : {
@@ -41,12 +42,7 @@ const ProductDetail = ({ product, classes }) => (
 );
 
 ProductDetail.propTypes = {
-    product : PropTypes.shape({
-        id : PropTypes.number.isRequired,
-        name : PropTypes.string.isRequired,
-        description : PropTypes.string.isRequired,
-        price : PropTypes.number.isRequired
-    }).isRequired
+    product : productShape.isRequired
 };
 
 export default withStyles(styles)(ProductDetail);

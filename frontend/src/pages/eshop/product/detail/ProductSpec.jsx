@@ -6,6 +6,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
+import { productDetailShape } from '../product-prop-type';
+
 const styles = theme => ({
     root : {
         borderTop : '1px solid #ccc',
@@ -47,15 +49,7 @@ const ProductSpec = ({ product, classes }) => (
 );
 
 ProductSpec.propTypes = {
-    product : PropTypes.shape({
-        id : PropTypes.number.isRequired,
-        name : PropTypes.string.isRequired,
-        description : PropTypes.string.isRequired,
-        price : PropTypes.number.isRequired,
-        dimensionX : PropTypes.number.isRequired,
-        dimensionY : PropTypes.number.isRequired,
-        dimensionZ : PropTypes.number.isRequired
-    }).isRequired
+    product : productDetailShape.isRequired
 };
 
 export default withStyles(styles)(ProductSpec);
