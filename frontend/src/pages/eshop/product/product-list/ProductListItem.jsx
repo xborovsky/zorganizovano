@@ -12,6 +12,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { productShape } from '../product-prop-type';
 import Price from '../../../../components/Price';
 import ShoppingCartButton from '../../../../components/ShoppingCartButton';
+import { addItemToShoppingCart } from '../../../../manager/shopping-cart.manager';
 
 const styles = theme => ({
     card : {
@@ -33,6 +34,7 @@ const ProductListItem = ({ product, classes }) => {
 
     const addToShoppingCart = product => {
         console.log('TODO add to shopping cart...');
+        addItemToShoppingCart(product);
     };
 
     return (
@@ -55,7 +57,7 @@ const ProductListItem = ({ product, classes }) => {
                             <Price value={product.price} />
                         </Grid>
                         <Grid item xs={6}>
-                            <ShoppingCartButton onClick={() => console.log('TODO - navigate...')} />
+                            <ShoppingCartButton onClick={() => addToShoppingCart(product)} />
                         </Grid>
                         <Grid item xs={12}>
                             <Typography variant="body2" element="span">

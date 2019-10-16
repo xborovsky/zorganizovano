@@ -11,14 +11,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@material-ui/core/TextField';
 
 import Actions from './Actions';
-
-// TODO fetch
-const itemsInitial = [{
-    id : 1,
-    name : 'Test',
-    quantity : 1,
-    price : 345
-}];
+import { getAllCartItems, setCartItems } from '../../../manager/shopping-cart.manager';
 
 const styles = theme => ({
     root: {
@@ -41,7 +34,7 @@ const styles = theme => ({
 
 const ShoppingCart = ({ classes }) => {
 
-    const [ items, setItems ] = useState(itemsInitial);
+    const [ items, setItems ] = useState(getAllCartItems());
 
     const renderEmpty = () => (
         <TableRow>
@@ -63,6 +56,7 @@ const ShoppingCart = ({ classes }) => {
             const itemsCopy = [...items];
             itemsCopy[itemIdx].quantity = value;
             setItems(itemsCopy);
+            setCartItems(itemsCopy);
         }
     };
 

@@ -9,6 +9,7 @@ import ProductSpec from './ProductSpec';
 import Price from '../../../../components/Price';
 import { productShape } from '../product-prop-type';
 import IdeaPrompt from '../../../../components/IdeaPrompt';
+import { addItemToShoppingCart } from '../../../../manager/shopping-cart.manager';
 
 const styles = theme => ({
     root : {
@@ -47,7 +48,7 @@ const ProductDetail = ({ product, classes }) => (
                         <Price value={product.price} />
                     </Grid>
                     <Grid item xs={6} className={classes.shoppingCartWrapper}>
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary" onClick={() => addItemToShoppingCart(product)}>
                             <FontAwesomeIcon icon={faShoppingCart} className={classes.shoppingCartIcon} />Vložit do košíku
                         </Button>
                     </Grid>
