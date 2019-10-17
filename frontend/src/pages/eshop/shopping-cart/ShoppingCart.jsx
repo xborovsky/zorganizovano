@@ -11,7 +11,6 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@material-ui/core/TextField';
 
 import Actions from './Actions';
-import { shoppingCartManager } from 'manager/shopping-cart.manager';
 
 const styles = theme => ({
     root: {
@@ -34,7 +33,7 @@ const styles = theme => ({
 
 const ShoppingCart = ({ classes }) => {
 
-    const [ items, setItems ] = useState(shoppingCartManager.getAllItems());
+    const [ items, setItems ] = useState({}); // TODO
 
     const renderEmpty = () => (
         <TableRow>
@@ -56,7 +55,6 @@ const ShoppingCart = ({ classes }) => {
             const itemsCopy = [...items];
             itemsCopy[itemIdx].quantity = value;
             setItems(itemsCopy);
-            shoppingCartManager.setItems(itemsCopy);
         }
     };
 

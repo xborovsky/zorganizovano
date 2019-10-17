@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,7 +10,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 
-import { shoppingCartManager } from 'manager/shopping-cart.manager';
+import ShoppingCartContext from '../shopping-cart/state-management/ShoppingCartContext';
 
 const styles = theme => ({
     appBar: {
@@ -35,31 +35,35 @@ const StyledBadge = withStyles(theme => ({
     }
 }))(Badge);
 
-const Header = ({ classes }) => (
-    <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-                Zorganizovano
-            </Typography>
-            <nav>
-                <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                    <NavLink to="/types">Typy</NavLink>
-                </Link>
-                <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                    <NavLink to="/eshop">Eshop</NavLink>
-                </Link>
-                <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                    <NavLink to="/shopping-cart">
-                        <IconButton aria-label="cart">
-                            <StyledBadge badgeContent={shoppingCartManager.getNumItems()} color="primary" className={classes.badge}>
-                                <FontAwesomeIcon icon={faShoppingCart} />
-                            </StyledBadge>
-                        </IconButton>
-                    </NavLink>
-                </Link>
-            </nav>
-        </Toolbar>
-    </AppBar>
-);
+const Header = ({ classes }) => {
+    const { state } = useContext(ShoppingCartContext);
+
+    return (
+        <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+            <Toolbar className={classes.toolbar}>
+                <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                    Zorganizovano
+                </Typography>
+                <nav>
+                    <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                        <NavLink to="/types">Typy</NavLink>
+                    </Link>
+                    <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                        <NavLink to="/eshop">Eshop</NavLink>
+                    </Link>
+                    <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                        <NavLink to="/shopping-cart">
+                            <IconButton aria-label="cart">
+                                <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge}>
+                                    <FontAwesomeIcon icon={faShoppingCart} />
+                                </StyledBadge>
+                            </IconButton>
+                        </NavLink>
+                    </Link>
+                </nav>
+            </Toolbar>
+        </AppBar>
+    );
+};
 
 export default withStyles(styles)(Header);

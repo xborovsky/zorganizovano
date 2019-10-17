@@ -24,35 +24,33 @@ const Eshop = () => {
     }, [state]);
 
     return (
-        <>
+        <ShoppingCartContext.Provider value={{ state, dispatch }}>
             <Header />
             <Main>
-                <ShoppingCartContext.Provider value={{ state, dispatch }}>
-                    <Suspense fallback={<Loader />}>
-                        <Switch>
-                            <Route path={`${match.path}/products/:id`}>
-                                <ProductDetailContainer />
-                            </Route>
-                            <Route path={`${match.path}/faq`}>
-                                <Faq />
-                            </Route>
-                            <Route path={`${match.path}/terms`}>
-                                <Terms />
-                            </Route>
-                            <Route path={`${match.path}/contact`}>
-                                <Contact />
-                            </Route>
-                            <Route path={`${match.path}/cart`}>
-                                <ShoppingCart />
-                            </Route>
-                            <Route path={match.path}>
-                                <ProductListContainer />
-                            </Route>
-                        </Switch>
-                    </Suspense>
-                </ShoppingCartContext.Provider>
+                <Suspense fallback={<Loader />}>
+                    <Switch>
+                        <Route path={`${match.path}/products/:id`}>
+                            <ProductDetailContainer />
+                        </Route>
+                        <Route path={`${match.path}/faq`}>
+                            <Faq />
+                        </Route>
+                        <Route path={`${match.path}/terms`}>
+                            <Terms />
+                        </Route>
+                        <Route path={`${match.path}/contact`}>
+                            <Contact />
+                        </Route>
+                        <Route path={`${match.path}/cart`}>
+                            <ShoppingCart />
+                        </Route>
+                        <Route path={match.path}>
+                            <ProductListContainer />
+                        </Route>
+                    </Switch>
+                </Suspense>
             </Main>
-        </>
+        </ShoppingCartContext.Provider>
     );
 };
 

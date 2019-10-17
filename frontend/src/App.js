@@ -4,9 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 
-import Header from './layout/Header';
-import Jumbotron from './layout/Jumbotron';
-import Main from './layout/Main';
 import Footer from './layout/Footer';
 import Loader from './components/Loader';
 import ErrorBoundary from './components/ErrorBoundary';
