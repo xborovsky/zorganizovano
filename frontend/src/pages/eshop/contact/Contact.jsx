@@ -6,7 +6,8 @@ import { withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import SocialLinks from '../../../components/SocialLinks';
+import SocialLinks from 'components/SocialLinks';
+import ContactEmail from 'components/ContactEmail';
 
 const styles = theme => ({
     root : {
@@ -17,11 +18,6 @@ const styles = theme => ({
     photo : {
         height : 200,
         width : 130
-    },
-    email : {
-        unicodeBidi : 'bidi-override',
-        direction : 'rtl',
-        textAlign : 'left'
     },
     socialLink : {
         color : '#000'
@@ -46,9 +42,7 @@ const Contact = ({ classes }) => (
                     <Typography variant="h5">
                         Test Jmeno
                     </Typography>
-                    <Typography variant="body1" className={classes.email}>
-                        zc.liame@tset
-                    </Typography>
+                    <ContactEmail reversedEmail='zc.liame@tset' />
                     <SocialLinks linkClass={classes.socialLink} iconClass={classes.socialIcon} />
                 </CardContent>
             </Grid>
