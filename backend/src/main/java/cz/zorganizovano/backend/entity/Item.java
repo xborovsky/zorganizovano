@@ -21,7 +21,7 @@ public class Item implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "subname", nullable = true)
-    private String subNname;
+    private String subName;
     @Column(name = "description", nullable = false, columnDefinition = "text")
     private String description;
     @Column(name = "price", nullable = false)
@@ -58,12 +58,12 @@ public class Item implements Serializable {
         this.name = name;
     }
 
-    public String getSubNname() {
-        return subNname;
+    public String getSubName() {
+        return subName;
     }
 
-    public void setSubNname(String subNname) {
-        this.subNname = subNname;
+    public void setSubName(String subName) {
+        this.subName = subName;
     }
 
     public String getDescription() {

@@ -6,38 +6,42 @@ import Loader from '../../components/Loader';
 import Alert from '../../components/Alert';
 
 const withLoading = url => Component => props => {
-    const [ loading, setLoading ] = useState(true);
-    const [ error, setError ] = useState(undefined);
-    const [ data, setData ] = useState(undefined);
-    const [ statusCode, setStatusCode ] = useState(undefined);
-    const params = useParams();
-    console.log(params);
+    const [ loader, setLoader ] = useState({
+        loading : true
+    });
+    //const params = useParams();
+    //console.log(params);
+    console.log('xxx');
 
     useEffect(() => {
         axios.get(url)
             .then(res => {
-                setData(res.data);
-                setStatusCode(res.status);
-                setLoading(false);
+                setLoader({
+                    data : res.data,
+                    statusCode : res.status,
+                    loading : false
+                });
             })
             .catch(err => {
                 console.error(err);
-                setError(err.message);
-                setLoading(false);
+                setLoader({
+                    error : err.message,
+                    loading : false
+                });
             });
-    }, []);
+    }, [url]);
 
     return (
-        loading ?
+        loader.loading ?
             <Loader /> :
-            error ?
-                <Alert type="error">{error}</Alert> :
+            loader.error ?
+                <Alert type="error">{loader.error}</Alert> :
                 <Component
                     {...props}
-                    loading={loading}
-                    error={error}
-                    data={data}
-                    statusCode={statusCode} />
+                    loading={loader.loading}
+                    error={loader.error}
+                    data={loader.data}
+                    statusCode={loader.statusCode} />
     );
 };
 

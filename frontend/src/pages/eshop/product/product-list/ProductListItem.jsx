@@ -12,7 +12,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { productShape } from '../product-prop-type';
 import Price from '../../../../components/Price';
 import ShoppingCartButton from '../../../../components/ShoppingCartButton';
-import { addItemToShoppingCart } from '../../../../manager/shopping-cart.manager';
 
 const styles = theme => ({
     card : {
@@ -34,7 +33,6 @@ const ProductListItem = ({ product, classes }) => {
 
     const addToShoppingCart = product => {
         console.log('TODO add to shopping cart...');
-        addItemToShoppingCart(product);
     };
 
     return (

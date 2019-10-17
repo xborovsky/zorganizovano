@@ -1,39 +1,54 @@
 const CART = 'cart';
 
-export const getAllCartItems = () => {
-    const cart = localStorage.getItem(CART);
-    return !cart ? [] : JSON.parse(cart);
-};
+export const shoppingCartManager = (() => {
+    const getAllItems = () => {
+        const cart = localStorage.getItem(CART);
+        return !cart ? [] : JSON.parse(cart);
+    };
 
-export const setCartItems = items => {
-    localStorage.setItem(CART, JSON.stringify(items));
-};
+    const getNumItems = () => {
+        return getAllItems().length;
+    };
 
-export const addItemToShoppingCart = item => {
-    let cart = [...getAllCartItems()];
-    if (!cart.length) {
-        setCartItems([item]);
-    } else {
-        updateItem(item);
-    }
-};
+    const setItems = items => {
+        localStorage.setItem(CART, JSON.stringify(items));
+    };
 
-export const removeItemFromShoppingCart = item => {
-    return getAllCartItems()
-        .filter(cartItem => cartItem.id !== item.id);
-};
-
-export const updateItem = item => {
-    const cart = [...getAllCartItems()];
-    if (item.quantity <= 0) {
-        return removeItemFromShoppingCart(item);
-    } else {
-        const itemInCartIdx = cart.findIndex(cartItem => cartItem.id === item.id);
-        if (itemInCartIdx === -1) {
-            setCartItems([...cart, item]);
+    const addItem = item => {
+        let cart = [...getAllItems()];
+        if (!cart.length) {
+            setItems([item]);
         } else {
-            cart[itemInCartIdx].quantity += item.quantity;
-            setCartItems(cart);
+            updateItem(item);
         }
-    }
-}
+    };
+
+    const removeItem = item => {
+        return getAllItems()
+            .filter(cartItem => cartItem.id !== item.id);
+    };
+
+    const updateItem = item => {
+        const cart = [...getAllItems()];
+        if (item.quantity <= 0) {
+            return removeItem(item);
+        } else {
+            const itemInCartIdx = cart.findIndex(cartItem => cartItem.id === item.id);
+            if (itemInCartIdx === -1) {
+                setItems([...cart, item]);
+            } else {
+                cart[itemInCartIdx].quantity += item.quantity;
+                setItems(cart);
+            }
+        }
+    };
+
+    return {
+        getAllItems,
+        getNumItems,
+        setItems,
+        addItem,
+        removeItem,
+        updateItem
+    };
+})();

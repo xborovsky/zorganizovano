@@ -10,6 +10,8 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 
+import { shoppingCartManager } from 'manager/shopping-cart.manager';
+
 const styles = theme => ({
     appBar: {
         borderBottom: `1px solid #AAA`,
@@ -49,7 +51,7 @@ const Header = ({ classes }) => (
                 <Link variant="button" color="textPrimary" href="#" className={classes.link}>
                     <NavLink to="/shopping-cart">
                         <IconButton aria-label="cart">
-                            <StyledBadge badgeContent={1} color="primary" className={classes.badge}>
+                            <StyledBadge badgeContent={shoppingCartManager.getNumItems()} color="primary" className={classes.badge}>
                                 <FontAwesomeIcon icon={faShoppingCart} />
                             </StyledBadge>
                         </IconButton>
