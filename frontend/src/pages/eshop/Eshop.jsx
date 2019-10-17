@@ -13,6 +13,7 @@ const Faq = React.lazy(() => import('./faq'));
 const Terms = React.lazy(() => import('./terms'));
 const Contact = React.lazy(() => import('./contact'));
 const ShoppingCart = React.lazy(() => import('./shopping-cart'));
+const OrderWizard = React.lazy(() => import('./order/OrderWizard'));
 
 const Eshop = () => {
     let match = useRouteMatch();
@@ -43,6 +44,9 @@ const Eshop = () => {
                         </Route>
                         <Route path={`${match.path}/shopping-cart`}>
                             <ShoppingCart />
+                        </Route>
+                        <Route path={`${match.path}/order`}>
+                            <OrderWizard />
                         </Route>
                         <Route path={match.path}>
                             <ProductListContainer />
