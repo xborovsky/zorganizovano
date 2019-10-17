@@ -11,7 +11,7 @@ var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 axios.interceptors.request.use(config => {
   // Concatenate base path if not an absolute URL
   if ( !isAbsoluteURLRegex.test(config.url) ) {
-    config.url = join('http://localhost:8080', config.url);
+    config.url = join('http://localhost:8081', config.url);
   }
 
   return config;

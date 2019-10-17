@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import GridList from '@material-ui/core/GridList';
 import Card from '@material-ui/core/Card';
@@ -12,45 +12,59 @@ const styles = theme => ({
     },
     mainImage : {
         width : '100%'
+    },
+    secondaryImage : {
+        cursor : 'pointer'
     }
 });
 
 const ImageGallery = ({
-    mainImage,
-    secondaryImages,
-    classes
-}) => (
-    <Card>
-        <Grid container>
-            <Grid item xs={12}>
-                <img src={mainImage.src} alt={mainImage.alt} title={mainImage.title} className={classes.mainImage} />
+    images,
+    mainImageIdx = 0,
+    classes,
+    className
+}) => {
+    const [mainImage, setMainImage] = useState(images[mainImageIdx]);
+
+    const handleImageClick = idx => {
+        setMainImage(images[idx]);
+    };
+
+    return (
+        <Card className={className}>
+            <Grid container>
+                <Grid item xs={12}>
+                    <img src={mainImage.src} alt={mainImage.alt} title={mainImage.title} className={classes.mainImage} />
+                </Grid>
+                <Grid item xs={12}>
+                    <GridList cols={2.5} className={classes.gridList}>
+                        {
+                            images.map((image, idx) =>(
+                                <img key={image.src}
+                                     src={image.src}
+                                     alt={image.alt}
+                                     title={image.title}
+                                     className={classes.secondaryImage}
+                                     onClick={() => handleImageClick(idx)}
+                                />
+                            ))
+                        }
+                    </GridList>
+                </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <GridList cols={2.5} className={classes.gridList}>
-                    {
-                        secondaryImages.map(image =>(
-                            <img src={image.src} alt={image.alt} title={image.title} />
-                        ))
-                    }
-                </GridList>
-            </Grid>
-        </Grid>
-    </Card>
-);
+        </Card>
+    );
+};
 
 ImageGallery.propTypes = {
-    mainImage : PropTypes.shape({
-        src : PropTypes.string.isRequired,
-        alt : PropTypes.string.isRequired,
-        title : PropTypes.string
-    }),
-    secondaryImages : PropTypes.arrayOf(
+    images : PropTypes.arrayOf(
         PropTypes.shape({
             src : PropTypes.string.isRequired,
             alt : PropTypes.string.isRequired,
             title : PropTypes.string
         })
-    ).isRequired
+    ).isRequired,
+    mainImageIdx : PropTypes.number
 };
 
 export default withStyles(styles)(ImageGallery);
