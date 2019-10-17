@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,6 +11,8 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@material-ui/core/TextField';
 
 import Actions from './Actions';
+import ShoppingCartContext from './state-management/ShoppingCartContext';
+import { UPDATE_SHOPPING_CART_ITEM_QUANTITY } from './state-management/ShoppingCartActions';
 
 const styles = theme => ({
     root: {
@@ -33,7 +35,7 @@ const styles = theme => ({
 
 const ShoppingCart = ({ classes }) => {
 
-    const [ items, setItems ] = useState({}); // TODO
+    const { state, dispatch } = useContext(ShoppingCartContext);
 
     const renderEmpty = () => (
         <TableRow>
@@ -44,18 +46,11 @@ const ShoppingCart = ({ classes }) => {
     );
 
     const handleChangeQuantity = (event, id) => {
-        const value = +event.currentTarget.value;
-
-        if (value < 0) {
-            return false;
-        }
-
-        const itemIdx = items.findIndex(item => item.id === id);
-        if (itemIdx !== -1) {
-            const itemsCopy = [...items];
-            itemsCopy[itemIdx].quantity = value;
-            setItems(itemsCopy);
-        }
+        dispatch({
+            type : UPDATE_SHOPPING_CART_ITEM_QUANTITY,
+            itemId : id,
+            quantity : +event.currentTarget.value
+        });
     };
 
     return (
@@ -74,9 +69,9 @@ const ShoppingCart = ({ classes }) => {
                     </TableHead>
                     <TableBody>
                         {
-                            !items.length ?
+                            (!state || !state.length) ?
                                 renderEmpty() :
-                                items.map(item => (
+                                state.map(item => (
                                     <TableRow key={item.id}>
                                         <TableCell>TODO - obrazok</TableCell>
                                         <TableCell>{item.name}</TableCell>

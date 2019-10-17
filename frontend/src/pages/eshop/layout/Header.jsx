@@ -52,7 +52,7 @@ const Header = ({ classes }) => {
                         <NavLink to="/eshop">Eshop</NavLink>
                     </Link>
                     <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                        <NavLink to="/shopping-cart">
+                        <NavLink to="/eshop/shopping-cart">
                             <IconButton aria-label="cart">
                                 <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge}>
                                     <FontAwesomeIcon icon={faShoppingCart} />

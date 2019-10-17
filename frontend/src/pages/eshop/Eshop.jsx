@@ -41,7 +41,7 @@ const Eshop = () => {
                         <Route path={`${match.path}/contact`}>
                             <Contact />
                         </Route>
-                        <Route path={`${match.path}/cart`}>
+                        <Route path={`${match.path}/shopping-cart`}>
                             <ShoppingCart />
                         </Route>
                         <Route path={match.path}>
