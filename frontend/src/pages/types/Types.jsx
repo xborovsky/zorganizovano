@@ -1,8 +1,14 @@
 import React from 'react';
 
+import Header from 'layout/Header';
+import Main from 'layout/Main';
+
 const Types = () => (
     <>
-        TODO types
+        <Header />
+        <Main>
+            TODO types
+        </Main>
     </>
 );
 

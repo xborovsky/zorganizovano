@@ -31,19 +31,15 @@ const App = ({ classes }) => {
       <CssBaseline />
       <ThemeProvider theme={zorganizovanoTheme}>
         <Router>
-          <Header />
-          {/*<Jumbotron img='https://source.unsplash.com/user/erondu' />*/}
-          <Main>
-            <ErrorBoundary>
-              <Suspense fallback={<Loader />}>
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/types" component={Types} />
-                  <Route path="/eshop" component={Eshop} />
-                </Switch>
-              </Suspense>
-            </ErrorBoundary>
-          </Main>
+          <ErrorBoundary>
+            <Suspense fallback={<Loader />}>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/types" component={Types} />
+                <Route path="/eshop" component={Eshop} />
+              </Switch>
+            </Suspense>
+          </ErrorBoundary>
           <Footer />
         </Router>
       </ThemeProvider>

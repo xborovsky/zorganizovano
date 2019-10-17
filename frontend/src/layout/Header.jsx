@@ -5,12 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import Link from '@material-ui/core/Link';
 import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
 
-import { shoppingCartManager } from 'manager/shopping-cart.manager';
+import Jumbotron from 'layout/Jumbotron';
 
 const styles = theme => ({
     appBar: {
@@ -28,38 +24,25 @@ const styles = theme => ({
     }
 });
 
-const StyledBadge = withStyles(theme => ({
-    badge : {
-        backgroundColor : '#fbbd5c',
-        color : '#000'
-    }
-}))(Badge);
-
 const Header = ({ classes }) => (
-    <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-                Zorganizovano
-            </Typography>
-            <nav>
-                <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                    <NavLink to="/types">Typy</NavLink>
-                </Link>
-                <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                    <NavLink to="/eshop">Eshop</NavLink>
-                </Link>
-                <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                    <NavLink to="/shopping-cart">
-                        <IconButton aria-label="cart">
-                            <StyledBadge badgeContent={shoppingCartManager.getNumItems()} color="primary" className={classes.badge}>
-                                <FontAwesomeIcon icon={faShoppingCart} />
-                            </StyledBadge>
-                        </IconButton>
-                    </NavLink>
-                </Link>
-            </nav>
-        </Toolbar>
-    </AppBar>
+    <>
+        <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+            <Toolbar className={classes.toolbar}>
+                <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                    Zorganizovano
+                </Typography>
+                <nav>
+                    <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                        <NavLink to="/types">Typy</NavLink>
+                    </Link>
+                    <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                        <NavLink to="/eshop">Eshop</NavLink>
+                    </Link>
+                </nav>
+            </Toolbar>
+        </AppBar>
+        <Jumbotron img='https://source.unsplash.com/user/erondu' />
+    </>
 );
 
 export default withStyles(styles)(Header);
