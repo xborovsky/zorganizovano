@@ -29,7 +29,7 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
     }
 
     protected void sendEmailToAdmin(Order order) {
-        String recipient = "TODO";
+        String recipient = EmailService.ADMIN_EMAIL;
         String subject = "Nová objednávka na zorganizovano.cz!";
         String text = "TODO";
 
