@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 
 import SocialLinks from 'components/SocialLinks';
 import ContactEmail from 'components/ContactEmail';
+import ContactForm from './ContactForm';
 
 const styles = theme => ({
     root : {
@@ -28,26 +29,29 @@ const styles = theme => ({
 });
 
 const Contact = ({ classes }) => (
-    <Card className={classes.root}>
-        <Grid container>
-            <Grid item xs={6} sm={4} md={3}>
-                <CardMedia
-                    className={classes.photo}
-                    image="https://1001freedownloads.s3.amazonaws.com/vector/thumb/66066/smiling_man_face.png"
-                    title="Title"
-                />
+    <>
+        <Card className={classes.root}>
+            <Grid container>
+                <Grid item xs={6} sm={4} md={3}>
+                    <CardMedia
+                        className={classes.photo}
+                        image="https://1001freedownloads.s3.amazonaws.com/vector/thumb/66066/smiling_man_face.png"
+                        title="Title"
+                    />
+                </Grid>
+                <Grid item xs={6} sm={8} md={9}>
+                    <CardContent>
+                        <Typography variant="h5">
+                            Test Jmeno
+                        </Typography>
+                        <ContactEmail reversedEmail='zc.liame@tset' />
+                        <SocialLinks linkClass={classes.socialLink} iconClass={classes.socialIcon} />
+                    </CardContent>
+                </Grid>
             </Grid>
-            <Grid item xs={6} sm={8} md={9}>
-                <CardContent>
-                    <Typography variant="h5">
-                        Test Jmeno
-                    </Typography>
-                    <ContactEmail reversedEmail='zc.liame@tset' />
-                    <SocialLinks linkClass={classes.socialLink} iconClass={classes.socialIcon} />
-                </CardContent>
-            </Grid>
-        </Grid>
-    </Card>
+        </Card>
+        <ContactForm />
+    </>
 );
 
 export default withStyles(styles)(Contact);
