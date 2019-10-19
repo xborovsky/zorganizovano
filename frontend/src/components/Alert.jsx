@@ -9,6 +9,9 @@ import InfoIcon from '@material-ui/icons/Info';
 import { amber, green, red, blue } from '@material-ui/core/colors';
 
 const styles = theme => ({
+    root : {
+        marginBottom : '2rem'
+    },
     icon: {
         verticalAlign: 'bottom',
         marginRight: '2rem'
@@ -50,7 +53,7 @@ const Alert = ({ type, children, classes }) => {
 
     return (
         <SnackbarContent
-            className={getClass()}
+            className={`${classes.root} ${getClass()}`}
             message={
                 <span>
                     {getIcon()}

@@ -47,7 +47,7 @@ const Footer = ({ classes }) => (
                     <Typography variant="body2" color="secondary">Obchodní podmínky</Typography>
                 </Link>
                 <Link to="/eshop/faq" className={classes.link}>
-                    <Typography variant="body2" color="secondary">FAQ</Typography>
+                    <Typography variant="body2" color="secondary">Nejčastěji kladené dotazy</Typography>
                 </Link>
                 <Link to="/eshop/contact" className={classes.link}>
                     <Typography variant="body2" color="secondary">Kontakt</Typography>

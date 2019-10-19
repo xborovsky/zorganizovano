@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -13,7 +13,10 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { withStyles } from '@material-ui/styles';
 import { CircularProgress } from '@material-ui/core';
+import axios from 'axios';
+
 import CharacterCounter from 'components/CharacterCounter';
+import Alert from 'components/Alert';
 
 const ContactFormSchema = Yup.object().shape({
     name : Yup.string()
@@ -62,9 +65,21 @@ const styles = theme => ({
 });
 
 const ContactForm = ({ classes }) => {
+    const [ ajaxResult, setAjaxResult ] = useState({});
+
+    const showAlert = () => {
+        if (ajaxResult.success) {
+            return <Alert type="success">{ajaxResult.success}</Alert>
+        } else if (ajaxResult.error) {
+            return <Alert type="error">{ajaxResult.error}</Alert>
+        }
+        return null;
+    };
+
     return (
         <Paper className={classes.root}>
             <Typography variant="h1">Kontaktní formulář</Typography>
+            { showAlert() }
             <Formik
                 initialValues={{
                     name : '',
@@ -82,11 +97,24 @@ const ContactForm = ({ classes }) => {
 
                     return errors;
                 }}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
-                    console.log(values);
-                    // TODO validace na serveru
-                    return false;
+                    setAjaxResult({});
+                    axios.post('/contact', values)
+                        .then(_res => {
+                            setAjaxResult({
+                                success : 'Dotaz byl úspěšně odeslán, děkujeme.'
+                            });
+                            setSubmitting(false);
+                            resetForm();
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            setAjaxResult({
+                                error : 'Dotaz se nepovedlo odeslat.'
+                            });
+                            setSubmitting(false);
+                        });
                 }}>
                     {({
                         values,

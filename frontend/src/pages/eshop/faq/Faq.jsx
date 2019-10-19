@@ -10,7 +10,7 @@ const styles = theme => ({});
 
 const Faq = ({ classes }) => (
     <div className={classes.root}>
-        <Typography variant="h1">FAQ</Typography>
+        <Typography variant="h1">Nejčastěji kladené dotazy</Typography>
         <ExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}

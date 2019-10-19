@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, withStyles, Button } from '@material-ui/core';
+import { Grid, withStyles, Button, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -92,7 +92,7 @@ const ProductDetail = ({ product, classes }) => {
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <h1>{ product.name }</h1>
+                    <Typography variant="h1">{ product.name }</Typography>
                     <ProductSpec product={product} />
                     <Grid container>
                         <Grid item xs={12} sm={4} className={classes.priceWrapper}>

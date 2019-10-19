@@ -24,9 +24,18 @@ public class ContactEndpoint {
     public void submitContactForm(@Valid @RequestBody ContactFormBean contactFormBean) {
         String recipient = EmailService.ADMIN_EMAIL;
         String subject = "Nový dotaz na zorganizovano.cz!";
-        String text = "TODO";
+        String text = buildText(contactFormBean);
 
         emailService.send(recipient, subject, text);
     }
+    
+    protected String buildText(ContactFormBean contactFormBean) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Jméno: ").append(contactFormBean.getName()).append("\n")
+            .append("Email: ").append(contactFormBean.getName()).append("\n")
+            .append("Typ dotazu: ").append(contactFormBean.getName()).append("\n")
+            .append("Dotaz: ").append(contactFormBean.getName());
+        return sb.toString();
+    } 
 
 }
