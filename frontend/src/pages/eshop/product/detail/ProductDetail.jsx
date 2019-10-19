@@ -5,12 +5,13 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import ImageGallery from 'react-image-gallery';
+import "react-image-gallery/styles/css/image-gallery.css";
 
 import ProductSpec from './ProductSpec';
 import Price from '../../../../components/Price';
 import { productShape } from '../product-prop-type';
 import IdeaPrompt from '../../../../components/IdeaPrompt';
-import ImageGallery from 'components/ImageGallery';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 
@@ -66,29 +67,25 @@ const ProductDetail = ({ product, classes }) => {
             <Grid container>
                 <Grid item xs={12} sm={6}>
                     <ImageGallery
-                        images={[
+                        items={[
                             {
-                                src : "http://www.tracyhensel.com/wp-content/uploads/2016/01/FullSizeRender-4-1024x795.jpg",
-                                alt : 'Title 1',
-                                title : 'Title 1'
+                                original : 'http://www.tracyhensel.com/wp-content/uploads/2016/01/FullSizeRender-4-1024x795.jpg',
+                                thumbnail : 'http://www.tracyhensel.com/wp-content/uploads/2016/01/FullSizeRender-4-1024x795.jpg'
                             },
                             {
-                                src : 'https://www.medicalnewstoday.com/content/images/articles/325/325466/man-walking-dog.jpg',
-                                alt : 'Title 2'
+                                original : 'https://www.medicalnewstoday.com/content/images/articles/325/325466/man-walking-dog.jpg',
+                                thumbnail : 'https://www.medicalnewstoday.com/content/images/articles/325/325466/man-walking-dog.jpg'
                             },
                             {
-                                src : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRcn-eu-FaJTkZcEnOBSZMrqtO2KbiIZl6gZvUeawEtLqxqXgiv',
-                                alt : 'Title 3'
+                                original : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRcn-eu-FaJTkZcEnOBSZMrqtO2KbiIZl6gZvUeawEtLqxqXgiv',
+                                thumbnail : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRcn-eu-FaJTkZcEnOBSZMrqtO2KbiIZl6gZvUeawEtLqxqXgiv'
                             },
                             {
-                                src : 'https://upload.wikimedia.org/wikipedia/commons/4/42/Shaqi_jrvej.jpg',
-                                alt : 'Title 4'
-                            },
-                            {
-                                src : 'http://www.youandthemat.com/wp-content/uploads/nature-2-26-17.jpg',
-                                alt : 'Title 5'
+                                original : 'https://upload.wikimedia.org/wikipedia/commons/4/42/Shaqi_jrvej.jpg',
+                                thumbnail : 'https://upload.wikimedia.org/wikipedia/commons/4/42/Shaqi_jrvej.jpg'
                             }
                         ]}
+                        showPlayButton={false}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
