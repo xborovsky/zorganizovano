@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -6,13 +6,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import TextField from '@material-ui/core/TextField';
 
 import Actions from './Actions';
 import ShoppingCartContext from './state-management/ShoppingCartContext';
-import { UPDATE_SHOPPING_CART_ITEM_QUANTITY } from './state-management/ShoppingCartActions';
+import { 
+    UPDATE_SHOPPING_CART_ITEM_QUANTITY,
+    REMOVE_ITEM_FROM_SHOPPING_CART
+} from './state-management/ShoppingCartActions';
+import ShoppingCartItem from './ShoppingCartItem';
+import ItemDeleteConfirm from './ItemDeleteConfirm';
 
 const styles = theme => ({
     root: {
@@ -21,9 +23,6 @@ const styles = theme => ({
     },
     table : {
         width : '100%'
-    },
-    textField: {
-        width: 50
     },
     actionsWrapper : {
         textAlign : 'right'
@@ -36,10 +35,14 @@ const styles = theme => ({
 const ShoppingCart = ({ classes }) => {
 
     const { state, dispatch } = useContext(ShoppingCartContext);
+    const [ confirm, setConfirm ] = useState({
+        show : false,
+        itemName : undefined
+    });
 
     const renderEmpty = () => (
         <TableRow>
-            <TableCell align="center" colSpan={4}>
+            <TableCell align="center" colSpan={7}>
                 <strong>Váš košík je prázdný</strong>
             </TableCell>
         </TableRow>
@@ -51,6 +54,22 @@ const ShoppingCart = ({ classes }) => {
             itemId : id,
             quantity : +event.currentTarget.value
         });
+    };
+
+    const showItemDeleteConfirm = id => {
+        setConfirm({
+            show : true,
+            itemId : id,
+            itemName : state[state.findIndex(item => item.id === id)].name
+        });
+    };
+
+    const handleItemDelete = id => {
+        dispatch({
+            type : REMOVE_ITEM_FROM_SHOPPING_CART,
+            payload : { id }
+        });
+        setConfirm({ show : false });
     };
 
     return (
@@ -72,29 +91,28 @@ const ShoppingCart = ({ classes }) => {
                             (!state || !state.length) ?
                                 renderEmpty() :
                                 state.map(item => (
-                                    <TableRow key={item.id}>
-                                        <TableCell>TODO - obrazok</TableCell>
-                                        <TableCell>{item.name}</TableCell>
-                                        <TableCell align="center">
-                                            <TextField
-                                                value={item.quantity}
-                                                onChange={evt => handleChangeQuantity(evt, item.id)}
-                                                type="number"
-                                                className={classes.textField}
-                                                InputLabelProps={{ shrink: true }}
-                                                margin="dense"
-                                                hiddenLabel
-                                            />
-                                        </TableCell>
-                                        <TableCell align="center">{item.price}</TableCell>
-                                        <TableCell align="center">{item.quantity * item.price}</TableCell>
-                                        <TableCell align="center"><FontAwesomeIcon icon={faTrashAlt} /></TableCell>
-                                    </TableRow>
+                                    <ShoppingCartItem
+                                        item={item}
+                                        onChangeQuantity={handleChangeQuantity}
+                                        onDelete={showItemDeleteConfirm}
+                                    />
                                 ))}
                     </TableBody>
                 </Table>
             </Paper>
             <Actions />
+            {
+                confirm.show &&
+                    <ItemDeleteConfirm
+                        itemId={confirm.itemId}
+                        itemName={confirm.itemName}
+                        onClose={() => setConfirm({
+                            show : false,
+                            itemName : undefined
+                        })}
+                        onConfirm={handleItemDelete}
+                    />
+            }
         </>
     );
 };

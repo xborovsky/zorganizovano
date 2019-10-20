@@ -29,8 +29,9 @@ const shoppingCartReducer = (state = initialState, action) => {
             }
         }
 
-        case REMOVE_ITEM_FROM_SHOPPING_CART:
+        case REMOVE_ITEM_FROM_SHOPPING_CART: {
             return state.filter(cartItem => cartItem.id !== action.payload.id);
+        }
 
         case UPDATE_SHOPPING_CART_ITEM_QUANTITY: {
             const itemId = action.itemId;
