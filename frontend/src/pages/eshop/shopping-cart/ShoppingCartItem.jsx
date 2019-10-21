@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
     textField: {
-        width: 50
+        width: 70
     },
     trashIcon : {
         cursor : 'pointer'
@@ -32,15 +32,17 @@ const ShoppingCartItem = ({
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
+                InputProps={{ inputProps: { min : 0, max: 99 } }}
                 margin="dense"
+                variant="outlined"
                 hiddenLabel
             />
         </TableCell>
         <TableCell align="center">{item.price}</TableCell>
         <TableCell align="center">{item.quantity * item.price}</TableCell>
         <TableCell align="center">
-            <FontAwesomeIcon 
-                icon={faTrashAlt} 
+            <FontAwesomeIcon
+                icon={faTrashAlt}
                 className={classes.trashIcon}
                 title="Odebrat z košíku"
                 onClick={() => onDelete(item.id)} />

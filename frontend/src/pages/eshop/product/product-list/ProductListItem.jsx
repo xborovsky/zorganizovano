@@ -18,17 +18,28 @@ import Price from '../../../../components/Price';
 
 const styles = theme => ({
     card : {
-        cursor : 'pointer'
+        //cursor : 'pointer'
     },
     header : {
         backgroundColor : '#6c815a',
         color : '#fff',
-        '&>.MuiCardHeader-content>.MuiCardHeader-subheader' : {
-            color : '#fff !important'
+        cursor : 'pointer',
+        '&>.MuiCardHeader-content' : {
+            '&>.MuiCardHeader-title' : {
+                //fontSize : 18
+            },
+            '&>.MuiCardHeader-subheader' : {
+                color : '#fff !important',
+                //fontSize : 13
+            }
         }
     },
+    content : {
+        cursor : 'pointer'
+    },
     cover: {
-        height: 200
+        height: 200,
+        cursor : 'pointer'
     },
     warehouseCnt : {
         color : '#6c815a',
@@ -36,6 +47,9 @@ const styles = theme => ({
     },
     textField: {
         width: 90
+    },
+    shoppingCartBtnWrapper : {
+        alignSelf : 'center'
     }
 });
 
@@ -72,7 +86,7 @@ const ProductListItem = ({ product, classes }) => {
                     title="TODO - titulek"
                     onClick={goToDetail}
                 />
-                <CardContent onClick={goToDetail}>
+                <CardContent onClick={goToDetail} className={classes.content}>
                     <Typography variant="body2">
                         { "TODO nejaka cast z description blabla bla..." }
                     </Typography>
@@ -82,28 +96,37 @@ const ProductListItem = ({ product, classes }) => {
                 </CardContent>
 
                 <CardActions>
-                    <Grid container spacing={5}>
+                    <Grid container spacing={5} alignItems="center">
                         <Grid item xs={3}>
                             <Price value={product.price} />
                         </Grid>
-                        <Grid item xs={3}>
-                            <TextField
-                                value={quantity}
-                                onChange={handleChangeQuantity}
-                                type="number"
-                                className={classes.textField}
-                                InputLabelProps={{ shrink: true }}
-                                margin="dense"
-                                variant="outlined"
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="end">ks</InputAdornment>
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button variant="contained" color="primary" size="large" onClick={() => addToShoppingCart(product)} title="Vložit do košíku">
-                                Vložit do košíku
-                            </Button>
+                        <Grid item xs={9}>
+                            <Grid container justify="flex-end">
+                                <Grid item xs={4}>
+                                    <TextField
+                                        value={quantity}
+                                        onChange={handleChangeQuantity}
+                                        type="number"
+                                        className={classes.textField}
+                                        InputLabelProps={{ shrink: true }}
+                                        margin="dense"
+                                        variant="outlined"
+                                        InputProps={{
+                                            endAdornment: <InputAdornment position="end">ks</InputAdornment>,
+                                            inputProps: { min : 0, max: 99 }
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={8} className={classes.shoppingCartBtnWrapper}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary" size="large"
+                                        onClick={() => addToShoppingCart(product)}
+                                        title="Vložit do košíku">
+                                        Vložit do košíku
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </CardActions>
