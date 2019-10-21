@@ -35,6 +35,15 @@ const styles = theme => ({
             textDecoration : 'none',
             color : '#000'
         }
+    },
+    yearWrapper : {
+        alignSelf : 'flex-end'
+    },
+    year : {
+        textAlign : 'right'
+    },
+    socialIcon : {
+        fontSize : '2rem'
     }
 });
 
@@ -51,25 +60,28 @@ const Footer = ({ classes }) => (
                 <Link to="/eshop/contact" className={classes.link}>
                     <Typography variant="body2" color="inherit">Kontakt</Typography>
                 </Link>
-                <SocialLinks linkClass={classes.nativeLink} />
+                <br />
+                <SocialLinks linkClass={classes.nativeLink} iconClass={classes.socialIcon} />
             </Grid>
             <Grid item xs={6} sm={3} className={classes.left}>
                 <Typography variant="body2" color="inherit">ZORGANIZOVÁNO</Typography>
-                <Typography variant="body2" color="inherit">Bára Borovská</Typography>
-                <Typography variant="body2" color="inherit">+420 734 836 714</Typography>
-                <Typography variant="body2" color="inherit">
-                    <ContactEmail reversedEmail="moc.liamg@onavozinagroz" />
-                </Typography>
-                <br />
-                <Typography variant="body2">
-                    Dotaz, nápad, průšiv?&nbsp;
-                    <Link to="/eshop/contact" className={classes.link} style={{ display : 'inline' }}>
-                        Napište mi!
-                    </Link>
-                </Typography>
+                <div style={{ marginLeft : 20 }}>
+                    <Typography variant="body2" color="inherit">Bára Borovská</Typography>
+                    <Typography variant="body2" color="inherit">+420 734 836 714</Typography>
+                    <Typography variant="body2" color="inherit">
+                        <ContactEmail reversedEmail="moc.liamg@onavozinagroz" />
+                    </Typography>
+                    <br />
+                    <Typography variant="body2">
+                        Dotaz, nápad, průšiv?&nbsp;
+                        <Link to="/eshop/contact" className={classes.link} style={{ display : 'inline' }}>
+                            Napište mi!
+                        </Link>
+                    </Typography>
+                </div>
             </Grid>
-            <Grid item xs={12} sm={6}>
-                <Typography variant="body2">2019</Typography>
+            <Grid item xs={12} sm={6} className={classes.yearWrapper}>
+                <Typography variant="body2" className={classes.year}>2019</Typography>
             </Grid>
         </Grid>
     </footer>
