@@ -5,36 +5,35 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
 import SocialLinks from '../components/SocialLinks';
+import ContactEmail from 'components/ContactEmail';
 
 const styles = theme => ({
     footer : {
         padding: '3rem 10vw',
         marginTop: 'auto',
-        backgroundColor : '#242424',
-        color : '#fff',
+        backgroundColor : '#cfcfcf',
+        color : '#000',
         textAlign : 'center'
     },
     left : {
         textAlign : 'left'
     },
     link : {
-        textDecoration : 'none',
-        color : '#fff',
+        color : '#000',
         '&:hover' : {
             textDecoration : 'underline'
         }
     },
     nativeLink : {
-        textDecoration : 'none',
-        color : '#fff',
+        color : '#000',
         marginRight : 5,
         '&:active' : {
             textDecoration : 'none',
-            color : '#fff'
+            color : '#000'
         },
         '&:visited' : {
             textDecoration : 'none',
-            color : '#fff'
+            color : '#000'
         }
     }
 });
@@ -42,20 +41,32 @@ const styles = theme => ({
 const Footer = ({ classes }) => (
     <footer className={classes.footer}>
         <Grid container>
-            <Grid item xs={12} sm={6} className={classes.left}>
+            <Grid item xs={6} sm={3} className={classes.left}>
                 <Link to="/eshop/terms" className={classes.link}>
-                    <Typography variant="body2" color="secondary">Obchodní podmínky</Typography>
+                    <Typography variant="body2" color="inherit">Obchodní podmínky</Typography>
                 </Link>
                 <Link to="/eshop/faq" className={classes.link}>
-                    <Typography variant="body2" color="secondary">Nejčastěji kladené dotazy</Typography>
+                    <Typography variant="body2" color="inherit">Nejčastěji kladené dotazy</Typography>
                 </Link>
                 <Link to="/eshop/contact" className={classes.link}>
-                    <Typography variant="body2" color="secondary">Kontakt</Typography>
+                    <Typography variant="body2" color="inherit">Kontakt</Typography>
                 </Link>
                 <SocialLinks linkClass={classes.nativeLink} />
             </Grid>
+            <Grid item xs={6} sm={3} className={classes.left}>
+                <span>ZORGANIZOVÁNO</span><br />
+                <span>Bára Borovská</span><br />
+                <span>+420 734 836 714</span>
+                <ContactEmail reversedEmail="moc.liamg@onavozinagroz" />
+                <p>
+                    Dotaz, nápad, průšiv?&nbsp;
+                    <Link to="/eshop/contact" className={classes.link} style={{ display : 'inline' }}>
+                        Napište mi!
+                    </Link>
+                </p>
+            </Grid>
             <Grid item xs={12} sm={6}>
-                &copy; 2019
+                2019
             </Grid>
         </Grid>
     </footer>

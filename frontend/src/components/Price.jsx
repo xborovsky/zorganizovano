@@ -4,17 +4,25 @@ import withStyles from '@material-ui/styles/withStyles';
 
 const styles = theme => ({
     root : {
-        fontSize : 32,
         color : '#030'
     }
 });
 
-const Price = ({ value, classes }) => (
-    <span className={classes.root}>{value},- Kč</span>
+const getFontSize = size => {
+    switch (size) {
+        case 'normal' : return 22;
+        case 'xl' : return 32;
+        default : return 22;
+    }
+};
+
+const Price = ({ value, size = 'normal', classes }) => (
+    <span className={classes.root} style={{ fontSize : getFontSize(size) }}>{value},- Kč</span>
 );
 
 Price.propTypes = {
-    value : PropTypes.number.isRequired
+    value : PropTypes.number.isRequired,
+    size : PropTypes.oneOf('normal', 'xl')
 };
 
 export default withStyles(styles)(Price);

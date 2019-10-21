@@ -93,7 +93,7 @@ const ProductDetail = ({ product, classes }) => {
                     <ProductSpec product={product} />
                     <Grid container>
                         <Grid item xs={12} sm={4} className={classes.priceWrapper}>
-                            <Price value={product.price} />
+                            <Price value={product.price} size="xl" />
                         </Grid>
                         <Grid item xs={12} sm={4} className={classes.quantityWrapper}>
                             <TextField
