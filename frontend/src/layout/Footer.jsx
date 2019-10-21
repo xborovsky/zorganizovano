@@ -69,7 +69,7 @@ const Footer = ({ classes }) => (
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-                2019
+                <Typography variant="body2">2019</Typography>
             </Grid>
         </Grid>
     </footer>
