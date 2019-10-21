@@ -12,7 +12,7 @@ const styles = theme => ({
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        height : 500,
+        height : 300,
         borderRadius : 0
     }
 });

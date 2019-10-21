@@ -54,6 +54,10 @@ const styles = theme => ({
     nav : {
         display : 'flex',
         alignItems : 'stretch'
+    },
+    linkNoDecoration : {
+        color : '#fff',
+        textDecoration : 'none'
     }
 });
 
@@ -74,7 +78,9 @@ const Header = ({ classes }) => {
             <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
                     <Typography variant="body1" color="inherit" noWrap className={classes.toolbarTitle}>
-                        Zorganizováno
+                        <NavLink to="/" className={classes.linkNoDecoration} exact>
+                            Zorganizováno
+                        </NavLink>
                     </Typography>
                     <nav className={classes.nav}>
                         <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink} exact>
