@@ -54,16 +54,19 @@ const Footer = ({ classes }) => (
                 <SocialLinks linkClass={classes.nativeLink} />
             </Grid>
             <Grid item xs={6} sm={3} className={classes.left}>
-                <span>ZORGANIZOVÁNO</span><br />
-                <span>Bára Borovská</span><br />
-                <span>+420 734 836 714</span>
-                <ContactEmail reversedEmail="moc.liamg@onavozinagroz" />
-                <p>
+                <Typography variant="body2" color="inherit">ZORGANIZOVÁNO</Typography>
+                <Typography variant="body2" color="inherit">Bára Borovská</Typography>
+                <Typography variant="body2" color="inherit">+420 734 836 714</Typography>
+                <Typography variant="body2" color="inherit">
+                    <ContactEmail reversedEmail="moc.liamg@onavozinagroz" />
+                </Typography>
+                <br />
+                <Typography variant="body2">
                     Dotaz, nápad, průšiv?&nbsp;
                     <Link to="/eshop/contact" className={classes.link} style={{ display : 'inline' }}>
                         Napište mi!
                     </Link>
-                </p>
+                </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
                 2019

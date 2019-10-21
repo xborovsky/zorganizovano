@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
@@ -12,9 +11,9 @@ const styles = theme => ({
 });
 
 const ContactEmail = ({ reversedEmail, classes }) => (
-    <Typography variant="body1" className={classes.email}>
+    <span className={classes.email}>
         { reversedEmail }
-    </Typography>
+    </span>
 );
 
 ContactEmail.propTypes = {

@@ -1,12 +1,16 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useReducer, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 
+import Main from './layout/Main';
+import Header from './layout/Header';
 import Footer from './layout/Footer';
 import Loader from './components/Loader';
 import ErrorBoundary from './components/ErrorBoundary';
+import ShoppingCartContext from './pages/eshop/shopping-cart/state-management/ShoppingCartContext';
+import shoppingCartReducer from './pages/eshop/shopping-cart/state-management/ShoppingCartReducer';
 
 import zorganizovanoTheme from './Theme';
 
@@ -23,19 +27,30 @@ const styles = theme => ({
 });
 
 const App = ({ classes }) => {
+  const [state, dispatch] = useReducer(shoppingCartReducer, localStorage.getItem('shoppingCart') ? JSON.parse(localStorage.getItem('shoppingCart')) : []);
+
+  useEffect(() => {
+      window.localStorage.setItem("shoppingCart", JSON.stringify(state));
+  }, [state]);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <ThemeProvider theme={zorganizovanoTheme}>
         <Router>
           <ErrorBoundary>
-            <Suspense fallback={<Loader />}>
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/types" component={Types} />
-                <Route path="/eshop" component={Eshop} />
-              </Switch>
-            </Suspense>
+            <ShoppingCartContext.Provider value={{ state, dispatch }}>
+              <Header />
+              <Main>
+                <Suspense fallback={<Loader />}>
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/types" component={Types} />
+                    <Route path="/eshop" component={Eshop} />
+                  </Switch>
+                </Suspense>
+              </Main>
+            </ShoppingCartContext.Provider>
           </ErrorBoundary>
           <Footer />
         </Router>
