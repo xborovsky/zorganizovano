@@ -48,8 +48,10 @@ const styles = theme => ({
     textField: {
         width: 90
     },
-    shoppingCartBtnWrapper : {
-        alignSelf : 'center'
+    orderActionWrapper : {
+        display : 'flex',
+        justifyContent : 'flex-end',
+        alignItems : 'baseline'
     }
 });
 
@@ -100,33 +102,27 @@ const ProductListItem = ({ product, classes }) => {
                         <Grid item xs={3}>
                             <Price value={product.price} />
                         </Grid>
-                        <Grid item xs={9}>
-                            <Grid container justify="flex-end">
-                                <Grid item xs={4}>
-                                    <TextField
-                                        value={quantity}
-                                        onChange={handleChangeQuantity}
-                                        type="number"
-                                        className={classes.textField}
-                                        InputLabelProps={{ shrink: true }}
-                                        margin="dense"
-                                        variant="outlined"
-                                        InputProps={{
-                                            endAdornment: <InputAdornment position="end">ks</InputAdornment>,
-                                            inputProps: { min : 0, max: 99 }
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={8} className={classes.shoppingCartBtnWrapper}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary" size="large"
-                                        onClick={() => addToShoppingCart(product)}
-                                        title="Vložit do košíku">
-                                        Vložit do košíku
-                                    </Button>
-                                </Grid>
-                            </Grid>
+                        <Grid item xs={9} className={classes.orderActionWrapper}>
+                            <TextField
+                                value={quantity}
+                                onChange={handleChangeQuantity}
+                                type="number"
+                                className={classes.textField}
+                                InputLabelProps={{ shrink: true }}
+                                margin="dense"
+                                variant="outlined"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="end">ks</InputAdornment>,
+                                    inputProps: { min : 0, max: 99 }
+                                }}
+                            /> &nbsp;
+                            <Button
+                                variant="contained"
+                                color="primary" size="large"
+                                onClick={() => addToShoppingCart(product)}
+                                title="Vložit do košíku">
+                                Vložit do košíku
+                            </Button>
                         </Grid>
                     </Grid>
                 </CardActions>
