@@ -14,7 +14,8 @@ import Jumbotron from 'layout/Jumbotron';
 
 const styles = theme => ({
     appBar: {
-        backgroundColor : 'rgba(0, 0, 0, 0.7)'
+        backgroundColor : 'rgba(0, 0, 0, 0.7)',
+        position : 'fixed'
     },
     toolbar: {
         flexWrap: 'wrap',
