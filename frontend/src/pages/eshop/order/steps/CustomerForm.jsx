@@ -33,32 +33,36 @@ const CustomerFormSchema = Yup.object().shape({
         .required('Prosím, zadejte PSČ.'),
     city : Yup.string()
         .max(100, 'Zadaný údaj je moc dlouhý.')
-        .required('Prosím, zadejte PSČ.'),
+        .required('Prosím, zadejte město.'),
     country : Yup.string()
         .min(15, 'Zadaný údaj je moc krátký.')
         .max(15, 'Zadaný údaj je moc dlouhý.')
         .required('Prosím, zadejte zemi.')
 });
 
-const CustomerForm = ({ onGoToNextStep }) => {
+const CustomerForm = ({ onGoToNextStep, initialFormData }) => {
     return (
         <Formik
-            initialValues={{
-                firstName : '',
-                lastName : '',
-                email : '',
-                phoneNo : '',
-                street : '',
-                psc : '',
-                city : '',
-                country : ''
-            }}
+            initialValues={
+                initialFormData ?
+                    {...initialFormData} :
+                    {
+                        firstName : '',
+                        lastName : '',
+                        email : '',
+                        phoneNo : '',
+                        street : '',
+                        psc : '',
+                        city : '',
+                        country : ''
+                    }
+            }
             validationSchema={CustomerFormSchema}
             onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
                 console.log(values);
                 // TODO validace na serveru
-                onGoToNextStep();
+                onGoToNextStep(values);
                 return false;
             }}>
                 {({
@@ -200,6 +204,16 @@ const CustomerForm = ({ onGoToNextStep }) => {
 };
 
 CustomerForm.propTypes = {
+    initialFormData : PropTypes.shape({
+        firstName : PropTypes.string,
+        lastName : PropTypes.string,
+        email : PropTypes.string,
+        phoneNo : PropTypes.string,
+        street : PropTypes.string,
+        psc : PropTypes.string,
+        city : PropTypes.string,
+        country : PropTypes.string
+    }),
     onGoToNextStep : PropTypes.func.isRequired
 };
 

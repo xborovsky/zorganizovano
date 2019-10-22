@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { withStyles } from '@material-ui/core';
+import axios from 'axios';
 
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/OrderConfirmation';
+import ShoppingCartContext from '../shopping-cart/state-management/ShoppingCartContext';
 
 const getSteps = () => ['Zákazník', 'Doprava', 'Potvrzení objednávky'];
 
@@ -24,16 +26,45 @@ const styles = theme => ({
     }
 });
 
+const defaultOrderData = {
+    customerInfo : undefined,
+    shoppingCart : undefined,
+    shippingAddress : undefined
+};
+
 const OrderWizard = ({ classes }) => {
 
+    const { state } = useContext(ShoppingCartContext);
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
+    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : (({ id, quantity }) => ({ id, quantity }))(state) });
 
     const getStepContent = step => {
         switch (step) {
-            case 0: return <CustomerForm onGoToNextStep={goToNext} />;
-            case 1: return <DeliveryForm />;
-            case 2: return <OrderConfirmation />;
+            case 0: return (
+                <CustomerForm
+                    initialFormData={orderData.customerInfo}
+                    onGoToNextStep={customerInfo => {
+                        setOrderData({...orderData, customerInfo});
+                        goToNext();
+                    }} />
+            );
+            case 1: return (
+                <DeliveryForm
+                    initialFormData={orderData.shippingAddress}
+                    onGoToNextStep={shippingAddress => {
+                        setOrderData({...orderData, shippingAddress});
+                        goToNext();
+                    }}
+                    onGoToPrevStep={goToPrev}
+                />
+            );
+            case 2: return (
+                <OrderConfirmation
+                    onOrderConfirmed={handleFinishOrder}
+                    onGoToPrevStep={goToPrev}
+                />
+            );
             default: throw new Error('Unknown step!');
         }
     };
@@ -46,8 +77,12 @@ const OrderWizard = ({ classes }) => {
         setCurrentStep(prevStep => prevStep - 1);
     };
 
-    const handleFinishOrder = () => {
+    const handleFinishOrder = event => {
+        event.preventDefault();
         console.log('TODO handleFinishOrder');
+        axios.post('/order/confirm', { ...orderData })
+            .then(res => console.log(res))
+            .catch(err => console.error(err));
     };
 
     return (
