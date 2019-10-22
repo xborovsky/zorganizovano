@@ -2,91 +2,94 @@ import React from 'react';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import { withStyles } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const styles = theme => ({});
-
-const Faq = ({ classes }) => (
-    <div className={classes.root}>
+const Faq = () => (
+    <div>
         <Typography variant="h1">Nejčastěji kladené dotazy</Typography>
         <ExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+                aria-controls="panel1-content"
+                id="panel1-header"
             >
-                <Typography variant="h6">Otázka 1</Typography>
+                <Typography variant="h6">Kdo zboží vyrábí?</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
+                    Veškeré produkty nabízené na těchto stránkách jsou mou vlastní tvorbou a vychází z reálných potřeb naší domácnosti. V současné chvíli se jedná převážně
+                    o polygrafickou činnost, nicméně už teď pro vás připravuji sérii organizérů ze 100% přírodních materiálů, tedy plně rozložitelných. Ve spolupráci se skvělou
+                    dvojicí Honzy a Símy z Brna také vzniká řada zakládacích diářů z pravé kůže a do nich se můžete těšit na originální náplně.
                 </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
+
         <ExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2a-content"
-                id="panel2a-header"
+                aria-controls="panel2-content"
+                id="panel2-header"
             >
-                <Typography variant="h6">Otázka 2</Typography>
+                <Typography variant="h6">Jak je zboží zabaleno?</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
+                    Kalendář vám dorazí v papírové krabici na tiskoviny velikosti A3, třívrstvé vlnité lepenky. Po rozbalení z bublinkové fólie se už můžete radovat z nového
+                    kalendáře na vaší lednici.
                 </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
+
         <ExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel3a-content"
-                id="panel3a-header"
+                aria-controls="panel3-content"
+                id="panel3-header"
             >
-                <Typography variant="h6">Otázka 3</Typography>
+                <Typography variant="h6">Za jak dlouho od objednání mi zboží dorazí?</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
+                    Veškeré zboží udržuji skladem, pokud tedy vaše objednávka dorazí do 20:00, mohu ji zpracovat, připravit a odeslat druhý den. Poté je již dodací lhůta závislá
+                    od vámi zvolené přepravní služby.
                 </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
+
         <ExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel4a-content"
-                id="panel4a-header"
+                aria-controls="panel4-content"
+                id="panel4-header"
             >
-                <Typography variant="h6">Otázka 4</Typography>
+                <Typography variant="h6">Jaké nabízíte možnosti přepravy?</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
+                    V tuto chvíli posíláme zboží skrze Českou poštu nebo nabízíme možnost zaslání na vámi zvolenou pobočku Zásilkovny.
                 </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
+
         <ExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel5a-content"
-                id="panel5a-header"
+                aria-controls="panel5-content"
+                id="panel5-header"
             >
-                <Typography variant="h6">Otázka 5</Typography>
+                <Typography variant="h6">Proč se u vás dá platit pouze převodem na účet?</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
+                    V současné chvíli implementujeme i možnost platby kartou, ale pro rychlejší spuštění prodeje a tedy zaručení doručení ještě před shonem okolo Vánoc,
+                    jsme prozatím zvolili cestu platby převodem na účet. Při dokončení objednávky pro vás generujeme QR kód pro načtení platby pro vaši mobilní banku a snažíme
+                    se tak o co nejpohodlnější službu.
                 </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
+
     </div>
 );
 
-export default withStyles(styles)(Faq);
+export default Faq;

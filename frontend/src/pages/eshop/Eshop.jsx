@@ -11,6 +11,7 @@ const Contact = React.lazy(() => import('./contact/Contact'));
 const ShoppingCart = React.lazy(() => import('./shopping-cart'));
 const OrderWizard = React.lazy(() => import('./order/OrderWizard'));
 
+
 const Eshop = () => {
     let match = useRouteMatch();
 
