@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,6 +16,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
+
     private static final long serialVersionUID = -1344823592580387688L;
 
     @Id
@@ -21,7 +24,7 @@ public class Order implements Serializable {
     @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "order_num", nullable = false, unique = true)
-    private int orderNum;
+    private long orderNum;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created")
     private Date created;
@@ -31,9 +34,9 @@ public class Order implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "shipped")
     private Date shipped;
-//    @OneToOne
-//    @JoinColumn(name = "customer_id", nullable = false)
-//    private Customer customer;
+    @OneToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 //    @OneToOne
 //    @JoinColumn(name = "order_address_id", nullable = false)
 //    private OrderAddress orderAddress;
@@ -59,11 +62,11 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public int getOrderNum() {
+    public long getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(int orderNum) {
+    public void setOrderNum(long orderNum) {
         this.orderNum = orderNum;
     }
 
@@ -89,6 +92,14 @@ public class Order implements Serializable {
 
     public void setShipped(Date shipped) {
         this.shipped = shipped;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override

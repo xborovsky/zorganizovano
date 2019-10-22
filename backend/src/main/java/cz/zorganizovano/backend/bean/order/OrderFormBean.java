@@ -5,17 +5,17 @@ import javax.validation.Valid;
 public class OrderFormBean {
 
     @Valid
-    private CustomerInfo customer;
+    private CustomerInfo customerInfo;
     private Address shippingAddress;
     @Valid
     private ShoppingCart shoppingCart;
 
-    public CustomerInfo getCustomer() {
-        return customer;
+    public CustomerInfo getCustomerInfo() {
+        return customerInfo;
     }
 
-    public void setCustomer(CustomerInfo customer) {
-        this.customer = customer;
+    public void setCustomerInfo(CustomerInfo customerInfo) {
+        this.customerInfo = customerInfo;
     }
 
     public Address getShippingAddress() {

@@ -37,7 +37,7 @@ public class OrderEndpoint {
     public void createOrder(@Valid @RequestBody OrderFormBean order) {
         // TODO validate warehouse cnt for each item
         orderService.createOrder(
-            order.getCustomer(),
+            order.getCustomerInfo(),
             order.getShippingAddress(),
             order.getShoppingCart()
         );

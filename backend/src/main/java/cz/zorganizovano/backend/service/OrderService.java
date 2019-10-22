@@ -7,6 +7,6 @@ import cz.zorganizovano.backend.entity.Order;
 
 public interface OrderService {
 
-    Order createOrder(CustomerInfo cutomer, Address shippingAddress, ShoppingCart shoppingCart);
+    Order createOrder(CustomerInfo customer, Address shippingAddress, ShoppingCart shoppingCart);
 
 }

@@ -3,7 +3,9 @@ package cz.zorganizovano.backend.service;
 import cz.zorganizovano.backend.bean.order.Address;
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.bean.order.ShoppingCart;
+import cz.zorganizovano.backend.dao.CustomerDao;
 import cz.zorganizovano.backend.dao.OrderDao;
+import cz.zorganizovano.backend.entity.Customer;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.manager.TimeManager;
 import java.util.Calendar;
@@ -19,21 +21,33 @@ public class OrderServiceImpl implements OrderService {
     private TimeManager timeManager;
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private CustomerDao customerDao;
 
     @Override
     @Transactional
-    public Order createOrder(CustomerInfo cutomer, Address shippingAddress, ShoppingCart shoppingCart) {
+    public Order createOrder(CustomerInfo customerInfo, Address shippingAddress, ShoppingCart shoppingCart) {
         Date now = timeManager.getCurrentDate();
         Order order = new Order();
         order.setCreated(now);
         order.setOrderNum(genereateOrderNumber(now));
+
+        Customer customer = new Customer();
+        customer.setFirstName(customerInfo.getFirstName());
+        customer.setLastName(customerInfo.getLastName());
+        customer.setEmail(customerInfo.getEmail());
+        customer.setPhoneNo(customerInfo.getPhoneNo());
+
+        customerDao.save(customer);
+
+        order.setCustomer(customer);
 
         orderDao.save(order);
 
         return order;
     }
 
-    protected int genereateOrderNumber(Date now) {
+    protected long genereateOrderNumber(Date now) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(now);
 
@@ -52,6 +66,6 @@ public class OrderServiceImpl implements OrderService {
         }
         sb.append(String.format("%03d", todayOrdersCnt + 1));
 
-        return Integer.parseInt(sb.toString());
+        return Long.parseLong(sb.toString());
     }
 }

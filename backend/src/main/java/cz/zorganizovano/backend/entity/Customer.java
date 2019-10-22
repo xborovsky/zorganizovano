@@ -1,13 +1,11 @@
 package cz.zorganizovano.backend.entity;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,8 +26,6 @@ public class Customer implements Serializable {
     private String email;
     @Column(name = "phone_no", nullable = false)
     private String phoneNo;
-    //@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    //private Order order;
 
     public Customer() {
     }
@@ -78,13 +74,6 @@ public class Customer implements Serializable {
         this.phoneNo = phoneNo;
     }
 
-    /*public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }*/
     @Override
     public int hashCode() {
         int hash = 7;
