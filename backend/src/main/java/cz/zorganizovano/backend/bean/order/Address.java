@@ -1,7 +1,7 @@
 package cz.zorganizovano.backend.bean.order;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 
 public class Address {
 
@@ -10,7 +10,7 @@ public class Address {
     @NotBlank(message = "Pole Obec je povinné")
     private String township;
     @NotBlank(message = "Pole PSČ je povinné")
-    @Size(min = 5, max = 5, message = "PSČ není validní")
+    @Pattern(regexp = "\\d{5}", message = "PSČ není validní")
     private String zipCode;
     @NotBlank(message = "Pole Země je povinné")
     private String country;
