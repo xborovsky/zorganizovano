@@ -10,6 +10,7 @@ import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/OrderConfirmation';
 import ShoppingCartContext from '../shopping-cart/state-management/ShoppingCartContext';
+import Alert from 'components/Alert';
 
 const getSteps = () => ['Zákazník', 'Doprava', 'Potvrzení objednávky'];
 
@@ -38,6 +39,7 @@ const OrderWizard = ({ classes }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
     const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : (({ id, quantity }) => ({ id, quantity }))(state) });
+    const [hasError, setHasError] = useState(false);
 
     const getStepContent = step => {
         switch (step) {
@@ -47,7 +49,9 @@ const OrderWizard = ({ classes }) => {
                     onGoToNextStep={customerInfo => {
                         setOrderData({...orderData, customerInfo});
                         goToNext();
-                    }} />
+                    }}
+                    onError={() => setHasError(true)}
+                />
             );
             case 1: return (
                 <DeliveryForm
@@ -57,12 +61,14 @@ const OrderWizard = ({ classes }) => {
                         goToNext();
                     }}
                     onGoToPrevStep={goToPrev}
+                    onError={() => setHasError(true)}
                 />
             );
             case 2: return (
                 <OrderConfirmation
                     onOrderConfirmed={handleFinishOrder}
                     onGoToPrevStep={goToPrev}
+                    onError={() => setHasError(true)}
                 />
             );
             default: throw new Error('Unknown step!');
@@ -98,6 +104,7 @@ const OrderWizard = ({ classes }) => {
                     })
                 }
             </Stepper>
+            { hasError && <Alert type="error">Formulář obsahuje chyby</Alert> }
             {getStepContent(currentStep)}
         </Paper>
     );

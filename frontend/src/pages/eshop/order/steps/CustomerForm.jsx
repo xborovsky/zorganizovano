@@ -41,7 +41,7 @@ const CustomerFormSchema = Yup.object().shape({
         .required('Prosím, zadejte zemi.')
 });
 
-const CustomerForm = ({ onGoToNextStep, initialFormData }) => {
+const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
     return (
         <Formik
             initialValues={
@@ -71,6 +71,7 @@ const CustomerForm = ({ onGoToNextStep, initialFormData }) => {
                         });
                         setErrors(errors);
                         setSubmitting(false);
+                        onError();
                     });
             }}>
                 {({
@@ -222,7 +223,8 @@ CustomerForm.propTypes = {
         township : PropTypes.string,
         country : PropTypes.string
     }),
-    onGoToNextStep : PropTypes.func.isRequired
+    onGoToNextStep : PropTypes.func.isRequired,
+    onError : PropTypes.func.isRequired
 };
 
 export default CustomerForm;

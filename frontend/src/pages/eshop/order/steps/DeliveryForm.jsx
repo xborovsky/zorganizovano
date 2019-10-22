@@ -15,7 +15,7 @@ import WizardButtons from '../components/WizardButtons';
 const PACKETA_API_KEY = '78f6dc3fd19b4bc1';
 const ZASILKOVNA = 'zasilkovna';
 
-const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData }) => {
+const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, onError }) => {
     const [selectedZasilkovna, setSelectedZasilkovna] = useState(undefined);
 
     const handleSelectZasilkovna = () => {
@@ -116,7 +116,8 @@ DeliveryForm.propTypes = {
     onGoToNextStep : PropTypes.func.isRequired,
     initialFormData : PropTypes.shape({
         deliveryoption : PropTypes.string
-    })
+    }),
+    onError : PropTypes.func.isRequired
 };
 
 const DeliveryFormWithLoading = withLoading('/order/delivery-options')(DeliveryForm);

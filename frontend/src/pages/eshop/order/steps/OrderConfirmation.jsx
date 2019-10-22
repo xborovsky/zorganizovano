@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import WizardButtons from '../components/WizardButtons';
 
-const OrderConfirmation = ({ onGoToPrevStep, onOrderConfirmed }) => (
+const OrderConfirmation = ({ onGoToPrevStep, onOrderConfirmed, onError }) => (
     <form onSubmit={onOrderConfirmed}>
         Potvrzení objednávky
         TODO - nějaký souhrn
@@ -17,7 +17,8 @@ const OrderConfirmation = ({ onGoToPrevStep, onOrderConfirmed }) => (
 
 OrderConfirmation.propTypes = {
     onGoToPrevStep : PropTypes.func.isRequired,
-    onOrderConfirmed : PropTypes.func.isRequired
+    onOrderConfirmed : PropTypes.func.isRequired,
+    onError : PropTypes.func.isRequired
 };
 
 export default OrderConfirmation;
