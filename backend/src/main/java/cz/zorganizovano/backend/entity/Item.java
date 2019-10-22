@@ -26,14 +26,14 @@ public class Item implements Serializable {
     private String description;
     @Column(name = "price", nullable = false)
     private double price;
-    @Column(name = "dimension_x", nullable = false)
-    private double dimensionX;
-    @Column(name = "dimension_y", nullable = false)
-    private double dimensionY;
-    @Column(name = "dimension_z", nullable = false)
-    private double dimensionZ;
+    @Column(name = "dimensions", nullable = true)
+    private String dimensions;
+    @Column(name = "shipping_dimensions", nullable = true)
+    private String shippingDimensions;
     @Column(name = "weight_grams", nullable = false)
     private double weightGrams;
+    @Column(name = "warehouse_qty", nullable = false)
+    private int warehouseQty = 0;
 
     public Item() {
     }
@@ -82,28 +82,20 @@ public class Item implements Serializable {
         this.price = price;
     }
 
-    public double getDimensionX() {
-        return dimensionX;
+    public String getDimensions() {
+        return dimensions;
     }
 
-    public void setDimensionX(double dimensionX) {
-        this.dimensionX = dimensionX;
+    public void setDimensions(String dimensions) {
+        this.dimensions = dimensions;
     }
 
-    public double getDimensionY() {
-        return dimensionY;
+    public String getShippingDimensions() {
+        return shippingDimensions;
     }
 
-    public void setDimensionY(double dimensionY) {
-        this.dimensionY = dimensionY;
-    }
-
-    public double getDimensionZ() {
-        return dimensionZ;
-    }
-
-    public void setDimensionZ(double dimensionZ) {
-        this.dimensionZ = dimensionZ;
+    public void setShippingDimensions(String shippingDimensions) {
+        this.shippingDimensions = shippingDimensions;
     }
 
     public double getWeightGrams() {
@@ -112,6 +104,14 @@ public class Item implements Serializable {
 
     public void setWeightGrams(double weightGrams) {
         this.weightGrams = weightGrams;
+    }
+
+    public int getWarehouseQty() {
+        return warehouseQty;
+    }
+
+    public void setWarehouseQty(int warehouseQty) {
+        this.warehouseQty = warehouseQty;
     }
 
     @Override
