@@ -8,6 +8,7 @@ import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 import WizardButtons from '../components/WizardButtons';
 
@@ -28,10 +29,10 @@ const CustomerFormSchema = Yup.object().shape({
     street : Yup.string()
         .max(100, 'Zadaný údaj je moc dlouhý.')
         .required('Prosím, zadejte ulici a číslo popisné.'),
-    psc : Yup.string()
+    zipCode : Yup.string()
         .matches(/^[0-9]{5}$/, 'Prosím, zadejte PSČ ve správném tvaru.')
         .required('Prosím, zadejte PSČ.'),
-    city : Yup.string()
+    township : Yup.string()
         .max(100, 'Zadaný údaj je moc dlouhý.')
         .required('Prosím, zadejte město.'),
     country : Yup.string()
@@ -52,18 +53,25 @@ const CustomerForm = ({ onGoToNextStep, initialFormData }) => {
                         email : '',
                         phoneNo : '',
                         street : '',
-                        psc : '',
-                        city : '',
+                        zipCode : '',
+                        township : '',
                         country : ''
                     }
             }
-            validationSchema={CustomerFormSchema}
-            onSubmit={(values, { setSubmitting }) => {
+            //validationSchema={CustomerFormSchema}
+            onSubmit={(values, { setSubmitting, setErrors }) => {
                 setSubmitting(true);
-                console.log(values);
-                // TODO validace na serveru
-                onGoToNextStep(values);
-                return false;
+                axios.post('/order/customer', {...values})
+                    .then(_res => onGoToNextStep(values))
+                    .catch(err => {
+                        // TODO handle other than validation errors
+                        let errors = {};
+                        err.response.data.errors.map(backendError => {
+                            errors[backendError.field] = backendError.defaultMessage;
+                        });
+                        setErrors(errors);
+                        setSubmitting(false);
+                    });
             }}>
                 {({
                     values,
@@ -152,29 +160,29 @@ const CustomerForm = ({ onGoToNextStep, initialFormData }) => {
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.psc && !!errors.psc} fullWidth>
-                                            <InputLabel htmlFor="psc">PSČ</InputLabel>
+                                        <FormControl error={touched.zipCode && !!errors.zipCode} fullWidth>
+                                            <InputLabel htmlFor="zipCode">PSČ</InputLabel>
                                             <Input
-                                                id="psc"
-                                                name="psc"
-                                                value={values.psc}
-                                                autoComplete="billing psc"
+                                                id="zipCode"
+                                                name="zipCode"
+                                                value={values.zipCode}
+                                                autoComplete="billing zipCode"
                                                 onChange={handleChange}
                                             />
-                                            <FormHelperText id="psc-error">{touched.psc && errors.psc}</FormHelperText>
+                                            <FormHelperText id="zipCode-error">{touched.zipCode && errors.zipCode}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.city && !!errors.city} fullWidth>
-                                            <InputLabel htmlFor="city">Obec</InputLabel>
+                                        <FormControl error={touched.township && !!errors.township} fullWidth>
+                                            <InputLabel htmlFor="township">Obec</InputLabel>
                                             <Input
-                                                id="city"
-                                                name="city"
-                                                value={values.city}
-                                                autoComplete="billing city"
+                                                id="township"
+                                                name="township"
+                                                value={values.township}
+                                                autoComplete="billing township"
                                                 onChange={handleChange}
                                             />
-                                            <FormHelperText id="city-error">{touched.city && errors.city}</FormHelperText>
+                                            <FormHelperText id="township-error">{touched.township && errors.township}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
@@ -210,8 +218,8 @@ CustomerForm.propTypes = {
         email : PropTypes.string,
         phoneNo : PropTypes.string,
         street : PropTypes.string,
-        psc : PropTypes.string,
-        city : PropTypes.string,
+        zipCode : PropTypes.string,
+        township : PropTypes.string,
         country : PropTypes.string
     }),
     onGoToNextStep : PropTypes.func.isRequired

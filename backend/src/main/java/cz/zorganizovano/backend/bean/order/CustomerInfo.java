@@ -11,7 +11,7 @@ public class CustomerInfo {
     @NotBlank(message = "Pole Příjmení je povinné")
     private String lastName;
     @NotBlank(message = "Pole Email je povinné")
-    @Email
+    @Email(message = "Zadejte validní email")
     private String email;
     @NotBlank(message = "Pole Telefonní číslo je povinné")
     private String phoneNo;
