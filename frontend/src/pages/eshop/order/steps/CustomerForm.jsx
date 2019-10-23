@@ -60,7 +60,16 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
     const handleFormSubmit = (values, { setSubmitting, setErrors }) => {
         setSubmitting(true);
         axios.post('/order/customer', {...values})
-            .then(_res => onGoToNextStep(values))
+            .then(_res => {
+                const customer = (({firstName, lastName, email, phoneNo}) => ({firstName, lastName, email, phoneNo}))(values);
+                const address = (({street, township, zipCode, country}) => ({street, township, zipCode, country}))(values);
+                onGoToNextStep({
+                    customerInfo : {
+                        ...customer,
+                        address
+                    }
+                })
+            })
             .catch(err => {
                 setSubmitting(false);
                 if (err.response && err.response.data && err.response.data.errors) {

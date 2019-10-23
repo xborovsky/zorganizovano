@@ -47,15 +47,7 @@ const OrderWizard = ({ classes }) => {
                 <CustomerForm
                     initialFormData={orderData.customerInfo}
                     onGoToNextStep={customerInfo => {
-                        const customer = (({firstName, lastName, email, phoneNo}) => ({firstName, lastName, email, phoneNo}))(customerInfo);
-                        const address = (({street, township, zipCode, country}) => ({street, township, zipCode, country}))(customerInfo);
-                        setOrderData({
-                            ...orderData,
-                            customerInfo : {
-                                ...customer,
-                                address
-                            }
-                        });
+                        setOrderData({...orderData, ...customerInfo});
                         goToNext();
                     }}
                     onError={error => setError(error)}
