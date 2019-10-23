@@ -69,6 +69,7 @@ const OrderWizard = ({ classes }) => {
                     onOrderConfirmed={handleFinishOrder}
                     onGoToPrevStep={goToPrev}
                     onError={error => setError(error)}
+                    orderData={orderData}
                 />
             );
             default: throw new Error('Unknown step!');
