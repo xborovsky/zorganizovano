@@ -38,7 +38,7 @@ const OrderWizard = ({ classes }) => {
     const { state } = useContext(ShoppingCartContext);
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
-    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : (({ id, quantity }) => ({ id, quantity }))(state) });
+    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : state});
     const [error, setError] = useState(undefined);
 
     const getStepContent = step => {
@@ -87,9 +87,12 @@ const OrderWizard = ({ classes }) => {
     const handleFinishOrder = event => {
         event.preventDefault();
         console.log('TODO handleFinishOrder');
-        axios.post('/order/confirm', { ...orderData })
-            .then(res => console.log(res))
-            .catch(err => console.error(err));
+        axios.post(
+            '/order/confirm', { 
+            ...orderData,
+            shoppingCart : (({id, quantity}) => ({id, quantity}))(orderData.shoppingCart)
+         }).then(res => console.log(res))
+         .catch(err => console.error(err));
     };
 
     return (

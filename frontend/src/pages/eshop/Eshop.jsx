@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import Loader from '../../components/Loader';
+import OrderCreated from './order-created';
 
 const ProductListContainer = React.lazy(() => import('./product/product-list/ProductListContainer'));
 const ProductDetailContainer = React.lazy(() => import('./product/detail/ProductDetailContainer'));
@@ -35,6 +36,9 @@ const Eshop = () => {
                 </Route>
                 <Route path={`${match.path}/order`}>
                     <OrderWizard />
+                </Route>
+                <Route path={`${match.path}/order-created`}>
+                    <OrderCreated />
                 </Route>
                 <Route path={match.path}>
                     <ProductListContainer />

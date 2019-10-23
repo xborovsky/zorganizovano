@@ -54,13 +54,13 @@ const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, o
         // TODO validace na serveru
         onGoToNextStep({
             shipmentType : values.deliveryOption,
-            shippingAddress : {
+            shippingAddress : selectedZasilkovna ? {
                 street : selectedZasilkovna.street,
                 township : selectedZasilkovna.township,
                 city : selectedZasilkovna.city,
                 zipCode : selectedZasilkovna.zipCode,
                 country : 'Česká republika' // TODO
-            }
+            } : undefined
         });
         return false;
     };
