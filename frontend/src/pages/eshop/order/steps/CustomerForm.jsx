@@ -62,13 +62,13 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
         axios.post('/order/customer', {...values})
             .then(_res => onGoToNextStep(values))
             .catch(err => {
+                setSubmitting(false);
                 if (err.response && err.response.data && err.response.data.errors) {
                     let errors = {};
                     err.response.data.errors.map(backendError => {
                         errors[backendError.field] = backendError.defaultMessage;
                     });
                     setErrors(errors);
-                    setSubmitting(false);
                     onError('Formulář obsahuje chyby');
                 } else {
                     onError('Problém komunikace se servrem');

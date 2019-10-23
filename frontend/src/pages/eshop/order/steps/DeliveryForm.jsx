@@ -11,6 +11,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import withLoading from '../../../../components/hoc/WithLoading';
 import WizardButtons from '../components/WizardButtons';
+import ZasilkovnaInfo from '../components/ZasilkovnaInfo';
 
 const PACKETA_API_KEY = '78f6dc3fd19b4bc1';
 const ZASILKOVNA = 'zasilkovna';
@@ -24,39 +25,42 @@ const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, o
 
     const setSelectedPickupPoint = point => {
         setSelectedZasilkovna(
-            point ?
-                { street : point.name, township : point.city, zipCode : point.zipCode, country : point.country } :
-                undefined
+            {
+                street : point.name,
+                township : point.city,
+                zipCode : point.zip,
+                country : point.country,
+                openingHours : point.openingHours
+            }
         );
+    };
+
+    const initialFormValues = initialFormData ? {...initialFormData} : { deliveryOption : '' };
+
+    const validateForm = values => {
+        let errors = {};
+        if (!values.deliveryOption || !values.deliveryOption.trim()) {
+            errors.deliveryOption = 'Vyberte prosím způsob doručení!';
+        }
+        if (values.deliveryOption.toLowerCase() === ZASILKOVNA && !selectedZasilkovna) {
+            errors.deliveryOption = 'Vyberte prosím zásilkovnu!';
+        }
+        return errors;
+    };
+
+    const handleSubmit = (values, { setSubmitting }) => {
+        setSubmitting(true);
+        console.log(values);
+        // TODO validace na serveru
+        onGoToNextStep(values);
+        return false;
     };
 
     return (
         <Formik
-            initialValues={
-                initialFormData ?
-                    {...initialFormData} :
-                    {
-                        deliveryOption : '',
-                        zasilkovnaAddress : selectedZasilkovna
-                    }
-            }
-            validate={values => {
-                let errors = {};
-                if (!values.deliveryOption || !values.deliveryOption.trim()) {
-                    errors.deliveryOption = 'Vyberte prosím způsob doručení!';
-                }
-                if (values.deliveryOption.toLowerCase() === ZASILKOVNA && !values.zasilkovnaAddress) {
-                    errors.zasilkovnaAddress = 'Vyberte prosím zásilkovnu!';
-                }
-                return errors;
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-                setSubmitting(true);
-                console.log(values);
-                // TODO validace na serveru
-                onGoToNextStep(values);
-                return false;
-            }}>
+            initialValues={initialFormValues}
+            validate={validateForm}
+            onSubmit={handleSubmit}>
                 {({
                     values,
                     errors,
@@ -72,9 +76,8 @@ const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, o
                             <RadioGroup aria-label="delivery option" name="deliveryOption" value={values.deliveryOption} onChange={handleChange}>
                                 {
                                     data.map(deliveryOption => (
-                                        <> {/* TODO key or some custom component or something */}
+                                        <div key={deliveryOption.name}>
                                             <FormControlLabel
-                                                key={deliveryOption.name}
                                                 value={deliveryOption.name}
                                                 control={<Radio color="primary" />}
                                                 label={deliveryOption.readableName}
@@ -89,12 +92,19 @@ const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, o
                                                             onClick={handleSelectZasilkovna}>
                                                             Vyberte zásilkovnu
                                                         </Button>
-                                                        { values.zasilkovnaAddress }
-                                                        <FormHelperText id="zasilkovnaAddress-error">{touched.zasilkovnaAddress && errors.zasilkovnaAddress}</FormHelperText>
+                                                        { selectedZasilkovna &&
+                                                            <ZasilkovnaInfo
+                                                                street={selectedZasilkovna.street}
+                                                                township={selectedZasilkovna.township}
+                                                                zipCode={selectedZasilkovna.zipCode}
+                                                                country={selectedZasilkovna.country}
+                                                                openingHours={selectedZasilkovna.openingHours.compactLong}
+                                                            />
+                                                        }
                                                     </> :
                                                     null
                                             }
-                                        </>
+                                        </div>
                                     ))
                                 }
                             </RadioGroup>

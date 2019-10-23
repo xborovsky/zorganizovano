@@ -31,7 +31,9 @@ const WizardButtons = ({
     <Grid container className={classes.root}>
         <Grid item xs={6}>
             {showPrev &&
-                <Button onClick={onPrevClick}>
+                <Button
+                    variant="contained"
+                    onClick={onPrevClick}>
                     Zpět
                 </Button>
             }
