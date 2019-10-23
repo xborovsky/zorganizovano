@@ -41,39 +41,44 @@ const CustomerFormSchema = Yup.object().shape({
         .required('Prosím, zadejte zemi.')
 });
 
+const EMPTY_FORM = {
+    firstName : '',
+    lastName : '',
+    email : '',
+    phoneNo : '',
+    street : '',
+    zipCode : '',
+    township : '',
+    country : ''
+};
+
 const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
+    const initialFormValues = initialFormData ? {...initialFormData} : EMPTY_FORM;
+
+    const handleFormSubmit = (values, { setSubmitting, setErrors }) => {
+        setSubmitting(true);
+        axios.post('/order/customer', {...values})
+            .then(_res => onGoToNextStep(values))
+            .catch(err => {
+                if (err.response && err.response.data && err.response.data.errors) {
+                    let errors = {};
+                    err.response.data.errors.map(backendError => {
+                        errors[backendError.field] = backendError.defaultMessage;
+                    });
+                    setErrors(errors);
+                    setSubmitting(false);
+                    onError('Formulář obsahuje chyby');
+                } else {
+                    onError('Problém komunikace se servrem');
+                }
+            });
+    };
+
     return (
         <Formik
-            initialValues={
-                initialFormData ?
-                    {...initialFormData} :
-                    {
-                        firstName : '',
-                        lastName : '',
-                        email : '',
-                        phoneNo : '',
-                        street : '',
-                        zipCode : '',
-                        township : '',
-                        country : ''
-                    }
-            }
-            //validationSchema={CustomerFormSchema}
-            onSubmit={(values, { setSubmitting, setErrors }) => {
-                setSubmitting(true);
-                axios.post('/order/customer', {...values})
-                    .then(_res => onGoToNextStep(values))
-                    .catch(err => {
-                        // TODO handle other than validation errors
-                        let errors = {};
-                        err.response.data.errors.map(backendError => {
-                            errors[backendError.field] = backendError.defaultMessage;
-                        });
-                        setErrors(errors);
-                        setSubmitting(false);
-                        onError();
-                    });
-            }}>
+            initialValues={initialFormValues}
+            validationSchema={CustomerFormSchema}
+            onSubmit={handleFormSubmit}>
                 {({
                     values,
                     errors,

@@ -39,7 +39,7 @@ const OrderWizard = ({ classes }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
     const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : (({ id, quantity }) => ({ id, quantity }))(state) });
-    const [hasError, setHasError] = useState(false);
+    const [error, setError] = useState(undefined);
 
     const getStepContent = step => {
         switch (step) {
@@ -50,7 +50,7 @@ const OrderWizard = ({ classes }) => {
                         setOrderData({...orderData, customerInfo});
                         goToNext();
                     }}
-                    onError={() => setHasError(true)}
+                    onError={error => setError(error)}
                 />
             );
             case 1: return (
@@ -61,14 +61,14 @@ const OrderWizard = ({ classes }) => {
                         goToNext();
                     }}
                     onGoToPrevStep={goToPrev}
-                    onError={() => setHasError(true)}
+                    onError={error => setError(error)}
                 />
             );
             case 2: return (
                 <OrderConfirmation
                     onOrderConfirmed={handleFinishOrder}
                     onGoToPrevStep={goToPrev}
-                    onError={() => setHasError(true)}
+                    onError={error => setError(error)}
                 />
             );
             default: throw new Error('Unknown step!');
@@ -104,7 +104,7 @@ const OrderWizard = ({ classes }) => {
                     })
                 }
             </Stepper>
-            { hasError && <Alert type="error">Formulář obsahuje chyby</Alert> }
+            { error && <Alert type="error">{error}</Alert> }
             {getStepContent(currentStep)}
         </Paper>
     );
