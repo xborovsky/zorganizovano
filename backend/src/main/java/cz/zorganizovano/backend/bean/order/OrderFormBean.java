@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.bean.order;
 
+import cz.zorganizovano.backend.entity.ShipmentType;
 import javax.validation.Valid;
 
 public class OrderFormBean {
@@ -7,6 +8,7 @@ public class OrderFormBean {
     @Valid
     private CustomerInfo customerInfo;
     private Address shippingAddress;
+    private ShipmentType shipmentType;
     @Valid
     private ShoppingCart shoppingCart;
 
@@ -24,6 +26,14 @@ public class OrderFormBean {
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    public ShipmentType getShipmentType() {
+        return shipmentType;
+    }
+
+    public void setShipmentType(ShipmentType shipmentType) {
+        this.shipmentType = shipmentType;
     }
 
     public ShoppingCart getShoppingCart() {

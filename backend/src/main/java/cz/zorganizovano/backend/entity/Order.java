@@ -37,9 +37,6 @@ public class Order implements Serializable {
     @OneToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-    @OneToOne
-    @JoinColumn(name = "order_address_id", nullable = false)
-    private InvoiceAddress orderAddress;
 //    @Enumerated(EnumType.STRING)
 //    private ShipmentType shipmentType;
 //    @OneToOne
@@ -100,14 +97,6 @@ public class Order implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public InvoiceAddress getOrderAddress() {
-        return orderAddress;
-    }
-
-    public void setOrderAddress(InvoiceAddress orderAddress) {
-        this.orderAddress = orderAddress;
     }
 
     @Override

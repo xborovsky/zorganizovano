@@ -66,13 +66,16 @@
             <column name="township" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="zip_code" type="VARCHAR(5)">
+            <column name="zip_code" type="VARCHAR(6)">
                 <constraints nullable="false"/>
             </column>
             <column name="country" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="order_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shipment_type" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -87,7 +90,7 @@
             <column name="township" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="zip_code" type="VARCHAR(5)">
+            <column name="zip_code" type="VARCHAR(6)">
                 <constraints nullable="false"/>
             </column>
             <column name="country" type="VARCHAR(50)">
@@ -102,7 +105,7 @@
             <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="order_num" type="INT">
+            <column name="order_num" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="created" type="TIMESTAMP">
