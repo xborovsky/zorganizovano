@@ -102,7 +102,8 @@ const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, o
                         </FormControl>
                         <WizardButtons
                             showPrev={true}
-                            showNext={!isSubmitting}
+                            showNext={true}
+                            showLoading={isSubmitting}
                             onPrevClick={onGoToPrevStep}
                         />
                     </Form>

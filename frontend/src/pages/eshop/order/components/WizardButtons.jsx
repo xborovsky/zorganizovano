@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
-import { Grid } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 
 const styles = theme => ({
     root : {
@@ -11,6 +11,12 @@ const styles = theme => ({
     },
     right : {
         textAlign : 'right'
+    },
+    loader : {
+        width : '25px !important',
+        height : '25px !important',
+        marginLeft : 6,
+        marginRight : 6
     }
 });
 
@@ -18,6 +24,7 @@ const WizardButtons = ({
     showPrev = true,
     showNext = true,
     showFinishOrder = false,
+    showLoading = false,
     onPrevClick,
     classes
 }) => (
@@ -30,21 +37,32 @@ const WizardButtons = ({
             }
         </Grid>
         <Grid item xs={6} className={classes.right}>
-            {showNext &&
+            {showLoading ?
                 <Button
                     variant="contained"
                     color="primary"
-                    type="submit">
-                    Další
-                </Button>
-            }
-            {showFinishOrder &&
-                <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit">
-                    Dokončit objednávku
-                </Button>
+                    type="button"
+                    disabled>
+                    <CircularProgress className={classes.loader} />
+                </Button> :
+                <>
+                    { showNext &&
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit">
+                            Další
+                        </Button>
+                    }
+                    {showFinishOrder &&
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit">
+                            Dokončit objednávku
+                        </Button>
+                    }
+                </>
             }
         </Grid>
     </Grid>
@@ -54,7 +72,8 @@ WizardButtons.propTypes = {
     showPrev : PropTypes.bool,
     showNext : PropTypes.bool,
     showFinishOrder : PropTypes.bool,
-    onPrevClick : PropTypes.func
+    onPrevClick : PropTypes.func,
+    showLaoding : PropTypes.bool
 };
 
 export default withStyles(styles)(WizardButtons);
