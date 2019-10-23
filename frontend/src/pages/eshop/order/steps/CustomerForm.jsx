@@ -6,6 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -49,7 +51,7 @@ const EMPTY_FORM = {
     street : '',
     zipCode : '',
     township : '',
-    country : ''
+    country : 'Česká republika'
 };
 
 const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
@@ -194,13 +196,16 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                     <Grid item xs={12}>
                                         <FormControl error={touched.country && !!errors.country} fullWidth>
                                             <InputLabel htmlFor="country">Země</InputLabel>
-                                            <Input
-                                                id="country"
-                                                name="country"
+                                            <Select
                                                 value={values.country}
-                                                autoComplete="billing country"
                                                 onChange={handleChange}
-                                            />
+                                                inputProps={{
+                                                    name: 'country',
+                                                    id: 'country'
+                                                }}
+                                                >
+                                                <MenuItem value={'Česká republika'}>Česká republika</MenuItem>
+                                            </Select>
                                             <FormHelperText id="country-error">{touched.country && errors.country}</FormHelperText>
                                         </FormControl>
                                     </Grid>
