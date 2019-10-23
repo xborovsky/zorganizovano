@@ -9,7 +9,7 @@
     <changeSet id="initial-db-schema" author="borovsky">
 
         <createTable tableName="items">
-            <column autoIncrement="true" name="id" type="INT">
+            <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(100)">
@@ -39,7 +39,7 @@
         </createTable>
 
         <createTable tableName="customers">
-            <column autoIncrement="true" name="id" type="INT">
+            <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="first_name" type="VARCHAR(50)">
@@ -57,7 +57,7 @@
         </createTable>
         
         <createTable tableName="shipment_addresses">
-            <column autoIncrement="true" name="id" type="INT">
+            <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="street" type="VARCHAR(150)">
@@ -72,7 +72,7 @@
             <column name="country" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="order_id" type="INT">
+            <column name="order_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="shipment_type" type="VARCHAR(20)">
@@ -81,7 +81,7 @@
         </createTable>
 
         <createTable tableName="invoice_addresses">
-            <column autoIncrement="true" name="id" type="INT">
+            <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="street" type="VARCHAR(150)">
@@ -96,13 +96,13 @@
             <column name="country" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="order_id" type="INT">
+            <column name="order_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
         
         <createTable tableName="orders">
-            <column autoIncrement="true" name="id" type="INT">
+            <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="order_num" type="BIGINT">
@@ -117,36 +117,91 @@
             <column name="shipped" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>
-            <column name="customer_id" type="INT">
+            <column name="customer_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        
+        <createTable tableName="order_items">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="INT">
+                <constraints nullable="true"/>
+            </column>            
+        </createTable>
 
-        <addUniqueConstraint 
+        <addUniqueConstraint
             constraintName="orders_order_num_unique"
             tableName="orders"
             columnNames="order_num" />
 
-        <addForeignKeyConstraint 
+        <addForeignKeyConstraint
             baseColumnNames="customer_id"
             baseTableName="orders"
             constraintName="fk_order_customer"
             referencedColumnNames="id"
-            referencedTableName="customers" />
+            referencedTableName="customers"
+            onDelete="CASCADE" />
 
-        <addForeignKeyConstraint 
+        <addForeignKeyConstraint
             baseColumnNames="order_id"
             baseTableName="invoice_addresses"
             constraintName="fk_invoice_address_order"
             referencedColumnNames="id"
-            referencedTableName="orders" />
+            referencedTableName="orders"
+            onDelete="CASCADE" />
 
-        <addForeignKeyConstraint 
+        <addForeignKeyConstraint
             baseColumnNames="order_id"
             baseTableName="shipment_addresses"
             constraintName="fk_shipment_address_order"
             referencedColumnNames="id"
-            referencedTableName="orders" />
+            referencedTableName="orders"
+            onDelete="CASCADE" />
+
+        <addForeignKeyConstraint
+            baseColumnNames="order_id"
+            baseTableName="order_items"
+            constraintName="fk_order_item_order"
+            referencedColumnNames="id"
+            referencedTableName="orders"
+            onDelete="CASCADE" />
+
+        <addForeignKeyConstraint
+            baseColumnNames="item_id"
+            baseTableName="order_items"
+            constraintName="fk_order_item_item"
+            referencedColumnNames="id"
+            referencedTableName="items"
+            onDelete="CASCADE" />
+        
+        <createIndex indexName="shipment_addresses_order_id_idx" tableName="shipment_addresses" unique="true">
+            <column name="order_id" type="BIGINT"/>
+        </createIndex>
+        
+        <createIndex indexName="invoice_addresses_order_id_idx" tableName="invoice_addresses" unique="true">
+            <column name="order_id" type="BIGINT"/>
+        </createIndex>
+
+        <createIndex indexName="orders_customer_id_idx" tableName="orders" unique="true">
+            <column name="customer_id" type="BIGINT"/>
+        </createIndex>
+        
+        <createIndex indexName="orders_items_order_id_idx" tableName="order_items" unique="true">
+            <column name="order_id" type="BIGINT"/>
+        </createIndex>
+        
+        <createIndex indexName="orders_items_order_id_item_id_idx" tableName="order_items" unique="true">
+            <column name="order_id" type="BIGINT"/>
+            <column name="item_id" type="BIGINT"/>
+        </createIndex>
 
     </changeSet>
     

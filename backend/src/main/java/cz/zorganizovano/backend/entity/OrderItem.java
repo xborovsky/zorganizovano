@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +18,13 @@ public class OrderItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
-    //private Order order;
+    @OneToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+    @OneToOne
+    @JoinColumn(name = "item_id", nullable = false)
     private Item item;
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
     public long getId() {
@@ -26,6 +33,14 @@ public class OrderItem implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Item getItem() {
@@ -71,7 +86,7 @@ public class OrderItem implements Serializable {
 
     @Override
     public String toString() {
-        return "OrderItem{" + "id=" + id + ", item=" + item + ", quantity=" + quantity + '}';
+        return "OrderItem{" + "id=" + id + ", order=" + order + ", item=" + item + ", quantity=" + quantity + '}';
     }
 
 }
