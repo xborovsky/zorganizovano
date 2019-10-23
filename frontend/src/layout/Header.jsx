@@ -36,14 +36,14 @@ const styles = theme => ({
         display : 'flex',
         alignItems : 'center',
         '&:active' : {
-            backgroundColor : 'rgba(108, 129, 90, 0.8)'
+            backgroundColor : 'rgba(46, 75, 20, .8)'
         },
         '&:hover' : {
-            backgroundColor : 'rgba(108, 129, 90, 0.8)'
+            backgroundColor : 'rgba(46, 75, 20, .8)'
         }
     },
     activeLink : {
-        backgroundColor : 'rgba(108, 129, 90, 0.8)'
+        backgroundColor : 'rgba(46, 75, 20, .8)'
     },
     shoppingCartIcon : {
         color : '#fff',
@@ -51,6 +51,9 @@ const styles = theme => ({
         "&:hover": {
             backgroundColor: "transparent"
         }
+    },
+    shoppingCartLink : {
+        textDecoration : 'none !important'
     },
     nav : {
         display : 'flex',
@@ -85,15 +88,17 @@ const Header = ({ classes }) => {
                     </Typography>
                     <nav className={classes.nav}>
                         <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink} exact>
-                            <Typography variant="body2" elemet="span">[Eshop]</Typography>
+                            <Typography variant="body2" element="span">[Eshop]</Typography>
                         </NavLink>
                         <NavLink to="/types" className={classes.link} activeClassName={classes.activeLink}>
-                            <Typography variant="body2" elemet="span">[Zorganizuj se]</Typography>
+                            <Typography variant="body2" element="span">[Zorganizuj se]</Typography>
                         </NavLink>
                         <NavLink to="/eshop/contact" className={classes.link} activeClassName={classes.activeLink}>
-                            <Typography variant="body2" elemet="span">[Kontakt]</Typography>
+                            <Typography variant="body2" element="span">[Kontakt]</Typography>
                         </NavLink>
-                        <NavLink to="/eshop/shopping-cart" className={classes.link} activeClassName={classes.activeLink}>
+                        <NavLink to="/eshop/shopping-cart" className={[classes.link, classes.shoppingCartLink].join(' ')} activeClassName={classes.activeLink}>
+                            {/* TODO celkova cena objednavky*/}
+                            <Typography variant="body2" element="span">TODO Kč</Typography>
                             <IconButton aria-label="cart" className={classes.shoppingCartIcon}>
                                 <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
                                     <FontAwesomeIcon icon={faShoppingCart} />
