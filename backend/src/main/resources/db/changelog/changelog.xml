@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    
+    <changeSet id="initial-db-schema" author="borovsky">
+
+        <createTable tableName="items">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subname" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dimensions" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shipping_dimensions" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight_grams" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="warehouse_qty" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="customers">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_no" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="shipment_addresses">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="street" type="VARCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="township" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="zip_code" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="invoice_addresses">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="street" type="VARCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="township" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="zip_code" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="order_num" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="processed" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="shipped" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="customer_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint 
+            constraintName="orders_order_num_unique"
+            tableName="orders"
+            columnNames="order_num" />
+
+        <addForeignKeyConstraint 
+            baseColumnNames="customer_id"
+            baseTableName="orders"
+            constraintName="fk_order_customer"
+            referencedColumnNames="id"
+            referencedTableName="customers" />
+
+        <addForeignKeyConstraint 
+            baseColumnNames="order_id"
+            baseTableName="invoice_addresses"
+            constraintName="fk_invoice_address_order"
+            referencedColumnNames="id"
+            referencedTableName="orders" />
+
+        <addForeignKeyConstraint 
+            baseColumnNames="order_id"
+            baseTableName="shipment_addresses"
+            constraintName="fk_shipment_address_order"
+            referencedColumnNames="id"
+            referencedTableName="orders" />
+
+    </changeSet>
+    
+</databaseChangeLog>

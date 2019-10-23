@@ -3,13 +3,17 @@ package cz.zorganizovano.backend.entity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "shipment_address")
+@Table(name = "shipment_addresses")
 public class ShipmentAddress implements Serializable {
 
     @Id
@@ -18,12 +22,17 @@ public class ShipmentAddress implements Serializable {
     private long id;
     @Column(name = "street", nullable = false)
     private String street;
-    @Column(name = "city", nullable = false)
-    private String city;
-    @Column(name = "psc", nullable = false)
-    private String psc;
+    @Column(name = "township", nullable = false)
+    private String township;
+    @Column(name = "zip_code", nullable = false)
+    private String zipCode;
     @Column(name = "country", nullable = false)
     private String country;
+    @OneToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+    @Enumerated(EnumType.STRING)
+    private ShipmentType shipmentType;
 
     public ShipmentAddress() {
     }
@@ -48,20 +57,20 @@ public class ShipmentAddress implements Serializable {
         this.street = street;
     }
 
-    public String getCity() {
-        return city;
+    public String getTownship() {
+        return township;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setTownship(String township) {
+        this.township = township;
     }
 
-    public String getPsc() {
-        return psc;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setPsc(String psc) {
-        this.psc = psc;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getCountry() {
@@ -70,6 +79,22 @@ public class ShipmentAddress implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public ShipmentType getShipmentType() {
+        return shipmentType;
+    }
+
+    public void setShipmentType(ShipmentType shipmentType) {
+        this.shipmentType = shipmentType;
     }
 
     @Override
@@ -99,7 +124,7 @@ public class ShipmentAddress implements Serializable {
 
     @Override
     public String toString() {
-        return "ShipmentAddress{" + "id=" + id + ", street=" + street + ", city=" + city + ", psc=" + psc + '}';
+        return "ShipmentAddress{" + "id=" + id + ", street=" + street + ", township=" + township + ", zipCode=" + zipCode + '}';
     }
 
 }

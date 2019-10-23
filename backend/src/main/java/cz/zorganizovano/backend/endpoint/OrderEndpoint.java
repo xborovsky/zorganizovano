@@ -25,7 +25,7 @@ public class OrderEndpoint {
 
     @PostMapping("/customer")
     public void validateCustomer(@Valid @RequestBody CustomerInfo customer) {
-        // TODO
+        // pouze validace, ok
     }
 
     @GetMapping("/delivery-options")

@@ -7,6 +7,7 @@ import cz.zorganizovano.backend.dao.CustomerDao;
 import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.entity.Customer;
 import cz.zorganizovano.backend.entity.Order;
+import cz.zorganizovano.backend.entity.InvoiceAddress;
 import cz.zorganizovano.backend.manager.TimeManager;
 import java.util.Calendar;
 import java.util.Date;
