@@ -4,10 +4,14 @@ import cz.zorganizovano.backend.bean.order.Address;
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.bean.order.ShoppingCart;
 import cz.zorganizovano.backend.dao.CustomerDao;
+import cz.zorganizovano.backend.dao.InvoiceAddressDao;
 import cz.zorganizovano.backend.dao.OrderDao;
+import cz.zorganizovano.backend.dao.ShipmentAddressDao;
 import cz.zorganizovano.backend.entity.Customer;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.InvoiceAddress;
+import cz.zorganizovano.backend.entity.ShipmentAddress;
+import cz.zorganizovano.backend.entity.ShipmentType;
 import cz.zorganizovano.backend.manager.TimeManager;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +28,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private InvoiceAddressDao invoiceAddressDao;
+    @Autowired
+    private ShipmentAddressDao shipmentAddressDao;
 
     @Override
     @Transactional
@@ -33,17 +41,13 @@ public class OrderServiceImpl implements OrderService {
         order.setCreated(now);
         order.setOrderNum(genereateOrderNumber(now));
 
-        Customer customer = new Customer();
-        customer.setFirstName(customerInfo.getFirstName());
-        customer.setLastName(customerInfo.getLastName());
-        customer.setEmail(customerInfo.getEmail());
-        customer.setPhoneNo(customerInfo.getPhoneNo());
-
-        customerDao.save(customer);
-
+        Customer customer = createCustomer(customerInfo);
         order.setCustomer(customer);
 
-        orderDao.save(order);
+        order = orderDao.save(order);
+
+        createInvoiceAddress(customerInfo, order);
+        createShipmentAddress(shippingAddress, order);
 
         return order;
     }
@@ -68,5 +72,40 @@ public class OrderServiceImpl implements OrderService {
         sb.append(String.format("%03d", todayOrdersCnt + 1));
 
         return Long.parseLong(sb.toString());
+    }
+
+    protected Customer createCustomer(CustomerInfo customerInfo) {
+        Customer customer = new Customer();
+        customer.setFirstName(customerInfo.getFirstName());
+        customer.setLastName(customerInfo.getLastName());
+        customer.setEmail(customerInfo.getEmail());
+        customer.setPhoneNo(customerInfo.getPhoneNo());
+
+        customerDao.save(customer);
+
+        return customer;
+    }
+
+    protected InvoiceAddress createInvoiceAddress(CustomerInfo customerInfo, Order order) {
+        InvoiceAddress invoiceAddress = new InvoiceAddress();
+        invoiceAddress.setStreet(customerInfo.getAddress().getStreet());
+        invoiceAddress.setTownship(customerInfo.getAddress().getTownship());
+        invoiceAddress.setZipCode(customerInfo.getAddress().getZipCode());
+        invoiceAddress.setCountry(customerInfo.getAddress().getCountry());
+        invoiceAddress.setOrder(order);
+
+        return invoiceAddressDao.save(invoiceAddress);
+    }
+
+    protected ShipmentAddress createShipmentAddress(Address address, Order order) {
+        ShipmentAddress shipmentAddress = new ShipmentAddress();
+        shipmentAddress.setStreet(address.getStreet());
+        shipmentAddress.setTownship(address.getTownship());
+        shipmentAddress.setZipCode(address.getZipCode());
+        shipmentAddress.setCountry(address.getCountry());
+        shipmentAddress.setShipmentType(ShipmentType.ZASILKOVNA);// TODO
+        shipmentAddress.setOrder(order);
+
+        return shipmentAddressDao.save(shipmentAddress);
     }
 }

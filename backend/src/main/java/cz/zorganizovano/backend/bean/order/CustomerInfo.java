@@ -1,6 +1,5 @@
 package cz.zorganizovano.backend.bean.order;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -15,7 +14,7 @@ public class CustomerInfo {
     private String email;
     @NotBlank(message = "Pole Telefonní číslo je povinné")
     private String phoneNo;
-    @Valid
+    //@Valid
     private Address address;
 
     public String getFirstName() {
