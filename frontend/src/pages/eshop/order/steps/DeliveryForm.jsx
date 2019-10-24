@@ -120,10 +120,15 @@ const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, o
                             <FormHelperText id="deliveryOption-error">{touched.deliveryOption && errors.deliveryOption}</FormHelperText>
                         </FormControl>
                         <WizardButtons
-                            showPrev={true}
-                            showNext={true}
-                            showLoading={isSubmitting}
-                            onPrevClick={onGoToPrevStep}
+                            prev={{
+                                show : true,
+                                onClick : onGoToPrevStep
+                            }}
+                            next={{
+                                show : true,
+                                disabled : !values.deliveryOption,
+                                loading : isSubmitting
+                            }}
                         />
                     </Form>
                 )}

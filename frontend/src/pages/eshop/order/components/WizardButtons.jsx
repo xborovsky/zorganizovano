@@ -21,25 +21,22 @@ const styles = theme => ({
 });
 
 const WizardButtons = ({
-    showPrev = true,
-    showNext = true,
-    showFinishOrder = false,
-    showLoading = false,
-    onPrevClick,
+    prev,
+    next,
     classes
 }) => (
     <Grid container className={classes.root}>
         <Grid item xs={6}>
-            {showPrev &&
+            {prev.show &&
                 <Button
                     variant="contained"
-                    onClick={onPrevClick}>
+                    onClick={prev.onClick}>
                     Zpět
                 </Button>
             }
         </Grid>
         <Grid item xs={6} className={classes.right}>
-            {showLoading ?
+            {next.loading ?
                 <Button
                     variant="contained"
                     color="primary"
@@ -48,21 +45,23 @@ const WizardButtons = ({
                     <CircularProgress className={classes.loader} />
                 </Button> :
                 <>
-                    { showNext &&
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit">
-                            Další
-                        </Button>
-                    }
-                    {showFinishOrder &&
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit">
-                            Dokončit objednávku
-                        </Button>
+                    {
+                        next.finishOrder ?
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                disabled={next.disabled}
+                                type="submit">
+                                Dokončit objednávku
+                            </Button> :
+                                next.show &&
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        disabled={next.disabled}
+                                        type="submit">
+                                        Další
+                                    </Button>
                     }
                 </>
             }
@@ -71,11 +70,16 @@ const WizardButtons = ({
 );
 
 WizardButtons.propTypes = {
-    showPrev : PropTypes.bool,
-    showNext : PropTypes.bool,
-    showFinishOrder : PropTypes.bool,
-    onPrevClick : PropTypes.func,
-    showLaoding : PropTypes.bool
+    prev : PropTypes.shape({
+        show : PropTypes.bool,
+        onClick : PropTypes.func
+    }).isRequired,
+    next : PropTypes.shape({
+        show : PropTypes.bool,
+        loading : PropTypes.bool,
+        finishOrder : PropTypes.bool,
+        disabled : PropTypes.bool
+    }).isRequired
 };
 
 export default withStyles(styles)(WizardButtons);

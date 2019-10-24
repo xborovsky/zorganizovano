@@ -64,6 +64,13 @@ const OrderConfirmation = ({
                 </Section>
             </div>
             <WizardButtons
+                prev={{
+                    show : true,
+                    onClick : onGoToPrevStep
+                }}
+                next={{
+                    finishOrder : true
+                }}
                 showNext={false}
                 showFinishOrder={true}
                 onPrevClick={onGoToPrevStep}

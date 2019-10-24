@@ -222,9 +222,8 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                             </Grid>
                         </Grid>
                         <WizardButtons
-                            showPrev={false}
-                            showNext={true}
-                            showLoading={isSubmitting}
+                            prev={{ show : false }}
+                            next={{ show : true, loading : isSubmitting }}
                         />
                     </Form>
                 )}
