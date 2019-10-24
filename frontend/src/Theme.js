@@ -24,8 +24,23 @@ let zorganizovanoTheme = createMuiTheme({
         fontSize : 14
     },
     h1 : {
-      fontSize : '4rem',
+      fontSize : '3rem',
       marginBottom : '1rem'
+    },
+    h2 : {
+      fontSize : '2.3rem'
+    },
+    h3 : {
+      fontSize : '2rem'
+    },
+    h4 : {
+      fontSize : '1.8rem'
+    },
+    h5 : {
+      fontSize : '1.6rem'
+    },
+    h6 : {
+      fontSize : '1.5rem'
     }
   }
 });

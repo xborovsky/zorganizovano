@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/styles';
 
 import Actions from './Actions';
 import ShoppingCartContext from './state-management/ShoppingCartContext';
-import { 
+import {
     UPDATE_SHOPPING_CART_ITEM_QUANTITY,
     REMOVE_ITEM_FROM_SHOPPING_CART
 } from './state-management/ShoppingCartActions';
@@ -20,6 +20,7 @@ const styles = theme => ({
     root: {
         width: '100%',
         overflowX: 'auto',
+        marginBottom : '3rem'
     },
     table : {
         width : '100%'
@@ -49,11 +50,16 @@ const ShoppingCart = ({ classes }) => {
     );
 
     const handleChangeQuantity = (event, id) => {
-        dispatch({
-            type : UPDATE_SHOPPING_CART_ITEM_QUANTITY,
-            itemId : id,
-            quantity : +event.currentTarget.value
-        });
+        const newQuantity = +event.currentTarget.value;
+        if (newQuantity === 0) {
+            showItemDeleteConfirm(id);
+        } else {
+            dispatch({
+                type : UPDATE_SHOPPING_CART_ITEM_QUANTITY,
+                itemId : id,
+                quantity : newQuantity
+            });
+        }
     };
 
     const showItemDeleteConfirm = id => {
@@ -100,7 +106,7 @@ const ShoppingCart = ({ classes }) => {
                     </TableBody>
                 </Table>
             </Paper>
-            <Actions />
+            <Actions disableProceedToOrder={!state || !state.length} />
             {
                 confirm.show &&
                     <ItemDeleteConfirm

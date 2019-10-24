@@ -38,8 +38,8 @@ const ShoppingCartItem = ({
                 hiddenLabel
             />
         </TableCell>
-        <TableCell align="center">{item.price}</TableCell>
-        <TableCell align="center">{item.quantity * item.price}</TableCell>
+        <TableCell align="center">{item.price},- Kč</TableCell>
+        <TableCell align="center">{item.quantity * item.price},- Kč</TableCell>
         <TableCell align="center">
             <FontAwesomeIcon
                 icon={faTrashAlt}
@@ -58,7 +58,7 @@ ShoppingCartItem.propTypes = {
         quantity : PropTypes.number.isRequired
     },
     onChangeQuantity : PropTypes.func.isRequired,
-    onDeleter : PropTypes.func.isRequired
+    onDelete : PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ShoppingCartItem);

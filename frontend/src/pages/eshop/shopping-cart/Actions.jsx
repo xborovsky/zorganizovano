@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/styles';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const styles = theme => ({
     root : {
@@ -13,9 +14,8 @@ const styles = theme => ({
     }
 });
 
-const Actions = ({ classes }) => {
+const Actions = ({ classes, disableProceedToOrder = false }) => {
     const history = useHistory();
-    const location = useLocation();
 
     const goToEshopMain = () => {
         history.push(`/eshop`);
@@ -33,12 +33,16 @@ const Actions = ({ classes }) => {
                 </Button>
             </Grid>
             <Grid item xs={6} className={classes.right}>
-                <Button variant="contained" color="primary" onClick={goToOrder}>
+                <Button variant="contained" color="primary" onClick={goToOrder} disabled={disableProceedToOrder}>
                     Přejít k objednávce
                 </Button>
             </Grid>
         </Grid>
     );
+};
+
+Actions.propsTypes = {
+    disableProceedToOrder : PropTypes.bool
 };
 
 export default withStyles(styles)(Actions);

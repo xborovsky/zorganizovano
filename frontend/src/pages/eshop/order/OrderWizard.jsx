@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
-import OrderConfirmation from './steps/OrderConfirmation';
+import OrderConfirmation from './steps/order-confirmation/OrderConfirmation';
 import ShoppingCartContext from '../shopping-cart/state-management/ShoppingCartContext';
 import Alert from 'components/Alert';
 
@@ -88,7 +88,7 @@ const OrderWizard = ({ classes }) => {
         event.preventDefault();
         console.log('TODO handleFinishOrder');
         axios.post(
-            '/order/confirm', { 
+            '/order/confirm', {
             ...orderData,
             shoppingCart : (({id, quantity}) => ({id, quantity}))(orderData.shoppingCart)
          }).then(res => console.log(res))
