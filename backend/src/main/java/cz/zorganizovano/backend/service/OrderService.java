@@ -7,6 +7,8 @@ import cz.zorganizovano.backend.entity.Order;
 
 public interface OrderService {
 
+    int DEFAULT_MATURITY = 5;
+
     Order createOrder(CustomerInfo customer, Address shippingAddress, ShoppingCart shoppingCart);
 
 }

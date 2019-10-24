@@ -21,6 +21,10 @@ const PaymentInfo = ({ paymentData }) => (
                 <TableCell>Variabilní symbol:</TableCell>
                 <TableCell>{ paymentData.variableSymbol }</TableCell>
             </TableRow>
+            <TableRow>
+                <TableCell>Datum splatnosti:</TableCell>
+                <TableCell>{ paymentData.date }</TableCell>
+            </TableRow>
         </TableBody>
     </Table>
 );

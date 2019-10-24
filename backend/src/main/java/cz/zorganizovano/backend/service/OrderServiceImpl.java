@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
         Date now = timeManager.getCurrentDate();
         Order order = new Order();
         order.setCreated(now);
+        order.setMaturity(timeManager.getNextDate(DEFAULT_MATURITY));
         order.setOrderNum(genereateOrderNumber(now));
 
         Customer customer = createCustomer(customerInfo);

@@ -26,6 +26,8 @@ public class OrderItem implements Serializable {
     private Item item;
     @Column(name = "quantity", nullable = false)
     private int quantity;
+    @Column(name = "price", nullable = false)
+    private double price;
 
     public long getId() {
         return id;
@@ -57,6 +59,14 @@ public class OrderItem implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override

@@ -26,8 +26,11 @@ public class Order implements Serializable {
     @Column(name = "order_num", nullable = false, unique = true)
     private long orderNum;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created")
+    @Column(name = "created", nullable = false)
     private Date created;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "maturity", nullable = false)
+    private Date maturity;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "processed")
     private Date processed;
@@ -73,6 +76,14 @@ public class Order implements Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Date getMaturity() {
+        return maturity;
+    }
+
+    public void setMaturity(Date maturity) {
+        this.maturity = maturity;
     }
 
     public Date getProcessed() {

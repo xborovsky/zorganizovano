@@ -2,7 +2,10 @@ package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.bean.order.OrderFormBean;
+import cz.zorganizovano.backend.bean.order.OrderSuccessResponse;
+import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.ShipmentType;
+import cz.zorganizovano.backend.payment.PaymentInfo;
 import cz.zorganizovano.backend.service.OrderService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +37,20 @@ public class OrderEndpoint {
     }
 
     @PostMapping("/confirm")
-    public void createOrder(@Valid @RequestBody OrderFormBean order) {
+    public OrderSuccessResponse createOrder(@Valid @RequestBody OrderFormBean order) {
         // TODO validate warehouse cnt for each item
-        orderService.createOrder(
+        Order created = orderService.createOrder(
             order.getCustomerInfo(),
             order.getShippingAddress(),
             order.getShoppingCart()
         );
+        
+        PaymentInfo paymentInfo = new PaymentInfo(
+            String.valueOf(created.getOrderNum()),
+            0, // TODO
+            created.getMaturity()
+        );
+        return new OrderSuccessResponse(created.getOrderNum(), paymentInfo);
     }
 
 }

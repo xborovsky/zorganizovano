@@ -6,4 +6,6 @@ public interface TimeManager {
 
     Date getCurrentDate();
 
+    Date getNextDate(int plusDays);
+
 }

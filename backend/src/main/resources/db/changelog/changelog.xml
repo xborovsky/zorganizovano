@@ -111,6 +111,9 @@
             <column name="created" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
+            <column name="maturity" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
             <column name="processed" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>
@@ -134,7 +137,10 @@
             </column>
             <column name="quantity" type="INT">
                 <constraints nullable="true"/>
-            </column>            
+            </column>
+            <column name="price" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>  
         </createTable>
 
         <addUniqueConstraint
