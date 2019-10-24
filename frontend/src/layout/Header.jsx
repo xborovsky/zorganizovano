@@ -76,6 +76,7 @@ const StyledBadge = withStyles(theme => ({
 
 const Header = ({ classes }) => {
     const { state } = useContext(ShoppingCartContext);
+    const totalPrice = state.reduce((a, b) => a + ((b['price'] || 0) * b['quantity']), 0);
 
     return (
         <>
@@ -97,8 +98,7 @@ const Header = ({ classes }) => {
                             <Typography variant="body2" element="span">[Kontakt]</Typography>
                         </NavLink>
                         <NavLink to="/eshop/shopping-cart" className={[classes.link, classes.shoppingCartLink].join(' ')} activeClassName={classes.activeLink}>
-                            {/* TODO celkova cena objednavky*/}
-                            <Typography variant="body2" element="span">TODO Kč</Typography>
+                            <Typography variant="body2" element="span">{ totalPrice },-</Typography>
                             <IconButton aria-label="cart" className={classes.shoppingCartIcon}>
                                 <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
                                     <FontAwesomeIcon icon={faShoppingCart} />
