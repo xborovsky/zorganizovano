@@ -5,6 +5,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { withStyles } from '@material-ui/core';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
@@ -36,6 +37,7 @@ const defaultOrderData = {
 const OrderWizard = ({ classes }) => {
 
     const { state } = useContext(ShoppingCartContext);
+    const { history } = useHistory();
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
     const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : state});
@@ -91,7 +93,7 @@ const OrderWizard = ({ classes }) => {
             '/order/confirm', {
             ...orderData,
             shoppingCart : (({id, quantity}) => ({id, quantity}))(orderData.shoppingCart)
-         }).then(res => console.log(res))
+         }).then(res => history.push('/order-created')) // TODO push response data or what?
          .catch(err => console.error(err));
     };
 

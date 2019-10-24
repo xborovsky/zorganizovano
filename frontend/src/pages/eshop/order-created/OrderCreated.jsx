@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import PaymentQR from './components/PaymentQR';
 
 const OrderCreated = () => (
     <>
@@ -9,6 +10,14 @@ const OrderCreated = () => (
             na účet. Pokud platba nebude připsána do 5 pracovních dnů, objednávka bude
             automaticky zrušena.<br />
             Údaje pro platbu: TODO
+            <PaymentQR paymentData={{
+                accountNumber : '123456789',
+                bankCode : '0000',
+                variableSymbol : '999999999',
+                amount : 1324,
+                currency : 'CZK',
+                message : 'Toto je test...'
+            }} />
         </Typography>
         <Typography variant="body1">
             Informace o potvrzení objednávky byla automaticky zaslána na Vámi uvedenou
@@ -18,7 +27,7 @@ const OrderCreated = () => (
         </Typography>
         <Typography variant="body1">
             Děkuji za Vaši objedávku<br />
-            a přeji Vám, aby Vám náš produkt pomohl v organizaci Vaší domácnosti. 
+            a přeji Vám, aby Vám náš produkt pomohl v organizaci Vaší domácnosti.
         </Typography>
     </>
 );
