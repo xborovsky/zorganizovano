@@ -23,6 +23,8 @@ public class ShipmentTypeSerializer extends StdSerializer<ShipmentType> {
         generator.writeString(shipmentType.name());
         generator.writeFieldName("readableName");
         generator.writeString(shipmentType.getReadableName());
+        generator.writeFieldName("price");
+        generator.writeNumber(shipmentType.getPrice());
         generator.writeEndObject();
     }
 

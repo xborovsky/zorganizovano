@@ -7,23 +7,22 @@ import WizardButtons from '../../components/WizardButtons';
 import ShoppingCart from './components/ShoppingCart';
 import CustomerInfo from './components/CustomerInfo';
 import Transport from './components/Transport';
+import withLoading from 'components/hoc/WithLoading';
+import Section from './components/Section';
 
 const styles = theme => ({
     header : {
         marginBottom : '2rem',
         fontSize : '2.3rem'
     },
-    subHeader : {
-        marginTop : '2rem',
-        marginBottom : '1.5rem',
-        fontSize : '1.8rem'
-    },
     padLeft : {
         marginLeft : '2rem'
     },
     totalPrice : {
         textAlign : 'right',
-        fontWeight : 'bold'
+        fontWeight : 'bold',
+        fontSize : '1.8rem',
+        marginTop : '2rem'
     }
 });
 
@@ -32,62 +31,37 @@ const OrderConfirmation = ({
     onOrderConfirmed,
     onError,
     orderData,
+    data, // ajax
     classes
 }) => {
     // TODO jeste jednou komplet validace na serveru
-    console.log(orderData);
-
-    const createSection = (title, data) => (
-        <>
-            <Typography variant="h2" className={classes.subHeader}>{ title }</Typography>
-            <div className={classes.padLeft}>{ data }</div>
-        </>
-    );
+    const selectedDelivery = data.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
 
     return (
         <form onSubmit={onOrderConfirmed}>
             <Typography variant="h1" className={classes.header}>Potvrzení objednávky</Typography>
             <div className={classes.padLeft}>
-                {
-                    createSection(
-                        'Objednáváte si tyto položky',
-                        <ShoppingCart items={orderData.shoppingCart} />
-                    )
-                }
-                {
-                    createSection(
-                        'Zkontrolujte, prosím, Vaše kontaktní údaje',
-                        <CustomerInfo data={orderData.customerInfo} />
-                    )
-                }
-                {
-                    createSection(
-                        'Pro doručení jste zvolili tuto službu',
-                        <>
-                            {
-                                orderData.shipmentType === 'CESKA_POSTA' &&
-                                    <Transport title='Česká pošta 89,-' /> // TODO natahnout ceny z backendu
-                            }
-                            {
-                                orderData.shipmentType === 'ZASILKOVNA' &&
-                                    <Transport
-                                        title='Zásilkovna 70,-'
-                                        additionalInfo={{
-                                            shipmentType : orderData.shipmentType,
-                                            shippingAddress : orderData.shippingAddress
-                                        }}
-                                    />
-                            }
-                        </>
-                    )
-                }
-
-                <Typography variant="h2" className={[classes.subHeader, classes.totalPrice].join(' ')}>
+                <Section title='Objednáváte si tyto položky'>
+                    <ShoppingCart items={orderData.shoppingCart} />
+                </Section>
+                <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje'>
+                    <CustomerInfo data={orderData.customerInfo} />
+                </Section>
+                <Section title='Pro doručení jste zvolili tuto službu'>
+                    <Transport
+                        title={`${selectedDelivery.readableName} ${selectedDelivery.price},-`}
+                        additionalInfo={orderData.shippingAddress && {
+                            shipmentType : orderData.shipmentType,
+                            shippingAddress : orderData.shippingAddress
+                        }}
+                    />
+                </Section>
+                <Section className={classes.totalPrice}>
                     Celková cena: {
                         orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.price), 0) +
-                        (orderData.shipmentType === 'CESKA_POSTA' ? 89 : 70) // TODO natahnout z backendu
-                        },- Kč
-                </Typography>
+                        selectedDelivery.price
+                    },- Kč
+                </Section>
             </div>
             <WizardButtons
                 showNext={false}
@@ -105,4 +79,6 @@ OrderConfirmation.propTypes = {
     orderData : PropTypes.shape({}).isRequired // TODO
 };
 
-export default withStyles(styles)(OrderConfirmation);
+const DeliveryFormWithLoading = withLoading('/order/delivery-options')(OrderConfirmation);
+
+export default withStyles(styles)(DeliveryFormWithLoading);
