@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import PaymentQR from './components/PaymentQR';
+import PaymentInfo from './components/PaymentInfo';
 
 const OrderCreated = () => (
     <>
@@ -9,7 +10,15 @@ const OrderCreated = () => (
             Vaše objednávka byla úspěšně potvrzena. Zboží expedujeme po připsání platby
             na účet. Pokud platba nebude připsána do 5 pracovních dnů, objednávka bude
             automaticky zrušena.<br />
-            Údaje pro platbu: TODO
+            Údaje pro platbu:
+            <PaymentInfo paymentData={{
+                accountNumber : '123456789',
+                bankCode : '0000',
+                variableSymbol : '999999999',
+                amount : 1324,
+                currency : 'CZK',
+                message : 'Toto je test...'
+            }} />
             <PaymentQR paymentData={{
                 accountNumber : '123456789',
                 bankCode : '0000',
