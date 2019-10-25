@@ -148,9 +148,27 @@
                 <constraints nullable="false"/>
             </column>
             <column name="quantity" type="INT">
-                <constraints nullable="true"/>
+                <constraints nullable="false"/>
             </column>
             <column name="display_on_eshop" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order_mail_notifications">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="address" type="VARCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>

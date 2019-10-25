@@ -8,4 +8,6 @@ public interface TimeManager {
 
     Date getNextDate(int plusDays);
 
+    int getNumDaysBetween(Date start, Date end);
+
 }

@@ -16,7 +16,7 @@ public class StockItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private long id;
     @OneToOne
     @JoinColumn(name = "item_id", nullable = false)
