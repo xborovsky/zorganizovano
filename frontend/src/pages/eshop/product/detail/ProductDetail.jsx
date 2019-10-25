@@ -13,11 +13,15 @@ import { productShape } from '../product-prop-type';
 import IdeaPrompt from '../../../../components/IdeaPrompt';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
+import Alert from 'components/Alert';
 
 const styles = theme => ({
     root : {
         margin : '0 10vw',
         padding : '1rem 3rem'
+    },
+    alert : {
+        marginBottom : '3rem'
     },
     shoppingCartIcon : {
         marginRight : 10
@@ -46,6 +50,7 @@ const styles = theme => ({
 const ProductDetail = ({ product, classes }) => {
     const { dispatch } = useContext(ShoppingCartContext);
     const [ quantity, setQuantity ] = useState(1);
+    const [successMessage, setSuccessMessage] = useState(undefined);
 
     const addItemToShoppingCart = item => {
         dispatch({
@@ -55,6 +60,8 @@ const ProductDetail = ({ product, classes }) => {
                 quantity
             }
         });
+        setSuccessMessage(`${ quantity > 1 ? 'Položky byly úspěšně přidány' : 'Položka byla úspěšně přidána'} do košíku.`);
+        setQuantity(1);
     };
 
     const handleChangeQuantity = event => {
@@ -63,6 +70,10 @@ const ProductDetail = ({ product, classes }) => {
 
     return (
         <Paper className={classes.root}>
+            {
+                successMessage &&
+                    <Alert type="success" className={classes.alert}>{ successMessage }</Alert>
+            }
             <Grid container>
                 <Grid item xs={12} sm={6}>
                     <ImageGallery

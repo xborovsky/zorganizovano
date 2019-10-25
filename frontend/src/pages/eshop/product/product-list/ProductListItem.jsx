@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -56,7 +57,7 @@ const styles = theme => ({
     }
 });
 
-const ProductListItem = ({ product, classes }) => {
+const ProductListItem = ({ product, onSuccess, classes }) => {
 
     const history = useHistory();
     const location = useLocation();
@@ -75,6 +76,8 @@ const ProductListItem = ({ product, classes }) => {
                 quantity
             }
         });
+        onSuccess(`${ quantity > 1 ? 'Položky byly úspěšně přidány' : 'Položka byla úspěšně přidána'} do košíku.`);
+        setQuantity(1);
     };
 
     const handleChangeQuantity = event => {
@@ -83,6 +86,7 @@ const ProductListItem = ({ product, classes }) => {
 
     return (
         <Grid item xs={12} sm={6} md={4}>
+            {}
             <Card className={classes.card}>
                 <CardHeader
                     title={product.name}
@@ -148,7 +152,8 @@ const ProductListItem = ({ product, classes }) => {
 };
 
 ProductListItem.propTypes = {
-    product : productShape.isRequired
+    product : productShape.isRequired,
+    onSuccess : PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ProductListItem);
