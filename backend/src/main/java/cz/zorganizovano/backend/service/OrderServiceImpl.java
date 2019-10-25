@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
         sb.append(String.format("%02d", month));
         sb.append(String.format("%02d", day));
 
-        long todayOrdersCnt = orderDao.findByCreated(now).size();
+        long todayOrdersCnt = orderDao.countTodayOrders();
         if (todayOrdersCnt % 1000 == 999) {
             throw new IllegalStateException("Orders limit reached!");
         }

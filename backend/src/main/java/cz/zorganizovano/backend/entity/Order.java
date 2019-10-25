@@ -40,12 +40,6 @@ public class Order implements Serializable {
     @OneToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-//    @Enumerated(EnumType.STRING)
-//    private ShipmentType shipmentType;
-//    @OneToOne
-//    @JoinColumn(name = "shipment_address_id")
-//    private ShipmentAddress shipmentAddress;
-//
 
     public Order() {
     }
