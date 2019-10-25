@@ -24,6 +24,9 @@
             <column name="price" type="DOUBLE">
                 <constraints nullable="false"/>
             </column>
+            <column name="discount_price" type="DOUBLE">
+                <constraints nullable="true"/>
+            </column>
             <column name="dimensions" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>

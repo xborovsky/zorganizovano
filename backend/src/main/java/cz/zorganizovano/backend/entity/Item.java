@@ -26,6 +26,8 @@ public class Item implements Serializable {
     private String description;
     @Column(name = "price", nullable = false)
     private double price;
+    @Column(name = "discount_price", nullable = true)
+    private Double discountPrice;
     @Column(name = "dimensions", nullable = true)
     private String dimensions;
     @Column(name = "shipping_dimensions", nullable = true)
@@ -78,6 +80,14 @@ public class Item implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Double getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(Double discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     public String getDimensions() {
