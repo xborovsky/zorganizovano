@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,6 +14,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import { productShape } from '../product-prop-type';
 import Price from '../../../../components/Price';
+import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
+import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 
 const styles = theme => ({
     card : {
@@ -60,13 +61,20 @@ const ProductListItem = ({ product, classes }) => {
     const history = useHistory();
     const location = useLocation();
     const [ quantity, setQuantity ] = useState(1);
+    const { dispatch } = useContext(ShoppingCartContext);
 
     const goToDetail = () => {
         history.push(`${location.pathname}/products/${product.id}`);
     };
 
-    const addToShoppingCart = product => {
-        console.log('TODO add to shopping cart...');
+    const addToShoppingCart = item => {
+        dispatch({
+            type : ADD_ITEM_TO_SHOPPING_CART,
+            payload : {
+                ...(({ id, name, subName, price }) => ({ id, name, subName, price }))(item),
+                quantity
+            }
+        });
     };
 
     const handleChangeQuantity = event => {
