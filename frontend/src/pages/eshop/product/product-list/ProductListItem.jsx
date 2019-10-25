@@ -78,7 +78,7 @@ const ProductListItem = ({ product, classes }) => {
             <Card className={classes.card}>
                 <CardHeader
                     title={product.name}
-                    subheader={"TODO nejaky subheader"}
+                    subheader={product.subName}
                     className={classes.header}
                     onClick={goToDetail}
                 />
@@ -92,9 +92,19 @@ const ProductListItem = ({ product, classes }) => {
                     <Typography variant="body2">
                         { "TODO nejaka cast z description blabla bla..." }
                     </Typography>
-                    <Typography variant="body2" className={classes.warehouseCnt}>
-                        Skladem > 5 kusů (TODO)
-                    </Typography>
+                    {
+                        product.stockQuantity > 5 ?
+                            <Typography variant="body2" className={classes.warehouseCnt}>
+                                Skladem > 5 kusů
+                            </Typography> :
+                            product.stockQuantity === 0 ?
+                                <Typography variant="body2" className={classes.warehouseCnt}>
+                                    Není skladem
+                                </Typography> :
+                                <Typography variant="body2" className={classes.warehouseCnt}>
+                                    Skladem {product.stockQuantity} {product.stockQuantity === 5 ? 'kusů' : product.stockQuantity === 1 ? 'kus' : 'kusy'}
+                                </Typography>
+                    }
                 </CardContent>
 
                 <CardActions>

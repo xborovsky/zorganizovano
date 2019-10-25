@@ -90,6 +90,7 @@ const ProductDetail = ({ product, classes }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <Typography variant="h1">{ product.name }</Typography>
+                    <Typography variant="h2">{ product.subName }</Typography>
                     <ProductSpec product={product} />
                     <Grid container>
                         <Grid item xs={12} sm={4} className={classes.priceWrapper}>

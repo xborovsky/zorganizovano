@@ -6,7 +6,6 @@ import cz.zorganizovano.backend.bean.order.ShoppingCart;
 import cz.zorganizovano.backend.bean.order.ShoppingCartItem;
 import cz.zorganizovano.backend.dao.CustomerDao;
 import cz.zorganizovano.backend.dao.InvoiceAddressDao;
-import cz.zorganizovano.backend.dao.ItemDao;
 import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.dao.OrderItemDao;
 import cz.zorganizovano.backend.dao.ShipmentAddressDao;
@@ -14,7 +13,6 @@ import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.entity.Customer;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.InvoiceAddress;
-import cz.zorganizovano.backend.entity.Item;
 import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.entity.ShipmentAddress;
 import cz.zorganizovano.backend.entity.ShipmentType;
@@ -45,8 +43,6 @@ public class OrderServiceImpl implements OrderService {
     private ShipmentAddressDao shipmentAddressDao;
     @Autowired
     private StockItemDao stockItemDao;
-    @Autowired
-    private ItemDao itemDao;
     @Autowired
     private OrderItemDao orderItemDao;
 
@@ -100,14 +96,14 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> orderItems = new ArrayList<>(shoppingCart.getItems().size());
 
         for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
-            Item item = itemDao.findById(shoppingCartItem.getItemId())
+            StockItem stockItem = stockItemDao.findById(shoppingCartItem.getItemId())
                     .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("Item id={0} not found on stock!", shoppingCartItem.getItemId())));
 
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
-            orderItem.setPrice(item.getPrice());
+            orderItem.setPrice(stockItem.getItem().getPrice());
             orderItem.setQuantity(shoppingCartItem.getQuantity());
-            orderItem.setItem(item);
+            orderItem.setItem(stockItem.getItem());
             orderItems.add(orderItemDao.save(orderItem));
         }
 
@@ -152,15 +148,14 @@ public class OrderServiceImpl implements OrderService {
     // TODO refaktoring mozna nejak vyuzit createOrderItems??
     protected void updateStock(ShoppingCart shoppingCart) {
         for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
-            Item item = itemDao.findById(shoppingCartItem.getItemId())
+            StockItem stockItem = stockItemDao.findById(shoppingCartItem.getItemId())
                     .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("Item id={0} not found on stock!", shoppingCartItem.getItemId())));
-            StockItem stockItem = stockItemDao.findByItem(item);
 
             if (stockItem.getQuantity() < shoppingCartItem.getQuantity()) {
                 throw new IllegalStateException(
                     MessageFormat.format(
                         "Not available quantity in stock form item id={0}! Stock quantity={1}, requested quantity={2}",
-                        item.getId(), stockItem.getQuantity(), shoppingCartItem.getQuantity()
+                        stockItem.getId(), stockItem.getQuantity(), shoppingCartItem.getQuantity()
                     )
                 );
             }

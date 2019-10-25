@@ -47,7 +47,7 @@ const ProductSpec = ({ product, classes }) => (
                     Rozměry (mm)
                 </TableCell>
                 <TableCell className={classes.tdCell}>
-                    {product.dimensionX}x{product.dimensionY}x{product.dimensionZ}
+                    {product.dimensions}
                 </TableCell>
             </TableRow>
         </TableBody>
