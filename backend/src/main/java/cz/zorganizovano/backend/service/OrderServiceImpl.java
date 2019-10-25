@@ -3,24 +3,35 @@ package cz.zorganizovano.backend.service;
 import cz.zorganizovano.backend.bean.order.Address;
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.bean.order.ShoppingCart;
+import cz.zorganizovano.backend.bean.order.ShoppingCartItem;
 import cz.zorganizovano.backend.dao.CustomerDao;
 import cz.zorganizovano.backend.dao.InvoiceAddressDao;
+import cz.zorganizovano.backend.dao.ItemDao;
 import cz.zorganizovano.backend.dao.OrderDao;
+import cz.zorganizovano.backend.dao.OrderItemDao;
 import cz.zorganizovano.backend.dao.ShipmentAddressDao;
+import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.entity.Customer;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.InvoiceAddress;
+import cz.zorganizovano.backend.entity.Item;
+import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.entity.ShipmentAddress;
 import cz.zorganizovano.backend.entity.ShipmentType;
+import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.manager.TimeManager;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    // TODO refaktor to smaller services (OrderItemService, StockItemService, etc...)
 
     @Autowired
     private TimeManager timeManager;
@@ -32,6 +43,12 @@ public class OrderServiceImpl implements OrderService {
     private InvoiceAddressDao invoiceAddressDao;
     @Autowired
     private ShipmentAddressDao shipmentAddressDao;
+    @Autowired
+    private StockItemDao stockItemDao;
+    @Autowired
+    private ItemDao itemDao;
+    @Autowired
+    private OrderItemDao orderItemDao;
 
     @Override
     @Transactional
@@ -47,8 +64,12 @@ public class OrderServiceImpl implements OrderService {
 
         order = orderDao.save(order);
 
+        createOrderItems(shoppingCart, order);
         createInvoiceAddress(customerInfo, order);
-        createShipmentAddress(shippingAddress, order);
+        if (shippingAddress != null) {
+            createShipmentAddress(shippingAddress, order);
+        }
+        updateStock(shoppingCart);
 
         return order;
     }
@@ -65,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
         sb.append(year);
         sb.append(String.format("%02d", month));
         sb.append(String.format("%02d", day));
-        
+
         long todayOrdersCnt = orderDao.findByCreated(now).size();
         if (todayOrdersCnt % 1000 == 999) {
             throw new IllegalStateException("Orders limit reached!");
@@ -73,6 +94,24 @@ public class OrderServiceImpl implements OrderService {
         sb.append(String.format("%03d", todayOrdersCnt + 1));
 
         return Long.parseLong(sb.toString());
+    }
+
+    protected List<OrderItem> createOrderItems(ShoppingCart shoppingCart, Order order) {
+        List<OrderItem> orderItems = new ArrayList<>(shoppingCart.getItems().size());
+
+        for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
+            Item item = itemDao.findById(shoppingCartItem.getItemId())
+                    .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("Item id={0} not found on stock!", shoppingCartItem.getItemId())));
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setPrice(item.getPrice());
+            orderItem.setQuantity(shoppingCartItem.getQuantity());
+            orderItem.setItem(item);
+            orderItems.add(orderItemDao.save(orderItem));
+        }
+
+        return orderItems;
     }
 
     protected Customer createCustomer(CustomerInfo customerInfo) {
@@ -108,5 +147,26 @@ public class OrderServiceImpl implements OrderService {
         shipmentAddress.setOrder(order);
 
         return shipmentAddressDao.save(shipmentAddress);
+    }
+
+    // TODO refaktoring mozna nejak vyuzit createOrderItems??
+    protected void updateStock(ShoppingCart shoppingCart) {
+        for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
+            Item item = itemDao.findById(shoppingCartItem.getItemId())
+                    .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("Item id={0} not found on stock!", shoppingCartItem.getItemId())));
+            StockItem stockItem = stockItemDao.findByItem(item);
+
+            if (stockItem.getQuantity() < shoppingCartItem.getQuantity()) {
+                throw new IllegalStateException(
+                    MessageFormat.format(
+                        "Not available quantity in stock form item id={0}! Stock quantity={1}, requested quantity={2}",
+                        item.getId(), stockItem.getQuantity(), shoppingCartItem.getQuantity()
+                    )
+                );
+            }
+
+            stockItem.setQuantity(stockItem.getQuantity() - shoppingCartItem.getQuantity());
+            stockItemDao.save(stockItem);
+        }
     }
 }

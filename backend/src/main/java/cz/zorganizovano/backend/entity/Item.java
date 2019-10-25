@@ -32,8 +32,6 @@ public class Item implements Serializable {
     private String shippingDimensions;
     @Column(name = "weight_grams", nullable = false)
     private double weightGrams;
-    @Column(name = "warehouse_qty", nullable = false)
-    private int warehouseQty = 0;
 
     public Item() {
     }
@@ -104,14 +102,6 @@ public class Item implements Serializable {
 
     public void setWeightGrams(double weightGrams) {
         this.weightGrams = weightGrams;
-    }
-
-    public int getWarehouseQty() {
-        return warehouseQty;
-    }
-
-    public void setWarehouseQty(int warehouseQty) {
-        this.warehouseQty = warehouseQty;
     }
 
     @Override

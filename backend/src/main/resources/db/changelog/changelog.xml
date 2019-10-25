@@ -33,9 +33,6 @@
             <column name="weight_grams" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="warehouse_qty" type="INT">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
         <createTable tableName="customers">
@@ -143,6 +140,21 @@
             </column>  
         </createTable>
 
+        <createTable tableName="stock_items">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="item_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="display_on_eshop" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
         <addUniqueConstraint
             constraintName="orders_order_num_unique"
             tableName="orders"
@@ -185,6 +197,13 @@
             baseTableName="order_items"
             constraintName="fk_order_item_item"
             referencedColumnNames="id"
+            referencedTableName="items" />
+
+        <addForeignKeyConstraint
+            baseColumnNames="item_id"
+            baseTableName="stock_items"
+            constraintName="fk_stock_item_item"
+            referencedColumnNames="id"
             referencedTableName="items"
             onDelete="CASCADE" />
         
@@ -206,6 +225,10 @@
         
         <createIndex indexName="orders_items_order_id_item_id_idx" tableName="order_items" unique="true">
             <column name="order_id" type="BIGINT"/>
+            <column name="item_id" type="BIGINT"/>
+        </createIndex>
+
+        <createIndex indexName="stock_items_item_id_idx" tableName="stock_items" unique="true">
             <column name="item_id" type="BIGINT"/>
         </createIndex>
 

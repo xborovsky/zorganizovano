@@ -37,7 +37,7 @@ const defaultOrderData = {
 const OrderWizard = ({ classes }) => {
 
     const { state } = useContext(ShoppingCartContext);
-    const { history } = useHistory();
+    const history = useHistory();
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
     const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : state});
@@ -88,12 +88,17 @@ const OrderWizard = ({ classes }) => {
 
     const handleFinishOrder = event => {
         event.preventDefault();
-        console.log('TODO handleFinishOrder');
+        const serverDataShoppingCart = orderData.shoppingCart.map(item => { return {itemId : item.id, quantity : item.quantity} });
         axios.post(
             '/order/confirm', {
             ...orderData,
-            shoppingCart : (({id, quantity}) => ({id, quantity}))(orderData.shoppingCart)
-         }).then(res => history.push('/order-created')) // TODO push response data or what?
+            shoppingCart : {
+                items : serverDataShoppingCart
+            }
+         }).then(res => {
+             // TODO remove from local storage!!!
+             history.push({ pathname : '/eshop/order-created', state : { order : res.data } });
+         })
          .catch(err => console.error(err));
     };
 
