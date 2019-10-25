@@ -12,6 +12,7 @@ import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/order-confirmation/OrderConfirmation';
 import ShoppingCartContext from '../shopping-cart/state-management/ShoppingCartContext';
 import Alert from 'components/Alert';
+import { EMPTY_SHOPPING_CART } from '../shopping-cart/state-management/ShoppingCartActions';
 
 const getSteps = () => ['Zákazník', 'Doprava', 'Potvrzení objednávky'];
 
@@ -36,7 +37,7 @@ const defaultOrderData = {
 
 const OrderWizard = ({ classes }) => {
 
-    const { state } = useContext(ShoppingCartContext);
+    const { state, dispatch } = useContext(ShoppingCartContext);
     const history = useHistory();
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
@@ -96,8 +97,8 @@ const OrderWizard = ({ classes }) => {
                 items : serverDataShoppingCart
             }
          }).then(res => {
-             // TODO remove from local storage!!!
-             history.push({ pathname : '/eshop/order-created', state : { order : res.data } });
+            dispatch({ type : EMPTY_SHOPPING_CART });
+            history.push({ pathname : '/eshop/order-created', state : { order : res.data } });
          })
          .catch(err => console.error(err));
     };

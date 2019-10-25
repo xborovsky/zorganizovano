@@ -1,7 +1,8 @@
 import {
     ADD_ITEM_TO_SHOPPING_CART,
     REMOVE_ITEM_FROM_SHOPPING_CART,
-    UPDATE_SHOPPING_CART_ITEM_QUANTITY
+    UPDATE_SHOPPING_CART_ITEM_QUANTITY,
+    EMPTY_SHOPPING_CART
 } from './ShoppingCartActions';
 
 const initialState = [];
@@ -45,6 +46,10 @@ const shoppingCartReducer = (state = initialState, action) => {
                 cart[itemInCartIdx].quantity = quantity;
                 return cart;
             }
+        }
+
+        case EMPTY_SHOPPING_CART: {
+            return initialState;
         }
 
         default:
