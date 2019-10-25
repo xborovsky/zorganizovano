@@ -133,7 +133,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                                 variant="outlined"
                                 InputProps={{
                                     endAdornment: <InputAdornment position="end">ks</InputAdornment>,
-                                    inputProps: { min : 0, max: 99 }
+                                    inputProps: { min : 1, max: 5 }
                                 }}
                             /> &nbsp;
                             <Button

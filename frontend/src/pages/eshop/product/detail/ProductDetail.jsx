@@ -114,7 +114,7 @@ const ProductDetail = ({ product, classes }) => {
                                 type="number"
                                 className={classes.quantity}
                                 inputProps={{
-                                    min: 0,
+                                    min: 1,
                                     max: 5
                                 }}
                                 margin="normal"
