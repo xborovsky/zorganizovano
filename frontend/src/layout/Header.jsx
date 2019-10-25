@@ -35,6 +35,7 @@ const styles = theme => ({
         textTransform : 'uppercase',
         display : 'flex',
         alignItems : 'center',
+        textDecoration : 'none !important',
         '&:active' : {
             backgroundColor : 'rgba(46, 75, 20, .8)'
         },
@@ -89,13 +90,13 @@ const Header = ({ classes }) => {
                     </Typography>
                     <nav className={classes.nav}>
                         <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink} exact>
-                            <Typography variant="body2" element="span">[Eshop]</Typography>
+                            <Typography variant="body2" element="span">[ Eshop ]</Typography>
                         </NavLink>
                         <NavLink to="/types" className={classes.link} activeClassName={classes.activeLink}>
-                            <Typography variant="body2" element="span">[Zorganizuj se]</Typography>
+                            <Typography variant="body2" element="span">[ Zorganizuj se ]</Typography>
                         </NavLink>
                         <NavLink to="/eshop/contact" className={classes.link} activeClassName={classes.activeLink}>
-                            <Typography variant="body2" element="span">[Kontakt]</Typography>
+                            <Typography variant="body2" element="span">[ Kontakt ]</Typography>
                         </NavLink>
                         <NavLink to="/eshop/shopping-cart" className={[classes.link, classes.shoppingCartLink].join(' ')} activeClassName={classes.activeLink}>
                             <Typography variant="body2" element="span">{ totalPrice },-</Typography>
