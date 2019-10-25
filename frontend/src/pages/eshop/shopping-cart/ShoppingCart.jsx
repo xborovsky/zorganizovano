@@ -11,10 +11,11 @@ import Actions from './Actions';
 import ShoppingCartContext from './state-management/ShoppingCartContext';
 import {
     UPDATE_SHOPPING_CART_ITEM_QUANTITY,
-    REMOVE_ITEM_FROM_SHOPPING_CART
+    REMOVE_ITEM_FROM_SHOPPING_CART,
+    EMPTY_SHOPPING_CART
 } from './state-management/ShoppingCartActions';
 import ShoppingCartItem from './ShoppingCartItem';
-import ItemDeleteConfirm from './ItemDeleteConfirm';
+import DeleteConfirm from './DeleteConfirm';
 
 const styles = theme => ({
     root: {
@@ -33,13 +34,18 @@ const styles = theme => ({
     }
 });
 
+const initialConfirmData = {
+    show : false,
+    message : undefined,
+    itemId : undefined,
+    itemName : undefined,
+    onConfirm : undefined
+};
+
 const ShoppingCart = ({ classes }) => {
 
     const { state, dispatch } = useContext(ShoppingCartContext);
-    const [ confirm, setConfirm ] = useState({
-        show : false,
-        itemName : undefined
-    });
+    const [ confirm, setConfirm ] = useState(initialConfirmData);
 
     const renderEmpty = () => (
         <TableRow>
@@ -63,10 +69,12 @@ const ShoppingCart = ({ classes }) => {
     };
 
     const showItemDeleteConfirm = id => {
+        const itemName = state[state.findIndex(item => item.id === id)].name;
         setConfirm({
             show : true,
+            message : (<>Opravdu si přejete odstranit <strong>{itemName}</strong> z košíku?'</>),
             itemId : id,
-            itemName : state[state.findIndex(item => item.id === id)].name
+            onConfirm : handleItemDelete
         });
     };
 
@@ -75,6 +83,19 @@ const ShoppingCart = ({ classes }) => {
             type : REMOVE_ITEM_FROM_SHOPPING_CART,
             payload : { id }
         });
+        setConfirm({ show : false });
+    };
+
+    const showEmptyShoppingCartConfirm = () => {
+        setConfirm({
+            show : true,
+            message : 'Opravdu si přejete vyprázdnit košík?',
+            onConfirm : handleEmptyShoppingCart
+        });
+    };
+
+    const handleEmptyShoppingCart = () => {
+        dispatch({ type : EMPTY_SHOPPING_CART });
         setConfirm({ show : false });
     };
 
@@ -106,18 +127,17 @@ const ShoppingCart = ({ classes }) => {
                     </TableBody>
                 </Table>
             </Paper>
-            <Actions disableProceedToOrder={!state || !state.length} />
+            <Actions
+                disableProceedToOrder={!state || !state.length}
+                onEmptyShoppingCart={showEmptyShoppingCartConfirm} />
             {
                 confirm.show &&
-                    <ItemDeleteConfirm
+                    <DeleteConfirm
                         itemId={confirm.itemId}
-                        itemName={confirm.itemName}
-                        onClose={() => setConfirm({
-                            show : false,
-                            itemName : undefined
-                        })}
-                        onConfirm={handleItemDelete}
-                    />
+                        onClose={() => setConfirm(initialConfirmData)}
+                        onConfirm={confirm.onConfirm}>
+                        {confirm.message}
+                    </DeleteConfirm>
             }
         </>
     );

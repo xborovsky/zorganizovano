@@ -81,7 +81,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     };
 
     const handleChangeQuantity = event => {
-        setQuantity(event.currentTarget.value);
+        setQuantity(+event.currentTarget.value);
     };
 
     return (

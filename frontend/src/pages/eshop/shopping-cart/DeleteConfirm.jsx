@@ -5,11 +5,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
-const ItemDeleteConfirm = ({
+const DeleteConfirm = ({
     itemId,
-    itemName,
     onClose,
-    onConfirm
+    onConfirm,
+    children
 }) => (
     <Dialog
         open={true}
@@ -17,25 +17,22 @@ const ItemDeleteConfirm = ({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
     >
-        <DialogTitle id="alert-dialog-title">
-            Opravdu si přejete odstranit <strong>{itemName}</strong> z košíku?
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{ children }</DialogTitle>
         <DialogActions>
             <Button onClick={onClose} color="primary">
-                Zrušit
+                <strong>Zrušit</strong>
           </Button>
             <Button onClick={() => onConfirm(itemId)} color="primary" autoFocus>
-                Potvrdit
+                <strong>Potvrdit</strong>
           </Button>
         </DialogActions>
     </Dialog>
 );
 
-ItemDeleteConfirm.propTypes = {
-    itemId : PropTypes.number.isRequired,
-    itemName : PropTypes.string.isRequired,
+DeleteConfirm.propTypes = {
+    itemId : PropTypes.number,
     onClose : PropTypes.func.isRequired,
     onConfirm : PropTypes.func.isRequired
 };
 
-export default ItemDeleteConfirm;
+export default DeleteConfirm;

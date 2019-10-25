@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const styles = theme => ({
     root : {
@@ -11,10 +13,17 @@ const styles = theme => ({
     },
     right : {
         textAlign : 'right'
+    },
+    trashIcon : {
+        marginRight : 5
     }
 });
 
-const Actions = ({ classes, disableProceedToOrder = false }) => {
+const Actions = ({
+    classes,
+    disableProceedToOrder = false,
+    onEmptyShoppingCart
+}) => {
     const history = useHistory();
 
     const goToEshopMain = () => {
@@ -33,6 +42,10 @@ const Actions = ({ classes, disableProceedToOrder = false }) => {
                 </Button>
             </Grid>
             <Grid item xs={6} className={classes.right}>
+                <Button variant="contained" color="primary" onClick={onEmptyShoppingCart} disabled={disableProceedToOrder}>
+                    <FontAwesomeIcon icon={faTrashAlt} className={classes.trashIcon} /> Vyprázdnit košík
+                </Button>
+                &nbsp;&nbsp;&nbsp;
                 <Button variant="contained" color="primary" onClick={goToOrder} disabled={disableProceedToOrder}>
                     Přejít k objednávce
                 </Button>
@@ -42,7 +55,8 @@ const Actions = ({ classes, disableProceedToOrder = false }) => {
 };
 
 Actions.propsTypes = {
-    disableProceedToOrder : PropTypes.bool
+    disableProceedToOrder : PropTypes.bool,
+    onEmptyShoppingCart : PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Actions);
