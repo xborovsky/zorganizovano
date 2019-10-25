@@ -89,9 +89,7 @@ const ProductListItem = ({ product, classes }) => {
                     onClick={goToDetail}
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>
-                    <Typography variant="body2">
-                        { "TODO nejaka cast z description blabla bla..." }
-                    </Typography>
+                    <Typography variant="body2">{product.descriptionShort}</Typography>
                     {
                         product.stockQuantity > 5 ?
                             <Typography variant="body2" className={classes.warehouseCnt}>

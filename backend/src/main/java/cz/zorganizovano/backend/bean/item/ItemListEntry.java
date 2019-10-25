@@ -16,7 +16,9 @@ public class ItemListEntry {
         this.id = stockItem.getId();
         this.name = stockItem.getItem().getName();
         this.subName = stockItem.getItem().getSubName();
-        this.descriptionShort = stockItem.getItem().getDescription().substring(0, 50) + "...";
+        this.descriptionShort = stockItem.getItem().getDescription().length() < 150 ?
+            stockItem.getItem().getDescription() :
+            stockItem.getItem().getDescription().substring(0, 150) + "...";
         this.price = stockItem.getItem().getPrice();
         this.discountPrice = stockItem.getItem().getDiscountPrice();
         this.stockQuantity = stockItem.getQuantity();
