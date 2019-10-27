@@ -13,6 +13,7 @@ import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCa
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import Alert from 'components/Alert';
 import ProductGallery from './ProductGallery';
+import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 
 const styles = theme => ({
     root : {
@@ -49,17 +50,18 @@ const styles = theme => ({
 const ProductDetail = ({ product, classes }) => {
     const { dispatch } = useContext(ShoppingCartContext);
     const [ quantity, setQuantity ] = useState(1);
-    const [successMessage, setSuccessMessage] = useState(undefined);    
+    const [ showSuccess, setShowSuccess ] = useState(undefined);
 
     const addItemToShoppingCart = item => {
+        const shoppingCartItem = {
+            ...(({ id, name, subName, price }) => ({ id, name, subName, price }))(item),
+            quantity
+        };
         dispatch({
             type : ADD_ITEM_TO_SHOPPING_CART,
-            payload : {
-                ...(({ id, name, subName, price }) => ({ id, name, subName, price }))(item),
-                quantity
-            }
+            payload : shoppingCartItem
         });
-        setSuccessMessage(`${ quantity > 1 ? 'Položky byly úspěšně přidány' : 'Položka byla úspěšně přidána'} do košíku.`);
+        setShowSuccess(shoppingCartItem);
         setQuantity(1);
     };
 
@@ -67,12 +69,12 @@ const ProductDetail = ({ product, classes }) => {
         setQuantity(+event.currentTarget.value);
     };
 
+    const handleSuccessClose = () => {
+        setShowSuccess(undefined);
+    };
+
     return (
         <Paper className={classes.root}>
-            {
-                successMessage &&
-                    <Alert type="success" className={classes.alert}>{ successMessage }</Alert>
-            }
             <Grid container>
                 <Grid item xs={12} sm={6}>
                     <ProductGallery productId={product.id} />
@@ -110,9 +112,17 @@ const ProductDetail = ({ product, classes }) => {
                     <IdeaPrompt />
                 </Grid>
             </Grid>
+
+            { // TODO refaktoring HC???
+                showSuccess &&
+                    <ProductAddToCartSuccess
+                        product={showSuccess}
+                        onClose={handleSuccessClose}
+                    />
+            }
         </Paper>
     );
-                    };
+};
 
 ProductDetail.propTypes = {
     product : productShape.isRequired

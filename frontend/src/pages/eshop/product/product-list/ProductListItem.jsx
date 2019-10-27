@@ -74,12 +74,16 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     const location = useLocation();
     const [ quantity, setQuantity ] = useState(1);
     const { dispatch } = useContext(ShoppingCartContext);
-
+    
     const goToDetail = () => {
         history.push(`${location.pathname}/products/${product.id}`);
     };
 
     const addToShoppingCart = item => {
+        const shoppingCartItem = {
+            ...(({ id, name, subName, price }) => ({ id, name, subName, price }))(item),
+            quantity
+        };
         dispatch({
             type : ADD_ITEM_TO_SHOPPING_CART,
             payload : {
@@ -87,7 +91,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                 quantity
             }
         });
-        onSuccess(`${ quantity > 1 ? 'Položky byly úspěšně přidány' : 'Položka byla úspěšně přidána'} do košíku.`);
+        onSuccess(shoppingCartItem);
         setQuantity(1);
     };
 

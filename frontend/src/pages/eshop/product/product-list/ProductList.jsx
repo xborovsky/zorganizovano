@@ -4,7 +4,7 @@ import { Grid, withStyles } from '@material-ui/core';
 
 import ProductListItem from './ProductListItem';
 import { productShape } from '../product-prop-type';
-import Alert from 'components/Alert';
+import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 
 const styles = theme => ({
     root : {
@@ -16,23 +16,30 @@ const styles = theme => ({
 });
 
 const ProductList = ({ products, classes }) => {
-    const [successMessage, setSuccessMessage] = useState(undefined);
+    const [ showSuccess, setShowSuccess ] = useState(undefined);
+
+    const handleSuccessClose = () => {
+        setShowSuccess(undefined);
+    };
 
     return (
         <div className={classes.root}>
-            {
-                successMessage &&
-                    <Alert type="success" className={classes.alert}>{ successMessage }</Alert>
-            }
             <Grid container spacing={5}>
                 {
                     products.map(product => (
                         <ProductListItem
                             product={product}
                             key={product.id}
-                            onSuccess={message => setSuccessMessage(message)}
+                            onSuccess={shoppingCartItem => setShowSuccess(shoppingCartItem)}
                         />
                     ))
+                }
+                { // TODO refaktoring HC???
+                    showSuccess &&
+                        <ProductAddToCartSuccess
+                            product={showSuccess}
+                            onClose={handleSuccessClose}
+                        />
                 }
             </Grid>
         </div>
