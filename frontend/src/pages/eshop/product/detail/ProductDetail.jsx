@@ -104,7 +104,7 @@ const ProductDetail = ({ product, classes }) => {
                                 className={classes.quantity}
                                 inputProps={{
                                     min: 1,
-                                    max: 5
+                                    max: product.stockQuantity
                                 }}
                                 margin="none"
                                 variant="outlined"

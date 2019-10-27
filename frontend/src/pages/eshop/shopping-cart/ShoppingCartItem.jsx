@@ -32,7 +32,7 @@ const ShoppingCartItem = ({
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
-                InputProps={{ inputProps: { min : 0, max: 99 } }}
+                InputProps={{ inputProps: { min : 0, max: 99 } }} // TODO max product.stockQuantity (ajax)
                 margin="dense"
                 variant="outlined"
                 hiddenLabel
