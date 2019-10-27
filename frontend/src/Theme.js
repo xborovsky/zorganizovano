@@ -14,33 +14,48 @@ let zorganizovanoTheme = createMuiTheme({
   typography: {
     fontFamily: 'Century Gothic, sans-serif',
     body1: {
-      fontSize: 18,
-      color: '#4a4a4a',
-      [defaultTheme.breakpoints.down('sm')] : {
-        fontSize : 12
+      fontSize: '1rem',
+      color: '#4a4a4a'
+    },
+    body2: {
+      fontSize: 14
+    },
+    h1: {
+      fontSize: '3rem',
+      marginBottom: '1rem',
+      [defaultTheme.breakpoints.down('lg')]: {
+        fontSize: '2rem'
       }
     },
-    body2 : {
-        fontSize : 14
+    h2: {
+      fontSize: '2.3rem',
+      [defaultTheme.breakpoints.down('lg')]: {
+        fontSize: '1.4rem'
+      }
     },
-    h1 : {
-      fontSize : '3rem',
-      marginBottom : '1rem'
+    h3: {
+      fontSize: '2rem'
     },
-    h2 : {
-      fontSize : '2.3rem'
+    h4: {
+      fontSize: '1.8rem'
     },
-    h3 : {
-      fontSize : '2rem'
+    h5: {
+      fontSize: '1.6rem',
+      [defaultTheme.breakpoints.down('lg')]: {
+        fontSize: '1.3rem',
+      },
+      [defaultTheme.breakpoints.down('sm')]: {
+        fontSize: '1.1rem',
+      }
     },
-    h4 : {
-      fontSize : '1.8rem'
-    },
-    h5 : {
-      fontSize : '1.6rem'
-    },
-    h6 : {
-      fontSize : '1.5rem'
+    h6: {
+      fontSize: '1.3rem',
+      [defaultTheme.breakpoints.down('lg')]: {
+        fontSize: '1.1rem',
+      },
+      [defaultTheme.breakpoints.down('sm')]: {
+        fontSize: '0.9rem',
+      }
     }
   }
 });

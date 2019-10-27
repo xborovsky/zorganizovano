@@ -39,6 +39,14 @@ const styles = theme => ({
             backgroundColor : '#6c815a'
         }
     },
+    headerTitle : {
+        fontSize : '1.2rem',
+        color : '#fff'
+    },
+    headerSubtitle : {
+        fontSize : '0.8rem',
+        color : '#fff'
+    },
     content : {
         cursor : 'pointer'
     },
@@ -87,15 +95,20 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
         setQuantity(+event.currentTarget.value);
     };
 
+    const headerTitle = <Typography varian="h5" className={classes.headerTitle}>{product.name}</Typography>;
+    const headerSubtitle = <Typography varian="h6" className={classes.headerSubtitle}>{product.subName}</Typography>;
+
     return (
         <Grid item xs={12} sm={6} md={4}>
-            {}
             <Card className={classes.card}>
                 <CardHeader
-                    title={product.name}
-                    subheader={product.subName}
+                    title={headerTitle}
+                    subheader={headerSubtitle}
                     className={classes.header}
                     onClick={goToDetail}
+                    disableTypography
+                    titleTypographyProps={classes.headerTitle}
+                    subheaderTypographyProps={classes.headerSubtitle}
                 />
                 <ProductListItemPhoto
                     id={product.id}

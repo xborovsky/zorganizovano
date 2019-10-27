@@ -16,7 +16,7 @@ import ProductGallery from './ProductGallery';
 
 const styles = theme => ({
     root : {
-        margin : '0 10vw',
+        margin : 0,
         padding : '1rem 3rem'
     },
     alert : {
