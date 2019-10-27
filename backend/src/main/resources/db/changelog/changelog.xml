@@ -186,7 +186,10 @@
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="data" type="BLOB">
+            <column name="data" type="LONGBLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_type" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="is_main" type="BOOLEAN" defaultValueBoolean="false">
@@ -279,7 +282,7 @@
             <column name="item_id" type="BIGINT"/>
         </createIndex>
 
-        <createIndex indexName="stock_item_pictures_stock_item_id_idx" tableName="stock_item_pictures" unique="true">
+        <createIndex indexName="stock_item_pictures_stock_item_id_idx" tableName="stock_item_pictures">
             <column name="stock_item_id" type="BIGINT"/>
         </createIndex>
 

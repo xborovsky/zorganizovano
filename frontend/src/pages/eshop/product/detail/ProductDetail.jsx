@@ -4,8 +4,6 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import ImageGallery from 'react-image-gallery';
-import "react-image-gallery/styles/css/image-gallery.css";
 
 import ProductSpec from './ProductSpec';
 import Price from '../../../../components/Price';
@@ -14,6 +12,7 @@ import IdeaPrompt from '../../../../components/IdeaPrompt';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import Alert from 'components/Alert';
+import ProductGallery from './ProductGallery';
 
 const styles = theme => ({
     root : {
@@ -50,7 +49,7 @@ const styles = theme => ({
 const ProductDetail = ({ product, classes }) => {
     const { dispatch } = useContext(ShoppingCartContext);
     const [ quantity, setQuantity ] = useState(1);
-    const [successMessage, setSuccessMessage] = useState(undefined);
+    const [successMessage, setSuccessMessage] = useState(undefined);    
 
     const addItemToShoppingCart = item => {
         dispatch({
@@ -76,27 +75,7 @@ const ProductDetail = ({ product, classes }) => {
             }
             <Grid container>
                 <Grid item xs={12} sm={6}>
-                    <ImageGallery
-                        items={[
-                            {
-                                original : 'http://www.tracyhensel.com/wp-content/uploads/2016/01/FullSizeRender-4-1024x795.jpg',
-                                thumbnail : 'http://www.tracyhensel.com/wp-content/uploads/2016/01/FullSizeRender-4-1024x795.jpg'
-                            },
-                            {
-                                original : 'https://www.medicalnewstoday.com/content/images/articles/325/325466/man-walking-dog.jpg',
-                                thumbnail : 'https://www.medicalnewstoday.com/content/images/articles/325/325466/man-walking-dog.jpg'
-                            },
-                            {
-                                original : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRcn-eu-FaJTkZcEnOBSZMrqtO2KbiIZl6gZvUeawEtLqxqXgiv',
-                                thumbnail : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRcn-eu-FaJTkZcEnOBSZMrqtO2KbiIZl6gZvUeawEtLqxqXgiv'
-                            },
-                            {
-                                original : 'https://upload.wikimedia.org/wikipedia/commons/4/42/Shaqi_jrvej.jpg',
-                                thumbnail : 'https://upload.wikimedia.org/wikipedia/commons/4/42/Shaqi_jrvej.jpg'
-                            }
-                        ]}
-                        showPlayButton={false}
-                    />
+                    <ProductGallery productId={product.id} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <Typography variant="h1">{ product.name }</Typography>

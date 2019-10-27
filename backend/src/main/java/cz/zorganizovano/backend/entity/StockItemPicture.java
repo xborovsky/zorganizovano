@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "stock_item_picture")
+@Table(name = "stock_item_pictures")
 public class StockItemPicture implements Serializable {
 
     @Id
@@ -24,9 +24,11 @@ public class StockItemPicture implements Serializable {
     private StockItem stockItem;
     @Column(name = "title", nullable = true)
     private String title;
-    @Column(name = "data", nullable = false, columnDefinition="BLOB")
+    @Column(name = "data", nullable = false, columnDefinition="LONGBLOB")
     @Lob
     private byte[] data;
+    @Column(name = "data_type", nullable = false)
+    private String dataType;
     @Column(name = "is_main", nullable = false)
     private boolean main = false;
 
@@ -66,6 +68,14 @@ public class StockItemPicture implements Serializable {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 
     public boolean isMain() {

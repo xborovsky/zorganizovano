@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
@@ -17,13 +16,14 @@ import { productShape } from '../product-prop-type';
 import Price from '../../../../components/Price';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
+import ProductListItemPhoto from './ProductListItemPhoto';
 
 const styles = theme => ({
     card : {
         //cursor : 'pointer'
     },
     header : {
-        backgroundColor : '#6c815a',
+        backgroundColor : '#2e4b14',
         color : '#fff',
         cursor : 'pointer',
         '&>.MuiCardHeader-content' : {
@@ -34,6 +34,9 @@ const styles = theme => ({
                 color : '#fff !important',
                 //fontSize : 13
             }
+        },
+        '&:hover' : {
+            backgroundColor : '#6c815a'
         }
     },
     content : {
@@ -94,10 +97,8 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                     className={classes.header}
                     onClick={goToDetail}
                 />
-                <CardMedia
-                    className={classes.cover}
-                    image="http://www.tracyhensel.com/wp-content/uploads/2016/01/FullSizeRender-4-1024x795.jpg"
-                    title="TODO - titulek"
+                <ProductListItemPhoto
+                    id={product.id}
                     onClick={goToDetail}
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>
