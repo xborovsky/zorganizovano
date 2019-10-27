@@ -11,14 +11,14 @@ import { productShape } from '../product-prop-type';
 import IdeaPrompt from '../../../../components/IdeaPrompt';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
-import Alert from 'components/Alert';
+import Details from './Details';
 import ProductGallery from './ProductGallery';
 import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 
 const styles = theme => ({
     root : {
         margin : 0,
-        padding : '1rem 3rem'
+        padding : '7vh 3rem'
     },
     alert : {
         marginBottom : '3rem'
@@ -31,19 +31,26 @@ const styles = theme => ({
         marign : '0 auto'
     },
     priceWrapper : {
-        textAlign : 'center'
+        textAlign : 'right'
     },
     shoppingCartWrapper : {
         textAlign : 'right'
     },
     ideaPromptWrapper : {
-        marginTop : '10vh'
+        marginTop : '3vh'
+    },
+    ideaPrompt : {
+        width: '70%',
+        margin : '0 auto',
+        [theme.breakpoints.down('sm')] : {
+            width : '100%'
+        }
     },
     quantityWrapper: {
         textAlign : 'center'
     },
     quantity : {
-        width : 75
+        width : 100
     }
 });
 
@@ -61,7 +68,7 @@ const ProductDetail = ({ product, classes }) => {
             type : ADD_ITEM_TO_SHOPPING_CART,
             payload : shoppingCartItem
         });
-        setShowSuccess(shoppingCartItem);
+        setShowSuccess({ productName : shoppingCartItem.name });
         setQuantity(1);
     };
 
@@ -75,16 +82,17 @@ const ProductDetail = ({ product, classes }) => {
 
     return (
         <Paper className={classes.root}>
+            <Typography variant="h1">{ product.name }</Typography>
+            <Typography variant="h2">{ product.subName }</Typography>
+            <br />
             <Grid container>
                 <Grid item xs={12} sm={6}>
                     <ProductGallery productId={product.id} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <Typography variant="h1">{ product.name }</Typography>
-                    <Typography variant="h2">{ product.subName }</Typography>
                     <ProductSpec product={product} />
-                    <Grid container>
-                        <Grid item xs={12} sm={4} className={classes.priceWrapper}>
+                    <Grid container alignItems="center">
+                        <Grid item xs={12} className={classes.priceWrapper}>
                             <Price value={product.price} size="xl" />
                         </Grid>
                         <Grid item xs={12} sm={4} className={classes.quantityWrapper}>
@@ -98,25 +106,29 @@ const ProductDetail = ({ product, classes }) => {
                                     min: 1,
                                     max: 5
                                 }}
-                                margin="normal"
+                                margin="none"
+                                variant="outlined"
                             />
                         </Grid>
-                        <Grid item xs={6} sm={4} className={classes.shoppingCartWrapper}>
+                        <Grid item xs={12} sm={8} className={classes.shoppingCartWrapper}>
                             <Button variant="contained" color="primary" onClick={() => addItemToShoppingCart(product)}>
                                 <FontAwesomeIcon icon={faShoppingCart} className={classes.shoppingCartIcon} />Vložit do košíku
                             </Button>
                         </Grid>
                     </Grid>
                 </Grid>
+                <Grid item xs={12}>
+                    <Details product={product} />
+                </Grid>
                 <Grid item xs={12} className={classes.ideaPromptWrapper}>
-                    <IdeaPrompt />
+                    <IdeaPrompt className={ classes.ideaPrompt } />
                 </Grid>
             </Grid>
 
             { // TODO refaktoring HC???
                 showSuccess &&
                     <ProductAddToCartSuccess
-                        product={showSuccess}
+                        productName={showSuccess.productName}
                         onClose={handleSuccessClose}
                     />
             }

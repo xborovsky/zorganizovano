@@ -30,14 +30,14 @@ const ProductList = ({ products, classes }) => {
                         <ProductListItem
                             product={product}
                             key={product.id}
-                            onSuccess={shoppingCartItem => setShowSuccess(shoppingCartItem)}
+                            onSuccess={shoppingCartItem => setShowSuccess({ productName : shoppingCartItem.name})}
                         />
                     ))
                 }
                 { // TODO refaktoring HC???
                     showSuccess &&
                         <ProductAddToCartSuccess
-                            product={showSuccess}
+                            product={showSuccess.productName}
                             onClose={handleSuccessClose}
                         />
                 }
