@@ -17,6 +17,7 @@ import Price from '../../../../components/Price';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import ProductListItemPhoto from './ProductListItemPhoto';
+import ShoppingCartButton from 'components/ShoppingCartButton';
 
 const styles = theme => ({
     card : {
@@ -58,13 +59,20 @@ const styles = theme => ({
         color : '#6c815a',
         marginTop : '0.7rem'
     },
-    textField: {
-        width: 90
-    },
     orderActionWrapper : {
         display : 'flex',
         justifyContent : 'flex-end',
-        alignItems : 'baseline'
+        alignItems : 'baseline',
+        paddingTop : '5px !important'
+    },
+    priceWrapper : {
+        textAlign : 'right',
+        paddingTop : '5px !important',
+        paddingBottom : '5px !important'
+    },
+    cardActions : {
+        marginRight : 15,
+        mefginLeft : 15 
     }
 });
 
@@ -135,12 +143,12 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                     }
                 </CardContent>
 
-                <CardActions>
+                <CardActions className={classes.cardActions}>
                     <Grid container spacing={5} alignItems="center">
-                        <Grid item xs={3}>
+                        <Grid item xs={12} className={classes.priceWrapper}>
                             <Price value={product.price} />
                         </Grid>
-                        <Grid item xs={9} className={classes.orderActionWrapper}>
+                        <Grid item xs={12} md={6} className={classes.orderActionWrapper}>
                             <TextField
                                 value={quantity}
                                 onChange={handleChangeQuantity}
@@ -153,14 +161,10 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                                     endAdornment: <InputAdornment position="end">ks</InputAdornment>,
                                     inputProps: { min : 1, max: product.stockQuantity }
                                 }}
-                            /> &nbsp;
-                            <Button
-                                variant="contained"
-                                color="primary" size="large"
-                                onClick={() => addToShoppingCart(product)}
-                                title="Vložit do košíku">
-                                Vložit do košíku
-                            </Button>
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} className={classes.orderActionWrapper}>
+                            <ShoppingCartButton onClick={() => addToShoppingCart(product)} />
                         </Grid>
                     </Grid>
                 </CardActions>

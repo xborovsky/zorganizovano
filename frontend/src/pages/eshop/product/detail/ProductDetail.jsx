@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import ProductSpec from './ProductSpec';
 import Price from '../../../../components/Price';
@@ -80,6 +81,38 @@ const ProductDetail = ({ product, classes }) => {
         setShowSuccess(undefined);
     };
 
+    const getQuantityInput = tooltiped => {
+        return tooltiped && product.stockQuantity > 0 ? 
+            <Tooltip title={`Do košíku je možno vložit pouze ${product.stockQuantity} kus${product.stockQuantity === 1 ? '' : product.stockQuantity > 4 ? 'ů' : 'y'}. Pro více kusů mě prosím kontaktujte, určitě se domluvíme.`}>
+                <TextField
+                    label="Počet kusů"
+                    value={quantity}
+                    onChange={handleChangeQuantity}
+                    type="number"
+                    className={classes.quantity}
+                    inputProps={{
+                        min: 1,
+                        max: product.stockQuantity
+                    }}
+                    margin="none"
+                    variant="outlined"
+                />
+            </Tooltip> :
+            <TextField
+                label="Počet kusů"
+                value={quantity}
+                onChange={handleChangeQuantity}
+                type="number"
+                className={classes.quantity}
+                inputProps={{
+                    min: 1,
+                    max: product.stockQuantity
+                }}
+                margin="none"
+                variant="outlined"
+            />
+    };
+
     return (
         <Paper className={classes.root}>
             <Typography variant="h1">{ product.name }</Typography>
@@ -96,19 +129,7 @@ const ProductDetail = ({ product, classes }) => {
                             <Price value={product.price} size="xl" />
                         </Grid>
                         <Grid item xs={12} sm={4} className={classes.quantityWrapper}>
-                            <TextField
-                                label="Počet kusů"
-                                value={quantity}
-                                onChange={handleChangeQuantity}
-                                type="number"
-                                className={classes.quantity}
-                                inputProps={{
-                                    min: 1,
-                                    max: product.stockQuantity
-                                }}
-                                margin="none"
-                                variant="outlined"
-                            />
+                            { getQuantityInput(product.stockQuantity > 0) }
                         </Grid>
                         <Grid item xs={12} sm={8} className={classes.shoppingCartWrapper}>
                             <Button variant="contained" color="primary" onClick={() => addItemToShoppingCart(product)}>

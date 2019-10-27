@@ -10,9 +10,9 @@ const styles = theme => ({
 
 const getFontSize = size => {
     switch (size) {
-        case 'normal' : return 22;
+        case 'normal' : return 26;
         case 'xl' : return 32;
-        default : return 22;
+        default : return 26;
     }
 };
 

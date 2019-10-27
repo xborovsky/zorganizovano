@@ -19,7 +19,7 @@ const ProductSpec = ({ product, classes }) => (
             { product.description.substring(0, 300) + '...' }&nbsp;
         </Typography>
         <Typography variant="body1" className={classes.inlineDisplay}>
-            <AnchorLink href='#full-desc' offset="80">(celý popis)</AnchorLink>
+            <AnchorLink href='#full-desc' offset="80">(detailní popis)</AnchorLink>
         </Typography>
     </div>
 );
