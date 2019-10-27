@@ -13,10 +13,18 @@ const styles = theme => ({
         marginTop: 'auto',
         backgroundColor : '#cfcfcf',
         color : '#000',
-        textAlign : 'center'
+        textAlign : 'center',
+        [theme.breakpoints.down('xs')] : {
+            paddingTop : '1rem',
+            paddingBottom : '1rem'
+        }
     },
     left : {
-        textAlign : 'left'
+        textAlign : 'left',
+        [theme.breakpoints.down('xs')] : {
+            paddingTop : '.7rem',
+            textAlign : 'center'
+        }
     },
     link : {
         color : '#000',
@@ -40,7 +48,10 @@ const styles = theme => ({
         alignSelf : 'flex-end'
     },
     year : {
-        textAlign : 'right'
+        textAlign : 'right',
+        [theme.breakpoints.down('xs')] : {
+            textAlign : 'center'
+        }
     },
     socialIcon : {
         fontSize : '2rem'
@@ -50,22 +61,22 @@ const styles = theme => ({
 const Footer = ({ classes }) => (
     <footer className={classes.footer}>
         <Grid container>
-            <Grid item xs={6} sm={3} className={classes.left}>
+            <Grid item xs={12} sm={6} className={classes.left}>
                 <Link to="/eshop/terms" className={classes.link}>
                     <Typography variant="body2" color="inherit">Obchodní podmínky</Typography>
                 </Link>
                 <Link to="/eshop/faq" className={classes.link}>
                     <Typography variant="body2" color="inherit">Nejčastěji kladené dotazy</Typography>
                 </Link>
-                <Link to="/eshop/contact" className={classes.link}>
+                <Link to="/contact" className={classes.link}>
                     <Typography variant="body2" color="inherit">Kontakt</Typography>
                 </Link>
                 <br />
                 <SocialLinks linkClass={classes.nativeLink} iconClass={classes.socialIcon} />
             </Grid>
-            <Grid item xs={6} sm={3} className={classes.left}>
+            <Grid item xs={12} sm={6} className={classes.left}>
                 <Typography variant="body2" color="inherit">ZORGANIZOVÁNO</Typography>
-                <div style={{ marginLeft : 20 }}>
+                <div>
                     <Typography variant="body2" color="inherit">Bára Borovská</Typography>
                     <Typography variant="body2" color="inherit">+420 734 836 714</Typography>
                     <Typography variant="body2" color="inherit">
@@ -74,13 +85,13 @@ const Footer = ({ classes }) => (
                     <br />
                     <Typography variant="body2">
                         Dotaz, nápad, průšiv?&nbsp;
-                        <Link to="/eshop/contact" className={classes.link} style={{ display : 'inline' }}>
+                        <Link to="/contact" className={classes.link} style={{ display : 'inline' }}>
                             Napište mi!
                         </Link>
                     </Typography>
                 </div>
             </Grid>
-            <Grid item xs={12} sm={6} className={classes.yearWrapper}>
+            <Grid item xs={12} className={classes.yearWrapper}>
                 <Typography variant="body2" className={classes.year}>2019</Typography>
             </Grid>
         </Grid>

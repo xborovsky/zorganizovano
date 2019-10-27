@@ -148,7 +148,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                         <Grid item xs={12} className={classes.priceWrapper}>
                             <Price value={product.price} />
                         </Grid>
-                        <Grid item xs={12} md={6} className={classes.orderActionWrapper}>
+                        <Grid item xs={6} className={classes.orderActionWrapper}>
                             <TextField
                                 value={quantity}
                                 onChange={handleChangeQuantity}
@@ -163,7 +163,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} md={6} className={classes.orderActionWrapper}>
+                        <Grid item xs={6} className={classes.orderActionWrapper}>
                             <ShoppingCartButton onClick={() => addToShoppingCart(product)} />
                         </Grid>
                     </Grid>
