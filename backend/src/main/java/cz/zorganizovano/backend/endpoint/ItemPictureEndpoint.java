@@ -50,7 +50,7 @@ public class ItemPictureEndpoint {
     public List<ItemPicture> getPicturesBase64(@PathVariable("id") long stockItemId) {
         Optional<StockItem> stockItem = stockItemDao.findById(stockItemId);
         if (stockItem.isPresent()) {
-            return stockItemPictureDao.findByStockItem(stockItem.get())
+            return stockItemPictureDao.findByStockItemOrderByMainDesc(stockItem.get())
                 .stream()
                 .map(stockItemPicture -> 
                     new ItemPicture(

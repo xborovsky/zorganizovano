@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StockItemPictureDao extends JpaRepository<StockItemPicture, Long> {
     
-    List<StockItemPicture> findByStockItem(StockItem stockItem);
+    List<StockItemPicture> findByStockItemOrderByMainDesc(StockItem stockItem);
     
     StockItemPicture findByStockItemAndMain(StockItem stockItem, boolean isMain);
     
