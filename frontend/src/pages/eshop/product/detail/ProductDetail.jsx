@@ -1,9 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Grid, withStyles, Button, Typography } from '@material-ui/core';
+import { Grid, withStyles, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import ProductSpec from './ProductSpec';
@@ -15,11 +13,15 @@ import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/
 import Details from './Details';
 import ProductGallery from './ProductGallery';
 import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
+import ShoppingCartButton from 'components/ShoppingCartButton';
 
 const styles = theme => ({
     root : {
         margin : 0,
-        padding : '7vh 3rem'
+        padding : '7vh 3rem',
+        [theme.breakpoints.down('xs')] : {
+            padding : '2vh 1rem'
+        }
     },
     alert : {
         marginBottom : '3rem'
@@ -48,7 +50,10 @@ const styles = theme => ({
         }
     },
     quantityWrapper: {
-        textAlign : 'center'
+        textAlign : 'center',
+        [theme.breakpoints.down('xs')] : {
+            textAlign : 'left'
+        }
     },
     quantity : {
         width : 100
@@ -128,13 +133,13 @@ const ProductDetail = ({ product, classes }) => {
                         <Grid item xs={12} className={classes.priceWrapper}>
                             <Price value={product.price} size="xl" />
                         </Grid>
-                        <Grid item xs={12} sm={4} className={classes.quantityWrapper}>
+                        <Grid item xs={6} sm={4} className={classes.quantityWrapper}>
                             { getQuantityInput(product.stockQuantity > 0) }
                         </Grid>
-                        <Grid item xs={12} sm={8} className={classes.shoppingCartWrapper}>
-                            <Button variant="contained" color="primary" onClick={() => addItemToShoppingCart(product)}>
-                                <FontAwesomeIcon icon={faShoppingCart} className={classes.shoppingCartIcon} />Vložit do košíku
-                            </Button>
+                        <Grid item xs={6} sm={8} className={classes.shoppingCartWrapper}>
+                            <ShoppingCartButton 
+                                onClick={() => addItemToShoppingCart(product)}
+                            />
                         </Grid>
                     </Grid>
                 </Grid>

@@ -3,14 +3,27 @@ import { Grid, Typography } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/styles';
 
-const IdeaPrompt = ({ className }) => (
+const styles = theme => ({
+    question : {
+        fontSize : '1.8rem',
+        [theme.breakpoints.down('sm')] : {
+            fontSize : '1.2rem'
+        },
+        [theme.breakpoints.down('xs')] : {
+            fontSize : '1rem'
+        }
+    }
+});
+
+const IdeaPrompt = ({ className, classes }) => (
     <Grid container className={className}>
         <Grid item xs={4} sm={2} md={1}>
             <FontAwesomeIcon icon={faLightbulb} size="5x" />
         </Grid>
         <Grid item xs={8} sm={10} md={11}>
-            <Typography variant="h4">
+            <Typography className={classes.question}>
                 Chybí Vám něco u tohoto produktu?
             </Typography>
             <Typography variant="body1">
@@ -20,4 +33,4 @@ const IdeaPrompt = ({ className }) => (
     </Grid>
 );
 
-export default IdeaPrompt;
+export default withStyles(styles)(IdeaPrompt);

@@ -164,7 +164,9 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                             />
                         </Grid>
                         <Grid item xs={6} className={classes.orderActionWrapper}>
-                            <ShoppingCartButton onClick={() => addToShoppingCart(product)} />
+                            <ShoppingCartButton 
+                                onClick={() => addToShoppingCart(product)}
+                                onlyIcon={true} />
                         </Grid>
                     </Grid>
                 </CardActions>

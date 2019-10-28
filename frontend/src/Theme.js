@@ -15,7 +15,10 @@ let zorganizovanoTheme = createMuiTheme({
     fontFamily: 'Century Gothic, sans-serif',
     body1: {
       fontSize: '1rem',
-      color: '#4a4a4a'
+      color: '#4a4a4a',
+      [defaultTheme.breakpoints.down('lg')]: {
+        fontSize: '0.8rem'
+      },
     },
     body2: {
       fontSize: 14
@@ -25,12 +28,19 @@ let zorganizovanoTheme = createMuiTheme({
       marginBottom: '1rem',
       [defaultTheme.breakpoints.down('lg')]: {
         fontSize: '2rem'
+      },
+      [defaultTheme.breakpoints.down('xs')]: {
+        fontSize: '1.2rem',
+        marginBottom : '0.3rem'
       }
     },
     h2: {
       fontSize: '2.3rem',
       [defaultTheme.breakpoints.down('lg')]: {
         fontSize: '1.4rem'
+      },
+      [defaultTheme.breakpoints.down('xs')]: {
+        fontSize: '0.9rem'
       }
     },
     h3: {
