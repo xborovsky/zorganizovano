@@ -1,17 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Paper } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
+import { withStyles } from '@material-ui/styles';
 
-const TipDetail = ({ tip }) => {
+const styles = theme => ({
+    root : {
+        padding : '1rem 2rem'
+    }
+});
+
+const TipDetail = ({ tip, classes }) => {
 
     return (
-        <Paper>
-            <h1>{ tip.title }</h1>
+        <Paper className={classes.root}>
+            <Typography variant="h1">{ tip.title }</Typography>
             <span>{ tip.publishedFormatted }</span>
-            <div>
+            <Typography variant="body1" component="div">
                 { ReactHtmlParser(tip.content) }
-            </div>
+            </Typography>
         </Paper>
     );
 };
@@ -25,4 +32,4 @@ TipDetail.propTypes = {
     }).isRequired
 }
 
-export default TipDetail;
+export default withStyles(styles)(TipDetail);

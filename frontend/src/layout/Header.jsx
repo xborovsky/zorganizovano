@@ -120,7 +120,7 @@ const Header = ({ classes }) => {
                             <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink}>
                                 <Typography variant="body2" element="span">[ Eshop ]</Typography>
                             </NavLink>
-                            <NavLink to="/types" className={classes.link} activeClassName={classes.activeLink}>
+                            <NavLink to="/tips" className={classes.link} activeClassName={classes.activeLink}>
                                 <Typography variant="body2" element="span">[ Zorganizuj se ]</Typography>
                             </NavLink>
                             <NavLink to="/contact" className={classes.link} activeClassName={classes.activeLink}>
@@ -167,7 +167,7 @@ const Header = ({ classes }) => {
                                                 </IconButton>
                                             </NavLink>
                                         </Grid>
-                                    </Grid>                                    
+                                    </Grid>
                                 </nav>
                                 TODO
                             </> :
