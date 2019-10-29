@@ -18,7 +18,7 @@
             <column name="subname" type="VARCHAR(200)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="TEXT">
+            <column name="description" type="LONGTEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="price" type="DOUBLE">
@@ -202,6 +202,24 @@
                 <constraints nullable="false"/>
             </column>
             <column name="priority_order" type="INT" defaultValueNumeric="-1">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="blog_posts">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="published" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content_preview" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="LONGTEXT">
                 <constraints nullable="false"/>
             </column>
         </createTable>

@@ -23,7 +23,7 @@ public class TimeManagerImpl implements TimeManager {
 
     @Override
     public int getNumDaysBetween(Date start, Date end) {
-        long diffInMillies = 0;
+        long diffInMillies = 0L;
 
         if (start.before(end)) {
             diffInMillies = Math.abs(end.getTime() - start.getTime());

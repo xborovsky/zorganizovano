@@ -15,7 +15,7 @@ import shoppingCartReducer from './pages/eshop/shopping-cart/state-management/Sh
 import zorganizovanoTheme from './Theme';
 
 const Home = React.lazy(() => import('./pages/home'));
-const Types = React.lazy(() => import('./pages/types'));
+const Tips = React.lazy(() => import('./pages/tips'));
 const Eshop = React.lazy(() => import('./pages/eshop'));
 
 const styles = theme => ({
@@ -45,7 +45,7 @@ const App = ({ classes }) => {
                 <Suspense fallback={<Loader />}>
                   <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route path="/types" component={Types} />
+                    <Route path="/tips" component={Tips} />
                     <Route path="/eshop" component={Eshop} />
                   </Switch>
                 </Suspense>
