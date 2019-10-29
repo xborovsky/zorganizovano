@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { CircularProgress } from '@material-ui/core';
 
-import withLoading from '../../../../components/hoc/WithLoading';
 import ProductDetail from './ProductDetail';
+import Alert from 'components/Alert';
 
-const ProductDetailContainer = ({ data }) => {
-    console.log('ProductDetailContainer');
+const ProductDetailContainer = () => {
     let { id } = useParams();
-    console.log(id);
+    const [ item, setItem ] = useState(undefined);
+    const [ loading, setLoading ] = useState(true);
+    const [ error, setError ] = useState(undefined);
+
+    useEffect(() => {
+        axios.get(`/item/${id}`)
+            .then(res => {
+                setItem(res.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                setLoading(false);
+                setError('Chyba spojení...'); // TODO
+            });
+    }, []);
 
     return (
-        <>
-            <ProductDetail product={data} />
-        </>
+        loading ?
+            <CircularProgress /> :
+            error ?
+                <Alert type="error">{ error }</Alert> :
+                <ProductDetail product={item} />
     );
 };
 
-export default withLoading('/item/1')(ProductDetailContainer);
+export default ProductDetailContainer;
