@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { Paper, Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
 import { withStyles } from '@material-ui/styles';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import { Link } from 'react-router-dom';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
+import BreadcrumbsNav from 'components/BreadcrumbsNav';
 
 const styles = theme => ({
     root : {
@@ -21,14 +20,7 @@ const TipDetail = ({ tip, classes }) => {
 
     return (
         <>
-            <div className={classes.breadcrumbsWrapper}>
-                <Paper elevation={0}>
-                    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
-                        <Link to="/tips">Tipy</Link>
-                        <Typography>{ tip.title }</Typography>
-                    </Breadcrumbs>
-                </Paper>
-            </div>
+            <BreadcrumbsNav items={[{ link : '/tips', name : 'Tipy' }, { name : tip.title }]} />
             <Paper className={classes.root}>
                 <Typography variant="h1">{ tip.title }</Typography>
                 <span>{ tip.publishedFormatted }</span>
