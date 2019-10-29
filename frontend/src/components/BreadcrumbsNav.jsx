@@ -5,6 +5,7 @@ import { Paper, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import HomeIcon from '@material-ui/icons/Home';
 
 const styles = theme => ({
     root : {
@@ -21,11 +22,12 @@ const BreadcrumbsNav = ({ items, classes }) => (
     <div className={classes.root}>
         <Paper elevation={0} className={classes.paper}>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
+                <Link to='/'><HomeIcon /></Link>
                 {
                     items.map(item => (
                         item.link ?
-                            <Link to={item.link}>{item.name}</Link> :
-                            <Typography>{ item.name }</Typography>
+                            <Link to={item.link} key={item.name}>{item.name}</Link> :
+                            <Typography key={item.name}>{ item.name }</Typography>
                     ))
                 }
             </Breadcrumbs>
