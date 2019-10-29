@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.entity;
 
+import cz.zorganizovano.backend.util.DateFormatter;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -46,6 +47,10 @@ public class BlogPost implements Serializable {
 
     public Date getPublished() {
         return published;
+    }
+
+    public String getPublishedFormatted() {
+        return DateFormatter.formatDate(published);
     }
 
     public void setPublished(Date published) {

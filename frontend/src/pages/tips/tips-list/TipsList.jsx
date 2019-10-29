@@ -4,13 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { useHistory } from 'react-router-dom';
 
 import withLoading from 'components/hoc/WithLoading';
 
 const TipsList = ({ data }) => {
 
+    const history = useHistory();
+
     const goToBlockPost = id => {
-        console.log('TODO - goToBlockPost');
+        history.push({ pathname : `/tips/${id}`});
     };
 
     return (
@@ -18,7 +21,7 @@ const TipsList = ({ data }) => {
             {
                 data.map(blogPost => (
                     <Grid item xs={12}>
-                        <Card onClick={() => goToBlockPost(data.id)}>
+                        <Card onClick={() => goToBlockPost(blogPost.id)}>
                             <CardContent>
                                 <Typography variant="h5">
                                     { blogPost.title } ({ blogPost.publishedFormatted })

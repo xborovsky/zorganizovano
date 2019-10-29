@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-import TipDetail from './tip-detail/TipDetail';
+import TipDetailContainer from './tip-detail/TipDetailContainer';
 import TipsList from './tips-list/TipsList';
 
 const Tips = () => {
@@ -11,7 +11,7 @@ const Tips = () => {
     return (
         <Switch>
             <Route path={`${match.path}/:id`}>
-                <TipDetail />
+                <TipDetailContainer />
             </Route>
             <Route path={match.path}>
                 <TipsList />
