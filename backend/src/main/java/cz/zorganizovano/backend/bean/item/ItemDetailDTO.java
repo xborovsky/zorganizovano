@@ -1,8 +1,10 @@
 package cz.zorganizovano.backend.bean.item;
 
+import cz.zorganizovano.backend.entity.ItemDetail;
 import cz.zorganizovano.backend.entity.StockItem;
+import java.util.List;
 
-public class ItemDetail {
+public class ItemDetailDTO {
 
     private final long id;
     private final String name;
@@ -11,11 +13,9 @@ public class ItemDetail {
     private final double price;
     private final Double discountPrice;
     private final int stockQuantity;
-    private final String dimensions;
-    private final String shippingDimensions;
-    private final double weightGrams;
+    private final List<ItemDetail> details;
 
-    public ItemDetail(StockItem stockItem) {
+    public ItemDetailDTO(StockItem stockItem, List<ItemDetail> itemDetails) {
         this.id = stockItem.getId();
         this.name = stockItem.getItem().getName();
         this.subName = stockItem.getItem().getSubName();
@@ -23,9 +23,7 @@ public class ItemDetail {
         this.price = stockItem.getItem().getPrice();
         this.discountPrice = stockItem.getItem().getDiscountPrice();
         this.stockQuantity = stockItem.getQuantity();
-        this.dimensions = stockItem.getItem().getDimensions();
-        this.shippingDimensions = stockItem.getItem().getShippingDimensions();
-        this.weightGrams = stockItem.getItem().getWeightGrams();
+        this.details = itemDetails;
     }
 
     public long getId() {
@@ -56,16 +54,8 @@ public class ItemDetail {
         return stockQuantity;
     }
 
-    public String getDimensions() {
-        return dimensions;
-    }
-
-    public String getShippingDimensions() {
-        return shippingDimensions;
-    }
-
-    public double getWeightGrams() {
-        return weightGrams;
+    public List<ItemDetail> getDetails() {
+        return details;
     }
 
 }

@@ -27,15 +27,6 @@
             <column name="discount_price" type="DOUBLE">
                 <constraints nullable="true"/>
             </column>
-            <column name="dimensions" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="shipping_dimensions" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="weight_grams" type="INT">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
         <createTable tableName="customers">
@@ -197,6 +188,24 @@
             </column>
         </createTable>
 
+        <createTable tableName="item_details">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="item_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="key" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority_order" type="INT" defaultValueNumeric="-1">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
         <addUniqueConstraint
             constraintName="orders_order_num_unique"
             tableName="orders"
@@ -256,6 +265,14 @@
             referencedColumnNames="id"
             referencedTableName="stock_items"
             onDelete="CASCADE" />
+
+        <addForeignKeyConstraint
+            baseColumnNames="item_id"
+            baseTableName="item_details"
+            constraintName="fk_item_detail_item"
+            referencedColumnNames="id"
+            referencedTableName="items"
+            onDelete="CASCADE" />
         
         <createIndex indexName="shipment_addresses_order_id_idx" tableName="shipment_addresses" unique="true">
             <column name="order_id" type="BIGINT"/>
@@ -284,6 +301,10 @@
 
         <createIndex indexName="stock_item_pictures_stock_item_id_idx" tableName="stock_item_pictures">
             <column name="stock_item_id" type="BIGINT"/>
+        </createIndex>
+
+        <createIndex indexName="item_details_item_id_idx" tableName="item_details">
+            <column name="item_id" type="BIGINT"/>
         </createIndex>
 
     </changeSet>

@@ -28,12 +28,6 @@ public class Item implements Serializable {
     private double price;
     @Column(name = "discount_price", nullable = true)
     private Double discountPrice;
-    @Column(name = "dimensions", nullable = true)
-    private String dimensions;
-    @Column(name = "shipping_dimensions", nullable = true)
-    private String shippingDimensions;
-    @Column(name = "weight_grams", nullable = false)
-    private double weightGrams;
 
     public Item() {
     }
@@ -88,30 +82,6 @@ public class Item implements Serializable {
 
     public void setDiscountPrice(Double discountPrice) {
         this.discountPrice = discountPrice;
-    }
-
-    public String getDimensions() {
-        return dimensions;
-    }
-
-    public void setDimensions(String dimensions) {
-        this.dimensions = dimensions;
-    }
-
-    public String getShippingDimensions() {
-        return shippingDimensions;
-    }
-
-    public void setShippingDimensions(String shippingDimensions) {
-        this.shippingDimensions = shippingDimensions;
-    }
-
-    public double getWeightGrams() {
-        return weightGrams;
-    }
-
-    public void setWeightGrams(double weightGrams) {
-        this.weightGrams = weightGrams;
     }
 
     @Override

@@ -18,7 +18,12 @@ export const productDetailShape = PropTypes.shape({
     price : PropTypes.number.isRequired,
     discountPrice : PropTypes.number,
     stockQuantity : PropTypes.number.isRequired,
-    dimensions : PropTypes.string,
-    shippingDimensions : PropTypes.string,
-    weightGrams : PropTypes.number
+    details : PropTypes.arrayOf(
+        PropTypes.shape({
+            id : PropTypes.number.isRequired,
+            key : PropTypes.string.isRequired,
+            value : PropTypes.string.isRequired,
+            priorityOrder : PropTypes.number.isRequired
+        })
+    ).isRequired
 });

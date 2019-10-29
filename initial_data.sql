@@ -1,4 +1,4 @@
-insert into zorganizovano.items (name, subname, description, price, discount_price, dimensions, shipping_dimensions, weight_grams)
+insert into zorganizovano.items (name, subname, description, price, discount_price)
 values ('KALENDÁŘ 2020 - LIŠČÍ ROK', 'Kalendář na lednici s magnetickou lištou', 'Mějte plány celé své rodiny vždy na očích, na nejfregventovanějším místě v domácnosti - lednici.
 Nezapomenete na žádné vystoupení ani zápas svých dětí, partner vás nepřekvapí návštěvou kamaráda, o které vám ale určitě říkal a váš zubař vás bude chválit za pravidelné preventivní
 prohlídky. Děti uvidí, které dny jste vytíženi a které plánujete pro rodinu, kdy se chystá výlet, dovolená a prázdniny u babičky a to v celoměsíčním přehledu - takže se vám už po 
@@ -14,7 +14,12 @@ mějte to zorganizováno 🙂
 <li>Státní svátky v ČR a vybrané mezinárodní dny</li>
 <li>Pohyb Měsíce (ať víte, kdy se blíží úplněk a tedy zpravidla, alespoň u nás, dětmi probdělá noc)</li>
 <li>Magnetická lišta k umístění na lednici, magnet je i ve spodní části kalendáře, při otevření lednice tedy nikam neuletí</li>
-</ul>', 299, null, '297 x 514 x 10 mm', '297x 310 x 10 mm', 120);
+</ul>', 299, null);
+
+insert into zorganizovano.item_details (item_id, `key`, `value`, priority_order)
+values (1, 'Rozměry', '297 x 514 x 10 mm', 1000),
+(1, 'Přepravní rozměry', '297 x 310 x 10 mm', 500),
+(1, 'Váha', '120g', 100);
 
 insert into zorganizovano.stock_items (item_id, quantity, display_on_eshop) values (1, 10, true);
 

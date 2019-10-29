@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import withStyles from '@material-ui/styles/withStyles';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
@@ -33,14 +33,18 @@ const Details = ({ product, classes }) => (
                 { ReactHtmlParser(product.description) }
             </TableCell>
         </TableRow>
-        <TableRow>
-            <TableCell component="th" scope="row" className={classes.thCell}>
-                Rozměry (mm)
-            </TableCell>
-            <TableCell className={classes.tdCell}>
-                {product.dimensions}
-            </TableCell>
-        </TableRow>
+        {
+            product.details.map(productDetail => (
+                <TableRow key={productDetail.id}>
+                    <TableCell component="th" scope="row" className={classes.thCell}>
+                        { productDetail.key }
+                    </TableCell>
+                    <TableCell className={classes.tdCell}>
+                        { productDetail.value }
+                    </TableCell>
+                </TableRow>
+            ))
+        }
     </TableBody>
 );
 

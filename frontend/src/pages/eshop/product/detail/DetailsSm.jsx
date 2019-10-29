@@ -1,14 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 import withStyles from '@material-ui/styles/withStyles';
-import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import ReactHtmlParser from 'react-html-parser';
 
 import { productDetailShape } from '../product-prop-type';
-import { Hidden } from '@material-ui/core';
+
 
 const styles = theme => ({
     price : {
@@ -44,16 +42,22 @@ const DetailsSm = ({ product, classes }) => (
                 { ReactHtmlParser(product.description) }
             </TableCell>
         </TableRow>
-        <TableRow>
-            <TableCell component="th" scope="row" className={classes.thCell}>
-                Rozměry (mm)
-            </TableCell>
-        </TableRow>
-        <TableRow>
-            <TableCell className={classes.tdCell}>
-                {product.dimensions}
-            </TableCell>
-        </TableRow>
+        {
+            product.details.map(productDetail => (
+                <Fragment key={productDetail.id}>
+                    <TableRow>
+                        <TableCell component="th" scope="row" className={classes.thCell}>
+                            { productDetail.key }
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell className={classes.tdCell}>
+                            { productDetail.value }
+                        </TableCell>
+                    </TableRow>
+                </Fragment>
+            ))
+        }
     </TableBody>
 );
 
