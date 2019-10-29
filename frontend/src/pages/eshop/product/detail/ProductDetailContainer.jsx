@@ -5,6 +5,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import ProductDetail from './ProductDetail';
 import Alert from 'components/Alert';
+import BreadcrumbsNav from 'components/BreadcrumbsNav';
 
 const ProductDetailContainer = () => {
     let { id } = useParams();
@@ -30,7 +31,10 @@ const ProductDetailContainer = () => {
             <CircularProgress /> :
             error ?
                 <Alert type="error">{ error }</Alert> :
-                <ProductDetail product={item} />
+                <>
+                    <BreadcrumbsNav items={[{ link : '/eshop', name : 'Produkty' }, { name : item.name }]} />
+                    <ProductDetail product={item} />
+                </>
     );
 };
 

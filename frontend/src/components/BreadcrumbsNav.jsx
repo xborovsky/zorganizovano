@@ -7,11 +7,13 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const styles = theme => ({
-    root : {}
+    root : {
+        marginBottom : '1rem'
+    }
 });
 
 const BreadcrumbsNav = ({ items, classes }) => (
-    <div className={classes.breadcrumbsWrapper}>
+    <div className={classes.root}>
         <Paper elevation={0}>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
                 {
