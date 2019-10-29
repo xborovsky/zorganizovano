@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import withStyles from '@material-ui/styles/withStyles';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';

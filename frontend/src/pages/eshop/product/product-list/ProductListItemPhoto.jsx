@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { CircularProgress, CardMedia, withStyles } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileImage } from '@fortawesome/free-solid-svg-icons';
 
 const styles = theme => ({
     cover: {

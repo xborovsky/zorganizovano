@@ -8,7 +8,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import { useHistory, useLocation } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
@@ -72,7 +71,7 @@ const styles = theme => ({
     },
     cardActions : {
         marginRight : 15,
-        mefginLeft : 15 
+        mefginLeft : 15
     }
 });
 
@@ -82,7 +81,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     const location = useLocation();
     const [ quantity, setQuantity ] = useState(1);
     const { dispatch } = useContext(ShoppingCartContext);
-    
+
     const goToDetail = () => {
         history.push(`${location.pathname}/products/${product.id}`);
     };
@@ -164,7 +163,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                             />
                         </Grid>
                         <Grid item xs={6} className={classes.orderActionWrapper}>
-                            <ShoppingCartButton 
+                            <ShoppingCartButton
                                 onClick={() => addToShoppingCart(product)}
                                 onlyIcon={true} />
                         </Grid>

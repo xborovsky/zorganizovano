@@ -10,7 +10,7 @@ const Home = () => (
         <Grid container justify="center">
             <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
             <Grid item xs={12} sm={5} md={4} lg={3}>
-                <NavLink to="/types">A</NavLink>
+                <NavLink to="/tips">A</NavLink>
             </Grid>
             <Grid item xs={12} sm={5} md={4} lg={3}>
                 <NavLink to="/eshop">B</NavLink>
