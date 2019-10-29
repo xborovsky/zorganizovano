@@ -42,7 +42,9 @@ const OrderConfirmation = ({
             <Typography variant="h1" className={classes.header}>Potvrzení objednávky</Typography>
             <div className={classes.padLeft}>
                 <Section title='Objednáváte si tyto položky'>
-                    <ShoppingCart items={orderData.shoppingCart} />
+                    <ShoppingCart
+                        items={orderData.shoppingCart}
+                        selectedDelivery={selectedDelivery} />
                 </Section>
                 <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje'>
                     <CustomerInfo data={orderData.customerInfo} />
