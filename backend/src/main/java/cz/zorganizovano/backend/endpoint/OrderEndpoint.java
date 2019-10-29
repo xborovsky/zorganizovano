@@ -1,14 +1,16 @@
 package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
+import cz.zorganizovano.backend.bean.order.OrderCreatedDTO;
 import cz.zorganizovano.backend.bean.order.OrderFormBean;
 import cz.zorganizovano.backend.bean.order.OrderSuccessResponse;
-import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.ShipmentType;
+import cz.zorganizovano.backend.event.OrderCreatedEvent;
 import cz.zorganizovano.backend.payment.PaymentInfo;
 import cz.zorganizovano.backend.service.OrderService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,8 @@ public class OrderEndpoint {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     @PostMapping("/customer")
     public void validateCustomer(@Valid @RequestBody CustomerInfo customer) {
@@ -39,18 +43,21 @@ public class OrderEndpoint {
     @PostMapping("/confirm")
     public OrderSuccessResponse createOrder(@Valid @RequestBody OrderFormBean order) {
         // TODO validate warehouse cnt for each item
-        Order created = orderService.createOrder(
+        OrderCreatedDTO created = orderService.createOrder(
             order.getCustomerInfo(),
             order.getShippingAddress(),
             order.getShoppingCart()
         );
         
         PaymentInfo paymentInfo = new PaymentInfo(
-            String.valueOf(created.getOrderNum()),
+            String.valueOf(created.getOrder().getOrderNum()),
             0, // TODO
-            created.getMaturity()
+            created.getOrder().getMaturity()
         );
-        return new OrderSuccessResponse(created.getOrderNum(), paymentInfo);
+
+        eventPublisher.publishEvent(new OrderCreatedEvent(created.getOrder(), created.getOrderItems(), paymentInfo));
+
+        return new OrderSuccessResponse(created.getOrder().getOrderNum(), paymentInfo);
     }
 
 }

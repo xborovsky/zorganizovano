@@ -2,6 +2,7 @@ package cz.zorganizovano.backend.service;
 
 import cz.zorganizovano.backend.bean.order.Address;
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
+import cz.zorganizovano.backend.bean.order.OrderCreatedDTO;
 import cz.zorganizovano.backend.bean.order.ShoppingCart;
 import cz.zorganizovano.backend.bean.order.ShoppingCartItem;
 import cz.zorganizovano.backend.dao.CustomerDao;
@@ -45,10 +46,11 @@ public class OrderServiceImpl implements OrderService {
     private StockItemDao stockItemDao;
     @Autowired
     private OrderItemDao orderItemDao;
+    
 
     @Override
     @Transactional
-    public Order createOrder(CustomerInfo customerInfo, Address shippingAddress, ShoppingCart shoppingCart) {
+    public OrderCreatedDTO createOrder(CustomerInfo customerInfo, Address shippingAddress, ShoppingCart shoppingCart) {
         Date now = timeManager.getCurrentDate();
         Order order = new Order();
         order.setCreated(now);
@@ -60,14 +62,14 @@ public class OrderServiceImpl implements OrderService {
 
         order = orderDao.save(order);
 
-        createOrderItems(shoppingCart, order);
+        List<OrderItem> orderItems = createOrderItems(shoppingCart, order);
         createInvoiceAddress(customerInfo, order);
         if (shippingAddress != null) {
             createShipmentAddress(shippingAddress, order);
         }
         updateStock(shoppingCart);
 
-        return order;
+        return new OrderCreatedDTO(order, orderItems);
     }
 
     protected long genereateOrderNumber(Date now) {

@@ -1,9 +1,13 @@
 package cz.zorganizovano.backend.event;
 
 import cz.zorganizovano.backend.email.EmailService;
+import cz.zorganizovano.backend.email.builder.OrderCreatedCustomerEmail;
 import cz.zorganizovano.backend.entity.Order;
-import cz.zorganizovano.backend.service.OrderMailNotificationServiceImpl;
+import cz.zorganizovano.backend.entity.OrderItem;
+import cz.zorganizovano.backend.payment.PaymentInfo;
+import cz.zorganizovano.backend.service.OrderMailNotificationService;
 import java.text.MessageFormat;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +23,24 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
     @Autowired
     private EmailService emailService;
     @Autowired
-    private OrderMailNotificationServiceImpl orderMailNotificationServiceImpl;
+    private OrderMailNotificationService orderMailNotificationService;
+    @Autowired
+    private OrderCreatedCustomerEmail customerEmail;
 
     @Override
     public void onApplicationEvent(OrderCreatedEvent event) {
         Order order = event.getOrder();
+        List<OrderItem> orderItems = event.getOrderItems();
+        PaymentInfo paymentInfo = event.getPaymentInfo();
 
-        sendEmailToCustomer(order);
+        sendEmailToCustomer(order, orderItems, paymentInfo);
     }
 
-    protected void sendEmailToCustomer(Order order) {
+    protected void sendEmailToCustomer(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo) {
         //String recipient = order.getCustomer().getEmail();
-        String recipient = "TODO";
-        String subject = "Vaše objednávka byla přijata";
-        String text = "TODO";
+        String recipient = "23boro23@gmail.com"; // TODO
+        String subject = customerEmail.getSubject();
+        String text = customerEmail.build(order, orderItems, paymentInfo);
 
         doSendMail(recipient, subject, text);
     }
@@ -50,7 +58,7 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
             emailService.send(recipient, subject, text);
         } catch (MailException e) {
             LOG.error(MessageFormat.format("Could not send email to {0}!", recipient), e);
-            orderMailNotificationServiceImpl.create(recipient, subject, text);
+            orderMailNotificationService.create(recipient, subject, text);
         }
     }
 
