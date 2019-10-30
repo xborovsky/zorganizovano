@@ -6,7 +6,6 @@ import withStyles from '@material-ui/styles/withStyles';
 import WizardButtons from '../../components/WizardButtons';
 import ShoppingCart from './components/ShoppingCart';
 import CustomerInfo from './components/CustomerInfo';
-import Transport from './components/Transport';
 import withLoading from 'components/hoc/WithLoading';
 import Section from './components/Section';
 
@@ -46,17 +45,13 @@ const OrderConfirmation = ({
                         items={orderData.shoppingCart}
                         selectedDelivery={selectedDelivery} />
                 </Section>
-                <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje'>
-                    <CustomerInfo data={orderData.customerInfo} />
-                </Section>
-                <Section title='Pro doručení jste zvolili tuto službu'>
-                    <Transport
-                        title={`${selectedDelivery.readableName} ${selectedDelivery.price},-`}
-                        additionalInfo={orderData.shippingAddress && {
+                <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
+                    <CustomerInfo
+                        data={orderData.customerInfo}
+                        shipment={{
                             shipmentType : orderData.shipmentType,
                             shippingAddress : orderData.shippingAddress
-                        }}
-                    />
+                        }} />
                 </Section>
                 <Section className={classes.totalPrice}>
                     Celková cena: {

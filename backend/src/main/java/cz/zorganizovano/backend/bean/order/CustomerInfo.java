@@ -14,7 +14,6 @@ public class CustomerInfo {
     private String email;
     @NotBlank(message = "Pole Telefonní číslo je povinné")
     private String phoneNo;
-    //@Valid
     private Address address;
 
     public String getFirstName() {

@@ -59,8 +59,8 @@ const OrderWizard = ({ classes }) => {
             case 1: return (
                 <DeliveryForm
                     initialFormData={orderData.shippingAddress}
-                    onGoToNextStep={shippingAddress => {
-                        setOrderData({...orderData, ...shippingAddress});
+                    onGoToNextStep={shipping => {
+                        setOrderData({...orderData, ...shipping});
                         goToNext();
                     }}
                     onGoToPrevStep={goToPrev}

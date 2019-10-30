@@ -50,7 +50,6 @@ const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, o
 
     const handleSubmit = (values, { setSubmitting }) => {
         setSubmitting(true);
-        console.log(values);
         // TODO validace na serveru
         onGoToNextStep({
             shipmentType : values.deliveryOption,

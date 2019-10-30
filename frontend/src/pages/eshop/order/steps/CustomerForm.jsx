@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
+import Checkbox from '@material-ui/core/Checkbox';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -40,7 +42,9 @@ const CustomerFormSchema = Yup.object().shape({
     country : Yup.string()
         .min(15, 'Zadaný údaj je moc krátký.')
         .max(15, 'Zadaný údaj je moc dlouhý.')
-        .required('Prosím, zadejte zemi.')
+        .required('Prosím, zadejte zemi.'),
+    personalDataHandleApproval : Yup.bool()
+        .oneOf([true], 'Tento údaj je povinný.')
 });
 
 const EMPTY_FORM = {
@@ -51,7 +55,8 @@ const EMPTY_FORM = {
     street : '',
     zipCode : '',
     township : '',
-    country : 'Česká republika'
+    country : 'Česká republika',
+    personalDataHandleApproval : false
 };
 
 const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
@@ -219,6 +224,25 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                         </FormControl>
                                     </Grid>
                                 </Grid>
+                            </Grid>
+                            <Grid item xs={12} style={{ textAlign : 'right', marginTop : '-4rem', marginBottom : '-2rem' }}>
+                                <FormControl error={touched.personalDataHandleApproval && !!errors.personalDataHandleApproval} fullWidth style={{ alignItems : 'flex-end' }}>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                id="personalDataHandleApproval"
+                                                name="personalDataHandleApproval"
+                                                checked={values.personalDataHandleApproval}
+                                                onChange={handleChange}
+                                                color="primary"
+                                            />
+                                        }
+                                        label="Souhlasím se zpracováním osobních údajů"
+                                    />
+                                    <FormHelperText id="personalDataHandleApproval-error">
+                                        {touched.personalDataHandleApproval && errors.personalDataHandleApproval}
+                                    </FormHelperText>
+                                </FormControl>
                             </Grid>
                         </Grid>
                         <WizardButtons
