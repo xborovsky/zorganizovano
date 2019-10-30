@@ -8,8 +8,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import { useHistory, useLocation } from 'react-router-dom';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 import { productShape } from '../product-prop-type';
 import Price from '../../../../components/Price';
@@ -17,6 +15,7 @@ import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCa
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import ProductListItemPhoto from './ProductListItemPhoto';
 import ShoppingCartButton from 'components/ShoppingCartButton';
+import QuantityInput from 'components/QuantityInput';
 
 const styles = theme => ({
     card : {
@@ -72,6 +71,9 @@ const styles = theme => ({
     cardActions : {
         marginRight : 15,
         mefginLeft : 15
+    },
+    quantityInput : {
+        marginRight : 20
     }
 });
 
@@ -147,22 +149,13 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                         <Grid item xs={12} className={classes.priceWrapper}>
                             <Price value={product.price} />
                         </Grid>
-                        <Grid item xs={6} className={classes.orderActionWrapper}>
-                            <TextField
+                        <Grid item xs={12} className={classes.orderActionWrapper}>
+                            <QuantityInput
                                 value={quantity}
                                 onChange={handleChangeQuantity}
-                                type="number"
-                                className={classes.textField}
-                                InputLabelProps={{ shrink: true }}
-                                margin="dense"
-                                variant="outlined"
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="end">ks</InputAdornment>,
-                                    inputProps: { min : 1, max: product.stockQuantity }
-                                }}
+                                maxVal={product.stockQuantity}
+                                className={classes.quantityInput}
                             />
-                        </Grid>
-                        <Grid item xs={6} className={classes.orderActionWrapper}>
                             <ShoppingCartButton
                                 onClick={() => addToShoppingCart(product)}
                                 onlyIcon={true} />

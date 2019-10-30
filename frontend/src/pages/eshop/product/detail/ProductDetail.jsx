@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Grid, withStyles, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import ProductSpec from './ProductSpec';
@@ -14,6 +13,7 @@ import Details from './Details';
 import ProductGallery from './ProductGallery';
 import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 import ShoppingCartButton from 'components/ShoppingCartButton';
+import QuantityInput from 'components/QuantityInput';
 
 const styles = theme => ({
     root : {
@@ -37,7 +37,12 @@ const styles = theme => ({
         textAlign : 'right'
     },
     shoppingCartWrapper : {
-        textAlign : 'right'
+        alignItems : 'center',
+        display : 'flex',
+        justifyContent : 'flex-end'
+    },
+    quantityInput : {
+        marginRight : 20
     },
     ideaPromptWrapper : {
         marginTop : '3vh'
@@ -48,15 +53,6 @@ const styles = theme => ({
         [theme.breakpoints.down('sm')] : {
             width : '100%'
         }
-    },
-    quantityWrapper: {
-        textAlign : 'center',
-        [theme.breakpoints.down('xs')] : {
-            textAlign : 'left'
-        }
-    },
-    quantity : {
-        width : 100
     }
 });
 
@@ -87,34 +83,20 @@ const ProductDetail = ({ product, classes }) => {
     };
 
     const getQuantityInput = tooltiped => {
-        return tooltiped && product.stockQuantity > 0 ? 
+        return tooltiped && product.stockQuantity > 0 ?
             <Tooltip title={`Do košíku je možno vložit pouze ${product.stockQuantity} kus${product.stockQuantity === 1 ? '' : product.stockQuantity > 4 ? 'ů' : 'y'}. Pro více kusů mě prosím kontaktujte, určitě se domluvíme.`}>
-                <TextField
-                    label="Počet kusů"
+                <QuantityInput
                     value={quantity}
                     onChange={handleChangeQuantity}
-                    type="number"
-                    className={classes.quantity}
-                    inputProps={{
-                        min: 1,
-                        max: product.stockQuantity
-                    }}
-                    margin="none"
-                    variant="outlined"
+                    maxVal={product.stockQuantity}
+                    className={classes.quantityInput}
                 />
             </Tooltip> :
-            <TextField
-                label="Počet kusů"
+            <QuantityInput
                 value={quantity}
                 onChange={handleChangeQuantity}
-                type="number"
-                className={classes.quantity}
-                inputProps={{
-                    min: 1,
-                    max: product.stockQuantity
-                }}
-                margin="none"
-                variant="outlined"
+                maxVal={product.stockQuantity}
+                className={classes.quantityInput}
             />
     };
 
@@ -133,11 +115,9 @@ const ProductDetail = ({ product, classes }) => {
                         <Grid item xs={12} className={classes.priceWrapper}>
                             <Price value={product.price} size="xl" />
                         </Grid>
-                        <Grid item xs={6} sm={4} className={classes.quantityWrapper}>
+                        <Grid item xs={12} className={classes.shoppingCartWrapper}>
                             { getQuantityInput(product.stockQuantity > 0) }
-                        </Grid>
-                        <Grid item xs={6} sm={8} className={classes.shoppingCartWrapper}>
-                            <ShoppingCartButton 
+                            <ShoppingCartButton
                                 onClick={() => addItemToShoppingCart(product)}
                             />
                         </Grid>

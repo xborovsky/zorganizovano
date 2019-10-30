@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { withStyles } from '@material-ui/styles';
+
 import Price from 'components/Price';
+import QuantityInput from 'components/QuantityInput';
 
 const styles = theme => ({
-    textField: {
-        width: 70
+    quantityInput: {
+        width: 90
     },
     trashIcon : {
         cursor : 'pointer'
@@ -27,16 +28,11 @@ const ShoppingCartItem = ({
         <TableCell>TODO - obrazok</TableCell>
         <TableCell>{item.name}</TableCell>
         <TableCell align="center">
-            <TextField
+            <QuantityInput
                 value={item.quantity}
                 onChange={evt => onChangeQuantity(evt, item.id)}
-                type="number"
-                className={classes.textField}
-                InputLabelProps={{ shrink: true }}
-                InputProps={{ inputProps: { min : 0, max: 99 } }} // TODO max product.stockQuantity (ajax)
-                margin="dense"
-                variant="outlined"
-                hiddenLabel
+                max={99} // TODO max product.stockQuantity (ajax)
+                className={classes.quantityInput}
             />
         </TableCell>
         <TableCell align="center"><Price value={item.price} size="inherit" /></TableCell>
