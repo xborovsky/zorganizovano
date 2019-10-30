@@ -2,7 +2,6 @@ package cz.zorganizovano.backend.email.builder;
 
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
-import cz.zorganizovano.backend.payment.PaymentInfo;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Properties;
@@ -17,9 +16,9 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OrderCreatedCustomerEmailImpl extends OrderCreatedEmailBuilderAbs implements OrderCreatedCustomerEmail {
-    
-    private static final String TEMPLATE_FILE = "/mail-templates/order-created.customer.vm";
+public class OrderCreatedAdminEmailImpl extends OrderCreatedEmailBuilderAbs implements OrderCreatedAdminEmail {
+
+    private static final String TEMPLATE_FILE = "/mail-templates/order-created.admin.vm";
 
     private Template template;
 
@@ -38,12 +37,10 @@ public class OrderCreatedCustomerEmailImpl extends OrderCreatedEmailBuilderAbs i
     }
 
     @Override
-    public String build(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo) {
+    public String build(Order order, List<OrderItem> orderItems) {
         VelocityContext context = new VelocityContext();
         context.put("orderNum", order.getOrderNum());
         context.put("orderItems", buildOrderItems(order, orderItems));
-        context.put("paymentDetails", buildPaymentDetails(paymentInfo));
-        context.put("paymentQR", buildPaymentQR());
 
         StringWriter writer = new StringWriter();
         template.merge(context, writer);
@@ -53,7 +50,7 @@ public class OrderCreatedCustomerEmailImpl extends OrderCreatedEmailBuilderAbs i
 
     @Override
     public String getSubject() {
-        return "Vaše objednávka byla přijata";
+        return "Nová objednávka přijata!";
     }
 
 }

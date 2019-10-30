@@ -1,6 +1,7 @@
 package cz.zorganizovano.backend.event;
 
 import cz.zorganizovano.backend.email.EmailService;
+import cz.zorganizovano.backend.email.builder.OrderCreatedAdminEmail;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.payment.PaymentInfo;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
-import cz.zorganizovano.backend.email.builder.OrderCreatedEmail;
+import cz.zorganizovano.backend.email.builder.OrderCreatedCustomerEmail;
 
 @Component
 public class OrderCreatedEventListener implements ApplicationListener<OrderCreatedEvent> {
@@ -25,7 +26,9 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
     @Autowired
     private OrderMailNotificationService orderMailNotificationService;
     @Autowired
-    private OrderCreatedEmail customerEmail;
+    private OrderCreatedCustomerEmail customerEmail;
+    @Autowired
+    private OrderCreatedAdminEmail adminEmail;
 
     @Override
     public void onApplicationEvent(OrderCreatedEvent event) {
@@ -34,6 +37,8 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
         PaymentInfo paymentInfo = event.getPaymentInfo();
 
         sendEmailToCustomer(order, orderItems, paymentInfo);
+
+        sendEmailToAdmin(order, orderItems);
     }
 
     protected void sendEmailToCustomer(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo) {
@@ -44,10 +49,10 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
         doSendMail(recipient, subject, text);
     }
 
-    protected void sendEmailToAdmin(Order order) {
+    protected void sendEmailToAdmin(Order order, List<OrderItem> orderItems) {
         String recipient = EmailService.ADMIN_EMAIL;
         String subject = "Nová objednávka přijata";
-        String text = "TODO";
+        String text = adminEmail.build(order, orderItems);
 
         doSendMail(recipient, subject, text);
     }
