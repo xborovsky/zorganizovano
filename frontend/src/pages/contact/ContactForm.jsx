@@ -14,9 +14,11 @@ import * as Yup from 'yup';
 import { withStyles } from '@material-ui/styles';
 import { CircularProgress } from '@material-ui/core';
 import axios from 'axios';
+import { ReCaptcha } from 'react-recaptcha-v3'
 
 import CharacterCounter from 'components/CharacterCounter';
 import Alert from 'components/Alert';
+import { RECAPTCHA_SITE_KEY } from 'App';
 
 const ContactFormSchema = Yup.object().shape({
     name : Yup.string()
@@ -63,9 +65,9 @@ const styles = theme => ({
         textAlign : 'right'
     }
 });
-
 const ContactForm = ({ classes }) => {
     const [ ajaxResult, setAjaxResult ] = useState({});
+    const [ recaptchaToken, setRecaptchaToken ] = useState(undefined);
 
     const showAlert = () => {
         if (ajaxResult.success) {
@@ -75,6 +77,8 @@ const ContactForm = ({ classes }) => {
         }
         return null;
     };
+
+    const verifyCallback = recaptchaToken => setRecaptchaToken(recaptchaToken);
 
     return (
         <Paper className={classes.root}>
@@ -100,7 +104,7 @@ const ContactForm = ({ classes }) => {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
                     setAjaxResult({});
-                    axios.post('/contact', values)
+                    axios.post('/contact', {...values, recaptchaToken})
                         .then(_res => {
                             setAjaxResult({
                                 success : 'Dotaz byl úspěšně odeslán, děkujeme.'
@@ -196,6 +200,13 @@ const ContactForm = ({ classes }) => {
                                         count={values.query.length}
                                         max={QUERY_MAX_LENGTH}
                                         className={classes.characterCounter} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <ReCaptcha
+                                        sitekey={RECAPTCHA_SITE_KEY}
+                                        action='contact_form'
+                                        verifyCallback={verifyCallback}
+                                    />
                                 </Grid>
                                 <Grid item xs={12} className={classes.submitBtnWrapper}>
                                     { isSubmitting ?

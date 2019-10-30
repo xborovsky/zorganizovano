@@ -14,6 +14,7 @@ public class ContactFormBean {
     private String type;
     @NotBlank(message = "Pole Dotaz je povinné")
     private String query;
+    private String recaptchaToken;
 
     public String getName() {
         return name;
@@ -45,6 +46,14 @@ public class ContactFormBean {
 
     public void setQuery(String query) {
         this.query = query;
+    }
+
+    public String getRecaptchaToken() {
+        return recaptchaToken;
+    }
+
+    public void setRecaptchaToken(String recaptchaToken) {
+        this.recaptchaToken = recaptchaToken;
     }
 
 }

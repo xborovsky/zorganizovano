@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { loadReCaptcha } from 'react-recaptcha-v3';
 
 import Main from './layout/Main';
 import Header from './layout/Header';
@@ -17,6 +18,7 @@ import zorganizovanoTheme from './Theme';
 const Home = React.lazy(() => import('./pages/home'));
 const Tips = React.lazy(() => import('./pages/tips'));
 const Eshop = React.lazy(() => import('./pages/eshop'));
+const Contact = React.lazy(() => import('./pages/contact'));
 
 const styles = theme => ({
   root: {
@@ -26,12 +28,18 @@ const styles = theme => ({
   }
 });
 
+export const RECAPTCHA_SITE_KEY = '6LdrKsAUAAAAAPsXgJSwERT3AwtBDMage9E6YyTy';
+
 const App = ({ classes }) => {
   const [state, dispatch] = useReducer(shoppingCartReducer, localStorage.getItem('shoppingCart') ? JSON.parse(localStorage.getItem('shoppingCart')) : []);
 
   useEffect(() => {
       window.localStorage.setItem("shoppingCart", JSON.stringify(state));
   }, [state]);
+
+  useEffect(() => {
+      loadReCaptcha(RECAPTCHA_SITE_KEY);
+  });
 
   return (
     <div className={classes.root}>
@@ -47,6 +55,7 @@ const App = ({ classes }) => {
                     <Route exact path="/" component={Home} />
                     <Route path="/tips" component={Tips} />
                     <Route path="/eshop" component={Eshop} />
+                    <Route path="/contact" component={Contact} />
                   </Switch>
                 </Suspense>
               </Main>
