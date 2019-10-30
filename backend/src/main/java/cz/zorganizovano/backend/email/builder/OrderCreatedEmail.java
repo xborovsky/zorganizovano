@@ -5,7 +5,7 @@ import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.payment.PaymentInfo;
 import java.util.List;
 
-public interface OrderCreatedCustomerEmail {
+public interface OrderCreatedEmail {
 
     String build(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo);
 

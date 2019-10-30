@@ -1,7 +1,6 @@
 package cz.zorganizovano.backend.event;
 
 import cz.zorganizovano.backend.email.EmailService;
-import cz.zorganizovano.backend.email.builder.OrderCreatedCustomerEmail;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.payment.PaymentInfo;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
+import cz.zorganizovano.backend.email.builder.OrderCreatedEmail;
 
 @Component
 public class OrderCreatedEventListener implements ApplicationListener<OrderCreatedEvent> {
@@ -25,7 +25,7 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
     @Autowired
     private OrderMailNotificationService orderMailNotificationService;
     @Autowired
-    private OrderCreatedCustomerEmail customerEmail;
+    private OrderCreatedEmail customerEmail;
 
     @Override
     public void onApplicationEvent(OrderCreatedEvent event) {
@@ -37,8 +37,7 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
     }
 
     protected void sendEmailToCustomer(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo) {
-        //String recipient = order.getCustomer().getEmail();
-        String recipient = "23boro23@gmail.com"; // TODO
+        String recipient = order.getCustomer().getEmail();
         String subject = customerEmail.getSubject();
         String text = customerEmail.build(order, orderItems, paymentInfo);
 
@@ -47,7 +46,7 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
 
     protected void sendEmailToAdmin(Order order) {
         String recipient = EmailService.ADMIN_EMAIL;
-        String subject = "Nová objednávka na zorganizovano.cz!";
+        String subject = "Nová objednávka přijata";
         String text = "TODO";
 
         doSendMail(recipient, subject, text);

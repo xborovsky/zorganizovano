@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="x-apple-disable-message-reformatting" />
-        <title>Email verification</title>
+        <title>Objednávka přijata</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body style="margin: 0; padding: 0; font-family: Helvetica, Arial, Verdana, 'Trebuchet MS';">
@@ -17,14 +17,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12pt; padding-left: 50px; padding-right: 50px; color: #4a4a4a;">
+                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
                         Přijali jsme Vaši objednávku č. ${orderNum}
                         <br /><br />
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12pt; padding-left: 50px; padding-right: 50px; color: #4a4a4a;">
+                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
                         <table>
                             <tr>
@@ -38,7 +38,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12pt; padding-left: 50px; padding-right: 50px; color: #4a4a4a;">
+                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
                         Pokud jste tak již neučinili, cenu objednávky prosím uhraďte do 5 pracovních dnů na účet:
                         ${paymentDetails}
@@ -49,13 +49,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12pt; padding-left: 50px; padding-right: 50px; color: #4a4a4a;">
+                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
                         TODO kontaktní údaje / zásilkovna
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 16pt; padding-left: 50px; padding-right: 50px; color: #4a4a4a;">
+                    <td style="font-size: 16pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
                         Děkuji za Váš nákup,
                         Bára
@@ -63,8 +63,35 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12pt; padding-left: 50px; padding-right: 50px; color: #4a4a4a;">
-                        TODO - footer
+                    <td style="font-size: 12pt; padding-left: 20px; padding-right: 20px; padding-top: 10px; color: #000; background-color: #cfcfcf;">
+                        <center>
+                            <table cellspacing="5">
+                                <tr>
+                                    <td><a style="color: #000;" href="https://zorganizovano.cz/eshop/terms">Obchodní podmínky</a></td>
+                                    <td>ZORGANIZOVÁNO</td>
+                                </tr>
+                                <tr>
+                                    <td><a style="color: #000;" href="https://zorganizovano.cz/eshop/faq">Nejčastěji kladené dotazy</a></td>
+                                    <td>Bára Borovská</td>
+                                </tr>
+                                <tr>
+                                    <td><a style="color: #000;" href="https://zorganizovano.cz/contact">Kontakt</a></td>
+                                    <td>+420 734 836 714</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>zorganizovano@gmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Dotaz, nápad, průšiv?&nbsp;<a style="color: #000; display: inline;" href="https://zorganizovano.cz/contact">Napište mi!</a></td>
+                                </tr>
+                            </table>
+                        </center>
                     </td>
                 </tr>
             </table>

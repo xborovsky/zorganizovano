@@ -17,9 +17,9 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OrderCreatedCustomerEmailImpl extends OrderCreatedEmailBuilderAbs implements OrderCreatedEmail {
-    
-    private static final String TEMPLATE_FILE = "/mail-templates/order-created.customer.vm";
+public class OrderCreatedAdminEmail extends OrderCreatedEmailBuilderAbs implements OrderCreatedEmail {
+
+    private static final String TEMPLATE_FILE = "/mail-templates/order-created.admin.vm";
 
     private Template template;
 
@@ -53,7 +53,7 @@ public class OrderCreatedCustomerEmailImpl extends OrderCreatedEmailBuilderAbs i
 
     @Override
     public String getSubject() {
-        return "Vaše objednávka byla přijata";
+        return "Nová objednávka přijata!";
     }
 
 }
