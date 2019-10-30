@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { loadReCaptcha } from 'react-recaptcha-v3';
 
 import Main from './layout/Main';
 import Header from './layout/Header';
@@ -36,10 +35,6 @@ const App = ({ classes }) => {
   useEffect(() => {
       window.localStorage.setItem("shoppingCart", JSON.stringify(state));
   }, [state]);
-
-  useEffect(() => {
-      loadReCaptcha(RECAPTCHA_SITE_KEY);
-  });
 
   return (
     <div className={classes.root}>

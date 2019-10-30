@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -14,7 +14,7 @@ import * as Yup from 'yup';
 import { withStyles } from '@material-ui/styles';
 import { CircularProgress } from '@material-ui/core';
 import axios from 'axios';
-import { ReCaptcha } from 'react-recaptcha-v3'
+import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-v3'
 
 import CharacterCounter from 'components/CharacterCounter';
 import Alert from 'components/Alert';
@@ -68,6 +68,10 @@ const styles = theme => ({
 const ContactForm = ({ classes }) => {
     const [ ajaxResult, setAjaxResult ] = useState({});
     const [ recaptchaToken, setRecaptchaToken ] = useState(undefined);
+
+    useEffect(() => {
+        loadReCaptcha(RECAPTCHA_SITE_KEY);
+    });
 
     const showAlert = () => {
         if (ajaxResult.success) {
