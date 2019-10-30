@@ -12,8 +12,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "order_mail_notifications")
-public class OrderMailNotification implements Serializable {
+@Table(name = "mail_notifications")
+public class MailNotification implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +29,10 @@ public class OrderMailNotification implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date created;
 
-    public OrderMailNotification() {
+    public MailNotification() {
     }
 
-    public OrderMailNotification(long id) {
+    public MailNotification(long id) {
         this.id = id;
     }
 
@@ -94,7 +94,7 @@ public class OrderMailNotification implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final OrderMailNotification other = (OrderMailNotification) obj;
+        final MailNotification other = (MailNotification) obj;
         if (this.id != other.id) {
             return false;
         }

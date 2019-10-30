@@ -1,8 +1,7 @@
 package cz.zorganizovano.backend.service;
 
-import cz.zorganizovano.backend.dao.OrderMailNotificationDao;
 import cz.zorganizovano.backend.email.EmailService;
-import cz.zorganizovano.backend.entity.OrderMailNotification;
+import cz.zorganizovano.backend.entity.MailNotification;
 import cz.zorganizovano.backend.manager.TimeManager;
 import java.text.MessageFormat;
 import java.util.List;
@@ -13,21 +12,22 @@ import org.springframework.mail.MailException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import cz.zorganizovano.backend.dao.MailNotificationDao;
 
 @Service
-public class OrderMailNotificationServiceImpl implements OrderMailNotificationService {
-    private static final Logger LOG = LoggerFactory.getLogger(OrderMailNotificationServiceImpl.class);
+public class MailNotificationServiceImpl implements MailNotificationService {
+    private static final Logger LOG = LoggerFactory.getLogger(MailNotificationServiceImpl.class);
 
     @Autowired
     private TimeManager timeManager;
     @Autowired
-    private OrderMailNotificationDao orderMailNotificationDao;
+    private MailNotificationDao mailNotificationDao;
     @Autowired
     private EmailService emailService;
 
     @Scheduled(fixedDelay = 5 * 60 * 1000) // 5 minutes
     public void sendUnsentMailNotifications() {
-        List<OrderMailNotification> mailNotifications = orderMailNotificationDao.findAll();
+        List<MailNotification> mailNotifications = mailNotificationDao.findAll();
 
         if (!mailNotifications.isEmpty()) {
             LOG.info(
@@ -62,7 +62,7 @@ public class OrderMailNotificationServiceImpl implements OrderMailNotificationSe
     @Scheduled(cron = "1 0 0 * * *")
     public void removeExpiredUnsentMailNotifications() {
         LOG.info("Removing expired unsent mail notifications...");
-        List<OrderMailNotification> mailNotifications = orderMailNotificationDao.findAll();
+        List<MailNotification> mailNotifications = mailNotificationDao.findAll();
         mailNotifications.stream()
             .filter((mailNotification) -> (timeManager.getNumDaysBetween(mailNotification.getCreated(), timeManager.getCurrentDate()) > OrderService.DEFAULT_MATURITY))
             .forEachOrdered((mailNotification) -> {
@@ -72,20 +72,20 @@ public class OrderMailNotificationServiceImpl implements OrderMailNotificationSe
 
     @Override
     @Transactional
-    public OrderMailNotification create(String mail, String subject, String content) {
-        OrderMailNotification mailNotification = new OrderMailNotification();
+    public MailNotification create(String mail, String subject, String content) {
+        MailNotification mailNotification = new MailNotification();
         mailNotification.setAddress(mail);
         mailNotification.setSubject(subject);
         mailNotification.setContent(content);
         mailNotification.setCreated(timeManager.getCurrentDate());
 
-        return orderMailNotificationDao.save(mailNotification);
+        return mailNotificationDao.save(mailNotification);
     }
 
     @Override
     @Transactional
-    public void delete(OrderMailNotification mailNotification) {
-        orderMailNotificationDao.delete(mailNotification);
+    public void delete(MailNotification mailNotification) {
+        mailNotificationDao.delete(mailNotification);
     }
 
 }

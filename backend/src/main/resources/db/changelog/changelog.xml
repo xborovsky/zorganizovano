@@ -149,7 +149,7 @@
             </column>
         </createTable>
 
-        <createTable tableName="order_mail_notifications">
+        <createTable tableName="mail_notifications">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>

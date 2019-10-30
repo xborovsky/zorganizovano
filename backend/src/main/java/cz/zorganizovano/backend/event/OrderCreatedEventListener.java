@@ -5,7 +5,6 @@ import cz.zorganizovano.backend.email.builder.OrderCreatedAdminEmail;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.payment.PaymentInfo;
-import cz.zorganizovano.backend.service.OrderMailNotificationService;
 import java.text.MessageFormat;
 import java.util.List;
 import org.slf4j.Logger;
@@ -15,6 +14,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
 import cz.zorganizovano.backend.email.builder.OrderCreatedCustomerEmail;
+import cz.zorganizovano.backend.service.MailNotificationService;
 
 @Component
 public class OrderCreatedEventListener implements ApplicationListener<OrderCreatedEvent> {
@@ -24,7 +24,7 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
     @Autowired
     private EmailService emailService;
     @Autowired
-    private OrderMailNotificationService orderMailNotificationService;
+    private MailNotificationService mailNotificationService;
     @Autowired
     private OrderCreatedCustomerEmail customerEmail;
     @Autowired
@@ -62,7 +62,7 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
             emailService.send(recipient, subject, text);
         } catch (MailException e) {
             LOG.error(MessageFormat.format("Could not send email to {0}!", recipient), e);
-            orderMailNotificationService.create(recipient, subject, text);
+            mailNotificationService.create(recipient, subject, text);
         }
     }
 
