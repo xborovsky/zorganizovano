@@ -15,6 +15,9 @@ const styles = theme => ({
     paper : {
         padding: '3px 20px',
         background: '#eee'
+    },
+    link : {
+        color : '#000'
     }
 });
 
@@ -22,11 +25,11 @@ const BreadcrumbsNav = ({ items, classes }) => (
     <div className={classes.root}>
         <Paper elevation={0} className={classes.paper}>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
-                <Link to='/'><HomeIcon /></Link>
+                <Link to='/' className={classes.link}><HomeIcon /></Link>
                 {
                     items.map(item => (
                         item.link ?
-                            <Link to={item.link} key={item.name}>{item.name}</Link> :
+                            <Link to={item.link} key={item.name} className={classes.link}>{item.name}</Link> :
                             <Typography key={item.name}>{ item.name }</Typography>
                     ))
                 }
