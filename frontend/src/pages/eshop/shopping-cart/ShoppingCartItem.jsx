@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { withStyles } from '@material-ui/styles';
+import Price from 'components/Price';
 
 const styles = theme => ({
     textField: {
@@ -38,8 +39,8 @@ const ShoppingCartItem = ({
                 hiddenLabel
             />
         </TableCell>
-        <TableCell align="center">{item.price},- Kč</TableCell>
-        <TableCell align="center">{item.quantity * item.price},- Kč</TableCell>
+        <TableCell align="center"><Price value={item.price} size="inherit" /></TableCell>
+        <TableCell align="center"><Price value={item.quantity * item.price} size="inherit" /></TableCell>
         <TableCell align="center">
             <FontAwesomeIcon
                 icon={faTrashAlt}

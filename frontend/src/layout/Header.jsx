@@ -169,7 +169,6 @@ const Header = ({ classes }) => {
                                         </Grid>
                                     </Grid>
                                 </nav>
-                                TODO
                             </> :
                             <MenuIcon className={classes.menuIcon} onClick={() => setShowMobileMenu(true)} />
                         }

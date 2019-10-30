@@ -10,8 +10,10 @@ const styles = theme => ({
 
 const getFontSize = size => {
     switch (size) {
+        case 'sm' : return 16;
         case 'normal' : return 26;
         case 'xl' : return 32;
+        case 'inherit' : return 'inherit';
         default : return 26;
     }
 };
@@ -22,7 +24,7 @@ const Price = ({ value, size = 'normal', classes }) => (
 
 Price.propTypes = {
     value : PropTypes.number.isRequired,
-    size : PropTypes.oneOf('normal', 'xl')
+    size : PropTypes.oneOf('sm', 'normal', 'xl', 'inherit')
 };
 
 export default withStyles(styles)(Price);

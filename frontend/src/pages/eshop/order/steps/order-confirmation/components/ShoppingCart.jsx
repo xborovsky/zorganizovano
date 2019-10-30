@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
+import Price from 'components/Price';
 
 const styles = theme => ({
     table : {
@@ -13,12 +14,6 @@ const styles = theme => ({
     },
     totalRow : {
         fontWeight : 'bold !important'
-    },
-    intermediateSum : {
-        fontSize : '13pt',
-    },
-    totalPrice : {
-        fontSize : '16pt'
     }
 });
 
@@ -44,25 +39,29 @@ const ShoppingCart = ({ items, selectedDelivery, classes }) => {
                             <TableCell></TableCell>
                             <TableCell>{ item.name }</TableCell>
                             <TableCell align="center">{ item.quantity }</TableCell>
-                            <TableCell align="center">{ item.price }</TableCell>
-                            <TableCell align="center">{ item.price * item.quantity }</TableCell>
+                            <TableCell align="center"><Price value={item.price} size="inherit" /></TableCell>
+                            <TableCell align="center"><Price value={item.price * item.quantity} size="inherit" /></TableCell>
                         </TableRow>
                     ))
                 }
                 <TableRow className={ classes.totalRow }>
                     <TableCell align="right" colSpan={4}>Mezisoučet:</TableCell>
-                    <TableCell align="center" className={classes.intermediateSum}>{ intermediateSum },- Kč</TableCell> {/* TODO price component? */}
+                    <TableCell align="center">
+                        <Price value={intermediateSum} size="inherit" />
+                    </TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell align="left" colSpan={5}>Doprava</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell align="left" colSpan={4}>{ selectedDelivery.readableName }</TableCell>
-                    <TableCell align="center">{ selectedDelivery.price }</TableCell>
+                    <TableCell align="center"><Price value={selectedDelivery.price} size="inherit" /></TableCell>
                 </TableRow>
                 <TableRow className={ classes.totalRow }>
                     <TableCell align="right" colSpan={4}>Celková cena:</TableCell>
-                    <TableCell align="center" className={classes.totalPrice}>{ totalSum },- Kč</TableCell> {/* TODO price component? */}
+                    <TableCell align="center">
+                        <Price value={totalSum} />
+                    </TableCell>
                 </TableRow>
             </TableBody>
         </Table>
