@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,17 +21,15 @@ public class StockItemPicture implements Serializable {
     @ManyToOne
     @JoinColumn(name = "stock_item_id", nullable = false)
     private StockItem stockItem;
-    @Column(name = "title", nullable = true)
-    private String title;
-    @Column(name = "data", nullable = false, columnDefinition="LONGBLOB")
-    @Lob
-    private byte[] data;
-    @Column(name = "data_type", nullable = false)
-    private String dataType;
     @Column(name = "is_main", nullable = false)
     private boolean main = false;
+    @Column(name = "src", nullable = false)
+    private String src;
+    @Column(name = "srcset", nullable = false)
+    private String srcSet;
 
-    public StockItemPicture() {}
+    public StockItemPicture() {
+    }
 
     public StockItemPicture(long id) {
         this.id = id;
@@ -54,36 +51,28 @@ public class StockItemPicture implements Serializable {
         this.stockItem = stockItem;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
-    }
-
-    public String getDataType() {
-        return dataType;
-    }
-
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
-    }
-
     public boolean isMain() {
         return main;
     }
 
     public void setMain(boolean main) {
         this.main = main;
+    }
+
+    public String getSrc() {
+        return src;
+    }
+
+    public void setSrc(String src) {
+        this.src = src;
+    }
+
+    public String getSrcSet() {
+        return srcSet;
+    }
+
+    public void setSrcSet(String srcSet) {
+        this.srcSet = srcSet;
     }
 
     @Override
@@ -113,8 +102,7 @@ public class StockItemPicture implements Serializable {
 
     @Override
     public String toString() {
-        return "StockItemPicture{" + "id=" + id + ", title=" + title + ", main=" + main + '}';
+        return "StockItemPicture{" + "id=" + id + ", main=" + main + '}';
     }
-
 
 }

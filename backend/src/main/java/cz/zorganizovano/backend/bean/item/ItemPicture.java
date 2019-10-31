@@ -2,22 +2,32 @@ package cz.zorganizovano.backend.bean.item;
 
 public class ItemPicture {
 
-    private final String pictureBase64;
-    private final String dataType;
-    
-    public ItemPicture(String pictureBase64, String dataType) {
-        this.pictureBase64 = pictureBase64;
-        this.dataType = dataType;
+    private final long stockItemPictureId;
+    private final String thumbnail;
+    private final String src;
+    private final String srcSet;
+
+    public ItemPicture(long stockItemPictureId, String thumbnail, String src, String srcSet) {
+        this.stockItemPictureId = stockItemPictureId;
+        this.thumbnail = thumbnail;
+        this.src = src;
+        this.srcSet = srcSet;
     }
 
-    public String getPictureBase64() {
-        return pictureBase64;
+    public long getStockItemPictureId() {
+        return stockItemPictureId;
     }
 
-    public String getDataType() {
-        return dataType;
+    public String getThumbnail() {
+        return thumbnail;
     }
-    
-    
-    
+
+    public String getSrc() {
+        return src;
+    }
+
+    public String getSrcSet() {
+        return srcSet;
+    }
+
 }

@@ -10,6 +10,8 @@ const EMPTY_PICTURES = {
     thumbnail : '/img/icons/image-square-outline.svg'
 };
 
+const BASE_URL = '/img/products';
+
 const ProductGallery = ({ productId }) => (
     <DataFetcher url={`/picture-item/${productId}`}>
         { data => (
@@ -17,10 +19,11 @@ const ProductGallery = ({ productId }) => (
                 items={
                     data.length ?
                         data.map(picture => {
-                            return picture.pictureBase64 ? {
-                                original : `data:${picture.dataType};base64,${picture.pictureBase64}`,
-                                thumbnail : `data:${picture.dataType};base64,${picture.pictureBase64}`
-                            } : EMPTY_PICTURES;
+                            return {
+                                thumbnail : `${BASE_URL}/${picture.src}`,
+                                original : `${BASE_URL}/${picture.src}`,
+                                srcSet : `${BASE_URL}/${picture.srcSet}`
+                            };
                         }) : [EMPTY_PICTURES]
                 }
                 showPlayButton={false}

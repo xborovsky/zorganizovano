@@ -177,13 +177,10 @@
             <column name="stock_item_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="title" type="VARCHAR(255)">
+            <column name="src" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="data" type="LONGBLOB">
-                <constraints nullable="false"/>
-            </column>
-            <column name="data_type" type="varchar(50)">
+            <column name="srcset" type="TEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="is_main" type="BOOLEAN" defaultValueBoolean="false">
