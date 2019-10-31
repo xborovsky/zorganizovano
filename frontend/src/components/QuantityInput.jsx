@@ -21,6 +21,7 @@ const QuantityInput = ({
             endAdornment: <InputAdornment position="end">ks</InputAdornment>,
             inputProps: { min : 1, max: maxVal }
         }}
+        style={{ marginTop : 4 }}
     />
 );
 

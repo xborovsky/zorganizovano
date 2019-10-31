@@ -15,6 +15,7 @@ const styles = theme => ({
         }
     },
     onlyIcon : {
+        fontSize : '16pt',
         [theme.breakpoints.down('xs')] : {
             width : '100%',
             paddingTop : 12,
@@ -31,20 +32,20 @@ const ShoppingCartButton = ({
     onlyIcon = false,
     classes
 }) => (
-    onlyIcon ? 
-        <Button 
+    onlyIcon ?
+        <Button
             variant="contained"
-            color="primary" 
-            size="large" 
+            color="primary"
+            size="large"
             onClick={onClick}
             className={classes.onlyIcon}
             title="Vložit do košíku">
             <FontAwesomeIcon icon={faShoppingCart} />
         </Button> :
-        <Button 
+        <Button
             variant="contained"
-            color="primary" 
-            size="large" 
+            color="primary"
+            size="large"
             onClick={onClick}
             className={classes.root}
             title="Vložit do košíku">
@@ -52,7 +53,7 @@ const ShoppingCartButton = ({
             <Hidden smDown>
                 { !onlyIcon &&
                     <span className={classes.text}>
-                        Vložit do košíku 
+                        Vložit do košíku
                     </span>
                 }
             </Hidden>

@@ -60,7 +60,7 @@ const styles = theme => ({
     orderActionWrapper : {
         display : 'flex',
         justifyContent : 'flex-end',
-        alignItems : 'baseline',
+        alignItems : 'center',
         paddingTop : '5px !important'
     },
     priceWrapper : {
