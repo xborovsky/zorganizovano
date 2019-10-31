@@ -11,6 +11,7 @@ public class ItemListEntry {
     private final double price;
     private final Double discountPrice;
     private final int stockQuantity;
+    private final String thumbnailLocation;
 
     public ItemListEntry(StockItem stockItem) {
         this.id = stockItem.getId();
@@ -22,6 +23,7 @@ public class ItemListEntry {
         this.price = stockItem.getItem().getPrice();
         this.discountPrice = stockItem.getItem().getDiscountPrice();
         this.stockQuantity = stockItem.getQuantity();
+        this.thumbnailLocation = stockItem.getThumbnailLocation();
     }
 
     public long getId() {
@@ -50,6 +52,10 @@ public class ItemListEntry {
 
     public int getStockQuantity() {
         return stockQuantity;
+    }
+
+    public String getThumbnailLocation() {
+        return thumbnailLocation;
     }
 
 }

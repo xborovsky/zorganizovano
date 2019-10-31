@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
@@ -13,7 +14,6 @@ import { productShape } from '../product-prop-type';
 import Price from '../../../../components/Price';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
-import ProductListItemPhoto from './ProductListItemPhoto';
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 
@@ -123,8 +123,9 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                     titleTypographyProps={classes.headerTitle}
                     subheaderTypographyProps={classes.headerSubtitle}
                 />
-                <ProductListItemPhoto
-                    id={product.id}
+                <CardMedia
+                    className={classes.cover}
+                    image={`/img/products/${product.thumbnailLocation}`}
                     onClick={goToDetail}
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>

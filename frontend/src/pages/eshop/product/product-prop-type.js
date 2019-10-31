@@ -7,7 +7,8 @@ export const productShape = PropTypes.shape({
     descriptionShort : PropTypes.string.isRequired,
     price : PropTypes.number.isRequired,
     discountPrice : PropTypes.number,
-    stockQuantity : PropTypes.number.isRequired
+    stockQuantity : PropTypes.number.isRequired,
+    thumbnailLocation : PropTypes.string
 });
 
 export const productDetailShape = PropTypes.shape({

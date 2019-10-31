@@ -147,6 +147,9 @@
             <column name="display_on_eshop" type="BOOLEAN" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
+            <column name="thumbnail_location" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
 
         <createTable tableName="mail_notifications">
@@ -303,7 +306,7 @@
             referencedColumnNames="id"
             referencedTableName="items"
             onDelete="CASCADE" />
-        
+
         <createIndex indexName="shipment_addresses_order_id_idx" tableName="shipment_addresses" unique="true">
             <column name="order_id" type="BIGINT"/>
         </createIndex>

@@ -25,8 +25,11 @@ public class StockItem implements Serializable {
     private int quantity = 0;
     @Column(name = "display_on_eshop", nullable = false)
     private boolean displayOnEshop = false;
+    @Column(name = "thumbnail_location", nullable = true)
+    private String thumbnailLocation;
 
-    public StockItem() {}
+    public StockItem() {
+    }
 
     public StockItem(long id) {
         this.id = id;
@@ -62,6 +65,14 @@ public class StockItem implements Serializable {
 
     public void setDisplayOnEshop(boolean displayOnEshop) {
         this.displayOnEshop = displayOnEshop;
+    }
+
+    public String getThumbnailLocation() {
+        return thumbnailLocation;
+    }
+
+    public void setThumbnailLocation(String thumbnailLocation) {
+        this.thumbnailLocation = thumbnailLocation;
     }
 
     @Override
