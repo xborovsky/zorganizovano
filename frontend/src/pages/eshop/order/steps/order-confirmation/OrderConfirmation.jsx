@@ -6,8 +6,8 @@ import withStyles from '@material-ui/styles/withStyles';
 import WizardButtons from '../../components/WizardButtons';
 import ShoppingCart from './components/ShoppingCart';
 import CustomerInfo from './components/CustomerInfo';
-import withLoading from 'components/hoc/WithLoading';
 import Section from './components/Section';
+import DataFetcher from 'components/DataFetcher';
 
 const styles = theme => ({
     header : {
@@ -30,51 +30,53 @@ const OrderConfirmation = ({
     onOrderConfirmed,
     onError,
     orderData,
-    data, // ajax
     classes
-}) => {
-    // TODO jeste jednou komplet validace na serveru
-    const selectedDelivery = data.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
-
-    return (
-        <form onSubmit={onOrderConfirmed}>
-            <Typography variant="h1" className={classes.header}>Potvrzení objednávky</Typography>
-            <div className={classes.padLeft}>
-                <Section title='Objednáváte si tyto položky'>
-                    <ShoppingCart
-                        items={orderData.shoppingCart}
-                        selectedDelivery={selectedDelivery} />
-                </Section>
-                <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
-                    <CustomerInfo
-                        data={orderData.customerInfo}
-                        shipment={{
-                            shipmentType : orderData.shipmentType,
-                            shippingAddress : orderData.shippingAddress
-                        }} />
-                </Section>
-                <Section className={classes.totalPrice}>
-                    Celková cena: {
-                        orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.price), 0) +
-                        selectedDelivery.price
-                    },- Kč
-                </Section>
-            </div>
-            <WizardButtons
-                prev={{
-                    show : true,
-                    onClick : onGoToPrevStep
-                }}
-                next={{
-                    finishOrder : true
-                }}
-                showNext={false}
-                showFinishOrder={true}
-                onPrevClick={onGoToPrevStep}
-            />
-        </form>
-    );
-};
+}) => (
+    <DataFetcher url='/order/delivery-options'>
+        { data => {
+            // TODO jeste jednou komplet validace na serveru
+            const selectedDelivery = data.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
+            return (
+                <form onSubmit={onOrderConfirmed}>
+                    <Typography variant="h1" className={classes.header}>Potvrzení objednávky</Typography>
+                    <div className={classes.padLeft}>
+                        <Section title='Objednáváte si tyto položky'>
+                            <ShoppingCart
+                                items={orderData.shoppingCart}
+                                selectedDelivery={selectedDelivery} />
+                        </Section>
+                        <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
+                            <CustomerInfo
+                                data={orderData.customerInfo}
+                                shipment={{
+                                    shipmentType : orderData.shipmentType,
+                                    shippingAddress : orderData.shippingAddress
+                                }} />
+                        </Section>
+                        <Section className={classes.totalPrice}>
+                            Celková cena: {
+                                orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.price), 0) +
+                                selectedDelivery.price
+                            },- Kč
+                        </Section>
+                    </div>
+                    <WizardButtons
+                        prev={{
+                            show : true,
+                            onClick : onGoToPrevStep
+                        }}
+                        next={{
+                            finishOrder : true
+                        }}
+                        showNext={false}
+                        showFinishOrder={true}
+                        onPrevClick={onGoToPrevStep}
+                    />
+                </form>
+            );
+        } }
+    </DataFetcher>
+);
 
 OrderConfirmation.propTypes = {
     onGoToPrevStep : PropTypes.func.isRequired,
@@ -83,6 +85,4 @@ OrderConfirmation.propTypes = {
     orderData : PropTypes.shape({}).isRequired // TODO
 };
 
-const DeliveryFormWithLoading = withLoading('/order/delivery-options')(OrderConfirmation);
-
-export default withStyles(styles)(DeliveryFormWithLoading);
+export default withStyles(styles)(OrderConfirmation);

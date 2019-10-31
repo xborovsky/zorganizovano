@@ -9,14 +9,19 @@ import Button from '@material-ui/core/Button';
 import { Formik, Form } from 'formik';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import withLoading from '../../../../components/hoc/WithLoading';
 import WizardButtons from '../components/WizardButtons';
 import ZasilkovnaInfo from '../components/ZasilkovnaInfo';
+import DataFetcher from 'components/DataFetcher';
 
 const PACKETA_API_KEY = '78f6dc3fd19b4bc1';
 const ZASILKOVNA = 'zasilkovna';
 
-const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, onError }) => {
+const DeliveryForm = ({
+    onGoToPrevStep,
+    onGoToNextStep,
+    initialFormData,
+    onError
+}) => {
     const [selectedZasilkovna, setSelectedZasilkovna] = useState(undefined);
 
     const handleSelectZasilkovna = () => {
@@ -65,73 +70,77 @@ const DeliveryForm = ({ data, onGoToPrevStep, onGoToNextStep, initialFormData, o
     };
 
     return (
-        <Formik
-            initialValues={initialFormValues}
-            validate={validateForm}
-            onSubmit={handleSubmit}>
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    isSubmitting
-                }) => (
-                    <Form>
-                        <Typography variant="h6" gutterBottom>
-                            Vyberte typ dopravy
-                        </Typography>
-                        <FormControl component="fieldset" error={touched.deliveryOption && !!errors.deliveryOption}>
-                            <RadioGroup aria-label="delivery option" name="deliveryOption" value={values.deliveryOption} onChange={handleChange}>
-                                {
-                                    data.map(deliveryOption => (
-                                        <div key={deliveryOption.name}>
-                                            <FormControlLabel
-                                                value={deliveryOption.name}
-                                                control={<Radio color="primary" />}
-                                                label={deliveryOption.readableName}
-                                            />
-                                            {
-                                                values.deliveryOption.toLowerCase() === ZASILKOVNA && deliveryOption.name.toLowerCase() === ZASILKOVNA ?
-                                                    <>
-                                                        <Button
-                                                            variant="contained"
-                                                            color="primary"
-                                                            type="button"
-                                                            onClick={handleSelectZasilkovna}>
-                                                            Vyberte zásilkovnu
-                                                        </Button>
-                                                        { selectedZasilkovna &&
-                                                            <ZasilkovnaInfo
-                                                                street={selectedZasilkovna.street}
-                                                                township={selectedZasilkovna.township}
-                                                                zipCode={selectedZasilkovna.zipCode}
-                                                                country={selectedZasilkovna.country}
-                                                                openingHours={selectedZasilkovna.openingHours.compactLong}
-                                                            />
-                                                        }
-                                                    </> :
-                                                    null
-                                            }
-                                        </div>
-                                    ))
-                                }
-                            </RadioGroup>
-                            <FormHelperText id="deliveryOption-error">{touched.deliveryOption && errors.deliveryOption}</FormHelperText>
-                        </FormControl>
-                        <WizardButtons
-                            prev={{
-                                show : true,
-                                onClick : onGoToPrevStep
-                            }}
-                            next={{
-                                show : true,
-                                disabled : !values.deliveryOption,
-                                loading : isSubmitting
-                            }}
-                        />
-                    </Form>
-                )}
-        </Formik>
+        <DataFetcher url='/order/delivery-options'>
+            { data => (
+                <Formik
+                    initialValues={initialFormValues}
+                    validate={validateForm}
+                    onSubmit={handleSubmit}>
+                        {({
+                            values,
+                            errors,
+                            touched,
+                            handleChange,
+                            isSubmitting
+                        }) => (
+                            <Form>
+                                <Typography variant="h6" gutterBottom>
+                                    Vyberte typ dopravy
+                                </Typography>
+                                <FormControl component="fieldset" error={touched.deliveryOption && !!errors.deliveryOption}>
+                                    <RadioGroup aria-label="delivery option" name="deliveryOption" value={values.deliveryOption} onChange={handleChange}>
+                                        {
+                                            data.map(deliveryOption => (
+                                                <div key={deliveryOption.name}>
+                                                    <FormControlLabel
+                                                        value={deliveryOption.name}
+                                                        control={<Radio color="primary" />}
+                                                        label={deliveryOption.readableName}
+                                                    />
+                                                    {
+                                                        values.deliveryOption.toLowerCase() === ZASILKOVNA && deliveryOption.name.toLowerCase() === ZASILKOVNA ?
+                                                            <>
+                                                                <Button
+                                                                    variant="contained"
+                                                                    color="primary"
+                                                                    type="button"
+                                                                    onClick={handleSelectZasilkovna}>
+                                                                    Vyberte zásilkovnu
+                                                                </Button>
+                                                                { selectedZasilkovna &&
+                                                                    <ZasilkovnaInfo
+                                                                        street={selectedZasilkovna.street}
+                                                                        township={selectedZasilkovna.township}
+                                                                        zipCode={selectedZasilkovna.zipCode}
+                                                                        country={selectedZasilkovna.country}
+                                                                        openingHours={selectedZasilkovna.openingHours.compactLong}
+                                                                    />
+                                                                }
+                                                            </> :
+                                                            null
+                                                    }
+                                                </div>
+                                            ))
+                                        }
+                                    </RadioGroup>
+                                    <FormHelperText id="deliveryOption-error">{touched.deliveryOption && errors.deliveryOption}</FormHelperText>
+                                </FormControl>
+                                <WizardButtons
+                                    prev={{
+                                        show : true,
+                                        onClick : onGoToPrevStep
+                                    }}
+                                    next={{
+                                        show : true,
+                                        disabled : !values.deliveryOption,
+                                        loading : isSubmitting
+                                    }}
+                                />
+                            </Form>
+                        )}
+                </Formik>
+            ) }
+        </DataFetcher>
     );
 };
 
@@ -144,6 +153,4 @@ DeliveryForm.propTypes = {
     onError : PropTypes.func.isRequired
 };
 
-const DeliveryFormWithLoading = withLoading('/order/delivery-options')(DeliveryForm);
-
-export default DeliveryFormWithLoading;
+export default DeliveryForm;

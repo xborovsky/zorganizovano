@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { CircularProgress, CardMedia, withStyles } from '@material-ui/core';
+import { CardMedia, withStyles } from '@material-ui/core';
+import DataFetcher from 'components/DataFetcher';
 
 const styles = theme => ({
     cover: {
@@ -10,41 +10,20 @@ const styles = theme => ({
     },
 });
 
-const ProductListItemPhoto = ({ classes, id, onClick }) => {
-    const [ loading, setLoading ] = useState(true);
-    const [ picture, setPicture ] = useState({
-        data : undefined,
-        dataType : undefined
-    });
-
-    useEffect(() => {
-        axios.get(`/picture-item/${id}/main`)
-            .then(res => {
-                setPicture({
-                    data : res.data.pictureBase64,
-                    dataType : res.data.dataType
-                });
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error(error);
-                setLoading(false);
-            });
-    }, [id]);
-
-    return (
-        loading ? <CircularProgress /> :
+const ProductListItemPhoto = ({ classes, id, onClick }) => (
+    <DataFetcher url={`/picture-item/${id}/main`}>
+        { data => (
             <CardMedia
                 className={classes.cover}
-                image={picture.data ?
-                    `data:${picture.dataType};base64,${picture.data}` :
+                image={data.pictureBase64 ?
+                    `data:${data.dataType};base64,${data.pictureBase64}` :
                     '/img/icons/image-square-outline.svg'
                 }
                 onClick={onClick}
             />
-    );
-
-};
+        ) }
+    </DataFetcher>
+);
 
 ProductListItemPhoto.propTypes = {
     id : PropTypes.number.isRequired,

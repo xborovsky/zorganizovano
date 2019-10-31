@@ -1,55 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { CircularProgress } from '@material-ui/core';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
+
+import DataFetcher from 'components/DataFetcher';
 
 const EMPTY_PICTURES = {
     original : '/img/icons/image-square-outline.svg',
     thumbnail : '/img/icons/image-square-outline.svg'
 };
 
-const ProductGallery = ({ productId }) => {
-
-    const [pictures, setPictures] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        axios.get(`/picture-item/${productId}`)
-            .then(res => {
-                const resPictures = res.data.map(resItem => {
-                    return {
-                        data : resItem.pictureBase64,
-                        dataType : res.data.dataType
-                    };
-                });
-                setPictures(resPictures);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error(error);
-                setLoading(false);
-            });
-    }, [productId]);
-
-    return (
-        loading ?
-            <CircularProgress /> :
+const ProductGallery = ({ productId }) => (
+    <DataFetcher url={`/picture-item/${productId}`}>
+        { data => (
             <ImageGallery
                 items={
-                    pictures.length ?
-                        pictures.map(picture => {
-                            return picture.data ? {
-                                original : `data:${picture.dataType};base64,${picture.data}`,
-                                thumbnail : `data:${picture.dataType};base64,${picture.data}`
+                    data.length ?
+                        data.map(picture => {
+                            return picture.pictureBase64 ? {
+                                original : `data:${picture.dataType};base64,${picture.pictureBase64}`,
+                                thumbnail : `data:${picture.dataType};base64,${picture.pictureBase64}`
                             } : EMPTY_PICTURES;
                         }) : [EMPTY_PICTURES]
                 }
                 showPlayButton={false}
             />
-    );
-};
+        ) }
+    </DataFetcher>
+);
 
 ProductGallery.propTypes = {
     productId : PropTypes.number.isRequired

@@ -1,14 +1,16 @@
 import React from 'react';
 
 import ProductList from './ProductList';
-import withLoading from '../../../../components/hoc/WithLoading';
 import MainText from './MainText';
+import DataFetcher from 'components/DataFetcher';
 
 const ProductListContainer = ({ data }) => (
     <>
         <MainText />
-        <ProductList products={data} />
+        <DataFetcher url='/item'>
+            { data => <ProductList products={data} /> }
+        </DataFetcher>
     </>
 );
 
-export default withLoading('/item')(ProductListContainer);
+export default ProductListContainer;
