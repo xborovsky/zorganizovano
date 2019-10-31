@@ -2,6 +2,7 @@ package cz.zorganizovano.backend.bean;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class ContactFormBean {
 
@@ -10,8 +11,8 @@ public class ContactFormBean {
     @NotBlank(message = "Pole Email je povinné")
     @Email(message = "Email není validní")
     private String email;
-    @NotBlank(message = "Pole Typ dotazu je povinné")
-    private String type;
+    @NotNull(message = "Pole Typ dotazu je povinné")
+    private Long type;
     @NotBlank(message = "Pole Dotaz je povinné")
     private String query;
     private String recaptchaToken;
@@ -32,11 +33,11 @@ public class ContactFormBean {
         this.email = email;
     }
 
-    public String getType() {
+    public Long getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Long type) {
         this.type = type;
     }
 

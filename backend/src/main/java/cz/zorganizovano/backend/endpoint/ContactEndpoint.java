@@ -3,6 +3,7 @@ package cz.zorganizovano.backend.endpoint;
 import cz.zorganizovano.backend.bean.ContactFormBean;
 import cz.zorganizovano.backend.dao.ContactQueryTypeDao;
 import cz.zorganizovano.backend.email.EmailService;
+import cz.zorganizovano.backend.email.builder.ContactAdminEmail;
 import cz.zorganizovano.backend.entity.ContactQueryType;
 import cz.zorganizovano.backend.service.GoogleRecaptchaVerifier;
 import java.io.IOException;
@@ -32,6 +33,8 @@ public class ContactEndpoint {
     private GoogleRecaptchaVerifier recaptchaVerifier;
     @Autowired
     private ContactQueryTypeDao contactQueryTypeDao;
+    @Autowired
+    private ContactAdminEmail contactAdminEmail;
 
     @GetMapping("/query-types")
     public List<ContactQueryType> getQueryTypes() {
@@ -42,8 +45,8 @@ public class ContactEndpoint {
     public ResponseEntity<Void> submitContactForm(@Valid @RequestBody ContactFormBean contactFormBean) throws IOException {
         if (recaptchaVerifier.isValid(contactFormBean.getRecaptchaToken())) {
             String recipient = EmailService.ADMIN_EMAIL;
-            String subject = "Nový dotaz na zorganizovano.cz!";
-            String text = buildText(contactFormBean);
+            String subject = contactAdminEmail.getSubject();
+            String text = contactAdminEmail.buildText(contactFormBean);
 
             emailService.send(recipient, subject, text);
 
@@ -52,14 +55,5 @@ public class ContactEndpoint {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
-    
-    protected String buildText(ContactFormBean contactFormBean) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Jméno: ").append(contactFormBean.getName()).append("\n")
-            .append("Email: ").append(contactFormBean.getName()).append("\n")
-            .append("Typ dotazu: ").append(contactFormBean.getName()).append("\n")
-            .append("Dotaz: ").append(contactFormBean.getName());
-        return sb.toString();
-    } 
 
 }
