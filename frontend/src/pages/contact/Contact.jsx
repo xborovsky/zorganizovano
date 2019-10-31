@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import SocialLinks from 'components/SocialLinks';
 import ContactEmail from 'components/ContactEmail';
 import ContactForm from './ContactForm';
+import DataFetcher from 'components/DataFetcher';
 
 const styles = theme => ({
     root : {
@@ -50,7 +51,9 @@ const Contact = ({ classes }) => (
                 </Grid>
             </Grid>
         </Card>
-        <ContactForm />
+        <DataFetcher url='/contact/query-types'>
+            { data => <ContactForm queryTypes={data} /> }
+        </DataFetcher>
     </>
 );
 

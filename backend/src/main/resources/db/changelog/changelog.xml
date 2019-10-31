@@ -224,6 +224,18 @@
             </column>
         </createTable>
 
+        <createTable tableName="contact_query_types">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sort_key" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
         <addUniqueConstraint
             constraintName="orders_order_num_unique"
             tableName="orders"

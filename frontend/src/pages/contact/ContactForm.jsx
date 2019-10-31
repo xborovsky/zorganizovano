@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -34,21 +35,6 @@ const ContactFormSchema = Yup.object().shape({
         .required('Prosím, zadejte dotaz.')
 });
 
-const queryTypes = [
-    {
-        value : 1,
-        label :'Typ 1'
-    },
-    {
-        value : 2,
-        label :'Typ 2'
-    },
-    {
-        value : 3,
-        label :'Typ 3'
-    }
-];
-
 const QUERY_MAX_LENGTH = 10000;
 
 const styles = theme => ({
@@ -65,7 +51,7 @@ const styles = theme => ({
         textAlign : 'right'
     }
 });
-const ContactForm = ({ classes }) => {
+const ContactForm = ({ queryTypes, classes }) => {
     const [ ajaxResult, setAjaxResult ] = useState({});
     const [ recaptchaToken, setRecaptchaToken ] = useState(undefined);
 
@@ -92,14 +78,14 @@ const ContactForm = ({ classes }) => {
                 initialValues={{
                     name : '',
                     email : '',
-                    type : '',
+                    type : -1,
                     query : ''
                 }}
                 validationSchema={ContactFormSchema}
                 validate={values => {
                     let errors = {};
 
-                    if (queryTypes.findIndex(type => type.value === values.type) === -1) {
+                    if (queryTypes.findIndex(queryType => queryType.id === values.type) === -1) {
                         errors.type = 'Prosím, vyberte typ dotazu.';
                     }
 
@@ -175,8 +161,8 @@ const ContactForm = ({ classes }) => {
                                         margin="normal"
                                     >
                                         { queryTypes.map(option => (
-                                            <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
+                                            <MenuItem key={option.id} value={option.id}>
+                                                {option.type}
                                             </MenuItem>
                                         ))}
                                     </TextField>
@@ -237,6 +223,15 @@ const ContactForm = ({ classes }) => {
             </Formik>
         </Paper>
     );
+};
+
+ContactForm.propTypes = {
+    queryTypes : PropTypes.arrayOf(
+        PropTypes.shape({
+            id : PropTypes.number.isRequired,
+            type : PropTypes.string.isRequired
+        })
+    ).isRequired
 };
 
 export default withStyles(styles)(ContactForm);

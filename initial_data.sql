@@ -42,3 +42,6 @@ values(
 <p>Bára</p>',
 'Kéžbych věděla :D Ne vážně, před narozením dětí jsem o sobě smýšlela jako o někom, kdo má vše dokonale zorganizované, dokonce jsem to na pracovních pohovorech vyzdvihovala jako mou snad největší přednost. Tak to bylo tehdy. V období "před dětmi". Potom přišlo období "po Marečkovi", no tak to byl samosebou sešup. Vůbec, ale vůbec jsem netušila co dělat...'
 );
+
+insert into zorganizovano.contact_query_types (type, sort_key) values 
+('TODO 1', 100), ('TODO 2', 200), ('TODO 3', 300), ('Ostatní', 100000);
