@@ -12,7 +12,7 @@ let zorganizovanoTheme = createMuiTheme({
     }
   },
   typography: {
-    fontFamily: 'Century Gothic, sans-serif',
+    fontFamily: 'Roboto, Century Gothic, sans-serif',
     body1: {
       fontSize: '1rem',
       color: '#4a4a4a',
