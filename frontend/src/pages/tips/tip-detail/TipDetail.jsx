@@ -20,7 +20,7 @@ const TipDetail = ({ tip, classes }) => {
 
     return (
         <>
-            <BreadcrumbsNav items={[{ link : '/tips', name : 'Tipy' }, { name : tip.title }]} />
+            <BreadcrumbsNav items={[{ link : '/tips', name : 'Zorganizuj se' }, { name : tip.title }]} />
             <Paper className={classes.root}>
                 <Typography variant="h1">{ tip.title }</Typography>
                 <span>{ tip.publishedFormatted }</span>

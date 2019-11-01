@@ -12,7 +12,7 @@ const ProductDetailContainer = () => {
         <DataFetcher url={`/item/${id}`}>
             { data => (
                 <>
-                    <BreadcrumbsNav items={[{ link : '/eshop', name : 'Produkty' }, { name : data.name }]} />
+                    <BreadcrumbsNav items={[{ link : '/eshop', name : 'eshop' }, { name : data.name }]} />
                     <ProductDetail product={data} />
                 </>
             ) }

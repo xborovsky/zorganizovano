@@ -11,6 +11,7 @@ import {
     EMPTY_SHOPPING_CART
 } from './state-management/ShoppingCartActions';
 import DeleteConfirm from './components/DeleteConfirm';
+import BreadcrumbsNav from 'components/BreadcrumbsNav';
 
 const initialConfirmData = {
     show : false,
@@ -132,6 +133,7 @@ const ShoppingCartContainer = () => {
             error ?
                 <Alert type="error">Chyba spojení se serverem.</Alert> :
                 <>
+                    <BreadcrumbsNav items={[{ name : 'Nákupní košík' }]} />
                     <ShoppingCart
                         items={serverCartItems}
                         onChangeQuantity={handleChangeQuantity}

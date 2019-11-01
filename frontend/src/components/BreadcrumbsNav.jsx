@@ -18,6 +18,9 @@ const styles = theme => ({
     },
     link : {
         color : '#000'
+    },
+    homeLink : {
+        verticalAlign : 'bottom'
     }
 });
 
@@ -25,7 +28,7 @@ const BreadcrumbsNav = ({ items, classes }) => (
     <div className={classes.root}>
         <Paper elevation={0} className={classes.paper}>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
-                <Link to='/' className={classes.link}><HomeIcon /></Link>
+                <Link to='/' className={classes.link}><HomeIcon className={classes.homeLink} /></Link>
                 {
                     items.map(item => (
                         item.link ?
