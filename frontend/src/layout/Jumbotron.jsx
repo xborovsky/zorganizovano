@@ -9,20 +9,29 @@ const styles = theme => ({
         backgroundColor: theme.palette.grey[800],
         color: theme.palette.common.white,
         marginBottom: theme.spacing(4),
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        height : 300,
-        borderRadius : 0
+        height : 400,
+        borderRadius : 0,
+        [theme.breakpoints.down('sm')] : {
+            height : 300
+        },
+        [theme.breakpoints.down('xs')] : {
+            height : 200
+        }
+    },
+    img : {
+        objectFit : 'cover',
+        width: '100%',
+        height: '100%'
     }
 });
 
-const Jumbotron = ({ img, classes }) => (
-    <Paper className={classes.jumbotron} style={{ backgroundImage : `url(${img})` }}>
+const Jumbotron = ({ src, srcSet, classes }) => (
+    <Paper className={classes.jumbotron}>
         {
             <img
-                style={{ display: 'none' }}
-                src={img}
+                className={classes.img}
+                src={src}
+                srcSet={srcSet}
                 alt="background"
             />
         }
@@ -30,7 +39,8 @@ const Jumbotron = ({ img, classes }) => (
 );
 
 Jumbotron.propTypes = {
-    img : PropTypes.string.isRequired
+    src : PropTypes.string.isRequired,
+    srcSet : PropTypes.string
 };
 
 export default withStyles(styles)(Jumbotron);

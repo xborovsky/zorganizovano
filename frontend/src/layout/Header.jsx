@@ -175,7 +175,16 @@ const Header = ({ classes }) => {
                     </Hidden>
                 </Toolbar>
             </AppBar>
-            <Jumbotron img='https://source.unsplash.com/user/erondu' />
+            <Jumbotron
+                src='/img/jumbotron/jumbotron.jpeg'
+                srcSet={`/img/jumbotron/jumbotron.jpeg,
+                        /img/jumbotron/jumbotron_1920.jpeg 1920w,
+                        /img/jumbotron/jumbotron_1600.jpeg 1600w,
+                        /img/jumbotron/jumbotron_1322.jpeg 1322w,
+                        /img/jumbotron/jumbotron_1024.jpeg 1024w,
+                        /img/jumbotron/jumbotron_768.jpeg 768w,
+                        /img/jumbotron/jumbotron_640.jpeg 640w`}
+            />
         </>
     );
 };
