@@ -8,14 +8,16 @@ const styles = theme => ({
         position: 'relative',
         backgroundColor: theme.palette.grey[800],
         color: theme.palette.common.white,
-        marginBottom: theme.spacing(4),
+        marginBottom: theme.spacing(2),
         height : 400,
         borderRadius : 0,
         [theme.breakpoints.down('sm')] : {
-            height : 250
+            height : 250,
+            marginBottom : '1rem'
         },
         [theme.breakpoints.down('xs')] : {
-            height : 200
+            height : 200,
+            marginBottom : '1rem'
         }
     },
     img : {

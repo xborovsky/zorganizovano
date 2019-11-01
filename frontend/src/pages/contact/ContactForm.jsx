@@ -39,7 +39,8 @@ const QUERY_MAX_LENGTH = 10000;
 
 const styles = theme => ({
     root : {
-        padding : '2rem 5vw'
+        padding : '2rem 5vw',
+        marginBottom : '2vh'
     },
     submitBtnWrapper : {
         textAlign : 'center'

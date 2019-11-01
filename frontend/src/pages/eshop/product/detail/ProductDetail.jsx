@@ -19,6 +19,9 @@ const styles = theme => ({
     root : {
         margin : 0,
         padding : '7vh 3rem',
+        [theme.breakpoints.down('sm')] : {
+            padding : '3vh 2rem'
+        },
         [theme.breakpoints.down('xs')] : {
             padding : '2vh 1rem'
         }

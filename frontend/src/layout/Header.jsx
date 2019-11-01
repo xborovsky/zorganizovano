@@ -148,7 +148,7 @@ const Header = ({ classes }) => {
                                             </NavLink>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <NavLink to="/types" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
+                                            <NavLink to="/tips" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
                                                 <Typography variant="body2" element="span">[ Zorganizuj se ]</Typography>
                                             </NavLink>
                                         </Grid>
