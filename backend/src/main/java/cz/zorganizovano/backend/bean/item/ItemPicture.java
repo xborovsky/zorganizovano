@@ -1,5 +1,7 @@
 package cz.zorganizovano.backend.bean.item;
 
+import cz.zorganizovano.backend.entity.StockItemPicture;
+
 public class ItemPicture {
 
     private final long stockItemPictureId;
@@ -7,11 +9,11 @@ public class ItemPicture {
     private final String src;
     private final String srcSet;
 
-    public ItemPicture(long stockItemPictureId, String thumbnail, String src, String srcSet) {
-        this.stockItemPictureId = stockItemPictureId;
-        this.thumbnail = thumbnail;
-        this.src = src;
-        this.srcSet = srcSet;
+    public ItemPicture(StockItemPicture stockItemPicture) {
+        this.stockItemPictureId = stockItemPicture.getId();
+        this.thumbnail = stockItemPicture.getGalleryThumbnail();
+        this.src = stockItemPicture.getSrc();
+        this.srcSet = stockItemPicture.getSrcSet();
     }
 
     public long getStockItemPictureId() {

@@ -19,10 +19,11 @@ const ProductGallery = ({ productId }) => (
                 items={
                     data.length ?
                         data.map(picture => {
+                            const srcSetWithBaseUrls = picture.srcSet.split(',').map(src => `${BASE_URL}/${src.trim()}`).join(', ');
                             return {
-                                thumbnail : `${BASE_URL}/${picture.src}`,
+                                thumbnail : `${BASE_URL}/${picture.thumbnail}`,
                                 original : `${BASE_URL}/${picture.src}`,
-                                srcSet : `${BASE_URL}/${picture.srcSet}`
+                                srcSet : `${srcSetWithBaseUrls}`
                             };
                         }) : [EMPTY_PICTURES]
                 }

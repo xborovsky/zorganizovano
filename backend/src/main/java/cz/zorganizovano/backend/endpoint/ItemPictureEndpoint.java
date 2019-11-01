@@ -31,14 +31,7 @@ public class ItemPictureEndpoint {
         if (stockItem.isPresent()) {
             return stockItemPictureDao.findByStockItemOrderByMainDesc(stockItem.get())
                 .stream()
-                .map(stockItemPicture -> {
-                    return new ItemPicture(
-                        stockItemPicture.getId(),
-                        stockItemPicture.getSrc(),
-                        stockItemPicture.getSrc(),
-                        stockItemPicture.getSrcSet()
-                    );
-                })
+                .map(stockItemPicture -> new ItemPicture(stockItemPicture))
                 .collect(Collectors.toList());
         } else {
             throw new ResourceNotFoundException(

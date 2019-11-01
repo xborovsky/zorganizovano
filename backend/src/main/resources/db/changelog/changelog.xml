@@ -183,6 +183,9 @@
             <column name="srcset" type="TEXT">
                 <constraints nullable="false"/>
             </column>
+            <column name="gallery_thumbnail" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
             <column name="is_main" type="BOOLEAN" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>

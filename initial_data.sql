@@ -21,14 +21,14 @@ values (1, 'Rozměry', '297 x 514 x 10 mm', 1000),
 (1, 'Přepravní rozměry', '297 x 310 x 10 mm', 500),
 (1, 'Váha', '120g', 100);
 
-insert into zorganizovano.stock_items (item_id, quantity, display_on_eshop, thumbnail_location) values (1, 10, true, 'kalendar-liska/thumbnail/thumbnail.png');
+insert into zorganizovano.stock_items (item_id, quantity, display_on_eshop, thumbnail_location) values (1, 10, true, 'kalendar-liska/thumbnail/thumbnail.jpg');
 
-insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset)
-values (1, true, 'kalendar-liska/1/1.jpg', 'kalendar-liska/1/1.jpg, kalendar-liska/1/1_1920.jpg 1920w');
-insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset)
-values (1, true, 'kalendar-liska/2/2.jpg', 'kalendar-liska/2/2.jpg, kalendar-liska/2/2_1920.jpg 1920w');
-insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset)
-values (1, true, 'kalendar-liska/3/3.jpg', 'kalendar-liska/3/3.jpg, kalendar-liska/3/3_1920.jpg 1920w');
+insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset, gallery_thumbnail)
+values (1, true, 'kalendar-liska/1/1.jpg', 'kalendar-liska/1/1.jpg, kalendar-liska/1/1_1920.jpg 1920w, kalendar-liska/1/1_1600.jpg 1600w, kalendar-liska/1/1_1366.jpg 1366w, kalendar-liska/1/1_1024.jpg 1024w, kalendar-liska/1/1_768.jpg 768w, kalendar-liska/1/1_640.jpg 640w', 'kalendar-liska/1/1_320.jpg');
+insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset, gallery_thumbnail)
+values (1, false, 'kalendar-liska/2/2.jpg', 'kalendar-liska/2/2.jpg, kalendar-liska/2/2_1920.jpg 1920w, kalendar-liska/2/2_1600.jpg 1600w, kalendar-liska/2/2_1366.jpg 1366w, kalendar-liska/2/2_1024.jpg 1024w, kalendar-liska/2/2_768.jpg 768w, kalendar-liska/2/2_640.jpg 640w', 'kalendar-liska/2/2_320.jpg');
+insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset, gallery_thumbnail)
+values (1, false, 'kalendar-liska/3/3.jpg', 'kalendar-liska/3/3.jpg, kalendar-liska/3/3_1920.jpg 1920w, kalendar-liska/3/3_1600.jpg 1600w, kalendar-liska/3/3_1366.jpg 1366w, kalendar-liska/3/3_1024.jpg 1024w, kalendar-liska/3/3_768.jpg 768w, kalendar-liska/3/3_640.jpg 640w', 'kalendar-liska/3/3_320.jpg');
 
 insert into zorganizovano.blog_posts (title, published, content, content_preview)
 values(

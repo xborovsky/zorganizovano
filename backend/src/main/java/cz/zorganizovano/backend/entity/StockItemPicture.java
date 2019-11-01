@@ -27,6 +27,8 @@ public class StockItemPicture implements Serializable {
     private String src;
     @Column(name = "srcset", nullable = false)
     private String srcSet;
+    @Column(name = "gallery_thumbnail", nullable = false)
+    private String galleryThumbnail;
 
     public StockItemPicture() {
     }
@@ -73,6 +75,14 @@ public class StockItemPicture implements Serializable {
 
     public void setSrcSet(String srcSet) {
         this.srcSet = srcSet;
+    }
+
+    public String getGalleryThumbnail() {
+        return galleryThumbnail;
+    }
+
+    public void setGalleryThumbnail(String galleryThumbnail) {
+        this.galleryThumbnail = galleryThumbnail;
     }
 
     @Override
