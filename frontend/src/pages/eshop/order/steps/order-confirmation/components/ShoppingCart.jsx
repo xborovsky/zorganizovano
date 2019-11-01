@@ -18,7 +18,7 @@ const styles = theme => ({
 });
 
 const ShoppingCart = ({ items, selectedDelivery, classes }) => {
-    const intermediateSum = items.reduce((a, b) => a + (b.quantity * b.price), 0);
+    const intermediateSum = items.reduce((a, b) => a + (b.quantity * b.priceSingle), 0);
     const totalSum = intermediateSum + selectedDelivery.price;
 
     return (
@@ -39,8 +39,8 @@ const ShoppingCart = ({ items, selectedDelivery, classes }) => {
                             <TableCell></TableCell>
                             <TableCell>{ item.name }</TableCell>
                             <TableCell align="center">{ item.quantity }</TableCell>
-                            <TableCell align="center"><Price value={item.price} size="inherit" /></TableCell>
-                            <TableCell align="center"><Price value={item.price * item.quantity} size="inherit" /></TableCell>
+                            <TableCell align="center"><Price value={item.priceSingle} size="inherit" /></TableCell>
+                            <TableCell align="center"><Price value={item.priceSingle * item.quantity} size="inherit" /></TableCell>
                         </TableRow>
                     ))
                 }

@@ -55,7 +55,7 @@ const OrderConfirmation = ({
                         </Section>
                         <Section className={classes.totalPrice}>
                             Celková cena: {
-                                orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.price), 0) +
+                                orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.priceSingle), 0) +
                                 selectedDelivery.price
                             },- Kč
                         </Section>

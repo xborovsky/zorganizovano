@@ -63,14 +63,14 @@ const ProductDetail = ({ product, classes }) => {
 
     const addItemToShoppingCart = item => {
         const shoppingCartItem = {
-            ...(({ id, name, subName, price }) => ({ id, name, subName, price }))(item),
+            id : item.id,
             quantity
         };
         dispatch({
             type : ADD_ITEM_TO_SHOPPING_CART,
             payload : shoppingCartItem
         });
-        setShowSuccess({ productName : shoppingCartItem.name });
+        setShowSuccess({ productName : item.name });
         setQuantity(1);
     };
 

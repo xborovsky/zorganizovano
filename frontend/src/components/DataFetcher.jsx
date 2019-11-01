@@ -24,6 +24,7 @@ const DataFetcher = ({
             .catch(err => {
                 console.error(err);
                 setError(true); // todo pass error to children
+                setLoading(false);
             });
     }, []);
 

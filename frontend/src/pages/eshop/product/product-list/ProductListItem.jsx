@@ -90,17 +90,14 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
 
     const addToShoppingCart = item => {
         const shoppingCartItem = {
-            ...(({ id, name, subName, price }) => ({ id, name, subName, price }))(item),
+            id : item.id,
             quantity
         };
         dispatch({
             type : ADD_ITEM_TO_SHOPPING_CART,
-            payload : {
-                ...(({ id, name, subName, price }) => ({ id, name, subName, price }))(item),
-                quantity
-            }
+            payload : shoppingCartItem
         });
-        onSuccess(shoppingCartItem);
+        onSuccess({ productName : shoppingCartItem.name });
         setQuantity(1);
     };
 

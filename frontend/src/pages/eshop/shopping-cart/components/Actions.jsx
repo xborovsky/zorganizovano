@@ -22,16 +22,13 @@ const styles = theme => ({
 const Actions = ({
     classes,
     disableProceedToOrder = false,
-    onEmptyShoppingCart
+    onEmptyShoppingCart,
+    onGoToOrder
 }) => {
     const history = useHistory();
 
     const goToEshopMain = () => {
         history.push(`/eshop`);
-    };
-
-    const goToOrder = () => {
-        history.push(`/eshop/order`);
     };
 
     return (
@@ -46,7 +43,7 @@ const Actions = ({
                     <FontAwesomeIcon icon={faTrashAlt} className={classes.trashIcon} /> Vyprázdnit košík
                 </Button>
                 &nbsp;&nbsp;&nbsp;
-                <Button variant="contained" color="primary" onClick={goToOrder} disabled={disableProceedToOrder}>
+                <Button variant="contained" color="primary" onClick={onGoToOrder} disabled={disableProceedToOrder}>
                     Přejít k objednávce
                 </Button>
             </Grid>
@@ -56,7 +53,8 @@ const Actions = ({
 
 Actions.propsTypes = {
     disableProceedToOrder : PropTypes.bool,
-    onEmptyShoppingCart : PropTypes.func.isRequired
+    onEmptyShoppingCart : PropTypes.func.isRequired,
+    onGoToOrder : PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Actions);

@@ -36,8 +36,8 @@ const ShoppingCartItem = ({
                 className={classes.quantityInput}
             />
         </TableCell>
-        <TableCell align="center"><Price value={item.price} size="inherit" /></TableCell>
-        <TableCell align="center"><Price value={item.quantity * item.price} size="inherit" /></TableCell>
+        <TableCell align="center"><Price value={item.priceSingle} size="inherit" /></TableCell>
+        <TableCell align="center"><Price value={item.quantity * item.priceSingle} size="inherit" /></TableCell>
         <TableCell align="center">
             <FontAwesomeIcon
                 icon={faTrashAlt}
@@ -52,7 +52,8 @@ ShoppingCartItem.propTypes = {
     item : {
         id : PropTypes.number.isRequired,
         name : PropTypes.string.isRequired,
-        price : PropTypes.number.isRequired,
+        subName : PropTypes.string.isRequired,
+        priceSingle : PropTypes.number.isRequired,
         quantity : PropTypes.number.isRequired
     },
     onChangeQuantity : PropTypes.func.isRequired,

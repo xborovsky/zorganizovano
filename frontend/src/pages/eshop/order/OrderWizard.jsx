@@ -5,7 +5,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { withStyles } from '@material-ui/core';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
@@ -37,11 +37,12 @@ const defaultOrderData = {
 
 const OrderWizard = ({ classes }) => {
 
-    const { state, dispatch } = useContext(ShoppingCartContext);
+    const { dispatch } = useContext(ShoppingCartContext);
     const history = useHistory();
+    const location = useLocation();
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
-    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : state});
+    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : [...location.state.shoppingCart]});
     const [error, setError] = useState(undefined);
 
     const getStepContent = step => {
