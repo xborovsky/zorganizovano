@@ -15,7 +15,7 @@ import * as Yup from 'yup';
 import { withStyles } from '@material-ui/styles';
 import { CircularProgress } from '@material-ui/core';
 import axios from 'axios';
-import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-v3'
+import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-v3';
 
 import CharacterCounter from 'components/CharacterCounter';
 import Alert from 'components/Alert';
@@ -57,7 +57,13 @@ const ContactForm = ({ queryTypes, classes }) => {
 
     useEffect(() => {
         loadReCaptcha(RECAPTCHA_SITE_KEY);
-    });
+        return () => {
+            const recaptchaScript = document.querySelector("script[src^='https://www.google.com/recaptcha/api.js']"),
+                recaptchaBadge = document.querySelector(".grecaptcha-badge").parentElement;
+            document.body.removeChild(recaptchaScript);
+            document.body.removeChild(recaptchaBadge);
+        };
+    }, []);
 
     const showAlert = () => {
         if (ajaxResult.success) {
