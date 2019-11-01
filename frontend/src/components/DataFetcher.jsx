@@ -23,7 +23,7 @@ const DataFetcher = ({
             })
             .catch(err => {
                 console.error(err);
-                setError(true);
+                setError(true); // todo pass error to children
             });
     }, []);
 

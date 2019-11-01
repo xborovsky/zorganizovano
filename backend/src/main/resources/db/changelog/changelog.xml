@@ -150,6 +150,9 @@
             <column name="thumbnail_location" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
+            <column name="shopping_cart_thumbnail_location" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <createTable tableName="mail_notifications">

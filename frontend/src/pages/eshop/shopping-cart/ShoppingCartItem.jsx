@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/styles';
 
 import Price from 'components/Price';
 import QuantityInput from 'components/QuantityInput';
+import ShoppingCartItemPhoto from './ShoppingCartItemPhoto';
 
 const styles = theme => ({
     quantityInput: {
@@ -25,7 +26,7 @@ const ShoppingCartItem = ({
     classes
 }) => (
     <TableRow key={item.id}>
-        <TableCell>TODO - obrazok</TableCell>
+        <TableCell><ShoppingCartItemPhoto itemId={item.id} /></TableCell>
         <TableCell>{item.name}</TableCell>
         <TableCell align="center">
             <QuantityInput

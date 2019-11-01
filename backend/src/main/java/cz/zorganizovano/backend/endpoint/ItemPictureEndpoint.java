@@ -39,5 +39,17 @@ public class ItemPictureEndpoint {
             );
         }
     }
+
+    @GetMapping(value = "/{id}/shopping-cart-thumbnail")
+    public String getShoppingCartThumbnailLocation(@PathVariable("id") long stockItemId) {
+        Optional<StockItem> stockItem = stockItemDao.findById(stockItemId);
+        if (stockItem.isPresent()) {
+            return stockItem.get().getShoppingCartThumbnailLocation();
+        } else {
+            throw new ResourceNotFoundException(
+                MessageFormat.format("Stock item id={0} not found!", stockItemId)
+            );
+        }
+    }
     
 }
