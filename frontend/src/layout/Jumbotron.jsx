@@ -12,7 +12,7 @@ const styles = theme => ({
         height : 400,
         borderRadius : 0,
         [theme.breakpoints.down('sm')] : {
-            height : 300
+            height : 250
         },
         [theme.breakpoints.down('xs')] : {
             height : 200
