@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
+import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -22,10 +23,17 @@ const styles = theme => ({
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
         paddingLeft: theme.spacing(8),
-        paddingRight: theme.spacing(8)
+        paddingRight: theme.spacing(8),
+        [theme.breakpoints.down('xs')] : {
+            margin : '0 1vw',
+            padding : '10px 20px'
+        }
     },
     stepper : {
-        marginBottom : '3rem'
+        marginBottom : '3rem',
+        [theme.breakpoints.down('xs')] : {
+            marginBottom : '1rem',
+        }
     }
 });
 
@@ -106,17 +114,32 @@ const OrderWizard = ({ classes }) => {
 
     return (
         <Paper className={classes.root}>
-            <Stepper activeStep={currentStep} className={classes.stepper}>
-                {
-                    steps.map(label => {
-                        return (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        );
-                    })
-                }
-            </Stepper>
+            <Hidden xsDown>
+                <Stepper activeStep={currentStep} className={classes.stepper}>
+                    {
+                        steps.map(label => {
+                            return (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            );
+                        })
+                    }
+                </Stepper>
+            </Hidden>
+            <Hidden smUp>
+                <Stepper activeStep={currentStep} className={classes.stepper} orientation="vertical">
+                    {
+                        steps.map(label => {
+                            return (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            );
+                        })
+                    }
+                </Stepper>
+            </Hidden>
             { error && <Alert type="error">{error}</Alert> }
             {getStepContent(currentStep)}
         </Paper>
