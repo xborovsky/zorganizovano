@@ -4,6 +4,9 @@ import { withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
+    root : {
+        marginBottom : '5rem'
+    },
     subHeader : {
         marginTop : '2rem',
         marginBottom : '1.5rem',
@@ -15,10 +18,10 @@ const styles = theme => ({
 });
 
 const Section = ({ title, children, className, classes }) => (
-    <>
+    <div className={classes.root}>
         { title && <Typography variant="h2" className={classes.subHeader}>{ title }</Typography> }
         <div className={className ? [classes.padLeft, className].join(' ') : classes.padLeft}>{ children }</div>
-    </>
+    </div>
 );
 
 Section.propTypes = {

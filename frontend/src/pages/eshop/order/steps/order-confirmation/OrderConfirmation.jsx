@@ -14,9 +14,6 @@ const styles = theme => ({
         marginBottom : '2rem',
         fontSize : '2.3rem'
     },
-    padLeft : {
-        marginLeft : '2rem'
-    },
     totalPrice : {
         textAlign : 'right',
         fontWeight : 'bold',
@@ -38,8 +35,7 @@ const OrderConfirmation = ({
             const selectedDelivery = data.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
             return (
                 <form onSubmit={onOrderConfirmed}>
-                    <Typography variant="h1" className={classes.header}>Potvrzení objednávky</Typography>
-                    <div className={classes.padLeft}>
+                    <div>
                         <Section title='Objednáváte si tyto položky'>
                             <ShoppingCart
                                 items={orderData.shoppingCart}

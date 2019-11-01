@@ -7,7 +7,9 @@ import { withStyles } from '@material-ui/styles';
 import ReactHtmlParser from 'react-html-parser';
 
 const styles = theme => ({
-    root : {}
+    root : {
+        border : '1px solid #ccc'
+    }
 });
 
 const ZasilkovnaInfo = ({
