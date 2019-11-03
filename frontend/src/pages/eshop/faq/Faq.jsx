@@ -67,7 +67,7 @@ const Faq = () => (
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    V tuto chvíli posíláme zboží skrze Českou poštu nebo nabízíme možnost zaslání na vámi zvolenou pobočku Zásilkovny.
+                    V tuto chvíli posílám zboží skrze Českou poštu, nebo nabízím možnost zaslání na vámi zvolenou pobočku Zásilkovny.
                 </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -82,8 +82,8 @@ const Faq = () => (
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    V současné chvíli implementujeme i možnost platby kartou, ale pro rychlejší spuštění prodeje a tedy zaručení doručení ještě před shonem okolo Vánoc,
-                    jsme prozatím zvolili cestu platby převodem na účet. Při dokončení objednávky pro vás generujeme QR kód pro načtení platby pro vaši mobilní banku a snažíme
+                    V současné chvíli implementuji i možnost platby kartou, ale pro rychlejší spuštění prodeje a tedy zaručení doručení ještě před shonem okolo Vánoc,
+                    jsem prozatím zvolila cestu platby převodem na účet. Při dokončení objednávky pro vás generuji QR kód pro načtení platby pro vaši mobilní banku a snažím
                     se tak o co nejpohodlnější službu.
                 </Typography>
             </ExpansionPanelDetails>
