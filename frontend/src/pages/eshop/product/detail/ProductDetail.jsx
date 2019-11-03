@@ -67,6 +67,7 @@ const ProductDetail = ({ product, classes }) => {
     const addItemToShoppingCart = item => {
         const shoppingCartItem = {
             id : item.id,
+            price : item.price,
             quantity
         };
         dispatch({

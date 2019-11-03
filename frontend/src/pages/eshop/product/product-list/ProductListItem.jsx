@@ -91,6 +91,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     const addToShoppingCart = item => {
         const shoppingCartItem = {
             id : item.id,
+            price : item.price,
             quantity
         };
         dispatch({

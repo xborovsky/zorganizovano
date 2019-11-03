@@ -63,7 +63,8 @@ const ShoppingCartContainer = () => {
     }, []);
 
     useEffect(() => {
-        if (serverCartItems) {
+        console.log(serverCartItems);
+        if (serverCartItems && serverCartItems.length) {
             const updatedItems = serverCartItems.map(serverCartItem => {
                 const stateItem = state.find(item => serverCartItem.id === item.id);
                 if (!stateItem) {
@@ -74,7 +75,7 @@ const ShoppingCartContainer = () => {
                         quantity : stateItem.quantity
                     };
                 }
-            });
+            }).filter(item => !!item);
             setServerCartItems(updatedItems);
         }
     }, [state]);
