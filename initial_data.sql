@@ -46,4 +46,8 @@ values(
 );
 
 insert into zorganizovano.contact_query_types (type, sort_key) values 
-('TODO 1', 100), ('TODO 2', 200), ('TODO 3', 300), ('Ostatní', 100000);
+('Potřebuji se zeptat na něco k produktu', 100),
+('Mám dotaz ohledně objednávky', 200),
+('Mám skvělej nápad k vylepšení produktů, služeb či tip na organizaci', 300),
+('Mám technický problém', 400),
+('Týká se to něčeho jiného', 100000);

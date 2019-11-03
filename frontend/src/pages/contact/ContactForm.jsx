@@ -86,7 +86,7 @@ const ContactForm = ({ queryTypes, classes }) => {
                 initialValues={{
                     name : '',
                     email : '',
-                    type : -1,
+                    type : '',
                     query : ''
                 }}
                 validationSchema={ContactFormSchema}
