@@ -18,6 +18,7 @@ const Home = React.lazy(() => import('./pages/home'));
 const Tips = React.lazy(() => import('./pages/tips'));
 const Eshop = React.lazy(() => import('./pages/eshop'));
 const Contact = React.lazy(() => import('./pages/contact'));
+const ShoppingCart = React.lazy(() => import('./pages/eshop/shopping-cart'));
 
 const styles = theme => ({
   root: {
@@ -51,6 +52,7 @@ const App = ({ classes }) => {
                     <Route path="/tips" component={Tips} />
                     <Route path="/eshop" component={Eshop} />
                     <Route path="/contact" component={Contact} />
+                    <Route path="/shopping-cart" component={ShoppingCart} />
                   </Switch>
                 </Suspense>
               </Main>

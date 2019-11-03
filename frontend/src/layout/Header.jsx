@@ -126,7 +126,7 @@ const Header = ({ classes }) => {
                             <NavLink to="/contact" className={classes.link} activeClassName={classes.activeLink}>
                                 <Typography variant="body2" element="span">[ Kontakt ]</Typography>
                             </NavLink>
-                            <NavLink to="/eshop/shopping-cart" className={[classes.link, classes.shoppingCartLink].join(' ')} activeClassName={classes.activeLink}>
+                            <NavLink to="/shopping-cart" className={[classes.link, classes.shoppingCartLink].join(' ')} activeClassName={classes.activeLink}>
                                 <Typography variant="body2" element="span">{ totalPrice },-</Typography>
                                 <IconButton aria-label="cart" className={classes.shoppingCartIcon}>
                                     <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
