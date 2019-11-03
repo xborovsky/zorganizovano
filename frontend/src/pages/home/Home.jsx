@@ -3,21 +3,45 @@ import { NavLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 import MainText from './MainText';
+import LinkButton from './LinkButton';
+import { withStyles } from '@material-ui/styles';
 
-const Home = () => (
+const styles = theme => ({
+    gridItem : {
+        textAlign : 'center'
+    },
+    gridWrapper : {
+        padding : '10px 40px 40px',
+        [theme.breakpoints.down('sm')] : {
+            padding : 0
+        }
+    }
+});
+
+const Home = ({ classes }) => (
     <>
         <MainText />
-        <Grid container justify="center">
+        <Grid container justify="center" className={classes.gridWrapper}>
             <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
-            <Grid item xs={12} sm={5} md={4} lg={3}>
-                <NavLink to="/tips">A</NavLink>
+            <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
+                <NavLink to="/tips">
+                    <LinkButton 
+                        src="/img/page/button2/Button2.jpg"
+                        srcSet=""
+                    />
+                </NavLink>
             </Grid>
-            <Grid item xs={12} sm={5} md={4} lg={3}>
-                <NavLink to="/eshop">B</NavLink>
+            <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
+                <NavLink to="/eshop">
+                    <LinkButton 
+                        src="/img/page/button1/Button1.jpg"
+                        srcSet=""
+                    />
+                </NavLink>
             </Grid>
             <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
         </Grid>
     </>
 );
 
-export default Home;
+export default withStyles(styles)(Home);

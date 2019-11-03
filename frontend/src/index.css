@@ -1,1 +1,5 @@
 html { font-family: 'Roboto', 'Century Gothic', sans-serif; }
+
+body {
+    background-color: #ededed !important;
+}

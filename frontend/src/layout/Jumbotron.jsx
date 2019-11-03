@@ -9,14 +9,14 @@ const styles = theme => ({
         backgroundColor: theme.palette.grey[800],
         color: theme.palette.common.white,
         marginBottom: theme.spacing(2),
-        height : 400,
+        height : 250,
         borderRadius : 0,
         [theme.breakpoints.down('sm')] : {
-            height : 250,
+            height : 200,
             marginBottom : '1rem'
         },
         [theme.breakpoints.down('xs')] : {
-            height : 200,
+            height : 150,
             marginBottom : '1rem'
         }
     },

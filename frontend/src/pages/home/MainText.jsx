@@ -6,7 +6,7 @@ import MainPageText from 'components/MainPageText';
 
 const MainText = () => (
     <MainPageText>
-        <Typography variant="body1" style={{ marginBottom : '3rem' }}>
+        <Typography variant="body1" style={{ marginBottom : '-1rem' }}>
             Ahoj,<br />
             jmenuji se Bára, jsem obyčejná máma jako vy, tak jako vy i já mám neobyčejné děti a vytíženého manžela <Emoji symbol="🙂" label="smiling" /> Starší Mareček
             už nám lítá téměř denně po kroužcích, Márovi-manželovi začala hokejová sezóna a babičky, tak ty máme daleko - a tak je zorganizovanost celé naší rodiny

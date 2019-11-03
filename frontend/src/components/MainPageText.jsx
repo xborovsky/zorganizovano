@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 const styles = theme => ({
     root : {
         textAlign : 'justify',
-        marginBottom : '4rem',
+        marginBottom : '2rem',
         '&>p' : {
             marginBottom : '1rem'
         }
