@@ -106,7 +106,9 @@ const OrderWizard = ({ classes }) => {
             '/order/confirm', {
             ...orderData,
             shippingAddress : {
-                ...orderData.selectedZasilkovna,
+                street : orderData.selectedZasilkovna.name,
+                township : orderData.selectedZasilkovna.city,
+                zipCode : orderData.selectedZasilkovna.zip,
                 country : 'Česká republika'
             },
             shoppingCart : {

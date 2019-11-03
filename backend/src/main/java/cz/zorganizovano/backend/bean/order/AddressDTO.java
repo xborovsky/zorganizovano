@@ -3,7 +3,7 @@ package cz.zorganizovano.backend.bean.order;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-public class Address {
+public class AddressDTO {
 
     @NotBlank(message = "Pole Ulice a číslo popisné jsou povinné")
     private String street;
@@ -14,6 +14,16 @@ public class Address {
     private String zipCode;
     @NotBlank(message = "Pole Země je povinné")
     private String country;
+
+    public AddressDTO() {
+    }
+
+    public AddressDTO(String street, String township, String zipCode, String country) {
+        this.street = street;
+        this.township = township;
+        this.zipCode = zipCode;
+        this.country = country;
+    }
 
     public String getStreet() {
         return street;

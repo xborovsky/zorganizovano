@@ -1,7 +1,9 @@
 package cz.zorganizovano.backend.email.builder;
 
+import cz.zorganizovano.backend.bean.order.AddressDTO;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
+import cz.zorganizovano.backend.entity.ShipmentType;
 import cz.zorganizovano.backend.payment.PaymentInfo;
 import java.io.StringWriter;
 import java.util.List;
@@ -38,12 +40,13 @@ public class OrderCreatedCustomerEmailImpl extends OrderCreatedEmailBuilderAbs i
     }
 
     @Override
-    public String build(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo) {
+    public String build(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo, ShipmentType shipmentType, AddressDTO shippingAddress) {
         VelocityContext context = new VelocityContext();
         context.put("orderNum", order.getOrderNum());
-        context.put("orderItems", buildOrderItems(order, orderItems));
+        context.put("orderItems", buildOrderItems(order, orderItems, shipmentType, shippingAddress));
         context.put("paymentDetails", buildPaymentDetails(paymentInfo));
         context.put("paymentQR", buildPaymentQR());
+        context.put("shippingAddress", buildShipmentAddress(shipmentType, shippingAddress));
 
         StringWriter writer = new StringWriter();
         template.merge(context, writer);

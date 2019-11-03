@@ -21,9 +21,9 @@
                         <br /><br />
                         <table>
                             <tr>
-                                <th>Produkt</th>
-                                <th>Množství</th>
-                                <th>Cena</th>
+                                <th style="text-align: left;">Produkt</th>
+                                <th style="text-align: left;">Množství</th>
+                                <th style="text-align: left;">Cena</th>
                             </tr>
                             ${orderItems}
                         </table>
@@ -33,7 +33,7 @@
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
-                        TODO kontaktní údaje / zásilkovna
+                        ${shippingAddress}
                     </td>
                 </tr>
                 <tr>
@@ -41,11 +41,6 @@
                         <br /><br />
                         ZORGANIZOVANO.cz
                         <br /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        TODO - footer
                     </td>
                 </tr>
             </table>

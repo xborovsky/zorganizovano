@@ -31,7 +31,7 @@ const ProductAddToCartSuccess = ({
     const history = useHistory();
 
     const handleGoToShoppingCart = () => {
-        history.push(`/eshop/shopping-cart`);
+        history.push(`/shopping-cart`);
     };
 
     return (

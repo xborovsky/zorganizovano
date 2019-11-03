@@ -1,40 +1,41 @@
 package cz.zorganizovano.backend.email.builder;
 
+import cz.zorganizovano.backend.bean.order.AddressDTO;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
+import cz.zorganizovano.backend.entity.ShipmentType;
 import cz.zorganizovano.backend.payment.PaymentInfo;
 import java.util.List;
 
 public abstract class OrderCreatedEmailBuilderAbs {
 
-    public String buildOrderItems(Order order, List<OrderItem> orderItems) {
+    public String buildOrderItems(Order order, List<OrderItem> orderItems, ShipmentType shipmentType, AddressDTO shippingAddress) {
         double subTotal = 0;
         StringBuilder sb = new StringBuilder();
         for (OrderItem orderItem : orderItems) {
             subTotal += orderItem.getPrice() * orderItem.getQuantity();
             sb.append("<tr>")
                 .append("<td>").append(orderItem.getItem().getName()).append("</td>")
-                .append("<td>").append(orderItem.getQuantity()).append("</td>")
-                .append("<td>").append(orderItem.getPrice() * orderItem.getQuantity()).append(",- Kč</td>")
+                .append("<td style=\"text-align : center;\">").append(orderItem.getQuantity()).append("</td>")
+                .append("<td style=\"text-align : right;\">").append(orderItem.getPrice() * orderItem.getQuantity()).append(",- Kč</td>")
                 .append("</tr>");
         }
 
         sb.append("<tr>")
             .append("<td colspan=\"2\">").append("Mezisoučet:").append("</td>")
-            .append("<td>").append(subTotal).append(",- Kč</td>")
+            .append("<td style=\"text-align: right;\">").append(subTotal).append(",- Kč</td>")
             .append("</tr>");
         sb.append("<tr>")
             .append("<td colspan=\"3\">").append("Doprava").append("</td>")
             .append("</tr>");
-        // TODO
-        /*sb.append("<tr>")
-            .append("<td colspan=\"2\">").append(order).append("</td>")
-            .append("<td>").append(subTotal).append(",- Kč</td>")
+        sb.append("<tr>")
+            .append("<td colspan=\"2\">").append(shipmentType.getReadableName()).append("</td>")
+            .append("<td style=\"text-align: right;\">").append(shipmentType.getPrice()).append(",- Kč</td>")
             .append("</tr>");
         sb.append("<tr>")
             .append("<td colspan=\"2\">").append("Celkem k úhradě:").append("</td>")
-            .append("<td>").append(total).append(",- Kč</td>")
-            .append("</tr>");*/
+            .append("<td style=\"text-align: right;\"><b>").append(subTotal + shipmentType.getPrice()).append(",- Kč</b></td>")
+            .append("</tr>");
 
         return sb.toString();
     }
@@ -63,7 +64,7 @@ public abstract class OrderCreatedEmailBuilderAbs {
                     .append("</td>")
                 .append("</tr>")
                 .append("<tr>")
-                    .append("<th>Datum splatnosti::</th>")
+                    .append("<th>Datum splatnosti:</th>")
                     .append("<td>")
                         .append(paymentInfo.getDateFormatted())
                     .append("</td>")
@@ -71,6 +72,16 @@ public abstract class OrderCreatedEmailBuilderAbs {
             .append("</table>");
 
         return sb.toString();
+    }
+    
+    public String buildShipmentAddress(ShipmentType shipmentType, AddressDTO address) {
+        return new StringBuilder()
+            .append("<b>").append(shipmentType.getReadableName()).append("</b><br />")
+            .append(address.getStreet()).append("<br />")
+            .append(address.getTownship()).append("<br />")
+            .append(address.getZipCode()).append("<br />")
+            .append(address.getCountry())
+            .toString();
     }
 
     public String buildPaymentQR() {

@@ -14,7 +14,7 @@ public class CustomerInfo {
     private String email;
     @NotBlank(message = "Pole Telefonní číslo je povinné")
     private String phoneNo;
-    private Address address;
+    private AddressDTO address;
 
     public String getFirstName() {
         return firstName;
@@ -48,11 +48,11 @@ public class CustomerInfo {
         this.phoneNo = phoneNo;
     }
 
-    public Address getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDTO address) {
         this.address = address;
     }
 

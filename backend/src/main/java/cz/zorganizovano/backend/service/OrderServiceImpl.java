@@ -1,6 +1,6 @@
 package cz.zorganizovano.backend.service;
 
-import cz.zorganizovano.backend.bean.order.Address;
+import cz.zorganizovano.backend.bean.order.AddressDTO;
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.bean.order.OrderCreatedDTO;
 import cz.zorganizovano.backend.bean.order.ShoppingCart;
@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderCreatedDTO createOrder(CustomerInfo customerInfo, Address shippingAddress, ShoppingCart shoppingCart) {
+    public OrderCreatedDTO createOrder(CustomerInfo customerInfo, AddressDTO shippingAddress, ShoppingCart shoppingCart) {
         Date now = timeManager.getCurrentDate();
         Order order = new Order();
         order.setCreated(now);
@@ -63,13 +63,21 @@ public class OrderServiceImpl implements OrderService {
         order = orderDao.save(order);
 
         List<OrderItem> orderItems = createOrderItems(shoppingCart, order);
-        createInvoiceAddress(customerInfo, order);
+        InvoiceAddress invoiceAddress = createInvoiceAddress(customerInfo, order);
+        ShipmentAddress shipmentAddress = null;
         if (shippingAddress != null) {
-            createShipmentAddress(shippingAddress, order);
+            shipmentAddress = createShipmentAddress(shippingAddress, order);
         }
         updateStock(shoppingCart);
 
-        return new OrderCreatedDTO(order, orderItems);
+        return new OrderCreatedDTO(
+            order, 
+            orderItems, 
+            getShippingAddress(invoiceAddress, shipmentAddress),
+            orderItems.stream()
+                .map(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+                .reduce(0.0, Double::sum)
+        );
     }
 
     protected long genereateOrderNumber(Date now) {
@@ -135,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
         return invoiceAddressDao.save(invoiceAddress);
     }
 
-    protected ShipmentAddress createShipmentAddress(Address address, Order order) {
+    protected ShipmentAddress createShipmentAddress(AddressDTO address, Order order) {
         ShipmentAddress shipmentAddress = new ShipmentAddress();
         shipmentAddress.setStreet(address.getStreet());
         shipmentAddress.setTownship(address.getTownship());
@@ -164,6 +172,24 @@ public class OrderServiceImpl implements OrderService {
 
             stockItem.setQuantity(stockItem.getQuantity() - shoppingCartItem.getQuantity());
             stockItemDao.save(stockItem);
+        }
+    }
+    
+    protected AddressDTO getShippingAddress(InvoiceAddress invoiceAddress, ShipmentAddress shipmentAddress) {
+        if (shipmentAddress == null) {
+            return new AddressDTO(
+                invoiceAddress.getStreet(),
+                invoiceAddress.getTownship(),
+                invoiceAddress.getZipCode(),
+                invoiceAddress.getCountry()
+            );
+        } else {
+            return new AddressDTO(
+                shipmentAddress.getStreet(),
+                shipmentAddress.getTownship(),
+                shipmentAddress.getZipCode(),
+                shipmentAddress.getCountry()
+            );
         }
     }
 }

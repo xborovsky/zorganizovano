@@ -10,9 +10,9 @@
         <center>
             <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
                 <tr>
-                    <td bgcolor="#000" align="center" color="#FFF">
+                    <td bgcolor="#000" align="center">
                         <br /><br />
-                        ZORGANIZOVÁNO
+                        <span style="color: #FFF;">ZORGANIZOVÁNO</span>
                         <br /><br /><br />
                     </td>
                 </tr>
@@ -42,7 +42,6 @@
                         <br /><br />
                         Pokud jste tak již neučinili, cenu objednávky prosím uhraďte do 5 pracovních dnů na účet:
                         ${paymentDetails}
-                        <!-- ${paymentQR} //TODO -->
                         <br /><br />
                         V případě, že objednávka nebude uhrazena v požadované lhůtě, bude stornována.
                         <br /><br />
@@ -51,7 +50,8 @@
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
-                        TODO kontaktní údaje / zásilkovna
+                        Zboží Vám bude doručeno na adresu:
+                        ${shippingAddress}
                     </td>
                 </tr>
                 <tr>
@@ -65,32 +65,7 @@
                 <tr>
                     <td style="font-size: 12pt; padding-left: 20px; padding-right: 20px; padding-top: 10px; color: #000; background-color: #cfcfcf;">
                         <center>
-                            <table cellspacing="5">
-                                <tr>
-                                    <td><a style="color: #000;" href="https://zorganizovano.cz/eshop/terms">Obchodní podmínky</a></td>
-                                    <td>ZORGANIZOVÁNO</td>
-                                </tr>
-                                <tr>
-                                    <td><a style="color: #000;" href="https://zorganizovano.cz/eshop/faq">Nejčastěji kladené dotazy</a></td>
-                                    <td>Bára Borovská</td>
-                                </tr>
-                                <tr>
-                                    <td><a style="color: #000;" href="https://zorganizovano.cz/contact">Kontakt</a></td>
-                                    <td>+420 734 836 714</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>zorganizovano@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>Dotaz, nápad, průšiv?&nbsp;<a style="color: #000; display: inline;" href="https://zorganizovano.cz/contact">Napište mi!</a></td>
-                                </tr>
-                            </table>
+                            <a href="https://www.zorganizovano.cz" style="color: #000;">zorganizovano.cz</a>
                         </center>
                     </td>
                 </tr>

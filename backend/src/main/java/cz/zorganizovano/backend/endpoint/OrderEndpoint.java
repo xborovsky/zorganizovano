@@ -41,7 +41,7 @@ public class OrderEndpoint {
     }
 
     @PostMapping("/confirm")
-    public OrderSuccessResponse createOrder(@Valid @RequestBody OrderFormBean order) {
+    public OrderSuccessResponse createOrder(@Valid @RequestBody OrderFormBean order) {        
         // TODO validate warehouse cnt for each item
         OrderCreatedDTO created = orderService.createOrder(
             order.getCustomerInfo(),
@@ -51,11 +51,19 @@ public class OrderEndpoint {
         
         PaymentInfo paymentInfo = new PaymentInfo(
             String.valueOf(created.getOrder().getOrderNum()),
-            0, // TODO
+            created.getTotalPrice(),
             created.getOrder().getMaturity()
         );
 
-        eventPublisher.publishEvent(new OrderCreatedEvent(created.getOrder(), created.getOrderItems(), paymentInfo));
+        eventPublisher.publishEvent(
+            new OrderCreatedEvent(
+                created.getOrder(), 
+                created.getOrderItems(), 
+                paymentInfo,
+                order.getShipmentType(),
+                created.getShippingAddress()
+            )
+        );
 
         return new OrderSuccessResponse(created.getOrder().getOrderNum(), paymentInfo);
     }

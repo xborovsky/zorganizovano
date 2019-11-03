@@ -7,7 +7,7 @@ public class OrderFormBean {
 
     @Valid
     private CustomerInfo customerInfo;
-    private Address shippingAddress;
+    private AddressDTO shippingAddress;
     private ShipmentType shipmentType;
     @Valid
     private ShoppingCart shoppingCart;
@@ -20,11 +20,11 @@ public class OrderFormBean {
         this.customerInfo = customerInfo;
     }
 
-    public Address getShippingAddress() {
+    public AddressDTO getShippingAddress() {
         return shippingAddress;
     }
 
-    public void setShippingAddress(Address shippingAddress) {
+    public void setShippingAddress(AddressDTO shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 

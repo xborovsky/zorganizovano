@@ -8,10 +8,14 @@ public class OrderCreatedDTO {
 
     private final Order order;
     private final List<OrderItem> orderItems;
+    private final AddressDTO shippingAddress;
+    private final double totalPrice;
 
-    public OrderCreatedDTO(Order order, List<OrderItem> orderItems) {
+    public OrderCreatedDTO(Order order, List<OrderItem> orderItems, AddressDTO shippingAddress, double totalPrice) {
         this.order = order;
         this.orderItems = orderItems;
+        this.shippingAddress = shippingAddress;
+        this.totalPrice = totalPrice;
     }
 
     public Order getOrder() {
@@ -20,6 +24,14 @@ public class OrderCreatedDTO {
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
+    }
+
+    public AddressDTO getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
 }
