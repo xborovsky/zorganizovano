@@ -46,7 +46,7 @@ const OrderConfirmation = ({
                                 data={orderData.customerInfo}
                                 shipment={{
                                     shipmentType : orderData.shipmentType,
-                                    shippingAddress : orderData.shippingAddress
+                                    shippingAddress : orderData.selectedZasilkovna
                                 }} />
                         </Section>
                         <Section className={classes.totalPrice}>
@@ -64,9 +64,6 @@ const OrderConfirmation = ({
                         next={{
                             finishOrder : true
                         }}
-                        showNext={false}
-                        showFinishOrder={true}
-                        onPrevClick={onGoToPrevStep}
                     />
                 </form>
             );

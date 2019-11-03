@@ -61,10 +61,10 @@ const CustomerInfo = ({
                                 {shipment.shipmentType}<br />
                                 {shipment.shippingAddress &&
                                     <>
-                                        {shipment.shippingAddress.street}<br />
-                                        {shipment.shippingAddress.township}<br />
-                                        {shipment.shippingAddress.zipCode}<br />
-                                        {shipment.shippingAddress.country}<br />
+                                        {shipment.shippingAddress.name}<br />
+                                        {shipment.shippingAddress.city}<br />
+                                        {shipment.shippingAddress.zip}<br />
+                                        Česká republika<br />
                                     </>
                                 }
                             </Typography>

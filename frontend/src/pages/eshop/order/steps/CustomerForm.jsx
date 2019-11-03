@@ -60,7 +60,9 @@ const EMPTY_FORM = {
 };
 
 const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
-    const initialFormValues = initialFormData ? {...initialFormData} : EMPTY_FORM;
+    const initialFormValues = initialFormData ?
+        {...initialFormData, ...initialFormData.address, ...initialFormData.personalDataHandleApproval} : 
+        EMPTY_FORM;
 
     const handleFormSubmit = (values, { setSubmitting, setErrors }) => {
         setSubmitting(true);
@@ -71,7 +73,8 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                 onGoToNextStep({
                     customerInfo : {
                         ...customer,
-                        address
+                        address,
+                        personalDataHandleApproval : values.personalDataHandleApproval
                     }
                 })
             })

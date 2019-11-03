@@ -22,22 +22,14 @@ const DeliveryForm = ({
     initialFormData,
     onError
 }) => {
-    const [selectedZasilkovna, setSelectedZasilkovna] = useState(undefined);
+    const [selectedZasilkovna, setSelectedZasilkovna] = useState(initialFormData.selectedZasilkovna);
 
     const handleSelectZasilkovna = () => {
         window.Packeta.Widget.pick(PACKETA_API_KEY, setSelectedPickupPoint);
     };
 
     const setSelectedPickupPoint = point => {
-        setSelectedZasilkovna(
-            {
-                street : point.name,
-                township : point.city,
-                zipCode : point.zip,
-                country : point.country,
-                openingHours : point.openingHours
-            }
-        );
+        setSelectedZasilkovna(point);
     };
 
     const initialFormValues = initialFormData ? {...initialFormData} : { deliveryOption : '' };
@@ -58,13 +50,7 @@ const DeliveryForm = ({
         // TODO validace na serveru
         onGoToNextStep({
             shipmentType : values.deliveryOption,
-            shippingAddress : selectedZasilkovna ? {
-                street : selectedZasilkovna.street,
-                township : selectedZasilkovna.township,
-                city : selectedZasilkovna.city,
-                zipCode : selectedZasilkovna.zipCode,
-                country : 'Česká republika' // TODO
-            } : undefined
+            selectedZasilkovna
         });
         return false;
     };
@@ -98,7 +84,9 @@ const DeliveryForm = ({
                                                         label={deliveryOption.readableName}
                                                     />
                                                     {
-                                                        values.deliveryOption.toLowerCase() === ZASILKOVNA && deliveryOption.name.toLowerCase() === ZASILKOVNA ?
+                                                        (values.deliveryOption && 
+                                                            values.deliveryOption.toLowerCase() === ZASILKOVNA && 
+                                                            deliveryOption.name.toLowerCase() === ZASILKOVNA) ?
                                                             <>
                                                                 <Button
                                                                     variant="contained"
@@ -109,9 +97,9 @@ const DeliveryForm = ({
                                                                 </Button>
                                                                 { selectedZasilkovna &&
                                                                     <ZasilkovnaInfo
-                                                                        street={selectedZasilkovna.street}
-                                                                        township={selectedZasilkovna.township}
-                                                                        zipCode={selectedZasilkovna.zipCode}
+                                                                        street={selectedZasilkovna.name}
+                                                                        township={selectedZasilkovna.city}
+                                                                        zipCode={selectedZasilkovna.zip}
                                                                         country={selectedZasilkovna.country}
                                                                         openingHours={selectedZasilkovna.openingHours.compactLong}
                                                                     />

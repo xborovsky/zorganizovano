@@ -40,7 +40,7 @@ const styles = theme => ({
 const defaultOrderData = {
     customerInfo : undefined,
     shoppingCart : undefined,
-    shippingAddress : undefined
+    selectedZasilkovna : undefined
 };
 
 const OrderWizard = ({ classes }) => {
@@ -67,7 +67,10 @@ const OrderWizard = ({ classes }) => {
             );
             case 1: return (
                 <DeliveryForm
-                    initialFormData={orderData.shippingAddress}
+                    initialFormData={{
+                        deliveryOption : orderData.shipmentType,
+                        selectedZasilkovna : orderData.selectedZasilkovna
+                    }}
                     onGoToNextStep={shipping => {
                         setOrderData({...orderData, ...shipping});
                         goToNext();
@@ -102,6 +105,10 @@ const OrderWizard = ({ classes }) => {
         axios.post(
             '/order/confirm', {
             ...orderData,
+            shippingAddress : {
+                ...orderData.selectedZasilkovna,
+                country : 'Česká republika'
+            },
             shoppingCart : {
                 items : serverDataShoppingCart
             }
