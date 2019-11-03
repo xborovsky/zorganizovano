@@ -80,7 +80,7 @@ const ContactForm = ({ queryTypes, classes }) => {
 
     return (
         <Paper className={classes.root}>
-            <Typography variant="h1">Kontaktní formulář</Typography>
+            <Typography variant="h1">Napište mi</Typography>
             { showAlert() }
             <Formik
                 initialValues={{
@@ -160,7 +160,7 @@ const ContactForm = ({ queryTypes, classes }) => {
                                         id="type"
                                         name="type"
                                         select
-                                        label="Typ dotazu"
+                                        label="Čeho se to týká"
                                         fullWidth
                                         value={values.type}
                                         onChange={handleChange}
