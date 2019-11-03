@@ -22,14 +22,14 @@ public class ContactAdminEmailImpl implements ContactAdminEmail {
     public String buildText(ContactFormBean contactFormBean) {
         String contactQueryType = "???";
         Optional<ContactQueryType> contactQueryTypeMaybe = contactQueryTypDao.findById(contactFormBean.getType());
-        if (!contactQueryTypeMaybe.isPresent()) {
+        if (contactQueryTypeMaybe.isPresent()) {
             contactQueryType = contactQueryTypeMaybe.get().getType();
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Jméno: ").append(contactFormBean.getName()).append("\n")
-            .append("Email: ").append(contactFormBean.getEmail()).append("\n")
-            .append("Typ dotazu: ").append(contactQueryType).append("\n")
+        sb.append("Jméno: ").append(contactFormBean.getName()).append("<br />")
+            .append("Email: ").append(contactFormBean.getEmail()).append("<br />")
+            .append("Typ dotazu: ").append(contactQueryType).append("<br />")
             .append("Dotaz: ").append(contactFormBean.getQuery());
         return sb.toString();
     }

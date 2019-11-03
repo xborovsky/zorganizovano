@@ -5,10 +5,10 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 
 const SocialLinks = ({ linkClass, iconClass }) => (
     <>
-        <a href="https://www.facebook.com/zorganizovano/" className={linkClass} >
+        <a href="https://www.facebook.com/zorganizovano/" className={linkClass} target="_blank">
             <FacebookIcon className={iconClass} />
         </a>
-        <a href="https://www.instagram.com/zorganizovano/" className={linkClass}>
+        <a href="https://www.instagram.com/zorganizovano/" className={linkClass} target="_blank">
             <InstagramIcon className={iconClass} />
         </a>
     </>

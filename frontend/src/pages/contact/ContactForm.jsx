@@ -181,6 +181,7 @@ const ContactForm = ({ queryTypes, classes }) => {
                                         name="query"
                                         label="Dotaz"
                                         placeholder="Sem napište Váš dotaz"
+                                        value={values.query}
                                         multiline
                                         margin="normal"
                                         variant="outlined"

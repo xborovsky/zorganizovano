@@ -9,10 +9,13 @@ import cz.zorganizovano.backend.service.GoogleRecaptchaVerifier;
 import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000")
 @Validated
 public class ContactEndpoint {
+    private static final Logger LOG = LoggerFactory.getLogger(ContactEndpoint.class);
 
     @Autowired
     private EmailService emailService;
@@ -48,7 +52,11 @@ public class ContactEndpoint {
             String subject = contactAdminEmail.getSubject();
             String text = contactAdminEmail.buildText(contactFormBean);
 
-            emailService.send(recipient, subject, text);
+            try {
+                emailService.send(recipient, subject, text);
+            } catch (MailException e) {
+                LOG.error(e.getMessage(), e);
+            }
 
             return ResponseEntity.ok().build();
         } else {
