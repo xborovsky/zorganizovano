@@ -22,12 +22,20 @@ const styles = theme => ({
         position : 'fixed'
     },
     toolbar: {
-        flexWrap: 'wrap',
+        display : 'flex',
         alignItems : 'stretch',
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
+            flexDirection : 'column',
+            justifyContent : 'center',
             paddingLeft : '0 !important',
-            paddingRight : '0 !important'
+            paddingRight : '0 !important',
+            paddingTop: '9px !important',
+            paddingBottom : '9px !important'
         }
+    },
+    toolbarContent : {
+        display : 'flex',
+        alignItems : 'center'
     },
     toolbarTitle: {
         flexGrow: 1,
@@ -76,7 +84,8 @@ const styles = theme => ({
     },
     nav : {
         display : 'flex',
-        alignItems : 'stretch'
+        alignItems : 'stretch',
+        marginLeft : 'auto'
     },
     linkNoDecoration : {
         color : '#fff',
@@ -85,7 +94,7 @@ const styles = theme => ({
     menuIcon : {
         color : '#fff',
         fontSize : 28,
-        margin: '.5rem 1rem 0'
+        margin: '0 1rem 0'
     },
     mobileNav : {
         display : 'flex'
@@ -110,11 +119,19 @@ const Header = ({ classes }) => {
         <>
             <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <Typography variant="body1" color="inherit" noWrap className={classes.toolbarTitle}>
-                        <NavLink to="/" className={classes.linkNoDecoration} exact onClick={() => setShowMobileMenu(false)}>
-                            Zorganizováno
-                        </NavLink>
-                    </Typography>
+                    <div className={classes.toolbarContent}>
+                        <Typography variant="body1" color="inherit" noWrap className={classes.toolbarTitle}>
+                            <NavLink to="/" className={classes.linkNoDecoration} exact onClick={() => setShowMobileMenu(false)}>
+                                Zorganizováno
+                            </NavLink>
+                        </Typography>
+                        <Hidden mdUp>
+                            { showMobileMenu ?
+                                <MenuOpenIcon className={classes.menuIcon} onClick={() => setShowMobileMenu(false)} /> :
+                                <MenuIcon className={classes.menuIcon} onClick={() => setShowMobileMenu(true)} />
+                            }
+                        </Hidden>
+                    </div>
                     <Hidden smDown>
                         <nav className={classes.nav}>
                             <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink}>
@@ -137,40 +154,36 @@ const Header = ({ classes }) => {
                         </nav>
                     </Hidden>
                     <Hidden mdUp>
-                        { showMobileMenu ?
-                            <>
-                                <MenuOpenIcon className={classes.menuIcon} onClick={() => setShowMobileMenu(false)} />
-                                <nav className={classes.mobileNav}>
-                                    <Grid container>
-                                        <Grid item xs={12}>
-                                            <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
-                                                <Typography variant="body2" element="span">[ Eshop ]</Typography>
-                                            </NavLink>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <NavLink to="/tips" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
-                                                <Typography variant="body2" element="span">[ Zorganizuj se ]</Typography>
-                                            </NavLink>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <NavLink to="/contact" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
-                                                <Typography variant="body2" element="span">[ Kontakt ]</Typography>
-                                            </NavLink>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <NavLink to="/eshop/shopping-cart" className={[classes.link, classes.shoppingCartLink].join(' ')} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
-                                                <Typography variant="body2" element="span">{ totalPrice },-</Typography>
-                                                <IconButton aria-label="cart" className={classes.shoppingCartIcon}>
-                                                    <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
-                                                        <FontAwesomeIcon icon={faShoppingCart} />
-                                                    </StyledBadge>
-                                                </IconButton>
-                                            </NavLink>
-                                        </Grid>
+                        { showMobileMenu &&
+                            <nav className={classes.mobileNav}>
+                                <Grid container>
+                                    <Grid item xs={12}>
+                                        <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
+                                            <Typography variant="body2" element="span">[ Eshop ]</Typography>
+                                        </NavLink>
                                     </Grid>
-                                </nav>
-                            </> :
-                            <MenuIcon className={classes.menuIcon} onClick={() => setShowMobileMenu(true)} />
+                                    <Grid item xs={12}>
+                                        <NavLink to="/tips" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
+                                            <Typography variant="body2" element="span">[ Zorganizuj se ]</Typography>
+                                        </NavLink>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <NavLink to="/contact" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
+                                            <Typography variant="body2" element="span">[ Kontakt ]</Typography>
+                                        </NavLink>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <NavLink to="/shopping-cart" className={[classes.link, classes.shoppingCartLink].join(' ')} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
+                                            <Typography variant="body2" element="span">{ totalPrice },-</Typography>
+                                            <IconButton aria-label="cart" className={classes.shoppingCartIcon}>
+                                                <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
+                                                    <FontAwesomeIcon icon={faShoppingCart} />
+                                                </StyledBadge>
+                                            </IconButton>
+                                        </NavLink>
+                                    </Grid>
+                                </Grid>
+                            </nav>
                         }
                     </Hidden>
                 </Toolbar>
