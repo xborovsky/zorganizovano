@@ -135,7 +135,7 @@ const ProductDetail = ({ product, classes }) => {
                 </Grid>
             </Grid>
 
-            { // TODO refaktoring HC???
+            {
                 showSuccess &&
                     <ProductAddToCartSuccess
                         productName={showSuccess.productName}

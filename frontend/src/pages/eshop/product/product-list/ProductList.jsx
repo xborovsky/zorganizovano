@@ -34,7 +34,7 @@ const ProductList = ({ products, classes }) => {
                         />
                     ))
                 }
-                { // TODO refaktoring HC???
+                {
                     showSuccess &&
                         <ProductAddToCartSuccess
                             product={showSuccess.productName}

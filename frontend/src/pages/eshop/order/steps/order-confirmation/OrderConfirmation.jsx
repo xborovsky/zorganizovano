@@ -31,7 +31,6 @@ const OrderConfirmation = ({
 }) => (
     <DataFetcher url='/order/delivery-options'>
         { data => {
-            // TODO jeste jednou komplet validace na serveru
             const selectedDelivery = data.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
             return (
                 <form onSubmit={onOrderConfirmed}>
