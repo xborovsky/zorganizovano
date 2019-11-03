@@ -29,6 +29,10 @@ public class BlogPost implements Serializable {
     private String contentPreview;
     @Column(name = "content", nullable = false, columnDefinition = "LONGTEXT")
     private String content;
+    @Column(name = "title_photo_src", nullable = false)
+    private String titlePhotoSrc;
+    @Column(name = "title_photo_srcset", nullable = false, columnDefinition = "TEXT")
+    private String titlePhotoSrcSet;
 
     public BlogPost() {
     }
@@ -79,6 +83,22 @@ public class BlogPost implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTitlePhotoSrc() {
+        return titlePhotoSrc;
+    }
+
+    public void setTitlePhotoSrc(String titlePhotoSrc) {
+        this.titlePhotoSrc = titlePhotoSrc;
+    }
+
+    public String getTitlePhotoSrcSet() {
+        return titlePhotoSrcSet;
+    }
+
+    public void setTitlePhotoSrcSet(String titlePhotoSrcSet) {
+        this.titlePhotoSrcSet = titlePhotoSrcSet;
     }
 
     @Override

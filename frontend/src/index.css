@@ -3,3 +3,39 @@ html { font-family: 'Roboto', 'Century Gothic', sans-serif; }
 body {
     background-color: #ededed !important;
 }
+
+.blog-post {
+    font-size : 12pt;
+}
+
+.blog-post-img {
+    width : 30%;
+}
+
+.blog-post-img.left {
+    float : left;
+    margin : 10px 20px 10px 0;
+}
+
+.blog-post-img.right {
+    float : right;
+    margin : 10px 0 10px 20px;
+}
+
+.blog-post-img-block {
+    text-align : center;
+    display : block;
+}
+
+.blog-post-img-block .blog-post-img {
+    display : inline-block;
+    margin : 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .blog-post-img {
+        width : 95%;
+        margin : 0 auto 20px;
+        display : block;
+    }
+}

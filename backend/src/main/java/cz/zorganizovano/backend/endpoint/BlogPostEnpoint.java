@@ -1,6 +1,7 @@
 package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.blog.BlogPostPreview;
+import cz.zorganizovano.backend.bean.blog.BlogPostTitlePicture;
 import cz.zorganizovano.backend.dao.BlogPostDao;
 import cz.zorganizovano.backend.entity.BlogPost;
 import java.text.MessageFormat;
@@ -31,6 +32,12 @@ public class BlogPostEnpoint {
             .orElseThrow(() ->
                 new IllegalArgumentException(MessageFormat.format("Blog post id={0} not found!", id))
             );
+    }
+
+    @GetMapping("/{id}/title-picture")
+    public BlogPostTitlePicture getBlogPostTitlePicture(@PathVariable("id") Long id) {
+        BlogPost blogPost = getBlogPost(id);
+        return new BlogPostTitlePicture(blogPost);
     }
 
 }

@@ -228,6 +228,12 @@
             <column name="content" type="LONGTEXT">
                 <constraints nullable="false"/>
             </column>
+            <column name="title_photo_src" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title_photo_srcset" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <createTable tableName="contact_query_types">

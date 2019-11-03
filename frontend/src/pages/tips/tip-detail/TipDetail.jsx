@@ -13,6 +13,17 @@ const styles = theme => ({
     breadcrumbsWrapper : {
         justifyContent: 'center',
         flexWrap: 'wrap'
+    },
+    blogPost : {
+        fontSize : '12pt',
+        textAlign : 'justify',
+        overflow : 'hidden',
+        '&>p' : {
+            textIndent : '3rem',
+            [theme.breakpoints.down('xs')] : {
+                textIndent : '2rem'
+            }
+        }
     }
 });
 
@@ -24,7 +35,7 @@ const TipDetail = ({ tip, classes }) => {
             <Paper className={classes.root}>
                 <Typography variant="h1">{ tip.title }</Typography>
                 <span>{ tip.publishedFormatted }</span>
-                <Typography variant="body1" component="div">
+                <Typography variant="body1" component="div" className={classes.blogPost}>
                     { ReactHtmlParser(tip.content) }
                 </Typography>
             </Paper>
