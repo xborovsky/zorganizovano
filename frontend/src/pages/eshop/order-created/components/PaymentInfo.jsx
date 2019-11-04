@@ -23,7 +23,7 @@ const PaymentInfo = ({ paymentData }) => (
             </TableRow>
             <TableRow>
                 <TableCell>Datum splatnosti:</TableCell>
-                <TableCell>{ paymentData.date }</TableCell>
+                <TableCell>{ new Date(paymentData.date).toLocaleDateString() }</TableCell>
             </TableRow>
         </TableBody>
     </Table>
