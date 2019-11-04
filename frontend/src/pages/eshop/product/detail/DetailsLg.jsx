@@ -4,6 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import ReactHtmlParser from 'react-html-parser';
+import { Typography } from '@material-ui/core';
 
 import { productDetailShape } from '../product-prop-type';
 
@@ -15,8 +16,10 @@ const styles = theme => ({
     },
     thCell : {
         border : 'none',
-        fontWeight : 'bold',
         verticalAlign : 'top'
+    },
+    th : {
+        fontWeight : 'bold !important'
     },
     tdCell : {
         border : 'none'
@@ -27,20 +30,28 @@ const Details = ({ product, classes }) => (
     <TableBody>
         <TableRow>
             <TableCell component="th" scope="row" className={classes.thCell}>
-                Popis
+                <Typography variant="body1" className={classes.th}>
+                    Popis
+                </Typography>
             </TableCell>
             <TableCell className={classes.tdCell}>
-                { ReactHtmlParser(product.description) }
+                <Typography variant="body1">
+                    { ReactHtmlParser(product.description) }
+                </Typography>
             </TableCell>
         </TableRow>
         {
             product.details.map(productDetail => (
                 <TableRow key={productDetail.id}>
                     <TableCell component="th" scope="row" className={classes.thCell}>
-                        { productDetail.key }
+                        <Typography variant="body1" className={classes.th}>
+                            { productDetail.key }
+                        </Typography>
                     </TableCell>
                     <TableCell className={classes.tdCell}>
-                        { productDetail.value }
+                        <Typography variant="body1">
+                            { productDetail.value }
+                        </Typography>
                     </TableCell>
                 </TableRow>
             ))

@@ -15,7 +15,6 @@ const styles = theme => ({
         flexWrap: 'wrap'
     },
     blogPost : {
-        fontSize : '12pt',
         textAlign : 'justify',
         overflow : 'hidden',
         '&>p' : {

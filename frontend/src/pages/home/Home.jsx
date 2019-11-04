@@ -11,7 +11,7 @@ const styles = theme => ({
         textAlign : 'center'
     },
     gridWrapper : {
-        padding : '10px 40px 40px',
+        padding : '20px 40px 40px',
         [theme.breakpoints.down('sm')] : {
             padding : 0
         }
@@ -25,7 +25,7 @@ const Home = ({ classes }) => (
             <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
             <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
                 <NavLink to="/tips">
-                    <LinkButton 
+                    <LinkButton
                         src="/img/page/button2/Button2.jpg"
                         srcSet=""
                     />
@@ -33,7 +33,7 @@ const Home = ({ classes }) => (
             </Grid>
             <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
                 <NavLink to="/eshop">
-                    <LinkButton 
+                    <LinkButton
                         src="/img/page/button1/Button1.jpg"
                         srcSet=""
                     />

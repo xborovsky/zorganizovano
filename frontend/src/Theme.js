@@ -14,10 +14,10 @@ let zorganizovanoTheme = createMuiTheme({
   typography: {
     fontFamily: 'Roboto, Century Gothic, sans-serif',
     body1: {
-      fontSize: '1rem',
+      fontSize: '1.1rem',
       color: '#4a4a4a',
       [defaultTheme.breakpoints.down('lg')]: {
-        fontSize: '0.8rem'
+        fontSize: '0.9rem'
       },
     },
     body2: {
