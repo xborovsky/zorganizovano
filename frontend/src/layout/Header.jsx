@@ -75,6 +75,7 @@ const styles = theme => ({
     shoppingCartIcon : {
         color : '#fff',
         fontSize : 14,
+        padding : '0 !important',
         "&:hover": {
             backgroundColor: "transparent"
         }
