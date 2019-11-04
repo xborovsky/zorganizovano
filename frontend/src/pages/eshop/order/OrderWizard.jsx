@@ -105,12 +105,12 @@ const OrderWizard = ({ classes }) => {
         axios.post(
             '/order/confirm', {
             ...orderData,
-            shippingAddress : {
+            shippingAddress : orderData.selectedZasilkovna ? {
                 street : orderData.selectedZasilkovna.name,
                 township : orderData.selectedZasilkovna.city,
                 zipCode : orderData.selectedZasilkovna.zip,
                 country : 'Česká republika'
-            },
+            } : null,
             shoppingCart : {
                 items : serverDataShoppingCart
             }
