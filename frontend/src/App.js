@@ -59,7 +59,6 @@ const App = ({ classes }) => {
         <Router>
           <ErrorBoundary>
             <ShoppingCartContext.Provider value={{ state, dispatch }}>
-              { console.log(state) }
               <Header />
               <Main>
                 <Suspense fallback={<Loader />}>

@@ -98,7 +98,8 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
             type : ADD_ITEM_TO_SHOPPING_CART,
             payload : shoppingCartItem
         });
-        onSuccess({ productName : shoppingCartItem.name });
+
+        onSuccess({ productName : item.name });
         setQuantity(1);
     };
 

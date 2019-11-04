@@ -30,14 +30,14 @@ const ProductList = ({ products, classes }) => {
                         <ProductListItem
                             product={product}
                             key={product.id}
-                            onSuccess={shoppingCartItem => setShowSuccess({ productName : shoppingCartItem.name})}
+                            onSuccess={shoppingCartItem => setShowSuccess(shoppingCartItem.productName)}
                         />
                     ))
                 }
                 {
                     showSuccess &&
                         <ProductAddToCartSuccess
-                            product={showSuccess.productName}
+                            productName={showSuccess}
                             onClose={handleSuccessClose}
                         />
                 }
