@@ -9,7 +9,7 @@ import ContactEmail from 'components/ContactEmail';
 
 const styles = theme => ({
     footer : {
-        padding: '3rem 10vw',
+        padding: '3rem 10vw 2rem',
         marginTop: 'auto',
         backgroundColor : '#cfcfcf',
         color : '#000',
@@ -61,7 +61,7 @@ const styles = theme => ({
 const Footer = ({ classes }) => (
     <footer className={classes.footer}>
         <Grid container>
-            <Grid item xs={12} sm={6} className={classes.left}>
+            <Grid item xs={12} sm={5} className={classes.left}>
                 <Link to="/eshop/terms" className={classes.link}>
                     <Typography variant="body2" color="inherit">Obchodní podmínky</Typography>
                 </Link>
@@ -74,7 +74,7 @@ const Footer = ({ classes }) => (
                 <br />
                 <SocialLinks linkClass={classes.nativeLink} iconClass={classes.socialIcon} />
             </Grid>
-            <Grid item xs={12} sm={6} className={classes.left}>
+            <Grid item xs={12} sm={5} className={classes.left}>
                 <Typography variant="body2" color="inherit">ZORGANIZOVÁNO</Typography>
                 <div>
                     <Typography variant="body2" color="inherit">Bára Borovská</Typography>
@@ -91,7 +91,7 @@ const Footer = ({ classes }) => (
                     </Typography>
                 </div>
             </Grid>
-            <Grid item xs={12} className={classes.yearWrapper}>
+            <Grid item xs={12} sm={2} className={classes.yearWrapper}>
                 <Typography variant="body2" className={classes.year}>2019</Typography>
             </Grid>
         </Grid>
