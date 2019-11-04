@@ -99,7 +99,8 @@ ShoppingCart.propTypes = {
             name : PropTypes.string.isRequired,
             subName : PropTypes.string.isRequired,
             priceSingle : PropTypes.number.isRequired,
-            quantity : PropTypes.number.isRequired
+            quantity : PropTypes.number.isRequired,
+            warehouseCnt : PropTypes.number.isRequired
         })
     ).isRequired,
     onChangeQuantity : PropTypes.func.isRequired,

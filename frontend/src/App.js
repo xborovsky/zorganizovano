@@ -31,8 +31,22 @@ const styles = theme => ({
 
 export const RECAPTCHA_SITE_KEY = '6LdrKsAUAAAAAPsXgJSwERT3AwtBDMage9E6YyTy';
 
+const getInitialShoppingCartState = () => {
+  const storage = window.localStorage.getItem('shoppingCart') ? JSON.parse(window.localStorage.getItem('shoppingCart')) : [];
+  const storageDeduplicated = [];
+
+  storage.forEach(item => {
+    if (!storageDeduplicated.find(i => i.id === item.id)) {
+      storageDeduplicated.push(item);
+    }
+  });
+
+  window.localStorage.setItem("shoppingCart", JSON.stringify(storageDeduplicated));
+  return storageDeduplicated;
+};
+
 const App = ({ classes }) => {
-  const [state, dispatch] = useReducer(shoppingCartReducer, localStorage.getItem('shoppingCart') ? JSON.parse(localStorage.getItem('shoppingCart')) : []);
+  const [state, dispatch] = useReducer(shoppingCartReducer, getInitialShoppingCartState());
 
   useEffect(() => {
       window.localStorage.setItem("shoppingCart", JSON.stringify(state));
@@ -45,6 +59,7 @@ const App = ({ classes }) => {
         <Router>
           <ErrorBoundary>
             <ShoppingCartContext.Provider value={{ state, dispatch }}>
+              { console.log(state) }
               <Header />
               <Main>
                 <Suspense fallback={<Loader />}>

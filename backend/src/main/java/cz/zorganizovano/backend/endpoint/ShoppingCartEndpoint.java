@@ -2,8 +2,10 @@ package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.shopping_cart.ShoppingCartItemResponse;
 import cz.zorganizovano.backend.dao.StockItemDao;
-import java.util.ArrayList;
+import cz.zorganizovano.backend.entity.StockItem;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,15 +22,16 @@ public class ShoppingCartEndpoint {
     private StockItemDao stockItemDao;
 
     @PostMapping("/items")
-    public List<ShoppingCartItemResponse> getShoppingCartItems(@RequestBody List<Long> stockItemIds) {
-        List<ShoppingCartItemResponse> resultItems = new ArrayList<>();
+    public Set<ShoppingCartItemResponse> getShoppingCartItems(@RequestBody List<Long> stockItemIds) {
+        Set<ShoppingCartItemResponse> resultItems = new HashSet<>();
 
         stockItemIds.stream()
             .map((stockItemId) -> stockItemDao.findById(stockItemId))
             .filter((stockItemMaybe) -> (stockItemMaybe.isPresent()))
             .forEachOrdered((stockItemMaybe) -> {
+                StockItem stockItem = stockItemMaybe.get();
                 resultItems.add(
-                    new ShoppingCartItemResponse(stockItemMaybe.get().getItem())
+                    new ShoppingCartItemResponse(stockItem.getItem(), stockItem.getQuantity())
                 );
             }
         );

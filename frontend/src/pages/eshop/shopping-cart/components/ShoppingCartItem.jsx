@@ -32,7 +32,7 @@ const ShoppingCartItem = ({
             <QuantityInput
                 value={item.quantity}
                 onChange={evt => onChangeQuantity(evt, item.id)}
-                max={99} // TODO max product.stockQuantity (ajax)
+                maxVal={item.warehouseCnt}
                 className={classes.quantityInput}
             />
         </TableCell>
@@ -54,7 +54,8 @@ ShoppingCartItem.propTypes = {
         name : PropTypes.string.isRequired,
         subName : PropTypes.string.isRequired,
         priceSingle : PropTypes.number.isRequired,
-        quantity : PropTypes.number.isRequired
+        quantity : PropTypes.number.isRequired,
+        warehouseCnt : PropTypes.number.isRequired
     },
     onChangeQuantity : PropTypes.func.isRequired,
     onDelete : PropTypes.func.isRequired

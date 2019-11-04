@@ -48,7 +48,8 @@ const ShoppingCartContainer = () => {
                         name : serverVerifiedItems[verifiedItemIdx].name,
                         subName : serverVerifiedItems[verifiedItemIdx].subName,
                         priceSingle : serverVerifiedItems[verifiedItemIdx].priceSingle,
-                        quantity : localStorageItem.quantity
+                        quantity : localStorageItem.quantity,
+                        warehouseCnt : serverVerifiedItems[verifiedItemIdx].warehouseCnt
                     };
                 }
             });
@@ -63,7 +64,6 @@ const ShoppingCartContainer = () => {
     }, []);
 
     useEffect(() => {
-        console.log(serverCartItems);
         if (serverCartItems && serverCartItems.length) {
             const updatedItems = serverCartItems.map(serverCartItem => {
                 const stateItem = state.find(item => serverCartItem.id === item.id);
