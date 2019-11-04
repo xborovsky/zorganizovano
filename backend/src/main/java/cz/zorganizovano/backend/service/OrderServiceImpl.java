@@ -68,7 +68,6 @@ public class OrderServiceImpl implements OrderService {
         if (shippingAddress != null) {
             shipmentAddress = createShipmentAddress(shippingAddress, order);
         }
-        updateStock(shoppingCart);
 
         return new OrderCreatedDTO(
             order, 
@@ -115,6 +114,8 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setQuantity(shoppingCartItem.getQuantity());
             orderItem.setItem(stockItem.getItem());
             orderItems.add(orderItemDao.save(orderItem));
+
+            updateStock(stockItem, shoppingCartItem);
         }
 
         return orderItems;
@@ -155,24 +156,18 @@ public class OrderServiceImpl implements OrderService {
         return shipmentAddressDao.save(shipmentAddress);
     }
 
-    // TODO refaktoring mozna nejak vyuzit createOrderItems??
-    protected void updateStock(ShoppingCart shoppingCart) {
-        for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
-            StockItem stockItem = stockItemDao.findById(shoppingCartItem.getItemId())
-                    .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("Item id={0} not found on stock!", shoppingCartItem.getItemId())));
-
-            if (stockItem.getQuantity() < shoppingCartItem.getQuantity()) {
-                throw new IllegalStateException(
-                    MessageFormat.format(
-                        "Not available quantity in stock form item id={0}! Stock quantity={1}, requested quantity={2}",
-                        stockItem.getId(), stockItem.getQuantity(), shoppingCartItem.getQuantity()
-                    )
-                );
-            }
-
-            stockItem.setQuantity(stockItem.getQuantity() - shoppingCartItem.getQuantity());
-            stockItemDao.save(stockItem);
+    protected void updateStock(StockItem stockItem, ShoppingCartItem shoppingCartItem) {
+        if (stockItem.getQuantity() < shoppingCartItem.getQuantity()) {
+            throw new IllegalStateException(
+                MessageFormat.format(
+                    "Not available quantity in stock form item id={0}! Stock quantity={1}, requested quantity={2}",
+                    stockItem.getId(), stockItem.getQuantity(), shoppingCartItem.getQuantity()
+                )
+            );
         }
+
+        stockItem.setQuantity(stockItem.getQuantity() - shoppingCartItem.getQuantity());
+        stockItemDao.save(stockItem);
     }
     
     protected AddressDTO getShippingAddress(InvoiceAddress invoiceAddress, ShipmentAddress shipmentAddress) {
