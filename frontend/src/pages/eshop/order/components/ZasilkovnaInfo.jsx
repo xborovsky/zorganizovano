@@ -8,7 +8,8 @@ import ReactHtmlParser from 'react-html-parser';
 
 const styles = theme => ({
     root : {
-        border : '1px solid #ccc'
+        border : '1px solid #ccc',
+        marginTop : '0.5rem'
     }
 });
 
