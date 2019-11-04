@@ -12,6 +12,7 @@ import {
 } from './state-management/ShoppingCartActions';
 import DeleteConfirm from './components/DeleteConfirm';
 import BreadcrumbsNav from 'components/BreadcrumbsNav';
+import { faSleigh } from '@fortawesome/free-solid-svg-icons';
 
 const initialConfirmData = {
     show : false,
@@ -80,14 +81,16 @@ const ShoppingCartContainer = () => {
         }
     }, [state]);
 
-    const handleChangeQuantity = (event, id) => {
+    const handleChangeQuantity = (event, item) => {
         const newQuantity = +event.currentTarget.value;
-        if (newQuantity === 0) {
-            showItemDeleteConfirm(id);
+        if (newQuantity <= 0) {
+            showItemDeleteConfirm(item.id);
+        } else if (newQuantity > item.warehouseCnt) {
+            return false;
         } else {
             dispatch({
                 type : UPDATE_SHOPPING_CART_ITEM_QUANTITY,
-                itemId : id,
+                itemId : item.id,
                 quantity : newQuantity
             });
         }

@@ -31,7 +31,7 @@ const ShoppingCartItem = ({
         <TableCell align="center">
             <QuantityInput
                 value={item.quantity}
-                onChange={evt => onChangeQuantity(evt, item.id)}
+                onChange={evt => onChangeQuantity(evt, item)}
                 maxVal={item.warehouseCnt}
                 className={classes.quantityInput}
             />

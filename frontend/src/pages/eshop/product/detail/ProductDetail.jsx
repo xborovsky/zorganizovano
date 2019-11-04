@@ -80,12 +80,6 @@ const ProductDetail = ({ product, classes }) => {
     const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
 
     const addItemToShoppingCart = item => {
-        if (quantity <= 0 || quantity > stockQuantityLeft) {
-            setQuantityError(true);
-            return false;
-        }
-        setQuantityError(false);
-
         const shoppingCartItem = {
             id : item.id,
             price : item.price,
@@ -100,7 +94,13 @@ const ProductDetail = ({ product, classes }) => {
     };
 
     const handleChangeQuantity = event => {
-        setQuantity(+event.currentTarget.value);
+        const newQuantity = +event.currentTarget.value;
+        if (newQuantity <= 0 || newQuantity > stockQuantityLeft) {
+            setQuantityError(true);
+            return false;
+        }
+        setQuantityError(false);
+        setQuantity(newQuantity);
     };
 
     const handleSuccessClose = () => {

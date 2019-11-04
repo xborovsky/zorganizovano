@@ -94,12 +94,6 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     };
 
     const addToShoppingCart = item => {
-        if (quantity <= 0 || quantity > stockQuantityLeft) {
-            setQuantityError(true);
-            return false;
-        }
-        setQuantityError(false);
-
         const shoppingCartItem = {
             id : item.id,
             price : item.price,
@@ -115,7 +109,13 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     };
 
     const handleChangeQuantity = event => {
-        setQuantity(+event.currentTarget.value);
+        const newQuantity = +event.currentTarget.value;
+        if (newQuantity <= 0 || newQuantity > stockQuantityLeft) {
+            setQuantityError(true);
+            return false;
+        }
+        setQuantityError(false);
+        setQuantity(newQuantity);
     };
 
     const headerTitle = <Typography varian="h5" className={classes.headerTitle}>{product.name}</Typography>;
