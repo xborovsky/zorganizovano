@@ -17,6 +17,7 @@ import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
+import QuantityError from '../common/QantityError';
 
 const styles = theme => ({
     card : {
@@ -71,6 +72,10 @@ const styles = theme => ({
     },
     quantityInput : {
         marginRight : 20
+    },
+    quantityError : {
+        paddingTop : '0 !important',
+        textAlign : 'right'
     }
 });
 
@@ -79,8 +84,9 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     const history = useHistory();
     const location = useLocation();
     const [ quantity, setQuantity ] = useState(1);
+    const [ quantityError, setQuantityError ] = useState(false);
     const { state, dispatch } = useContext(ShoppingCartContext);
-    const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity;
+    const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;
     const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
 
     const goToDetail = () => {
@@ -88,6 +94,12 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     };
 
     const addToShoppingCart = item => {
+        if (quantity <= 0 || quantity > stockQuantityLeft) {
+            setQuantityError(true);
+            return false;
+        }
+        setQuantityError(false);
+
         const shoppingCartItem = {
             id : item.id,
             price : item.price,
@@ -148,6 +160,11 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                                 onlyIcon={true}
                                 disabled={stockQuantityLeft <= 0} />
                         </Grid>
+                        { quantityError &&
+                            <Grid item xs={12} className={classes.quantityError}>
+                                <QuantityError />
+                            </Grid>
+                        }
                     </Grid>
                 </CardActions>
             </Card>

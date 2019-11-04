@@ -15,6 +15,7 @@ import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
+import QuantityError from '../common/QantityError';
 
 const styles = theme => ({
     root : {
@@ -63,17 +64,28 @@ const styles = theme => ({
         [theme.breakpoints.down('xs')] : {
             padding : '0 .6rem .5rem',
         }
+    },
+    quantityError : {
+        paddingTop : '0 !important',
+        textAlign : 'right'
     }
 });
 
 const ProductDetail = ({ product, classes }) => {
     const { state, dispatch } = useContext(ShoppingCartContext);
     const [ quantity, setQuantity ] = useState(1);
+    const [ quantityError, setQuantityError ] = useState(false);
     const [ showSuccess, setShowSuccess ] = useState(undefined);
-    const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity;
+    const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;
     const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
 
     const addItemToShoppingCart = item => {
+        if (quantity <= 0 || quantity > stockQuantityLeft) {
+            setQuantityError(true);
+            return false;
+        }
+        setQuantityError(false);
+
         const shoppingCartItem = {
             id : item.id,
             price : item.price,
@@ -137,6 +149,11 @@ const ProductDetail = ({ product, classes }) => {
                                 onClick={() => addItemToShoppingCart(product)}
                             />
                         </Grid>
+                        { quantityError &&
+                            <Grid item xs={12} className={classes.quantityError}>
+                                <QuantityError />
+                            </Grid>
+                        }
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
