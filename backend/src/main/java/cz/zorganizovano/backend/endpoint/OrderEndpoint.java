@@ -41,8 +41,7 @@ public class OrderEndpoint {
     }
 
     @PostMapping("/confirm")
-    public OrderSuccessResponse createOrder(@Valid @RequestBody OrderFormBean order) {        
-        // TODO validate warehouse cnt for each item
+    public OrderSuccessResponse createOrder(@Valid @RequestBody OrderFormBean order) {
         OrderCreatedDTO created = orderService.createOrder(
             order.getCustomerInfo(),
             order.getShippingAddress(),
