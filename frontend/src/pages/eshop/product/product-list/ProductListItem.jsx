@@ -16,6 +16,7 @@ import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCa
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
+import ProductStockQuantity from '../common/ProductStockQuantity';
 
 const styles = theme => ({
     card : {
@@ -53,10 +54,6 @@ const styles = theme => ({
         height: 200,
         cursor : 'pointer'
     },
-    warehouseCnt : {
-        color : '#6c815a',
-        marginTop : '0.7rem'
-    },
     orderActionWrapper : {
         display : 'flex',
         justifyContent : 'flex-end',
@@ -82,7 +79,9 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
     const history = useHistory();
     const location = useLocation();
     const [ quantity, setQuantity ] = useState(1);
-    const { dispatch } = useContext(ShoppingCartContext);
+    const { state, dispatch } = useContext(ShoppingCartContext);
+    const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity;
+    const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
 
     const goToDetail = () => {
         history.push(`${location.pathname}/products/${product.id}`);
@@ -129,19 +128,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>
                     <Typography variant="body2">{product.descriptionShort}</Typography>
-                    {
-                        product.stockQuantity > 5 ?
-                            <Typography variant="body2" className={classes.warehouseCnt}>
-                                Skladem > 5 kusů
-                            </Typography> :
-                            product.stockQuantity === 0 ?
-                                <Typography variant="body2" className={classes.warehouseCnt}>
-                                    Není skladem
-                                </Typography> :
-                                <Typography variant="body2" className={classes.warehouseCnt}>
-                                    Skladem {product.stockQuantity} {product.stockQuantity === 5 ? 'kusů' : product.stockQuantity === 1 ? 'kus' : 'kusy'}
-                                </Typography>
-                    }
+                    <ProductStockQuantity stockQuantityLeft={stockQuantityLeft} />
                 </CardContent>
 
                 <CardActions className={classes.cardActions}>
@@ -158,7 +145,8 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                             />
                             <ShoppingCartButton
                                 onClick={() => addToShoppingCart(product)}
-                                onlyIcon={true} />
+                                onlyIcon={true}
+                                disabled={stockQuantityLeft <= 0} />
                         </Grid>
                     </Grid>
                 </CardActions>

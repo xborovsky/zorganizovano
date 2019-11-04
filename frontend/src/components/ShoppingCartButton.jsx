@@ -30,6 +30,7 @@ const styles = theme => ({
 const ShoppingCartButton = ({
     onClick,
     onlyIcon = false,
+    disabled = false,
     classes
 }) => (
     onlyIcon ?
@@ -39,7 +40,8 @@ const ShoppingCartButton = ({
             size="large"
             onClick={onClick}
             className={classes.onlyIcon}
-            title="Vložit do košíku">
+            title="Vložit do košíku"
+            disabled={disabled}>
             <FontAwesomeIcon icon={faShoppingCart} />
         </Button> :
         <Button
@@ -48,7 +50,8 @@ const ShoppingCartButton = ({
             size="large"
             onClick={onClick}
             className={classes.root}
-            title="Vložit do košíku">
+            title="Vložit do košíku"
+            disabled={disabled}>
             <FontAwesomeIcon icon={faShoppingCart} />
             <Hidden smDown>
                 { !onlyIcon &&
@@ -62,7 +65,8 @@ const ShoppingCartButton = ({
 
 ShoppingCartButton.propTypes = {
     onClick : PropTypes.func.isRequired,
-    onlyIcon : PropTypes.bool
+    onlyIcon : PropTypes.bool,
+    disabled : PropTypes.bool
 };
 
 export default withStyles(styles)(ShoppingCartButton);

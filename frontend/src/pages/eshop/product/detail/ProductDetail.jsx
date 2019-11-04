@@ -14,6 +14,7 @@ import ProductGallery from './ProductGallery';
 import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
+import ProductStockQuantity from '../common/ProductStockQuantity';
 
 const styles = theme => ({
     root : {
@@ -56,13 +57,21 @@ const styles = theme => ({
         [theme.breakpoints.down('sm')] : {
             width : '100%'
         }
+    },
+    productText : {
+        padding : '0 1rem 2rem',
+        [theme.breakpoints.down('xs')] : {
+            padding : '0 .6rem .5rem',
+        }
     }
 });
 
 const ProductDetail = ({ product, classes }) => {
-    const { dispatch } = useContext(ShoppingCartContext);
+    const { state, dispatch } = useContext(ShoppingCartContext);
     const [ quantity, setQuantity ] = useState(1);
     const [ showSuccess, setShowSuccess ] = useState(undefined);
+    const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity;
+    const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
 
     const addItemToShoppingCart = item => {
         const shoppingCartItem = {
@@ -113,10 +122,13 @@ const ProductDetail = ({ product, classes }) => {
                 <Grid item xs={12} sm={6}>
                     <ProductGallery productId={product.id} />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} className={classes.productText}>
                     <ProductSpec product={product} />
                     <Grid container alignItems="center">
-                        <Grid item xs={12} className={classes.priceWrapper}>
+                        <Grid item xs={6}>
+                            <ProductStockQuantity stockQuantityLeft={stockQuantityLeft} />
+                        </Grid>
+                        <Grid item xs={6} className={classes.priceWrapper}>
                             <Price value={product.price} size="xl" />
                         </Grid>
                         <Grid item xs={12} className={classes.shoppingCartWrapper}>

@@ -6,10 +6,7 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 
 const styles = theme => ({
     root : {
-        padding : '0 1rem 2rem',
-        [theme.breakpoints.down('xs')] : {
-            padding : '0 .6rem .5rem',
-        }
+        textAlign : 'justify'
     },
     inlineDisplay : {
         display : 'inline'
