@@ -9,13 +9,27 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const styles = theme => ({
     root : {
-        marginTop : '0.5rem'
+        marginTop : '0.5rem',
+        [theme.breakpoints.down('sm')] : {
+            marginTop : 0
+        }
     },
     right : {
-        textAlign : 'right'
+        textAlign : 'right',
+        [theme.breakpoints.up('md')] : {
+            '&>button' : {
+                marginLeft : '0.5rem'
+            }
+        }
     },
     trashIcon : {
         marginRight : 5
+    },
+    btn : {
+        [theme.breakpoints.down('sm')] : {
+            width : '100%',
+            marginBottom : '0.5rem'
+        }
     }
 });
 
@@ -33,17 +47,16 @@ const Actions = ({
 
     return (
         <Grid container className={classes.root}>
-            <Grid item xs={6}>
-                <Button variant="contained" color="primary" onClick={goToEshopMain}>
+            <Grid item xs={12} md={6}>
+                <Button variant="contained" color="primary" onClick={goToEshopMain} className={classes.btn}>
                     Pokračovat v nákupu
                 </Button>
             </Grid>
-            <Grid item xs={6} className={classes.right}>
-                <Button variant="contained" color="primary" onClick={onEmptyShoppingCart} disabled={disableProceedToOrder}>
+            <Grid item xs={12} md={6} className={classes.right}>
+                <Button variant="contained" color="primary" onClick={onEmptyShoppingCart} disabled={disableProceedToOrder} className={classes.btn}>
                     <FontAwesomeIcon icon={faTrashAlt} className={classes.trashIcon} /> Vyprázdnit košík
                 </Button>
-                &nbsp;&nbsp;&nbsp;
-                <Button variant="contained" color="primary" onClick={onGoToOrder} disabled={disableProceedToOrder}>
+                <Button variant="contained" color="primary" onClick={onGoToOrder} disabled={disableProceedToOrder} className={classes.btn}>
                     Přejít k objednávce
                 </Button>
             </Grid>

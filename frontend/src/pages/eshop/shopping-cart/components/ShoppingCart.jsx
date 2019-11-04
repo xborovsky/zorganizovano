@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,15 +8,20 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
+import { Hidden } from '@material-ui/core';
 
 import Actions from './Actions';
 import ShoppingCartItem from './ShoppingCartItem';
+import ShoppingCartItemSm from './ShoppingCartItemSm';
 
 const styles = theme => ({
     root: {
         width: '100%',
         overflowX: 'auto',
-        marginBottom : '3rem'
+        marginBottom : '3rem',
+        [theme.breakpoints.down('sm')] : {
+            marginBottom : '1rem'
+        }
     },
     table : {
         width : '100%'
@@ -59,26 +64,39 @@ const ShoppingCart = ({
         <>
             <Paper className={classes.root}>
                 <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell>Položka</TableCell>
-                            <TableCell align="center">Počet kusů</TableCell>
-                            <TableCell align="center">Cena za kus</TableCell>
-                            <TableCell align="center">Cena celkem</TableCell>
-                            <TableCell align="center"></TableCell>
-                        </TableRow>
-                    </TableHead>
+                    <Hidden smDown>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell>Položka</TableCell>
+                                <TableCell align="center">Počet kusů</TableCell>
+                                <TableCell align="center">Cena za kus</TableCell>
+                                <TableCell align="center">Cena celkem</TableCell>
+                                <TableCell align="center"></TableCell>
+                            </TableRow>
+                        </TableHead>
+                    </Hidden>
                     <TableBody>
                         {
                             (!items || !items.length) ?
                                 renderEmpty() :
                                 items.map(item => (
-                                    <ShoppingCartItem
-                                        item={item}
-                                        onChangeQuantity={onChangeQuantity}
-                                        onDelete={onDelete}
-                                    />
+                                    <Fragment key={item.id}>
+                                        <Hidden smDown>
+                                            <ShoppingCartItem
+                                                item={item}
+                                                onChangeQuantity={onChangeQuantity}
+                                                onDelete={onDelete}
+                                            />
+                                        </Hidden>
+                                        <Hidden mdUp>
+                                            <ShoppingCartItemSm
+                                                item={item}
+                                                onChangeQuantity={onChangeQuantity}
+                                                onDelete={onDelete}
+                                            />
+                                        </Hidden>
+                                    </Fragment>
                                 ) )
                         }
                     </TableBody>

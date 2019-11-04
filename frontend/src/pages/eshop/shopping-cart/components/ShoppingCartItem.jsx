@@ -25,7 +25,7 @@ const ShoppingCartItem = ({
     onDelete,
     classes
 }) => (
-    <TableRow key={item.id}>
+    <TableRow>
         <TableCell><ShoppingCartItemPhoto itemId={item.id} /></TableCell>
         <TableCell>{item.name}</TableCell>
         <TableCell align="center">

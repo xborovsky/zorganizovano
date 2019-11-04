@@ -4,10 +4,10 @@ import { Avatar } from '@material-ui/core';
 
 import DataFetcher from 'components/DataFetcher';
 
-const ShoppingCartItemPhoto = ({ itemId }) => (
+const ShoppingCartItemPhoto = ({ itemId, className }) => (
     <DataFetcher url={`/picture-item/${itemId}/shopping-cart-thumbnail`}>
         { data => (
-            <Avatar src={`/img/products/${data}`} />
+            <Avatar src={`/img/products/${data}`} className={className} />
         )}
     </DataFetcher>
 );
