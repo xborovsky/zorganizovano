@@ -32,7 +32,7 @@ const styles = theme => ({
 export const RECAPTCHA_SITE_KEY = '6LdrKsAUAAAAAPsXgJSwERT3AwtBDMage9E6YyTy';
 
 const getInitialShoppingCartState = () => {
-  const storage = window.localStorage.getItem('shoppingCart') ? JSON.parse(window.localStorage.getItem('shoppingCart')) : [];
+  const storage = window.sessionStorage.getItem('shoppingCart') ? JSON.parse(window.sessionStorage.getItem('shoppingCart')) : [];
   const storageDeduplicated = [];
 
   storage.forEach(item => {
@@ -41,7 +41,7 @@ const getInitialShoppingCartState = () => {
     }
   });
 
-  window.localStorage.setItem("shoppingCart", JSON.stringify(storageDeduplicated));
+  window.sessionStorage.setItem("shoppingCart", JSON.stringify(storageDeduplicated));
   return storageDeduplicated;
 };
 
@@ -49,7 +49,7 @@ const App = ({ classes }) => {
   const [state, dispatch] = useReducer(shoppingCartReducer, getInitialShoppingCartState());
 
   useEffect(() => {
-      window.localStorage.setItem("shoppingCart", JSON.stringify(state));
+      window.sessionStorage.setItem("shoppingCart", JSON.stringify(state));
   }, [state]);
 
   return (
