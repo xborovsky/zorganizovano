@@ -7,7 +7,7 @@ import TipsListItem from './TipsListItem';
 
 const TipsList = () => (
     <>
-        <BreadcrumbsNav items={[{ name : 'Zorganizuj se' }]} />
+        <BreadcrumbsNav items={[{ name : 'U nás doma' }]} />
         <DataFetcher url='/blog/posts'>
             { data => (
                 <Grid container>

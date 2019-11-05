@@ -139,7 +139,7 @@ const Header = ({ classes }) => {
                                 <Typography variant="body2" element="span">[ Eshop ]</Typography>
                             </NavLink>
                             <NavLink to="/tips" className={classes.link} activeClassName={classes.activeLink}>
-                                <Typography variant="body2" element="span">[ Zorganizuj se ]</Typography>
+                                <Typography variant="body2" element="span">[ U nás doma ]</Typography>
                             </NavLink>
                             <NavLink to="/contact" className={classes.link} activeClassName={classes.activeLink}>
                                 <Typography variant="body2" element="span">[ Kontakt ]</Typography>
@@ -165,7 +165,7 @@ const Header = ({ classes }) => {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <NavLink to="/tips" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
-                                            <Typography variant="body2" element="span">[ Zorganizuj se ]</Typography>
+                                            <Typography variant="body2" element="span">[ U nás doma ]</Typography>
                                         </NavLink>
                                     </Grid>
                                     <Grid item xs={12}>
