@@ -48,11 +48,13 @@
     <script>
       function isSupported(browser) {
         var browserVersionNum = +browser.version.split('.')[0];
-        if ((browser.name === 'Chrome' && browserVersionNum > 23) ||
-          (browser.name === 'Firefox' && browserVersionNum > 21) ||
-          (browser.name === 'Safari' && browserVersionNum > 6) ||
-          (browser.name === 'Microsoft Edge' && browserVersionNum > 12) ||
-          (browser.name === 'Opera' && browserVersionNum > 15)) {
+        var browserName = browser.name.toLowerCase();
+
+        if ((browserName.indexOf('chrome') > -1 && browserVersionNum > 23) ||
+          (browserName.indexOf('firefox') > -1 && browserVersionNum > 21) ||
+          (browserName.indexOf('safari') > -1 && browserVersionNum > 6) ||
+          (browserName.indexOf('edge') > -1 && browserVersionNum > 12) ||
+          (browserName.indexOf('opera') > -1 && browserVersionNum > 15)) {
           return true;
         }
         return false;
