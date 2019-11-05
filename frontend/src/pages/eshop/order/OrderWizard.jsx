@@ -15,7 +15,7 @@ import ShoppingCartContext from '../shopping-cart/state-management/ShoppingCartC
 import Alert from 'components/Alert';
 import { EMPTY_SHOPPING_CART } from '../shopping-cart/state-management/ShoppingCartActions';
 
-const getSteps = () => ['Zákazník', 'Doprava', 'Potvrzení objednávky'];
+const getSteps = () => ['Zákazník', 'Doprava a platba', 'Potvrzení objednávky'];
 
 const styles = theme => ({
     root : {
@@ -69,7 +69,8 @@ const OrderWizard = ({ classes }) => {
                 <DeliveryForm
                     initialFormData={{
                         deliveryOption : orderData.shipmentType,
-                        selectedZasilkovna : orderData.selectedZasilkovna
+                        selectedZasilkovna : orderData.selectedZasilkovna,
+                        paymentType : 'bankTransfer'
                     }}
                     onGoToNextStep={shipping => {
                         setOrderData({...orderData, ...shipping});

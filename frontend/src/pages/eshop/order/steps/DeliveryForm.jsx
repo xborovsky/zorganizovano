@@ -32,7 +32,9 @@ const DeliveryForm = ({
         setSelectedZasilkovna(point);
     };
 
-    const initialFormValues = initialFormData ? {...initialFormData} : { deliveryOption : '' };
+    const initialFormValues = initialFormData ? 
+        {...initialFormData} : 
+        { deliveryOption : '', paymentMethod : 'bankTransfer' };
 
     const validateForm = values => {
         let errors = {};
@@ -112,6 +114,19 @@ const DeliveryForm = ({
                                         }
                                     </RadioGroup>
                                     <FormHelperText id="deliveryOption-error">{touched.deliveryOption && errors.deliveryOption}</FormHelperText>
+                                </FormControl>
+                                <Typography variant="h6" gutterBottom>
+                                    Platba
+                                </Typography>
+                                <FormControl component="fieldset" error={touched.paymentMethod && !!errors.paymentMethod}>
+                                    <RadioGroup aria-label="delivery option" name="paymentMethod" value={values.paymentMethod} onChange={handleChange}>
+                                        <FormControlLabel
+                                            value="bankTransfer"
+                                            control={<Radio color="primary" checked />}
+                                            label="Bankovním převodem"
+                                        />
+                                    </RadioGroup>
+                                    <FormHelperText id="paymentMethod-error">{touched.paymentMethod && errors.paymentMethod}</FormHelperText>
                                 </FormControl>
                                 <WizardButtons
                                     prev={{

@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     root : {
-        marginBottom : '5rem'
+        marginBottom : '3rem'
     },
     subHeader : {
         marginTop : '2rem',
