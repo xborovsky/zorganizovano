@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
     email : {
@@ -11,14 +10,14 @@ const styles = theme => ({
     }
 });
 
-const ContactEmail = ({ reversedEmail, classes }) => (
+const ContactEmail = ({ reversedEmail = 'moc.liamg@onavozinagroz', classes }) => (
     <span className={classes.email}>
         { reversedEmail }
     </span>
 );
 
 ContactEmail.propTypes = {
-    reversedEmail : PropTypes.string.isRequired
+    reversedEmail : PropTypes.string
 };
 
 export default withStyles(styles)(ContactEmail);
