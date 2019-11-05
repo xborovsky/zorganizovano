@@ -142,9 +142,7 @@ public class OrderServiceImpl implements OrderService {
         invoiceAddress.setCountry(customerInfo.getAddress().getCountry());
         invoiceAddress.setOrder(order);
 
-        throw new NullPointerException("Test ex...");
-
-        //return invoiceAddressDao.save(invoiceAddress);
+        return invoiceAddressDao.save(invoiceAddress);
     }
 
     protected ShipmentAddress createShipmentAddress(AddressDTO address, Order order) {
