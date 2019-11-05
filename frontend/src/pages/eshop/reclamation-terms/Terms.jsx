@@ -5,7 +5,10 @@ import ContactEmail from 'components/ContactEmail';
 
 const styles = theme => ({
     root : {
-        padding : '2rem 4rem'
+        padding : '2rem 4rem',
+        [theme.breakpoints.down('sm')] : {
+            padding : '2rem 1rem'
+        }
     },
     font : {
         fontSize : 14,

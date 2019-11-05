@@ -3,7 +3,10 @@ import { Typography, withStyles, Paper } from '@material-ui/core';
 
 const styles = theme => ({
     root : {
-        padding : '2rem 4rem'
+        padding : '2rem 4rem',
+        [theme.breakpoints.down('sm')] : {
+            padding : '2rem 1rem'
+        }
     },
     font : {
         fontSize : 14,
@@ -24,6 +27,9 @@ const styles = theme => ({
             display : 'block',
             fontSize : 16,
             marginTop : '0.5rem',
+            [theme.breakpoints.down('xs')] : {
+                marginLeft : '-1rem'
+            },
             '&:before' : {
                 fontWeight : 'bold',
                 fontSize : 16,
@@ -36,6 +42,9 @@ const styles = theme => ({
                 fontWeight : 'normal',
                 display : 'block',
                 fontSize : 14,
+                [theme.breakpoints.down('xs')] : {
+                    marginLeft : '-1rem'
+                },
                 '&:before' : {
                     fontWeight : 'normal',
                     content : 'counter(item) "." counter(subitem) "." ',
