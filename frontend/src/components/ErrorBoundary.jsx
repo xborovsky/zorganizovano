@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDizzy } from '@fortawesome/free-solid-svg-icons';
 import { withStyles } from '@material-ui/styles';
+import axios from 'axios';
+import Bowser from 'bowser';
 
 import ContactEmail from 'components/ContactEmail';
 
@@ -36,6 +38,10 @@ class ErrorBoundary extends Component {
 
     componentDidCatch(error, errorInfo) {
         console.error(error, errorInfo);
+        axios.post('/client-error', {
+            error : JSON.stringify(errorInfo),
+            browser : JSON.stringify(Bowser.parse(window.navigator.userAgent))
+        });
     }
 
     render() {

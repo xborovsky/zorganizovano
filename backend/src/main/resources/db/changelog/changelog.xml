@@ -248,6 +248,21 @@
             </column>
         </createTable>
 
+        <createTable tableName="client_errors">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="timestamp" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="error" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="browser" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
         <addUniqueConstraint
             constraintName="orders_order_num_unique"
             tableName="orders"
