@@ -15,15 +15,15 @@ import Section from './components/Section';
 import DataFetcher from 'components/DataFetcher';
 
 const styles = theme => ({
-    header : {
-        marginBottom : '2rem',
-        fontSize : '2.3rem'
-    },
     totalPrice : {
         textAlign : 'right',
         fontWeight : 'bold',
         fontSize : '1.8rem',
-        marginTop : '2rem'
+        marginTop : '2rem',
+        [theme.breakpoints.down('sm')] : {
+            fontSize : '1.2rem',
+            marginTop : '1rem'
+        }
     }
 });
 

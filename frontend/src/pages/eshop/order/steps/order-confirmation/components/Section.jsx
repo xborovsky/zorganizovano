@@ -5,15 +5,29 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     root : {
-        marginBottom : '3rem'
+        marginBottom : '3rem',
+        [theme.breakpoints.down('sm')] : {
+            marginBottom : '2rem',
+            '&:last-child' : {
+                marginBottom : 0
+            }
+        }
     },
     subHeader : {
         marginTop : '2rem',
         marginBottom : '1.5rem',
-        fontSize : '1.8rem'
+        fontSize : '1.8rem',
+        [theme.breakpoints.down('sm')] : {
+            marginTop : '1rem',
+            marginBottom : '1rem',
+            fontSize : '1.1rem'
+        }
     },
     padLeft : {
-        marginLeft : '2rem'
+        marginLeft : '2rem',
+        [theme.breakpoints.down('sm')] : {
+            marginLeft : 0
+        }
     }
 });
 
