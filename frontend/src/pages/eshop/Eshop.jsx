@@ -9,6 +9,7 @@ const ProductDetailContainer = React.lazy(() => import('./product/detail/Product
 const Faq = React.lazy(() => import('./faq'));
 const Terms = React.lazy(() => import('./terms'));
 const PersonalDataProtectionTerms = React.lazy(() => import('./personal-data-protection-terms'));
+const ReclamationTerms = React.lazy(() => import('./reclamation-terms'));
 const OrderWizard = React.lazy(() => import('./order/OrderWizard'));
 
 
@@ -27,8 +28,11 @@ const Eshop = () => {
                 <Route path={`${match.path}/terms`}>
                     <Terms />
                 </Route>
-                <Route path={`${match.path}/personal_data_protection_terms`}>
+                <Route path={`${match.path}/personal-data-protection-terms`}>
                     <PersonalDataProtectionTerms />
+                </Route>
+                <Route path={`${match.path}/reclamation-terms`}>
+                    <ReclamationTerms />
                 </Route>
                 <Route path={`${match.path}/order`}>
                     <OrderWizard />

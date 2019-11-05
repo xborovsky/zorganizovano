@@ -65,8 +65,11 @@ const Footer = ({ classes }) => (
                 <Link to="/eshop/terms" className={classes.link}>
                     <Typography variant="body2" color="inherit">Obchodní podmínky</Typography>
                 </Link>
-                <Link to="/eshop/personal_data_protection_terms" className={classes.link}>
+                <Link to="/eshop/personal-data-protection-terms" className={classes.link}>
                     <Typography variant="body2" color="inherit">Ochrana osobních údajů</Typography>
+                </Link>
+                <Link to="/eshop/reclamation-terms" className={classes.link}>
+                    <Typography variant="body2" color="inherit">Reklamace</Typography>
                 </Link>
                 <Link to="/eshop/faq" className={classes.link}>
                     <Typography variant="body2" color="inherit">Nejčastěji kladené dotazy</Typography>
