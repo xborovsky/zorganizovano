@@ -118,7 +118,10 @@ const OrderWizard = ({ classes }) => {
             dispatch({ type : EMPTY_SHOPPING_CART });
             history.push({ pathname : '/eshop/order-created', state : { order : res.data } });
          })
-         .catch(err => console.error(err));
+         .catch(err => {
+             console.error(err)
+             setError('Problém komunikace se servrem');
+         });
     };
 
     return (
