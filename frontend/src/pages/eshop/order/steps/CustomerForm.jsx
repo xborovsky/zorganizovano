@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import WizardButtons from '../components/WizardButtons';
 
@@ -61,7 +62,7 @@ const EMPTY_FORM = {
 
 const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
     const initialFormValues = initialFormData ?
-        {...initialFormData, ...initialFormData.address, ...initialFormData.personalDataHandleApproval} : 
+        {...initialFormData, ...initialFormData.address, ...initialFormData.personalDataHandleApproval} :
         EMPTY_FORM;
 
     const handleFormSubmit = (values, { setSubmitting, setErrors }) => {
@@ -240,7 +241,7 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 color="primary"
                                             />
                                         }
-                                        label="Souhlasím se zpracováním osobních údajů"
+                                        label={<Link to='/eshop/personal-data-protection-terms'>Souhlasím se zpracováním osobních údajů</Link>}
                                     />
                                     <FormHelperText id="personalDataHandleApproval-error">
                                         {touched.personalDataHandleApproval && errors.personalDataHandleApproval}
