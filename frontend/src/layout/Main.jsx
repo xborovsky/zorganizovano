@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 const styles = theme => ({
     root : {
         margin : '2vh 5vw 5vh',
+        position : 'relative',
         [theme.breakpoints.down('sm')] : {
             margin : '1vh 3vw 2vh'
         },

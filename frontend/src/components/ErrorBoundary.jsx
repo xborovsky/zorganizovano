@@ -1,4 +1,26 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDizzy } from '@fortawesome/free-solid-svg-icons';
+import { withStyles } from '@material-ui/styles';
+
+import ContactEmail from 'components/ContactEmail';
+
+const styles = theme => ({
+    centered : {
+        position : 'absolute',
+        fontSize : 20,
+        textAlign : 'center',
+        width : '100%'
+    },
+    icon : {
+        display : 'block',
+        margin : '0 auto'
+    },
+    mail : {
+        fontSize : 14
+    }
+});
 
 class ErrorBoundary extends Component {
     constructor(props) {
@@ -18,13 +40,24 @@ class ErrorBoundary extends Component {
 
     render() {
         const { hasError } = this.state;
+        const { classes, middleOfScreen } = this.props;
 
         if (hasError) {
-            return <h1>TODO - Something went wrong.</h1>;
+            return (
+                <div className={classes.centered} style={middleOfScreen && { top : '50%', transform : 'translate(0, -50%)'}}>
+                    <FontAwesomeIcon icon={faDizzy} className={classes.icon} size="7x" />
+                    <div>Ups, něco se pokazilo!</div>
+                    <div className={classes.mail}>Dejte nám vědět na <ContactEmail /></div>
+                </div>
+            );
         }
 
         return this.props.children;
     }
 }
 
-export default ErrorBoundary;
+ErrorBoundary.propTypes = {
+    middleOfScreen : PropTypes.bool
+};
+
+export default withStyles(styles)(ErrorBoundary);

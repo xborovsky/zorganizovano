@@ -25,7 +25,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
+    minHeight: '100vh'
   }
 });
 
@@ -57,24 +57,26 @@ const App = ({ classes }) => {
       <CssBaseline />
       <ThemeProvider theme={zorganizovanoTheme}>
         <Router>
-          <ErrorBoundary>
+          <ErrorBoundary middleOfScreen>
             <ShoppingCartContext.Provider value={{ state, dispatch }}>
               <Header />
               <Main>
-                <Suspense fallback={<Loader />}>
-                  <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/tips" component={Tips} />
-                    <Route path="/eshop" component={Eshop} />
-                    <Route path="/contact" component={Contact} />
-                    <Route path="/shopping-cart" component={ShoppingCart} />
-                    <Route component={NotFound} />
-                  </Switch>
-                </Suspense>
+                <ErrorBoundary>
+                  <Suspense fallback={<Loader />}>
+                    <Switch>
+                      <Route exact path="/" component={Home} />
+                      <Route path="/tips" component={Tips} />
+                      <Route path="/eshop" component={Eshop} />
+                      <Route path="/contact" component={Contact} />
+                      <Route path="/shopping-cart" component={ShoppingCart} />
+                      <Route component={NotFound} />
+                    </Switch>
+                  </Suspense>
+                </ErrorBoundary>
               </Main>
             </ShoppingCartContext.Provider>
+            <Footer />
           </ErrorBoundary>
-          <Footer />
         </Router>
       </ThemeProvider>
     </div>
