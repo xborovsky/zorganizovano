@@ -1,5 +1,7 @@
 import React from 'react';
-import { Typography, withStyles, Paper } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/styles/withStyles';
+import Paper from '@material-ui/core/Paper';
 
 import ContactEmail from 'components/ContactEmail';
 
@@ -52,13 +54,13 @@ const Terms = ({ classes }) => (
                 současně se zbožím nebo jej zašlete e-mailem nebo poštou), zboží nesmí být
                 zasláno na dobírku, v takovém případě nebude převzato. Nepřijímáme zboží k
                 výměně v případě, že zboží neprojde kontrolou z těchto důvodů:
-                <ul>
-                    <li>zboží nemá originální balení</li>
-                    <li>zboží je jakýmkoliv způsobem znehodnoceno</li>
-                    <li>část zboží nebo příslušenství je poškozeno nebo chybí</li>
-                    <li>zboží není schopné dalšího prodeje</li>
-                </ul>
             </p>
+            <ul>
+                <li>zboží nemá originální balení</li>
+                <li>zboží je jakýmkoliv způsobem znehodnoceno</li>
+                <li>část zboží nebo příslušenství je poškozeno nebo chybí</li>
+                <li>zboží není schopné dalšího prodeje</li>
+            </ul>
             <p>
                 Zboží je nutné zaslat na adresu <strong>Barbora Borovská, V Jamkách 354, Čakovičky
                 250 63</strong>, ze které Vám bylo původně odesláno.
@@ -75,7 +77,7 @@ const Terms = ({ classes }) => (
             </p>
             <p>
                 Vámi požadované zboží nemusí být v době výměny již dostupné. V tom případě
-                bude nutné pokračovat v komunikaci přes email zorganizovano@gmail.com.
+                bude nutné pokračovat v komunikaci přes email <ContactEmail />.
             </p>
             <p>
                 <a href="/docs/Formular_pro_odstoupeni_od_smlouvy.pdf" download>Formulář pro odstoupení od Smlouvy</a>
@@ -137,13 +139,13 @@ const Terms = ({ classes }) => (
             <p>
                 Kupující není oprávněn odstoupit od Smlouvy, pokud naplní jednu z níže <strong>uvedených
                 podmínek</strong>:
-                <ul>
-                    <li>zboží nemá originální balení</li>
-                    <li>zboží je jakýmkoliv způsobem znehodnoceno</li>
-                    <li>část zboží nebo příslušenství je poškozeno nebo chybí</li>
-                    <li>zboží není schopné dalšího prodeje</li>
-                </ul>
             </p>
+            <ul>
+                <li>zboží nemá originální balení</li>
+                <li>zboží je jakýmkoliv způsobem znehodnoceno</li>
+                <li>část zboží nebo příslušenství je poškozeno nebo chybí</li>
+                <li>zboží není schopné dalšího prodeje</li>
+            </ul>
             <p>
                 <a href="/docs/Formular_pro_odstoupeni_od_smlouvy.pdf" download>Formulář pro odstoupení od Smlouvy</a>
             </p>

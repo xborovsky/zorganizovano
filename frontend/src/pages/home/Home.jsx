@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+import withStyles from '@material-ui/styles/withStyles';
 
 import MainText from './MainText';
 import LinkButton from './LinkButton';
-import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
     gridItem : {
@@ -28,6 +28,7 @@ const Home = ({ classes }) => (
                     <LinkButton
                         src="/img/page/button2/Button2.jpg"
                         srcSet="/img/page/button2/Button2_1920.jpg 1920w, /img/page/button2/Button2_1600.jpg 1600w, /img/page/button2/Button2_1366.jpg 1366w"
+                        alt="Jak to máme doma"
                     />
                 </NavLink>
             </Grid>
@@ -36,6 +37,7 @@ const Home = ({ classes }) => (
                     <LinkButton
                         src="/img/page/button1/Button1.jpg"
                         srcSet="/img/page/button1/Button1_1920.jpg 1920w, /img/page/button1/Button1_1600.jpg 1600w, /img/page/button1/Button1_1366.jpg 1366w"
+                        alt="Chci nakupovat"
                     />
                 </NavLink>
             </Grid>

@@ -6,7 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import TipsListItemTitlePicture from './TipsListItemTitlePicture';
-import { withStyles } from '@material-ui/core';
+import withStyles from '@material-ui/styles/withStyles';
 
 const styles = theme => ({
     root : {
@@ -29,7 +29,7 @@ const TipsListItem = ({ blogPost, classes }) => {
             <Card onClick={() => goToBlockPost(blogPost.id)}>
                 <Grid container>
                     <Grid item xs={12} md={3}>
-                        <TipsListItemTitlePicture tipId={blogPost.id} />
+                        <TipsListItemTitlePicture tipId={blogPost.id} tipName={blogPost.title} />
                     </Grid>
                     <Grid item xs={12} md={9}>
                         <CardContent>

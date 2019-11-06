@@ -12,8 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { withStyles } from '@material-ui/styles';
-import { CircularProgress } from '@material-ui/core';
+import withStyles from '@material-ui/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-v3';
 

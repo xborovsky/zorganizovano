@@ -1,7 +1,7 @@
 import React, { Suspense, useReducer, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import Main from './layout/Main';

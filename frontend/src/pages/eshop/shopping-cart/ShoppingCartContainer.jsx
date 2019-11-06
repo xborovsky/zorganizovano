@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Grid, CircularProgress } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import ShoppingCartContext from './state-management/ShoppingCartContext';
 import Alert from 'components/Alert';
@@ -12,7 +13,6 @@ import {
 } from './state-management/ShoppingCartActions';
 import DeleteConfirm from './components/DeleteConfirm';
 import BreadcrumbsNav from 'components/BreadcrumbsNav';
-import { faSleigh } from '@fortawesome/free-solid-svg-icons';
 
 const initialConfirmData = {
     show : false,

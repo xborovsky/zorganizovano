@@ -27,7 +27,7 @@ const Price = ({ value, size = 'normal', classes, className }) => (
 
 Price.propTypes = {
     value : PropTypes.number.isRequired,
-    size : PropTypes.oneOf('sm', 'normal', 'xl', 'inherit')
+    size : PropTypes.oneOf(['sm', 'normal', 'xl', 'inherit'])
 };
 
 export default withStyles(styles)(Price);

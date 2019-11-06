@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 import Price from 'components/Price';
-import { Paper } from '@material-ui/core';
 
 const styles = theme => ({
     table : {

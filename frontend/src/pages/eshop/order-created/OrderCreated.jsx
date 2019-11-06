@@ -1,8 +1,9 @@
 import React from 'react';
-import { Typography, Grid } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import PaymentQR from './components/PaymentQR';
 import PaymentInfo from './components/PaymentInfo';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import Alert from 'components/Alert';
 import { useLocation } from 'react-router-dom';
 

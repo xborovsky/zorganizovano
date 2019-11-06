@@ -4,7 +4,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 
 import Price from 'components/Price';
 import QuantityInput from 'components/QuantityInput';
@@ -49,14 +49,14 @@ const ShoppingCartItem = ({
 );
 
 ShoppingCartItem.propTypes = {
-    item : {
+    item : PropTypes.shape({
         id : PropTypes.number.isRequired,
         name : PropTypes.string.isRequired,
         subName : PropTypes.string.isRequired,
         priceSingle : PropTypes.number.isRequired,
         quantity : PropTypes.number.isRequired,
         warehouseCnt : PropTypes.number.isRequired
-    },
+    }).isRequired,
     onChangeQuantity : PropTypes.func.isRequired,
     onDelete : PropTypes.func.isRequired
 };

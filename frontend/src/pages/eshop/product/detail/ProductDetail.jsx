@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Grid, withStyles, Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/grid';
+import withStyles from '@material-ui/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import ProductSpec from './ProductSpec';
 import Price from '../../../../components/Price';
-import { productShape } from '../product-prop-type';
+import { productDetailShape } from '../product-prop-type';
 import IdeaPrompt from '../../../../components/IdeaPrompt';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
@@ -176,7 +178,7 @@ const ProductDetail = ({ product, classes }) => {
 };
 
 ProductDetail.propTypes = {
-    product : productShape.isRequired
+    product : productDetailShape.isRequired
 };
 
 export default withStyles(styles)(ProductDetail);

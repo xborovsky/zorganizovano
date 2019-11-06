@@ -32,8 +32,8 @@ const DeliveryForm = ({
         setSelectedZasilkovna(point);
     };
 
-    const initialFormValues = initialFormData ? 
-        {...initialFormData} : 
+    const initialFormValues = initialFormData ?
+        {...initialFormData} :
         { deliveryOption : '', paymentMethod : 'bankTransfer' };
 
     const validateForm = values => {
@@ -86,8 +86,8 @@ const DeliveryForm = ({
                                                         label={deliveryOption.readableName}
                                                     />
                                                     {
-                                                        (values.deliveryOption && 
-                                                            values.deliveryOption.toLowerCase() === ZASILKOVNA && 
+                                                        (values.deliveryOption &&
+                                                            values.deliveryOption.toLowerCase() === ZASILKOVNA &&
                                                             deliveryOption.name.toLowerCase() === ZASILKOVNA) ?
                                                             <>
                                                                 <Button

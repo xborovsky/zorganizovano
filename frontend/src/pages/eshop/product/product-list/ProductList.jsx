@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, withStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import withStyles from '@material-ui/styles/withStyles';
 
 import ProductListItem from './ProductListItem';
 import { productShape } from '../product-prop-type';

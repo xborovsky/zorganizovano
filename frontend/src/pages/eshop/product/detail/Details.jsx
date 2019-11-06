@@ -1,5 +1,7 @@
 import React from 'react';
-import { Hidden, withStyles, Table } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
+import withStyles from '@material-ui/styles/withStyles';
+import Table from '@material-ui/core/Table';
 
 import { productDetailShape } from '../product-prop-type';
 import DetailsSm from './DetailsSm';

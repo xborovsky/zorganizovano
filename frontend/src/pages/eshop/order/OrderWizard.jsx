@@ -4,7 +4,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Hidden from '@material-ui/core/Hidden';
-import { withStyles } from '@material-ui/core';
+import withStyles from '@material-ui/styles/withStyles';
 import axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
 

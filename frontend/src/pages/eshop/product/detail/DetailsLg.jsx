@@ -4,7 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import ReactHtmlParser from 'react-html-parser';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import { productDetailShape } from '../product-prop-type';
 
@@ -35,7 +35,7 @@ const Details = ({ product, classes }) => (
                 </Typography>
             </TableCell>
             <TableCell className={classes.tdCell}>
-                <Typography variant="body1">
+                <Typography variant="body1" component="div">
                     { ReactHtmlParser(product.description) }
                 </Typography>
             </TableCell>

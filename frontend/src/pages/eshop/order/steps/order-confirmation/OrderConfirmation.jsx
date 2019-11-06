@@ -7,7 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { Link } from 'react-router-dom';
-import { Hidden } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
 
 import WizardButtons from '../../components/WizardButtons';
 import ShoppingCart from './components/ShoppingCart';

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Typography, withStyles, Paper } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/styles/withStyles';
+import Paper from '@material-ui/core/Paper';
 
 import ContactEmail from 'components/ContactEmail';
 

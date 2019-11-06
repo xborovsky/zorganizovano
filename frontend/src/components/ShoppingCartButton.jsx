@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { withStyles } from '@material-ui/styles';
-import { Hidden } from '@material-ui/core';
+import withStyles from '@material-ui/styles/withStyles';
+import Hidden from '@material-ui/core/Hidden';
 
 const styles = theme => ({
     root : {

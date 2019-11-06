@@ -38,7 +38,7 @@ const DetailsSm = ({ product, classes }) => (
             </TableCell>
         </TableRow>
         <TableRow>
-            <TableCell className={classes.tdCell}>
+            <TableCell className={classes.tdCell} component="div">
                 { ReactHtmlParser(product.description) }
             </TableCell>
         </TableRow>

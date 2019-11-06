@@ -4,7 +4,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import ErrorIcon from '@material-ui/icons/Error';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import WarningIcon from '@material-ui/icons/Warning';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import InfoIcon from '@material-ui/icons/Info';
 import { amber, green, red, blue } from '@material-ui/core/colors';
 

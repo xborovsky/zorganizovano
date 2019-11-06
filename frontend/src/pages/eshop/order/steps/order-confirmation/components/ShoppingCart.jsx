@@ -5,7 +5,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { withStyles } from '@material-ui/core';
+import withStyles from '@material-ui/styles/withStyles';
 
 import Price from 'components/Price';
 
@@ -73,7 +73,7 @@ ShoppingCart.propTypes = {
     items : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
         name : PropTypes.string.isRequired,
-        price : PropTypes.number.isRequired,
+        priceSingle : PropTypes.number.isRequired,
         quantity : PropTypes.number.isRequired
     })).isRequired,
     selectedDelivery : PropTypes.shape({

@@ -7,7 +7,8 @@ const QuantityInput = ({
     value,
     onChange,
     maxVal,
-    className
+    className,
+    ...rest
 }) => (
     <TextField
         value={value}
@@ -22,6 +23,7 @@ const QuantityInput = ({
             inputProps: { min : 1, max: maxVal }
         }}
         style={{ marginTop : 4, minWidth : 100 }}
+        {...rest}
     />
 );
 

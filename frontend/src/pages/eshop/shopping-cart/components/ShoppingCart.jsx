@@ -6,9 +6,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useHistory } from 'react-router-dom';
-import { Hidden } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
 
 import Actions from './Actions';
 import ShoppingCartItem from './ShoppingCartItem';
