@@ -37,7 +37,7 @@ const ShoppingCartContainer = () => {
             const serverVerifiedItems = res.data;
             const resultItems = state.map(sessionStorageItem => {
                 const verifiedItemIdx = serverVerifiedItems.findIndex(serverItem => serverItem.id === sessionStorageItem.id);
-                if (verifiedItemIdx) {
+                if (verifiedItemIdx === -1) {
                     dispatch({
                         type : REMOVE_ITEM_FROM_SHOPPING_CART,
                         payload : { id : sessionStorageItem.id }

@@ -17,6 +17,11 @@ const styles = theme => ({
     },
     itemPriceTotal : {
         fontWeight : 'bold'
+    },
+    totalPrice : {
+        [theme.breakpoints.down('sm')] : {
+            fontSize : '1.2rem !important'
+        }
     }
 });
 
@@ -52,7 +57,7 @@ const ShoppingCartSm = ({ items, selectedDelivery, classes }) => {
                     </TableRow>
                     <TableRow>
                         <TableCell >Celková cena</TableCell>
-                        <TableCell align="right"><Price value={totalSum} /></TableCell>
+                        <TableCell align="right"><Price value={totalSum} className={classes.totalPrice} /></TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

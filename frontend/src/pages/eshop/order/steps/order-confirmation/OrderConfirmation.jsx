@@ -14,7 +14,7 @@ import ShoppingCart from './components/ShoppingCart';
 import CustomerInfo from './components/CustomerInfo';
 import Section from './components/Section';
 import DataFetcher from 'components/DataFetcher';
-import ShoppingCartSm from './ShoppingCartSm';
+import ShoppingCartSm from './components/ShoppingCartSm';
 
 const styles = theme => ({
     totalPrice : {
