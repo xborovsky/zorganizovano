@@ -1,3 +1,7 @@
+SET autocommit=OFF;
+
+START TRANSACTION;
+
 insert into zorganizovano.items (name, subname, description, price, discount_price)
 values ('KALENDÁŘ 2020 - LIŠČÍ ROK', 'Kalendář na lednici s magnetickou lištou', 'Mějte plány celé své rodiny vždy na očích, na nejfregventovanějším místě v domácnosti - lednici.
 Nezapomenete na žádné vystoupení ani zápas svých dětí, partner vás nepřekvapí návštěvou kamaráda, o které vám ale určitě říkal a váš zubař vás bude chválit za pravidelné preventivní
@@ -64,3 +68,6 @@ insert into zorganizovano.contact_query_types (type, sort_key) values
 ('Mám skvělý nápad k vylepšení produktů, služeb či tip na organizaci', 300),
 ('Mám technický problém', 400),
 ('Týká se to něčeho jiného', 100000);
+
+COMMIT;
+SET autocommit=ON;
