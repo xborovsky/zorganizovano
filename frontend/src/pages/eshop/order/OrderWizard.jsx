@@ -1,19 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Hidden from '@material-ui/core/Hidden';
 import withStyles from '@material-ui/styles/withStyles';
-import axios from 'axios';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/order-confirmation/OrderConfirmation';
-import ShoppingCartContext from '../shopping-cart/state-management/ShoppingCartContext';
 import Alert from 'components/Alert';
-import { EMPTY_SHOPPING_CART } from '../shopping-cart/state-management/ShoppingCartActions';
 
 const getSteps = () => ['Zákazník', 'Doprava a platba', 'Potvrzení objednávky'];
 
@@ -45,8 +42,6 @@ const defaultOrderData = {
 
 const OrderWizard = ({ classes }) => {
 
-    const { dispatch } = useContext(ShoppingCartContext);
-    const history = useHistory();
     const location = useLocation();
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
@@ -82,7 +77,6 @@ const OrderWizard = ({ classes }) => {
             );
             case 2: return (
                 <OrderConfirmation
-                    onOrderConfirmed={handleFinishOrder}
                     onGoToPrevStep={goToPrev}
                     onError={error => setError(error)}
                     orderData={orderData}
@@ -98,31 +92,6 @@ const OrderWizard = ({ classes }) => {
 
     const goToPrev = () => {
         setCurrentStep(prevStep => prevStep - 1);
-    };
-
-    const handleFinishOrder = event => {
-        event.preventDefault();
-        const serverDataShoppingCart = orderData.shoppingCart.map(item => { return {itemId : item.id, quantity : item.quantity} });
-        axios.post(
-            '/order/confirm', {
-            ...orderData,
-            shippingAddress : orderData.selectedZasilkovna ? {
-                street : orderData.selectedZasilkovna.name,
-                township : orderData.selectedZasilkovna.city,
-                zipCode : orderData.selectedZasilkovna.zip,
-                country : 'Česká republika'
-            } : null,
-            shoppingCart : {
-                items : serverDataShoppingCart
-            }
-         }).then(res => {
-            dispatch({ type : EMPTY_SHOPPING_CART });
-            history.push({ pathname : '/eshop/order-created', state : { order : res.data } });
-         })
-         .catch(err => {
-             console.error(err)
-             setError('Problém komunikace se servrem');
-         });
     };
 
     return (
