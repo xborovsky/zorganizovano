@@ -27,12 +27,16 @@ public class BlogPost implements Serializable {
     private String title;
     @Column(name = "content_preview", nullable = false, columnDefinition = "TEXT")
     private String contentPreview;
-    @Column(name = "content", nullable = false, columnDefinition = "LONGTEXT")
+    @Column(name = "content", nullable = false, columnDefinition = "MEDIUMTEXT")
     private String content;
     @Column(name = "title_photo_src", nullable = false)
     private String titlePhotoSrc;
-    @Column(name = "title_photo_srcset", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "title_photo_srcset", nullable = false, columnDefinition = "MEDIUMTEXT")
     private String titlePhotoSrcSet;
+    @Column(name = "link_href", nullable = true)
+    private String linkHref;
+    @Column(name = "link_content", nullable = true, columnDefinition = "TEXT")
+    private String linkContent;
 
     public BlogPost() {
     }
@@ -99,6 +103,22 @@ public class BlogPost implements Serializable {
 
     public void setTitlePhotoSrcSet(String titlePhotoSrcSet) {
         this.titlePhotoSrcSet = titlePhotoSrcSet;
+    }
+
+    public String getLinkHref() {
+        return linkHref;
+    }
+
+    public void setLinkHref(String linkHref) {
+        this.linkHref = linkHref;
+    }
+
+    public String getLinkContent() {
+        return linkContent;
+    }
+
+    public void setLinkContent(String linkContent) {
+        this.linkContent = linkContent;
     }
 
     @Override

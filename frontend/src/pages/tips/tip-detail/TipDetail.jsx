@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ReactHtmlParser from 'react-html-parser';
 import withStyles from '@material-ui/styles/withStyles';
+import { Link } from 'react-router-dom';
 
 import BreadcrumbsNav from 'components/BreadcrumbsNav';
 
@@ -24,6 +25,23 @@ const styles = theme => ({
                 textIndent : '2rem'
             }
         }
+    },
+    additionalLinkWrapper : {
+        display : 'block'
+    },
+    additionalLink : {
+        display : 'block',
+        width : '25%',
+        margin : '1rem auto',
+        '&>img' : {
+            width : '100%'
+        },
+        [theme.breakpoints.down('xs')] : {
+            width : '70%'
+        },
+        [theme.breakpoints.down('sm')] : {
+            width : '50%'
+        }
     }
 });
 
@@ -39,6 +57,11 @@ const TipDetail = ({ tip, classes }) => {
                     { ReactHtmlParser(tip.content) }
                 </Typography>
             </Paper>
+            { (tip.linkHref && tip.linkContent) &&
+                <Link to={tip.linkHref} className={classes.additionalLink}>
+                    { ReactHtmlParser(tip.linkContent) }
+                </Link>
+            }
         </>
     );
 };
@@ -48,7 +71,9 @@ TipDetail.propTypes = {
         id : PropTypes.number.isRequired,
         title : PropTypes.string.isRequired,
         publishedFormatted : PropTypes.string.isRequired,
-        content : PropTypes.string.isRequired
+        content : PropTypes.string.isRequired,
+        linkHref : PropTypes.string,
+        linkContent : PropTypes.string
     }).isRequired
 }
 

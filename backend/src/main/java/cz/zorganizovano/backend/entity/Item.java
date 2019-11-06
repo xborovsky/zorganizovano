@@ -22,7 +22,7 @@ public class Item implements Serializable {
     private String name;
     @Column(name = "subname", nullable = true)
     private String subName;
-    @Column(name = "description", nullable = false, columnDefinition = "text")
+    @Column(name = "description", nullable = false, columnDefinition = "MEDIUMTEXT")
     private String description;
     @Column(name = "price", nullable = false)
     private double price;

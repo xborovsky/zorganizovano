@@ -31,7 +31,7 @@ values (1, false, 'kalendar-liska/2/2.jpg', 'kalendar-liska/2/2_1920.jpg 1920w, 
 insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset, gallery_thumbnail)
 values (1, false, 'kalendar-liska/3/3.jpg', 'kalendar-liska/3/3_1920.jpg 1920w, kalendar-liska/3/3_1600.jpg 1600w, kalendar-liska/3/3_1366.jpg 1366w, kalendar-liska/3/3_1024.jpg 1024w, kalendar-liska/3/3_768.jpg 768w, kalendar-liska/3/3_640.jpg 640w', 'kalendar-liska/3/3_320.jpg');
 
-insert into zorganizovano.blog_posts (title, published, content, content_preview, title_photo_src, title_photo_srcset)
+insert into zorganizovano.blog_posts (title, published, content, content_preview, title_photo_src, title_photo_srcset, link_href, link_content)
 values(
 'Jak si zorganizovat čas? 1/3',
  curdate(), 
@@ -50,11 +50,13 @@ values(
 <p>Naše děti jsou u nás na prvním místě a tak dbáme na to, že když jsme s nimi, jsme opravdu jen s nimi. Já v tu chvíli odkládám telefon, nedělám nic okolo domu a jsem jen s nimi. Vstávat dřív nevnímám jako nějakou oběť, chodíme spát brzy, takže nějakým spánkovým deficitem netrpíme (alespoň ne ve dnech, kdy pro vás nepřipravujeme tyto stránky ;)). Věřím tomu, že mít systém a být v plánování zorganizovaní, nám přináší spoustu času jen pro naši rodinu. Takže jestli to vnímáte stejně jako my, ráda vám sem budu psát tipy zaměřené na konkrétní témata - vaření, uklízení, péče o děti, nákupy, organizování domácnosti, plánování, organizace času, Vánoc, dovolené, ... co mě zrovna napadne nebo bude aktuální. Už teď pro vás připravuji nějaké zlepšováky a pomocníky, které my doma používáme na denní bázi, proto věřím, že by vám mohli také dobře posloužit.</p>
 <p>Dnes jsem vám chtěla přiblížit, jak fungujeme jako rodina ve všední dny a jak to tedy máme zorganizováno mezi sebou. V pokračování článku vám ukáži, jak přesně plánujeme čas.</p>
 <p>Mějte se zatím krásně, pokud jste dočetli až sem, klobouk dolů a děkuji vám :) Snad vám některá má myšlenka uvízne v hlavě a pomůže vám ve vaší rodině. Budu se těšit příště a do té doby pa! </p>
-<p>Bára</p>',
+<p>Bára</p>
+',
 'Kéžbych věděla :D Ne vážně, před narozením dětí jsem o sobě smýšlela jako o někom, kdo má vše dokonale zorganizované, dokonce jsem to na pracovních pohovorech vyzdvihovala jako mou snad největší přednost. Tak to bylo tehdy. V období "před dětmi". Potom přišlo období "po Marečkovi", no tak to byl samosebou sešup. Vůbec, ale vůbec jsem netušila co dělat, jak to dělat a proč. Názorů okolo spousta, dobrých rad ještě víc. No po čase jsem si našla systém, jak se z ničeho nic starat o někoho jiného než sebe. O někoho, kdo na mě byl absolutně závislý. Do toho jsme čerstvě postavili dům a založili zahradu, no nebylo toho z ničeho nic málo. Zaběhli jsme se, fungovalo to, no stále jsem si říkala...',
 '/img/blog/how_to_organize_1/title/wm06.jpg',
-'/img/blog/how_to_organize_1/title/wm06_1920.jpg 1920w, /img/blog/how_to_organize_1/title/wm06_1600.jpg 1600w, /img/blog/how_to_organize_1/title/wm06_1366.jpg 1366w, /img/blog/how_to_organize_1/title/wm06_1024.jpg 1024w, /img/blog/how_to_organize_1/title/wm06_768.jpg 768w, /img/blog/how_to_organize_1/title/wm06_640.jpg 640w'
-);
+'/img/blog/how_to_organize_1/title/wm06_1920.jpg 1920w, /img/blog/how_to_organize_1/title/wm06_1600.jpg 1600w, /img/blog/how_to_organize_1/title/wm06_1366.jpg 1366w, /img/blog/how_to_organize_1/title/wm06_1024.jpg 1024w, /img/blog/how_to_organize_1/title/wm06_768.jpg 768w, /img/blog/how_to_organize_1/title/wm06_640.jpg 640w',
+'/eshop/products/1',
+'<img src="/img/blog/how_to_organize_1/7/7.jpg" srcSet="/img/blog/how_to_organize_1/7/7_1920.jpg 1920w, /img/blog/how_to_organize_1/7/7_1600.jpg 1600w, /img/blog/how_to_organize_1/7/7_1366.jpg 1366w, /img/blog/how_to_organize_1/7/7_1024.jpg 1024w" alt="U nás v eshopu" />');
 
 insert into zorganizovano.contact_query_types (type, sort_key) values 
 ('Potřebuji se zeptat na něco k produktu', 100),

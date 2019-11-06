@@ -18,7 +18,7 @@
             <column name="subname" type="VARCHAR(200)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="LONGTEXT">
+            <column name="description" type="MEDIUMTEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="price" type="DOUBLE">
@@ -225,7 +225,7 @@
             <column name="content_preview" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="LONGTEXT">
+            <column name="content" type="MEDIUMTEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="title_photo_src" type="VARCHAR(255)">
@@ -233,6 +233,12 @@
             </column>
             <column name="title_photo_srcset" type="TEXT">
                 <constraints nullable="false"/>
+            </column>
+            <column name="link_href" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="link_content" type="TEXT">
+                <constraints nullable="true"/>
             </column>
         </createTable>
 
@@ -255,7 +261,7 @@
             <column name="timestamp" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
-            <column name="error" type="LONGTEXT">
+            <column name="error" type="MEDIUMTEXT">
                 <constraints nullable="true"/>
             </column>
             <column name="browser" type="TEXT">

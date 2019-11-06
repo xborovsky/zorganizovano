@@ -22,7 +22,7 @@ public class ClientError implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "timestamp")
     private Date timestamp;
-    @Column(name = "error", columnDefinition = "LONGTEXT", nullable = true)
+    @Column(name = "error", columnDefinition = "MEDIUMTEXT", nullable = true)
     private String error;
     @Column(name = "browser", columnDefinition = "TEXT", nullable = true)
     private String browser;
