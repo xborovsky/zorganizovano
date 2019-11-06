@@ -32,7 +32,7 @@ const styles = theme => ({
     additionalLink : {
         display : 'block',
         width : '25%',
-        margin : '1rem auto',
+        margin : '0 auto',
         '&>img' : {
             width : '100%'
         },
@@ -56,12 +56,12 @@ const TipDetail = ({ tip, classes }) => {
                 <Typography variant="body1" component="div" className={classes.blogPost}>
                     { ReactHtmlParser(tip.content) }
                 </Typography>
+                { (tip.linkHref && tip.linkContent) &&
+                    <Link to={tip.linkHref} className={classes.additionalLink}>
+                        { ReactHtmlParser(tip.linkContent) }
+                    </Link>
+                }
             </Paper>
-            { (tip.linkHref && tip.linkContent) &&
-                <Link to={tip.linkHref} className={classes.additionalLink}>
-                    { ReactHtmlParser(tip.linkContent) }
-                </Link>
-            }
         </>
     );
 };
