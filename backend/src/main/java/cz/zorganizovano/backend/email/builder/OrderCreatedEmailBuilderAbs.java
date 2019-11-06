@@ -15,26 +15,23 @@ public abstract class OrderCreatedEmailBuilderAbs {
         for (OrderItem orderItem : orderItems) {
             subTotal += orderItem.getPrice() * orderItem.getQuantity();
             sb.append("<tr>")
-                .append("<td>").append(orderItem.getItem().getName()).append("</td>")
-                .append("<td style=\"text-align : center;\">").append(orderItem.getQuantity()).append("</td>")
-                .append("<td style=\"text-align : right;\">").append(orderItem.getPrice() * orderItem.getQuantity()).append(",- Kč</td>")
+                .append("<td style=\"border-bottom : 1px solid #999;\">").append(orderItem.getItem().getName()).append("</td>")
+                .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(orderItem.getQuantity()).append("</td>")
+                .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(orderItem.getPrice() * orderItem.getQuantity()).append(",- Kč</td>")
                 .append("</tr>");
         }
 
         sb.append("<tr>")
-            .append("<td colspan=\"2\">").append("Mezisoučet:").append("</td>")
-            .append("<td style=\"text-align: right;\">").append(subTotal).append(",- Kč</td>")
+            .append("<td style=\"border-bottom : 1px solid #999;\" colspan=\"2\">").append("Mezisoučet:").append("</td>")
+            .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(subTotal).append(",- Kč</td>")
             .append("</tr>");
         sb.append("<tr>")
-            .append("<td colspan=\"3\">").append("Doprava").append("</td>")
+            .append("<td style=\"border-bottom : 1px solid #999;\" colspan=\"2\">").append("Doprava - ").append(shipmentType.getReadableName()).append("</td>")
+            .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(shipmentType.getPrice()).append(",- Kč</td>")
             .append("</tr>");
         sb.append("<tr>")
-            .append("<td colspan=\"2\">").append(shipmentType.getReadableName()).append("</td>")
-            .append("<td style=\"text-align: right;\">").append(shipmentType.getPrice()).append(",- Kč</td>")
-            .append("</tr>");
-        sb.append("<tr>")
-            .append("<td colspan=\"2\">").append("Celkem k úhradě:").append("</td>")
-            .append("<td style=\"text-align: right;\"><b>").append(subTotal + shipmentType.getPrice()).append(",- Kč</b></td>")
+            .append("<td style=\"border-bottom : 1px solid #999;\" colspan=\"2\">").append("Celkem k úhradě:").append("</td>")
+            .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\"><b>").append(subTotal + shipmentType.getPrice()).append(",- Kč</b></td>")
             .append("</tr>");
 
         return sb.toString();
@@ -42,30 +39,30 @@ public abstract class OrderCreatedEmailBuilderAbs {
 
     public String buildPaymentDetails(PaymentInfo paymentInfo) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<table>")
+        sb.append("<table cellpadding=\"10\" cellspacing=\"0\" style=\"border : 2px solid #999; border-collapse: collapse;\">")
                 .append("<tr>")
-                    .append("<th>Číslo účtu:</th>")
-                    .append("<td>")
+                    .append("<th style=\"text-align: left; border : 1px solid #999;\">Číslo účtu:</th>")
+                    .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">")
                         .append(paymentInfo.getAccountNumber())
                         .append("/")
                         .append(paymentInfo.getBankCode())
                     .append("</td>")
                 .append("</tr>")
                 .append("<tr>")
-                    .append("<th>Částka:</th>")
-                    .append("<td>")
+                    .append("<th style=\"text-align: left; border : 1px solid #999;\">Částka:</th>")
+                    .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">")
                         .append(paymentInfo.getAmount())
                     .append("</td>")
                 .append("</tr>")
                 .append("<tr>")
-                    .append("<th>Variabilní symbol:</th>")
-                    .append("<td>")
+                    .append("<th style=\"text-align: left; border : 1px solid #999;\">Variabilní symbol:</th>")
+                    .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">")
                         .append(paymentInfo.getVariableSymbol())
                     .append("</td>")
                 .append("</tr>")
                 .append("<tr>")
-                    .append("<th>Datum splatnosti:</th>")
-                    .append("<td>")
+                    .append("<th style=\"text-align: left; border : 1px solid #999;\">Datum splatnosti:</th>")
+                    .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">")
                         .append(paymentInfo.getDateFormatted())
                     .append("</td>")
                 .append("</tr>")
