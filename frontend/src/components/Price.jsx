@@ -4,7 +4,7 @@ import withStyles from '@material-ui/styles/withStyles';
 
 const styles = theme => ({
     root : {
-        color : '#030'
+        color : '#000'
     }
 });
 
@@ -18,8 +18,11 @@ const getFontSize = size => {
     }
 };
 
-const Price = ({ value, size = 'normal', classes }) => (
-    <span className={classes.root} style={{ fontSize : getFontSize(size) }}>{value},- Kč</span>
+const Price = ({ value, size = 'normal', classes, className }) => (
+    <span className={className ? [classes.root, className].join(' ') : classes.root}
+        style={{ fontSize : getFontSize(size) }}>
+        {value},- Kč
+    </span>
 );
 
 Price.propTypes = {

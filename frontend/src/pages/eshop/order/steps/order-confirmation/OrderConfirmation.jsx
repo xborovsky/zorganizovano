@@ -7,12 +7,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { Link } from 'react-router-dom';
+import { Hidden } from '@material-ui/core';
 
 import WizardButtons from '../../components/WizardButtons';
 import ShoppingCart from './components/ShoppingCart';
 import CustomerInfo from './components/CustomerInfo';
 import Section from './components/Section';
 import DataFetcher from 'components/DataFetcher';
+import ShoppingCartSm from './ShoppingCartSm';
 
 const styles = theme => ({
     totalPrice : {
@@ -42,7 +44,7 @@ const OrderConfirmation = ({
                     initialValues={{ orderTermsApproval : false }}
                     validate={values => {
                         let errors = {};
-                        
+
                         if (!values.orderTermsApproval) {
                             errors.orderTermsApproval = 'Tento údaj je povinný.';
                         }
@@ -59,9 +61,16 @@ const OrderConfirmation = ({
                             <Form>
                                 <div>
                                     <Section title='Objednáváte si tyto položky'>
-                                        <ShoppingCart
-                                            items={orderData.shoppingCart}
-                                            selectedDelivery={selectedDelivery} />
+                                        <Hidden smDown>
+                                            <ShoppingCart
+                                                items={orderData.shoppingCart}
+                                                selectedDelivery={selectedDelivery} />
+                                        </Hidden>
+                                        <Hidden mdUp>
+                                            <ShoppingCartSm
+                                                items={orderData.shoppingCart}
+                                                selectedDelivery={selectedDelivery} />
+                                        </Hidden>
                                     </Section>
                                     <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
                                         <CustomerInfo

@@ -26,7 +26,7 @@ const WizardButtons = ({
     classes
 }) => (
     <Grid container className={classes.root}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
             {prev.show &&
                 <Button
                     variant="contained"
@@ -35,7 +35,7 @@ const WizardButtons = ({
                 </Button>
             }
         </Grid>
-        <Grid item xs={6} className={classes.right}>
+        <Grid item xs={8} className={classes.right}>
             {next.loading ?
                 <Button
                     variant="contained"
