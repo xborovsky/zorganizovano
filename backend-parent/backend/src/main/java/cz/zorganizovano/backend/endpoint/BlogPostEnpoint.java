@@ -1,7 +1,6 @@
 package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.blog.BlogPostPreview;
-import cz.zorganizovano.backend.bean.blog.BlogPostTitlePicture;
 import cz.zorganizovano.backend.dao.BlogPostDao;
 import cz.zorganizovano.backend.entity.BlogPost;
 import java.text.MessageFormat;
@@ -35,9 +34,9 @@ public class BlogPostEnpoint {
     }
 
     @GetMapping("/{id}/title-picture")
-    public BlogPostTitlePicture getBlogPostTitlePicture(@PathVariable("id") Long id) {
+    public String getBlogPostTitlePicture(@PathVariable("id") Long id) {
         BlogPost blogPost = getBlogPost(id);
-        return new BlogPostTitlePicture(blogPost);
+        return blogPost.getTitlePhoto();
     }
 
 }

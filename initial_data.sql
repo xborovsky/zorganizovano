@@ -25,17 +25,17 @@ values (1, 'Rozměry', '297 x 514 x 10 mm', 1000),
 (1, 'Přepravní rozměry', '297 x 310 x 10 mm', 500),
 (1, 'Váha', '120g', 100);
 
-insert into zorganizovano.stock_items (item_id, quantity, display_on_eshop, thumbnail_location, shopping_cart_thumbnail_location)
-values (1, 10, true, 'kalendar-liska/thumbnail/thumbnail.jpg', 'kalendar-liska/shopping_cart_thumbnail/thumbnail.jpg');
+insert into zorganizovano.stock_items (item_id, quantity, display_on_eshop, thumbnail_location)
+values (1, 10, true, 'p_1.jpg');
 
-insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset, gallery_thumbnail)
-values (1, true, 'kalendar-liska/1/1.jpg', 'kalendar-liska/1/1_1920.jpg 1920w, kalendar-liska/1/1_1600.jpg 1600w, kalendar-liska/1/1_1366.jpg 1366w, kalendar-liska/1/1_1024.jpg 1024w, kalendar-liska/1/1_768.jpg 768w, kalendar-liska/1/1_640.jpg 640w', 'kalendar-liska/1/1_320.jpg');
-insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset, gallery_thumbnail)
-values (1, false, 'kalendar-liska/2/2.jpg', 'kalendar-liska/2/2_1920.jpg 1920w, kalendar-liska/2/2_1600.jpg 1600w, kalendar-liska/2/2_1366.jpg 1366w, kalendar-liska/2/2_1024.jpg 1024w, kalendar-liska/2/2_768.jpg 768w, kalendar-liska/2/2_640.jpg 640w', 'kalendar-liska/2/2_320.jpg');
-insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src, srcset, gallery_thumbnail)
-values (1, false, 'kalendar-liska/3/3.jpg', 'kalendar-liska/3/3_1920.jpg 1920w, kalendar-liska/3/3_1600.jpg 1600w, kalendar-liska/3/3_1366.jpg 1366w, kalendar-liska/3/3_1024.jpg 1024w, kalendar-liska/3/3_768.jpg 768w, kalendar-liska/3/3_640.jpg 640w', 'kalendar-liska/3/3_320.jpg');
+insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src)
+values (1, true, 'p_1.jpg');
+insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src)
+values (1, true, 'p_2.jpg');
+insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src)
+values (1, true, 'p_3.jpg');
 
-insert into zorganizovano.blog_posts (title, published, content, content_preview, title_photo_src, title_photo_srcset, link_href, link_content)
+insert into zorganizovano.blog_posts (title, published, content, content_preview, title_photo, link_href, link_content)
 values(
 'Jak si zorganizovat čas? 1/3',
  curdate(), 
@@ -57,8 +57,7 @@ values(
 <p>Bára</p>
 ',
 'Kéžbych věděla :D Ne vážně, před narozením dětí jsem o sobě smýšlela jako o někom, kdo má vše dokonale zorganizované, dokonce jsem to na pracovních pohovorech vyzdvihovala jako mou snad největší přednost. Tak to bylo tehdy. V období "před dětmi". Potom přišlo období "po Marečkovi", no tak to byl samosebou sešup. Vůbec, ale vůbec jsem netušila co dělat, jak to dělat a proč. Názorů okolo spousta, dobrých rad ještě víc. No po čase jsem si našla systém, jak se z ničeho nic starat o někoho jiného než sebe. O někoho, kdo na mě byl absolutně závislý. Do toho jsme čerstvě postavili dům a založili zahradu, no nebylo toho z ničeho nic málo. Zaběhli jsme se, fungovalo to, no stále jsem si říkala...',
-'/img/blog/how_to_organize_1/title/wm06.jpg',
-'/img/blog/how_to_organize_1/title/wm06_1920.jpg 1920w, /img/blog/how_to_organize_1/title/wm06_1600.jpg 1600w, /img/blog/how_to_organize_1/title/wm06_1366.jpg 1366w, /img/blog/how_to_organize_1/title/wm06_1024.jpg 1024w, /img/blog/how_to_organize_1/title/wm06_768.jpg 768w, /img/blog/how_to_organize_1/title/wm06_640.jpg 640w',
+'b_1.jpg',
 '/eshop/products/1',
 '<img src="/img/blog/how_to_organize_1/7/7.jpg" srcSet="/img/blog/how_to_organize_1/7/7_1920.jpg 1920w, /img/blog/how_to_organize_1/7/7_1600.jpg 1600w, /img/blog/how_to_organize_1/7/7_1366.jpg 1366w, /img/blog/how_to_organize_1/7/7_1024.jpg 1024w" alt="U nás v eshopu" />');
 

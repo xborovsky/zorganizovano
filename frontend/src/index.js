@@ -10,8 +10,10 @@ var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
 axios.interceptors.request.use(config => {
   // Concatenate base path if not an absolute URL
-  if ( !isAbsoluteURLRegex.test(config.url) ) {
-    config.url = join('http://localhost:8081/api/', config.url);
+  if ( !isAbsoluteURLRegex.test(config.url)) {
+    const port = config.url.startsWith('/img-api') ? 8082 : 8081;
+    const defaultContextPath = port === 8081 ? '/api' : '';
+    config.url = join(`http://localhost:${port}${defaultContextPath}`, config.url);
   }
 
   return config;

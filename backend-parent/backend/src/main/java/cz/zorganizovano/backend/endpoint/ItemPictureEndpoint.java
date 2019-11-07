@@ -44,7 +44,7 @@ public class ItemPictureEndpoint {
     public String getShoppingCartThumbnailLocation(@PathVariable("id") long stockItemId) {
         Optional<StockItem> stockItem = stockItemDao.findById(stockItemId);
         if (stockItem.isPresent()) {
-            return stockItem.get().getShoppingCartThumbnailLocation();
+            return stockItem.get().getThumbnailLocation();
         } else {
             throw new ResourceNotFoundException(
                 MessageFormat.format("Stock item id={0} not found!", stockItemId)
