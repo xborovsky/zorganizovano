@@ -8,12 +8,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -69,6 +71,7 @@ public class ImageController {
 
         return ResponseEntity.ok()
             .contentType(MediaType.parseMediaType(fileTypeMap.getContentType(image.getName())))
+            .cacheControl(CacheControl.maxAge(1, TimeUnit.DAYS))
             .body(baos.toByteArray());
     }
 
