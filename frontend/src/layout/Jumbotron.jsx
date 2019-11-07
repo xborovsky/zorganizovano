@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/styles/withStyles';
 
+import { getImgServerUrl } from 'util/img-util';
+
 const styles = theme => ({
     jumbotron : {
         position: 'relative',
@@ -27,13 +29,12 @@ const styles = theme => ({
     }
 });
 
-const Jumbotron = ({ src, srcSet, classes }) => (
+const Jumbotron = ({ src, classes }) => (
     <Paper className={classes.jumbotron}>
         {
             <img
                 className={classes.img}
-                src={src}
-                srcSet={srcSet}
+                src={getImgServerUrl(src)}
                 alt="background"
             />
         }
@@ -41,8 +42,7 @@ const Jumbotron = ({ src, srcSet, classes }) => (
 );
 
 Jumbotron.propTypes = {
-    src : PropTypes.string.isRequired,
-    srcSet : PropTypes.string
+    src : PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(Jumbotron);

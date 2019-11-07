@@ -47,12 +47,34 @@ public class ImageController {
         }
     }
 
-    @GetMapping("/{imageName}/{screenWidth}")
-    public ResponseEntity<byte[]> getImage(
+    @GetMapping("/products/{imageName}/{screenWidth}")
+    public ResponseEntity<byte[]> getProductImage(
         @PathVariable("imageName") String imageName,
         @PathVariable("screenWidth") int screenWidth,
         @MatrixVariable Map<String, String> matrixConfig) throws IOException {
 
+        return getImage("products/" + imageName, screenWidth, matrixConfig);
+    }
+
+    @GetMapping("/blog/{imageName}/{screenWidth}")
+    public ResponseEntity<byte[]> getBlogImage(
+        @PathVariable("imageName") String imageName,
+        @PathVariable("screenWidth") int screenWidth,
+        @MatrixVariable Map<String, String> matrixConfig) throws IOException {
+
+        return getImage("blog/" + imageName, screenWidth, matrixConfig);
+    }
+
+    @GetMapping("/other/{imageName}/{screenWidth}")
+    public ResponseEntity<byte[]> getOtherImage(
+        @PathVariable("imageName") String imageName,
+        @PathVariable("screenWidth") int screenWidth,
+        @MatrixVariable Map<String, String> matrixConfig) throws IOException {
+
+        return getImage("other/" + imageName, screenWidth, matrixConfig);
+    }
+
+    public ResponseEntity<byte[]> getImage(String imageName, int screenWidth, Map<String, String> matrixConfig) throws IOException {
         File image = new File(imagesFolder.getPath() + File.separator + imageName);
         if (!image.exists()) {
             LOG.warn(MessageFormat.format("Image {0} not found!", image.getPath()));

@@ -26,14 +26,14 @@ values (1, 'Rozměry', '297 x 514 x 10 mm', 1000),
 (1, 'Váha', '120g', 100);
 
 insert into zorganizovano.stock_items (item_id, quantity, display_on_eshop, thumbnail_location)
-values (1, 10, true, 'p_1.jpg');
+values (1, 10, true, 'products/p_1.jpg');
 
 insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src)
-values (1, true, 'p_1.jpg');
+values (1, true, 'products/p_1.jpg');
 insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src)
-values (1, true, 'p_2.jpg');
+values (1, true, 'products/p_2.jpg');
 insert into zorganizovano.stock_item_pictures (stock_item_id, is_main, src)
-values (1, true, 'p_3.jpg');
+values (1, true, 'products/p_3.jpg');
 
 insert into zorganizovano.blog_posts (title, published, content, content_preview, title_photo, link_href, link_content)
 values(
@@ -57,7 +57,7 @@ values(
 <p>Bára</p>
 ',
 'Kéžbych věděla :D Ne vážně, před narozením dětí jsem o sobě smýšlela jako o někom, kdo má vše dokonale zorganizované, dokonce jsem to na pracovních pohovorech vyzdvihovala jako mou snad největší přednost. Tak to bylo tehdy. V období "před dětmi". Potom přišlo období "po Marečkovi", no tak to byl samosebou sešup. Vůbec, ale vůbec jsem netušila co dělat, jak to dělat a proč. Názorů okolo spousta, dobrých rad ještě víc. No po čase jsem si našla systém, jak se z ničeho nic starat o někoho jiného než sebe. O někoho, kdo na mě byl absolutně závislý. Do toho jsme čerstvě postavili dům a založili zahradu, no nebylo toho z ničeho nic málo. Zaběhli jsme se, fungovalo to, no stále jsem si říkala...',
-'b_1.jpg',
+'blog/b_1.jpg',
 '/eshop/products/1',
 '<img src="/img/blog/how_to_organize_1/7/7.jpg" srcSet="/img/blog/how_to_organize_1/7/7_1920.jpg 1920w, /img/blog/how_to_organize_1/7/7_1600.jpg 1600w, /img/blog/how_to_organize_1/7/7_1366.jpg 1366w, /img/blog/how_to_organize_1/7/7_1024.jpg 1024w" alt="U nás v eshopu" />');
 

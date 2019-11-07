@@ -2,9 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/styles/withStyles';
+import withWidth from '@material-ui/core/withWidth';
 
 import MainText from './MainText';
 import LinkButton from './LinkButton';
+import { getImgServerUrl } from 'util/img-util';
 
 const styles = theme => ({
     gridItem : {
@@ -18,32 +20,46 @@ const styles = theme => ({
     }
 });
 
-const Home = ({ classes }) => (
-    <>
-        <MainText />
-        <Grid container justify="center" className={classes.gridWrapper}>
-            <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
-            <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
-                <NavLink to="/tips">
-                    <LinkButton
-                        src="/img/page/button2/Button2.jpg"
-                        srcSet="/img/page/button2/Button2_1920.jpg 1920w, /img/page/button2/Button2_1600.jpg 1600w, /img/page/button2/Button2_1366.jpg 1366w"
-                        alt="Jak to máme doma"
-                    />
-                </NavLink>
-            </Grid>
-            <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
-                <NavLink to="/eshop">
-                    <LinkButton
-                        src="/img/page/button1/Button1.jpg"
-                        srcSet="/img/page/button1/Button1_1920.jpg 1920w, /img/page/button1/Button1_1600.jpg 1600w, /img/page/button1/Button1_1366.jpg 1366w"
-                        alt="Chci nakupovat"
-                    />
-                </NavLink>
-            </Grid>
-            <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
-        </Grid>
-    </>
-);
+const Home = ({ classes, width }) => {
 
-export default withStyles(styles)(Home);
+    const getLinkButtonWidthPct = () => {
+        switch (width) {
+            case 'xl':
+            case 'lg':
+                return 30;
+            case 'md':
+                return 25;
+            case 'sm':
+                return 50;
+            default : return 100;
+        }
+    };
+
+    return (
+        <>
+            <MainText />
+            <Grid container justify="center" className={classes.gridWrapper}>
+                <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
+                <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
+                    <NavLink to="/tips">
+                        <LinkButton
+                            src={getImgServerUrl('/other/Button2.jpg', getLinkButtonWidthPct())}
+                            alt="Jak to máme doma"
+                        />
+                    </NavLink>
+                </Grid>
+                <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
+                    <NavLink to="/eshop">
+                        <LinkButton
+                            src={getImgServerUrl('/other/Button1.jpg', getLinkButtonWidthPct())}
+                            alt="Chci nakupovat"
+                        />
+                    </NavLink>
+                </Grid>
+                <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
+            </Grid>
+        </>
+    );
+};
+
+export default withStyles(styles)(withWidth()(Home));
