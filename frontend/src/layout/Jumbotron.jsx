@@ -34,7 +34,7 @@ const Jumbotron = ({ src, classes }) => (
         {
             <img
                 className={classes.img}
-                src={getImgServerUrl(src)}
+                src={getImgServerUrl(`other/${src}`)}
                 alt="background"
             />
         }

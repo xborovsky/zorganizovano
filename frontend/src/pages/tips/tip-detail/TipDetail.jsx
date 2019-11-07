@@ -5,8 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import ReactHtmlParser from 'react-html-parser';
 import withStyles from '@material-ui/styles/withStyles';
 import { Link } from 'react-router-dom';
+import format from 'string-template';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import BreadcrumbsNav from 'components/BreadcrumbsNav';
+import { screenWidth, dpr } from 'util/img-util';
 
 const styles = theme => ({
     root : {
@@ -46,6 +49,8 @@ const styles = theme => ({
 });
 
 const TipDetail = ({ tip, classes }) => {
+    const matchesSmallDevice = useMediaQuery('(max-width:768px)');
+    const widthPct = matchesSmallDevice ? 95 : 30;
 
     return (
         <>
@@ -54,11 +59,11 @@ const TipDetail = ({ tip, classes }) => {
                 <Typography variant="h1">{ tip.title }</Typography>
                 <span>{ tip.publishedFormatted }</span>
                 <Typography variant="body1" component="div" className={classes.blogPost}>
-                    { ReactHtmlParser(tip.content) }
+                    { ReactHtmlParser(format(tip.content, { screenWidth, dpr, widthPct })) }
                 </Typography>
                 { (tip.linkHref && tip.linkContent) &&
                     <Link to={tip.linkHref} className={classes.additionalLink}>
-                        { ReactHtmlParser(tip.linkContent) }
+                        { ReactHtmlParser(format(tip.linkContent, { screenWidth, dpr, widthPct })) }
                     </Link>
                 }
             </Paper>
