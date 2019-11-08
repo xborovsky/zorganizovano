@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/styles/withStyles';
+import withWidth from '@material-ui/core/withWidth';
 
 import DataFetcher from 'components/DataFetcher';
+import { getImgServerUrl } from 'util/img-util';
 
 const styles = theme => ({
     root : {
@@ -12,12 +14,11 @@ const styles = theme => ({
     }
 });
 
-const TipsListItemTitlePicture = ({ tipId, tipName, classes }) => (
+const TipsListItemTitlePicture = ({ tipId, tipName, classes, width }) => (
     <DataFetcher url={`/blog/posts/${tipId}/title-picture`}>
         {data => (
             <img
-                src={`${data.src}`}
-                srcSet={`${data.srcSet}`}
+                src={getImgServerUrl(data, ['xs', 'sm'].indexOf(width) > -1 ? 100 : 25)}
                 alt={tipName}
                 className={classes.root} />
         )}
@@ -29,4 +30,4 @@ TipsListItemTitlePicture.propTypes = {
     tipName : PropTypes.string.isRequired
 };
 
-export default withStyles(styles)(TipsListItemTitlePicture);
+export default withStyles(styles)(withWidth()(TipsListItemTitlePicture));

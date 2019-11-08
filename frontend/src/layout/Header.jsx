@@ -189,15 +189,7 @@ const Header = ({ classes }) => {
                     </Hidden>
                 </Toolbar>
             </AppBar>
-            <Jumbotron
-                src='/img/jumbotron/jumbotron.jpg'
-                srcSet={`/img/jumbotron/jumbotron_1920.jpg 1920w,
-                        /img/jumbotron/jumbotron_1600.jpg 1600w,
-                        /img/jumbotron/jumbotron_1322.jpg 1322w,
-                        /img/jumbotron/jumbotron_1024.jpg 1024w,
-                        /img/jumbotron/jumbotron_768.jpg 768w,
-                        /img/jumbotron/jumbotron_640.jpg 640w`}
-            />
+            <Jumbotron src='jumbotron.jpg' />
         </>
     );
 };

@@ -29,10 +29,8 @@ public class BlogPost implements Serializable {
     private String contentPreview;
     @Column(name = "content", nullable = false, columnDefinition = "MEDIUMTEXT")
     private String content;
-    @Column(name = "title_photo_src", nullable = false)
-    private String titlePhotoSrc;
-    @Column(name = "title_photo_srcset", nullable = false, columnDefinition = "MEDIUMTEXT")
-    private String titlePhotoSrcSet;
+    @Column(name = "title_photo", nullable = false)
+    private String titlePhoto;
     @Column(name = "link_href", nullable = true)
     private String linkHref;
     @Column(name = "link_content", nullable = true, columnDefinition = "TEXT")
@@ -89,20 +87,12 @@ public class BlogPost implements Serializable {
         this.content = content;
     }
 
-    public String getTitlePhotoSrc() {
-        return titlePhotoSrc;
+    public String getTitlePhoto() {
+        return titlePhoto;
     }
 
-    public void setTitlePhotoSrc(String titlePhotoSrc) {
-        this.titlePhotoSrc = titlePhotoSrc;
-    }
-
-    public String getTitlePhotoSrcSet() {
-        return titlePhotoSrcSet;
-    }
-
-    public void setTitlePhotoSrcSet(String titlePhotoSrcSet) {
-        this.titlePhotoSrcSet = titlePhotoSrcSet;
+    public void setTitlePhoto(String titlePhoto) {
+        this.titlePhoto = titlePhoto;
     }
 
     public String getLinkHref() {

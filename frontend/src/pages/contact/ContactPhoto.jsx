@@ -1,9 +1,27 @@
 import React from 'react';
 
-const ContactPhoto = ({ className }) => (
-    <img src="/img/page/contact/kontakt.jpg" 
-        alt="Bára Borovská" 
-        className={className} />
-);
+import { getImgServerUrl } from 'util/img-util';
+import { withWidth } from '@material-ui/core';
 
-export default ContactPhoto;
+const ContactPhoto = ({ className, width }) => {
+    const getLinkButtonWidthPct = () => {
+        switch (width) {
+            case 'xl':
+            case 'lg':
+                return 30;
+            case 'md':
+                return 25;
+            case 'sm':
+                return 50;
+            default : return 100;
+        }
+    };
+
+    return (
+        <img src={getImgServerUrl('other/kontakt.jpg', getLinkButtonWidthPct())}
+            alt="Bára Borovská"
+            className={className} />
+    );
+};
+
+export default withWidth()(ContactPhoto);

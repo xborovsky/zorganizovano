@@ -18,6 +18,7 @@ import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
 import QuantityError from '../common/QantityError';
+import { getImgServerUrl } from 'util/img-util';
 
 const styles = theme => ({
     card : {
@@ -135,7 +136,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                 />
                 <CardMedia
                     className={classes.cover}
-                    image={`/img/products/${product.thumbnailLocation}`}
+                    image={getImgServerUrl(product.thumbnailLocation, 30)}
                     onClick={goToDetail}
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>

@@ -150,9 +150,6 @@
             <column name="thumbnail_location" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="shopping_cart_thumbnail_location" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
         <createTable tableName="mail_notifications">
@@ -181,12 +178,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="src" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="srcset" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="gallery_thumbnail" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="is_main" type="BOOLEAN" defaultValueBoolean="false">
@@ -228,10 +219,7 @@
             <column name="content" type="MEDIUMTEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="title_photo_src" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="title_photo_srcset" type="TEXT">
+            <column name="title_photo" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="link_href" type="VARCHAR(255)">

@@ -4,13 +4,12 @@ import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 
 import DataFetcher from 'components/DataFetcher';
+import { getImgServerUrl } from 'util/img-util';
 
 const EMPTY_PICTURES = {
     original : '/img/icons/image-square-outline.svg',
     thumbnail : '/img/icons/image-square-outline.svg'
 };
-
-const BASE_URL = '/img/products';
 
 const ProductGallery = ({ productId }) => (
     <DataFetcher url={`/picture-item/${productId}`}>
@@ -19,11 +18,9 @@ const ProductGallery = ({ productId }) => (
                 items={
                     data.length ?
                         data.map(picture => {
-                            const srcSetWithBaseUrls = picture.srcSet.split(',').map(src => `${BASE_URL}/${src.trim()}`).join(', ');
                             return {
-                                thumbnail : `${BASE_URL}/${picture.thumbnail}`,
-                                original : `${BASE_URL}/${picture.src}`,
-                                srcSet : `${srcSetWithBaseUrls}`
+                                thumbnail : getImgServerUrl(picture.src, 25),
+                                original : getImgServerUrl(picture.src)
                             };
                         }) : [EMPTY_PICTURES]
                 }

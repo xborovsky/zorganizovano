@@ -8,12 +8,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -45,12 +47,34 @@ public class ImageController {
         }
     }
 
-    @GetMapping("/{imageName}/{screenWidth}")
-    public ResponseEntity<byte[]> getImage(
+    @GetMapping("/products/{imageName}/{screenWidth}")
+    public ResponseEntity<byte[]> getProductImage(
         @PathVariable("imageName") String imageName,
         @PathVariable("screenWidth") int screenWidth,
         @MatrixVariable Map<String, String> matrixConfig) throws IOException {
 
+        return getImage("products/" + imageName, screenWidth, matrixConfig);
+    }
+
+    @GetMapping("/blog/{imageName}/{screenWidth}")
+    public ResponseEntity<byte[]> getBlogImage(
+        @PathVariable("imageName") String imageName,
+        @PathVariable("screenWidth") int screenWidth,
+        @MatrixVariable Map<String, String> matrixConfig) throws IOException {
+
+        return getImage("blog/" + imageName, screenWidth, matrixConfig);
+    }
+
+    @GetMapping("/other/{imageName}/{screenWidth}")
+    public ResponseEntity<byte[]> getOtherImage(
+        @PathVariable("imageName") String imageName,
+        @PathVariable("screenWidth") int screenWidth,
+        @MatrixVariable Map<String, String> matrixConfig) throws IOException {
+
+        return getImage("other/" + imageName, screenWidth, matrixConfig);
+    }
+
+    public ResponseEntity<byte[]> getImage(String imageName, int screenWidth, Map<String, String> matrixConfig) throws IOException {
         File image = new File(imagesFolder.getPath() + File.separator + imageName);
         if (!image.exists()) {
             LOG.warn(MessageFormat.format("Image {0} not found!", image.getPath()));
@@ -69,6 +93,7 @@ public class ImageController {
 
         return ResponseEntity.ok()
             .contentType(MediaType.parseMediaType(fileTypeMap.getContentType(image.getName())))
+            .cacheControl(CacheControl.maxAge(1, TimeUnit.DAYS))
             .body(baos.toByteArray());
     }
 
