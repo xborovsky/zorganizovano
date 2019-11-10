@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
+import withWidth from '@material-ui/core/withWidth';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { productShape } from '../product-prop-type';
@@ -80,7 +81,7 @@ const styles = theme => ({
     }
 });
 
-const ProductListItem = ({ product, onSuccess, classes }) => {
+const ProductListItem = ({ product, onSuccess, classes, width }) => {
 
     const history = useHistory();
     const location = useLocation();
@@ -119,6 +120,20 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
         setQuantity(newQuantity);
     };
 
+    const getProductPhotoWidthPct = () => {
+        switch (width) {
+            case 'xl':
+            case 'lg':
+            case 'md':
+                return 25;
+            case 'sm':
+                return 50;
+            case 'xs':
+                return 100;
+            default : return 100;
+        }
+    };
+
     const headerTitle = <Typography varian="h5" className={classes.headerTitle}>{product.name}</Typography>;
     const headerSubtitle = <Typography varian="h6" className={classes.headerSubtitle}>{product.subName}</Typography>;
 
@@ -136,7 +151,7 @@ const ProductListItem = ({ product, onSuccess, classes }) => {
                 />
                 <CardMedia
                     className={classes.cover}
-                    image={getImgServerUrl(product.thumbnailLocation, 30)}
+                    image={getImgServerUrl(product.thumbnailLocation, getProductPhotoWidthPct())}
                     onClick={goToDetail}
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>
@@ -178,4 +193,4 @@ ProductListItem.propTypes = {
     onSuccess : PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(ProductListItem);
+export default withStyles(styles)(withWidth()(ProductListItem));
