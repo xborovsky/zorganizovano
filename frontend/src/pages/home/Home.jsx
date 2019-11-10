@@ -43,7 +43,7 @@ const Home = ({ classes, width }) => {
                 <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
                     <NavLink to="/tips">
                         <LinkButton
-                            src={getImgServerUrl('/other/Button2.jpg', getLinkButtonWidthPct())}
+                            src={getImgServerUrl('other/Button2.jpg', getLinkButtonWidthPct())}
                             alt="Jak to máme doma"
                         />
                     </NavLink>
@@ -51,7 +51,7 @@ const Home = ({ classes, width }) => {
                 <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
                     <NavLink to="/eshop">
                         <LinkButton
-                            src={getImgServerUrl('/other/Button1.jpg', getLinkButtonWidthPct())}
+                            src={getImgServerUrl('other/Button1.jpg', getLinkButtonWidthPct())}
                             alt="Chci nakupovat"
                         />
                     </NavLink>
