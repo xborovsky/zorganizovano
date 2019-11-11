@@ -9,10 +9,16 @@ import { useLocation } from 'react-router-dom';
 
 const styles = theme => ({
     block : {
-        marginBottom : '2rem'
+        marginBottom : '2rem',
+        textAlign : 'justify'
     },
     qrCodeWrapper : {
         textAlign : 'center'
+    },
+    thankYou : {
+        marginBottom : '.2rem',
+        fontFamily : 'Sacramento',
+        fontSize : 24
     }
 });
 
@@ -30,7 +36,7 @@ const OrderCreated = ({ classes }) => {
             <Alert type="success">Objednávka <strong>{orderNum}</strong> byla úspěšně vytvořena</Alert>
             <Typography variant="body1" className={classes.block}>
                 Děkuji,<br /><br />
-                Vaše objednávka byla úspěšně potvrzena. Zboží expedujeme po připsání platby
+                Vaše objednávka byla úspěšně potvrzena. Zboží expeduji po připsání platby
                 na účet. Pokud platba nebude připsána do 5 pracovních dnů, objednávka bude
                 automaticky zrušena.
             </Typography>
@@ -48,12 +54,14 @@ const OrderCreated = ({ classes }) => {
 
             <Typography variant="body1" className={classes.block}>
                 Informace o potvrzení objednávky byla automaticky zaslána na Vámi uvedenou
-                emailovou adresu spolu s platebními údaji. Po dokončení objednávky a odeslání
+                emailovou adresu spolu s platebními údaji. Po dokončení objednávky a odevzdání
                 zboží přepravci, kterého jste zvolili, Vám v rámci ochrany životního prostředí
                 zašleme fakturu pouze v elektronické podobě.
             </Typography>
+            <Typography variant="body1" className={classes.thankYou}>
+                Děkuji za Vaši objedávku
+            </Typography>
             <Typography variant="body1" className={classes.block}>
-                Děkuji za Vaši objedávku<br />
                 a přeji Vám, aby Vám náš produkt pomohl v organizaci Vaší domácnosti.
             </Typography>
         </>
