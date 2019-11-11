@@ -32,3 +32,5 @@ build/
 
 ### Keys ###
 **/Keys.java
+
+/logs/**
