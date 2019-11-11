@@ -90,7 +90,7 @@ const Footer = ({ classes }) => (
                     </Typography>
                     <br />
                     <Typography variant="body2">
-                        Dotaz, nápad, průšiv?&nbsp;
+                        Dotaz, nápad, průšvih?&nbsp;
                         <Link to="/contact" className={classes.link} style={{ display : 'inline' }}>
                             Napište mi!
                         </Link>
