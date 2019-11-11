@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/styles/withStyles';
 import { Formik, Form } from 'formik';
@@ -42,6 +42,10 @@ const OrderConfirmation = ({
 
     const { dispatch } = useContext(ShoppingCartContext);
     const history = useHistory();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleFinishOrder = (values, { setSubmitting }) => {
         setSubmitting(true);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import PaymentQR from './components/PaymentQR';
@@ -20,6 +20,10 @@ const OrderCreated = ({ classes }) => {
     const location = useLocation();
     const orderNum = location.state.order.orderNum;
     const paymentInfo = location.state.order.paymentInfo;
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <>

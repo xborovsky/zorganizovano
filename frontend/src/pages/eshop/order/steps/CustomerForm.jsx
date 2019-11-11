@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -64,6 +64,10 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
     const initialFormValues = initialFormData ?
         {...initialFormData, ...initialFormData.address, ...initialFormData.personalDataHandleApproval} :
         EMPTY_FORM;
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleFormSubmit = (values, { setSubmitting, setErrors }) => {
         setSubmitting(true);

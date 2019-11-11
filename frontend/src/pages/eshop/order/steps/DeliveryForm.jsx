@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -23,6 +23,10 @@ const DeliveryForm = ({
     onError
 }) => {
     const [selectedZasilkovna, setSelectedZasilkovna] = useState(initialFormData.selectedZasilkovna);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleSelectZasilkovna = () => {
         window.Packeta.Widget.pick(PACKETA_API_KEY, setSelectedPickupPoint);
