@@ -6,6 +6,7 @@ export const paymentPropTypes = PropTypes.shape({
     variableSymbol : PropTypes.string.isRequired,
     amount : PropTypes.number.isRequired,
     currency : PropTypes.number.isRequired,
-    message : PropTypes.string.isRequired,
+    message : PropTypes.string,
+    dateFormatted : PropTypes.string.isRequired,
     date : PropTypes.string.isRequired
 }).isRequired;
