@@ -17,8 +17,18 @@ const styles = theme => ({
     cartIcon : {
         marginRight : 10
     },
+    btnWrapper : {
+        [theme.breakpoints.down('sm')] : {
+            textAlign : 'center',
+            margin : '.5rem auto'
+        }
+    },
     shoppingCartBtnWrapper : {
-        textAlign : 'right'
+        textAlign : 'right',
+        [theme.breakpoints.down('sm')] : {
+            textAlign : 'center',
+            margin : '.5rem auto'
+        }
     }
 });
 
@@ -51,7 +61,7 @@ const ProductAddToCartSuccess = ({
             </DialogContent>
             <DialogActions>
                 <Grid container>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6} className={classes.btnWrapper}>
                         <Button variant="contained" color="primary" size="large" onClick={onClose}>
                             Pokračovat v nákupu
                         </Button>
