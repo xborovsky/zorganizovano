@@ -47,7 +47,8 @@ public class OrderEndpoint {
         OrderCreatedDTO created = orderService.createOrder(
             order.getCustomerInfo(),
             order.getShippingAddress(),
-            order.getShoppingCart()
+            order.getShoppingCart(),
+            order.getShipmentType()
         );
         
         PaymentInfo paymentInfo = new PaymentInfo(

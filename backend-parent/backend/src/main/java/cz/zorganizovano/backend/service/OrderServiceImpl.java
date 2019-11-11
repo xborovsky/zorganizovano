@@ -50,7 +50,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderCreatedDTO createOrder(CustomerInfo customerInfo, AddressDTO shippingAddress, ShoppingCart shoppingCart) {
+    public OrderCreatedDTO createOrder(CustomerInfo customerInfo, AddressDTO shippingAddress,
+            ShoppingCart shoppingCart, ShipmentType shipmentType) {
         Date now = timeManager.getCurrentDate();
         Order order = new Order();
         order.setCreated(now);
@@ -69,14 +70,13 @@ public class OrderServiceImpl implements OrderService {
             shipmentAddress = createShipmentAddress(shippingAddress, order);
         }
 
-
         return new OrderCreatedDTO(
             order, 
             orderItems, 
             getShippingAddress(invoiceAddress, shipmentAddress),
             orderItems.stream()
                 .map(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
-                .reduce(0.0, Double::sum)
+                .reduce(0.0, Double::sum) + shipmentType.getPrice()
         );
     }
 
