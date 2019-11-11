@@ -45,7 +45,7 @@ const styles = theme => ({
         display : 'flex',
         alignItems : 'center',
         [theme.breakpoints.down('sm')] : {
-            margin : '.7rem auto',
+            margin : '.7rem auto .7rem 1rem',
             display : 'block',
             flexGrow : 0
         }
