@@ -57,4 +57,9 @@ public class AddressDTO {
         this.country = country;
     }
 
+    @Override
+    public String toString() {
+        return "AddressDTO{" + "street=" + street + ", township=" + township + ", zipCode=" + zipCode + ", country=" + country + '}';
+    }
+
 }

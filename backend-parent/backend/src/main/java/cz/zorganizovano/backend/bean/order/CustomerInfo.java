@@ -56,4 +56,9 @@ public class CustomerInfo {
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return "CustomerInfo{" + "firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNo=" + phoneNo + ", address=" + address + '}';
+    }
+
 }

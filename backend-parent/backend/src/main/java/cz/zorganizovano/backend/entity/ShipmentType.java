@@ -25,4 +25,9 @@ public enum ShipmentType {
         return price;
     }
 
+    @Override
+    public String toString() {
+        return "ShipmentType{" + "readableName=" + readableName + ", price=" + price + '}';
+    }
+
 }

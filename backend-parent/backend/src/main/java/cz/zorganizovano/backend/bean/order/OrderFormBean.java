@@ -44,4 +44,9 @@ public class OrderFormBean {
         this.shoppingCart = shoppingCart;
     }
 
+    @Override
+    public String toString() {
+        return "OrderFormBean{" + "customerInfo=" + customerInfo + ", shippingAddress=" + shippingAddress + ", shipmentType=" + shipmentType + ", shoppingCart=" + shoppingCart + '}';
+    }
+
 }

@@ -57,4 +57,9 @@ public class ContactFormBean {
         this.recaptchaToken = recaptchaToken;
     }
 
+    @Override
+    public String toString() {
+        return "ContactFormBean{" + "name=" + name + ", email=" + email + ", type=" + type + ", query=" + query + '}';
+    }
+
 }

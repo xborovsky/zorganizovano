@@ -9,6 +9,8 @@ import cz.zorganizovano.backend.event.OrderCreatedEvent;
 import cz.zorganizovano.backend.payment.PaymentInfo;
 import cz.zorganizovano.backend.service.OrderService;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order")
 @Validated
 public class OrderEndpoint {
+    private static final Logger LOG = LoggerFactory.getLogger(OrderEndpoint.class);
 
     @Autowired
     private OrderService orderService;
@@ -40,6 +43,7 @@ public class OrderEndpoint {
 
     @PostMapping("/confirm")
     public OrderSuccessResponse createOrder(@Valid @RequestBody OrderFormBean order) {
+        LOG.info("Create order handler", order);
         OrderCreatedDTO created = orderService.createOrder(
             order.getCustomerInfo(),
             order.getShippingAddress(),
@@ -62,6 +66,8 @@ public class OrderEndpoint {
             )
         );
 
+        LOG.info("Order successfully created.");
+        
         return new OrderSuccessResponse(created.getOrder().getOrderNum(), paymentInfo);
     }
 

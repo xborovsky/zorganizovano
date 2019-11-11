@@ -76,6 +76,13 @@ public class ImageController {
     }
 
     public ResponseEntity<byte[]> getImage(String imageName, int screenWidth, Map<String, String> matrixConfig) throws IOException {
+        LOG.info(
+            MessageFormat.format(
+                "Get image imageName={0}, screenWidth={1}, matrixConfig={2}",
+                imageName, screenWidth, matrixConfig
+            )
+        );
+
         File image = new File(imagesFolder.getPath() + File.separator + imageName);
         if (!image.exists()) {
             LOG.warn(MessageFormat.format("Image {0} not found!", image.getPath()));
