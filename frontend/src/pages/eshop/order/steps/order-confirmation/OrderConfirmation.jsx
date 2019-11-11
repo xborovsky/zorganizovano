@@ -133,7 +133,7 @@ const OrderConfirmation = ({
                                                     color="primary"
                                                 />
                                             }
-                                            label={<Link to='/eshop/terms'>Souhlasím s obchodními podmínkami</Link>}
+                                            label={<Link to='/eshop/terms' target="_blank">Souhlasím s obchodními podmínkami</Link>}
                                         />
                                         <FormHelperText id="orderTermsApproval-error">
                                             {touched.orderTermsApproval && errors.orderTermsApproval}

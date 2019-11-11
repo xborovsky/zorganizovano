@@ -241,7 +241,7 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 color="primary"
                                             />
                                         }
-                                        label={<Link to='/eshop/personal-data-protection-terms'>Souhlasím se zpracováním osobních údajů</Link>}
+                                        label={<Link to='/eshop/personal-data-protection-terms' target="_blank">Souhlasím se zpracováním osobních údajů</Link>}
                                     />
                                     <FormHelperText id="personalDataHandleApproval-error">
                                         {touched.personalDataHandleApproval && errors.personalDataHandleApproval}
