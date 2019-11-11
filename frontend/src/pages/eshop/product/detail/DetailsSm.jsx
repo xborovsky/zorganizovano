@@ -24,6 +24,7 @@ const styles = theme => ({
     },
     tdCell : {
         border : 'none',
+        textAlign : 'justify',
         [theme.breakpoints.down('sm')] : {
             padding : 5
         }

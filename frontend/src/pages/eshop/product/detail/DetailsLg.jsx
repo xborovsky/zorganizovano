@@ -22,7 +22,8 @@ const styles = theme => ({
         fontWeight : 'bold !important'
     },
     tdCell : {
-        border : 'none'
+        border : 'none',
+        textAlign : 'justify'
     }
 });
 
