@@ -83,7 +83,7 @@ const DeliveryForm = ({
                                                     <FormControlLabel
                                                         value={deliveryOption.name}
                                                         control={<Radio color="primary" />}
-                                                        label={deliveryOption.readableName}
+                                                        label={`${deliveryOption.readableName} - ${deliveryOption.price},- Kč`}
                                                     />
                                                     {
                                                         (values.deliveryOption &&
