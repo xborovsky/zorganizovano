@@ -81,8 +81,7 @@ const ShoppingCartContainer = () => {
         }
     }, [state]);
 
-    const handleChangeQuantity = (event, item) => {
-        const newQuantity = +event.currentTarget.value;
+    const handleChangeQuantity = (newQuantity, item) => {
         if (newQuantity <= 0) {
             showItemDeleteConfirm(item.id);
         } else if (newQuantity > item.warehouseCnt) {
@@ -91,7 +90,7 @@ const ShoppingCartContainer = () => {
             dispatch({
                 type : UPDATE_SHOPPING_CART_ITEM_QUANTITY,
                 itemId : item.id,
-                quantity : newQuantity
+                quantity : +newQuantity
             });
         }
     };

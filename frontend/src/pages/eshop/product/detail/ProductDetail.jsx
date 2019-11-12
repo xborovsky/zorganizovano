@@ -17,7 +17,6 @@ import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
-import QuantityError from '../common/QantityError';
 
 const styles = theme => ({
     root : {
@@ -66,17 +65,12 @@ const styles = theme => ({
         [theme.breakpoints.down('xs')] : {
             padding : '0 .6rem .5rem',
         }
-    },
-    quantityError : {
-        paddingTop : '0 !important',
-        textAlign : 'right'
     }
 });
 
 const ProductDetail = ({ product, classes }) => {
     const { state, dispatch } = useContext(ShoppingCartContext);
     const [ quantity, setQuantity ] = useState(1);
-    const [ quantityError, setQuantityError ] = useState(false);
     const [ showSuccess, setShowSuccess ] = useState(undefined);
     const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;
     const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
@@ -95,14 +89,11 @@ const ProductDetail = ({ product, classes }) => {
         setQuantity(1);
     };
 
-    const handleChangeQuantity = event => {
-        const newQuantity = +event.currentTarget.value;
-        if (newQuantity <= 0 || newQuantity > stockQuantityLeft) {
-            setQuantityError(true);
+    const handleChangeQuantity = newValue => {
+        if (newValue <= 0 || newValue > stockQuantityLeft) {
             return false;
         }
-        setQuantityError(false);
-        setQuantity(newQuantity);
+        setQuantity(newValue);
     };
 
     const handleSuccessClose = () => {
@@ -151,11 +142,6 @@ const ProductDetail = ({ product, classes }) => {
                                 onClick={() => addItemToShoppingCart(product)}
                             />
                         </Grid>
-                        { quantityError &&
-                            <Grid item xs={12} className={classes.quantityError}>
-                                <QuantityError />
-                            </Grid>
-                        }
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
