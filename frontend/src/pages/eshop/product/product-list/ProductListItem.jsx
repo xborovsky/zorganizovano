@@ -58,9 +58,9 @@ const styles = theme => ({
     },
     orderActionWrapper : {
         display : 'flex',
-        justifyContent : 'flex-end',
-        alignItems : 'center',
-        paddingTop : '5px !important'
+        alignItems: 'center',
+        marginBottom: '.5rem',
+        justifyContent: 'flex-end'
     },
     priceWrapper : {
         textAlign : 'right',
@@ -72,7 +72,7 @@ const styles = theme => ({
         mefginLeft : 15
     },
     quantityInput : {
-        marginRight : 20
+        marginTop : '4px !important'
     }
 });
 
@@ -151,7 +151,7 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
                 </CardContent>
 
                 <CardActions className={classes.cardActions}>
-                    <Grid container spacing={5} alignItems="center">
+                    <Grid container spacing={0} alignItems="center">
                         <Grid item xs={12} className={classes.priceWrapper}>
                             <Price value={product.price} />
                         </Grid>
@@ -162,9 +162,11 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
                                 maxVal={stockQuantityLeft}
                                 className={classes.quantityInput}
                             />
+                        </Grid>
+                        <Grid item xs={12} className={classes.orderActionWrapper}>
                             <ShoppingCartButton
                                 onClick={() => addToShoppingCart(product)}
-                                onlyIcon={true}
+                                onlyIcon={false}
                                 disabled={stockQuantityLeft <= 0} />
                         </Grid>
                     </Grid>

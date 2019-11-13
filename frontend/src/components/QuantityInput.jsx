@@ -12,14 +12,20 @@ const styles = theme => ({
         }
     },
     minusBtn : {
-        marginRight : 5,
         cursor : 'pointer',
-        marginTop : 4
+        paddingTop : 7,
+        paddingBottom : 7,
+        backgroundColor : '#ddd',
+        width : '40px !important',
+        minWidth : '40px !important'
     },
     plusBtn : {
-        marginLeft : 5,
         cursor : 'pointer',
-        marginTop : 4
+        paddingTop : 7,
+        paddingBottom : 7,
+        backgroundColor : '#ddd',
+        width : '40px !important',
+        minWidth : '40px !important'
     }
 });
 
@@ -31,7 +37,7 @@ const QuantityInput = ({
     classes,
     ...rest
 }) => {
-    
+
     const handlePlus = () => {
         if (value + 1 > maxVal) {
             return false;
@@ -48,7 +54,7 @@ const QuantityInput = ({
 
     return (
         <>
-            <Button onClick={handleMinus} variant="contained" className={classes.minusBtn}>-</Button>
+            <Button onClick={handleMinus} variant="outlined" className={classes.minusBtn}>-</Button>
             <TextField
                 value={value}
                 onChange={onChange}
@@ -61,11 +67,11 @@ const QuantityInput = ({
                     endAdornment: <InputAdornment position="end">ks</InputAdornment>,
                     inputProps: { min : 1, max: maxVal }
                 }}
-                style={{ marginTop : 4, minWidth : 100 }}
+                style={{ marginTop : 0, minWidth : 100 }}
                 disabled
                 {...rest}
             />
-            <Button onClick={handlePlus} variant="contained" className={classes.plusBtn}>+</Button>
+            <Button onClick={handlePlus} variant="outlined" className={classes.plusBtn}>+</Button>
         </>
     );
 };

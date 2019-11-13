@@ -45,10 +45,11 @@ const styles = theme => ({
     shoppingCartWrapper : {
         alignItems : 'center',
         display : 'flex',
-        justifyContent : 'flex-end'
+        justifyContent : 'flex-end',
+        marginBottom : '.5rem'
     },
     quantityInput : {
-        marginRight : 20
+        marginTop : '4px !important'
     },
     ideaPromptWrapper : {
         marginTop : '3vh'
@@ -138,6 +139,8 @@ const ProductDetail = ({ product, classes }) => {
                         </Grid>
                         <Grid item xs={12} className={classes.shoppingCartWrapper}>
                             { getQuantityInput(product.stockQuantity > 0) }
+                        </Grid>
+                        <Grid item xs={12} className={classes.shoppingCartWrapper}>
                             <ShoppingCartButton
                                 onClick={() => addItemToShoppingCart(product)}
                             />
