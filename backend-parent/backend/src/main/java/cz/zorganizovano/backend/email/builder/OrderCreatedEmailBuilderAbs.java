@@ -5,9 +5,12 @@ import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.entity.ShipmentType;
 import cz.zorganizovano.backend.payment.PaymentInfo;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 public abstract class OrderCreatedEmailBuilderAbs {
+    NumberFormat DF = new DecimalFormat("##.###");
 
     public String buildOrderItems(Order order, List<OrderItem> orderItems, ShipmentType shipmentType, AddressDTO shippingAddress) {
         double subTotal = 0;
@@ -17,21 +20,21 @@ public abstract class OrderCreatedEmailBuilderAbs {
             sb.append("<tr>")
                 .append("<td style=\"border-bottom : 1px solid #999;\">").append(orderItem.getItem().getName()).append("</td>")
                 .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(orderItem.getQuantity()).append("</td>")
-                .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(orderItem.getPrice() * orderItem.getQuantity()).append(",- Kč</td>")
+                .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(DF.format(orderItem.getPrice() * orderItem.getQuantity())).append(",- Kč</td>")
                 .append("</tr>");
         }
 
         sb.append("<tr>")
-            .append("<td style=\"border-bottom : 1px solid #999;\" colspan=\"2\">").append("Mezisoučet:").append("</td>")
-            .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(subTotal).append(",- Kč</td>")
+            .append("<td style=\"border-bottom : 1px solid #999; color : #ccc;\" colspan=\"2\">").append("Mezisoučet:").append("</td>")
+            .append("<td style=\"text-align: right; border-bottom : 1px solid #999; color : #ccc;\">").append(DF.format(subTotal)).append(",- Kč</td>")
             .append("</tr>");
         sb.append("<tr>")
             .append("<td style=\"border-bottom : 1px solid #999;\" colspan=\"2\">").append("Doprava - ").append(shipmentType.getReadableName()).append("</td>")
-            .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(shipmentType.getPrice()).append(",- Kč</td>")
+            .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">").append(DF.format(shipmentType.getPrice())).append(",- Kč</td>")
             .append("</tr>");
         sb.append("<tr>")
-            .append("<td style=\"border-bottom : 1px solid #999;\" colspan=\"2\">").append("Celkem k úhradě:").append("</td>")
-            .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\"><b>").append(subTotal + shipmentType.getPrice()).append(",- Kč</b></td>")
+            .append("<td style=\"border-bottom : 1px solid #999; background-color : #ddd;\" colspan=\"2\">").append("<b>Celkem k úhradě:</b>").append("</td>")
+            .append("<td style=\"text-align: right; border-bottom : 1px solid #999; background-color : #ddd;\"><b>").append(DF.format(subTotal + shipmentType.getPrice())).append(",- Kč</b></td>")
             .append("</tr>");
 
         return sb.toString();
@@ -39,7 +42,7 @@ public abstract class OrderCreatedEmailBuilderAbs {
 
     public String buildPaymentDetails(PaymentInfo paymentInfo) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<table cellpadding=\"10\" cellspacing=\"0\" style=\"border : 2px solid #999; border-collapse: collapse;\">")
+        sb.append("<table cellpadding=\"10\" cellspacing=\"0\" style=\"border : 2px solid #999; border-collapse: collapse; font-size: 10pt;\">")
                 .append("<tr>")
                     .append("<th style=\"text-align: left; border : 1px solid #999;\">Číslo účtu:</th>")
                     .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">")
@@ -51,7 +54,7 @@ public abstract class OrderCreatedEmailBuilderAbs {
                 .append("<tr>")
                     .append("<th style=\"text-align: left; border : 1px solid #999;\">Částka:</th>")
                     .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\">")
-                        .append(paymentInfo.getAmount())
+                        .append(DF.format(paymentInfo.getAmount())).append(",- Kč")
                     .append("</td>")
                 .append("</tr>")
                 .append("<tr>")

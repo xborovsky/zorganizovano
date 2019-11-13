@@ -63,7 +63,8 @@ public class OrderEndpoint {
                 created.getOrderItems(), 
                 paymentInfo,
                 order.getShipmentType(),
-                created.getShippingAddress()
+                created.getShippingAddress(),
+                order.getCustomerInfo()
             )
         );
 

@@ -10,7 +10,7 @@
         <center>
             <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
                 <tr>
-                    <td bgcolor="#000" align="center">
+                    <td bgcolor="#2E4B14" align="center">
                         <br /><br />
                         <a style="color: #FFF; text-decoration: none; font-size : 20pt;" href="https://zorganizovano.cz">ZORGANIZOVÁNO</a>
                         <br /><br /><br />
@@ -19,17 +19,17 @@
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
-                        Přijali jsme Vaši objednávku č. ${orderNum}
+                        Přijala jsem Vaši objednávku č. ${orderNum}
                         <br /><br />
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
+                    <td style="font-size: 9pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <table cellpadding="10" cellspacing="0" style="border : 2px solid #999; border-collapse: collapse;">
                             <tr>
                                 <th style="text-align: left; border : 1px solid #999;">Produkt</th>
                                 <th style="text-align: left; border : 1px solid #999;">Množství</th>
-                                <th style="text-align: left; border : 1px solid #999;">Cena</th>
+                                <th style="text-align: left; border : 1px solid #999;" nowrap>Cena</th>
                             </tr>
                             ${orderItems}
                         </table>
@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        Pokud jste tak již neučinili, cenu objednávky prosím uhraďte do 5 pracovních dnů na účet:
+                        Pokud jste tak již neučinili, cenu objednávky prosím uhraďte do 3 pracovních dnů na účet:
                         <br /><br />
                         ${paymentDetails}
                         <br /><br />
@@ -64,7 +64,7 @@
                 <tr>
                     <td style="font-size: 10pt; padding-left: 20px; padding-right: 20px; padding-top: 10px; padding-bottom: 10px; color: #000; background-color: #cfcfcf;">
                         <center>
-                            <a href="https://www.zorganizovano.cz" style="color: #000;">zorganizovano.cz</a><br /><br />
+                            <a href="https://www.zorganizovano.cz" style="color: #000;">www.zorganizovano.cz</a><br /><br />
                             Bára Borovská<br />
                             +420 734 836 714<br />
                             zorganizovano@gmail.com

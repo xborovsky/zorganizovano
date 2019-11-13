@@ -1,6 +1,7 @@
 package cz.zorganizovano.backend.event;
 
 import cz.zorganizovano.backend.bean.order.AddressDTO;
+import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.entity.ShipmentType;
@@ -15,14 +16,16 @@ public class OrderCreatedEvent extends ApplicationEvent {
     private final PaymentInfo paymentInfo;
     private final ShipmentType shipmentType;
     private final AddressDTO shipmentAddress;
+    private final CustomerInfo customerInfo;
 
-    public OrderCreatedEvent(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo, ShipmentType shipmentType, AddressDTO shipmentAddress) {
+    public OrderCreatedEvent(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo, ShipmentType shipmentType, AddressDTO shipmentAddress, CustomerInfo customerInfo) {
         super(order);
         this.order = order;
         this.orderItems = orderItems;
         this.paymentInfo = paymentInfo;
         this.shipmentType = shipmentType;
         this.shipmentAddress = shipmentAddress;
+        this.customerInfo = customerInfo;
     }
 
     public Order getOrder() {
@@ -43,6 +46,10 @@ public class OrderCreatedEvent extends ApplicationEvent {
 
     public AddressDTO getShipmentAddress() {
         return shipmentAddress;
+    }
+
+    public CustomerInfo getCustomerInfo() {
+        return customerInfo;
     }
 
 }

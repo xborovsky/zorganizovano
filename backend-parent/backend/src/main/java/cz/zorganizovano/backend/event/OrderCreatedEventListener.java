@@ -1,6 +1,7 @@
 package cz.zorganizovano.backend.event;
 
 import cz.zorganizovano.backend.bean.order.AddressDTO;
+import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.email.EmailService;
 import cz.zorganizovano.backend.email.builder.OrderCreatedAdminEmail;
 import cz.zorganizovano.backend.entity.Order;
@@ -39,10 +40,11 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
         PaymentInfo paymentInfo = event.getPaymentInfo();
         ShipmentType shipmentType = event.getShipmentType();
         AddressDTO shippingAddress = event.getShipmentAddress();
+        CustomerInfo customerInfo = event.getCustomerInfo();
 
         sendEmailToCustomer(order, orderItems, paymentInfo, shipmentType, shippingAddress);
 
-        sendEmailToAdmin(order, orderItems, shipmentType, shippingAddress);
+        sendEmailToAdmin(order, orderItems, shipmentType, shippingAddress, customerInfo);
     }
 
     protected void sendEmailToCustomer(Order order, List<OrderItem> orderItems, PaymentInfo paymentInfo, ShipmentType shipmentType, AddressDTO shippingAddress) {
@@ -53,10 +55,11 @@ public class OrderCreatedEventListener implements ApplicationListener<OrderCreat
         doSendMail(recipient, subject, text);
     }
 
-    protected void sendEmailToAdmin(Order order, List<OrderItem> orderItems, ShipmentType shipmentType, AddressDTO shippingAddress) {
+    protected void sendEmailToAdmin(Order order, List<OrderItem> orderItems, ShipmentType shipmentType,
+            AddressDTO shippingAddress, CustomerInfo customerInfo) {
         String recipient = EmailService.ADMIN_EMAIL;
         String subject = "Nová objednávka přijata";
-        String text = adminEmail.build(order, orderItems, shipmentType, shippingAddress);
+        String text = adminEmail.build(order, orderItems, shipmentType, shippingAddress, customerInfo);
 
         doSendMail(recipient, subject, text);
     }

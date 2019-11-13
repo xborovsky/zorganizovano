@@ -1,6 +1,7 @@
 package cz.zorganizovano.backend.email.builder;
 
 import cz.zorganizovano.backend.bean.order.AddressDTO;
+import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.entity.ShipmentType;
@@ -39,11 +40,13 @@ public class OrderCreatedAdminEmailImpl extends OrderCreatedEmailBuilderAbs impl
     }
 
     @Override
-    public String build(Order order, List<OrderItem> orderItems, ShipmentType shipmentType, AddressDTO shippingAddress) {
+    public String build(Order order, List<OrderItem> orderItems, ShipmentType shipmentType,
+            AddressDTO shippingAddress, CustomerInfo customerInfo) {
         VelocityContext context = new VelocityContext();
         context.put("orderNum", order.getOrderNum());
         context.put("orderItems", buildOrderItems(order, orderItems, shipmentType, shippingAddress));
         context.put("shippingAddress", buildShipmentAddress(shipmentType, shippingAddress));
+        context.put("customerInfo", buildCustomerInfo(customerInfo));
 
         StringWriter writer = new StringWriter();
         template.merge(context, writer);
@@ -54,6 +57,21 @@ public class OrderCreatedAdminEmailImpl extends OrderCreatedEmailBuilderAbs impl
     @Override
     public String getSubject() {
         return "Nová objednávka přijata!";
+    }
+    
+    protected String buildCustomerInfo(CustomerInfo customerInfo) {
+        StringBuilder sb = new StringBuilder("");
+        sb.append("<strong>Zákazník:</strong><br />")
+            .append(customerInfo.getFirstName()).append(" ")
+            .append(customerInfo.getLastName()).append("<br />")
+            .append(customerInfo.getEmail()).append("<br />")
+            .append(customerInfo.getPhoneNo()).append("<br />")
+            .append(customerInfo.getAddress().getStreet()).append("<br />")
+            .append(customerInfo.getAddress().getTownship()).append("<br />")
+            .append(customerInfo.getAddress().getZipCode()).append("<br />")
+            .append(customerInfo.getAddress().getCountry());
+
+        return sb.toString();
     }
 
 }

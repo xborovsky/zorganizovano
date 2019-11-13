@@ -19,7 +19,7 @@
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
-                        <table>
+                        <table cellpadding="10" cellspacing="0" style="border : 2px solid #999; border-collapse: collapse;">
                             <tr>
                                 <th style="text-align: left;">Produkt</th>
                                 <th style="text-align: left;">Množství</th>
@@ -30,6 +30,12 @@
                         <br /><br />
                     </td>
                 </tr>
+                <tr>
+                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
+                        <br /><br />
+                        ${customerInfo}
+                    </td>
+                <\tr>
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />

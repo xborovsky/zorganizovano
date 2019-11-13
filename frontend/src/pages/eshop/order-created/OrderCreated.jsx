@@ -35,7 +35,7 @@ const OrderCreated = ({ classes }) => {
         <>
             <Alert type="success">Objednávka <strong>{orderNum}</strong> byla úspěšně vytvořena</Alert>
             <Typography variant="body1" className={classes.block}>
-                Děkuji,<br /><br />
+                Děkuji za Vaši objednávku,<br /><br />
                 Vaše objednávka byla úspěšně potvrzena. Zboží expeduji po připsání platby
                 na účet. Pokud platba nebude připsána do 5 pracovních dnů, objednávka bude
                 automaticky zrušena.
@@ -59,7 +59,7 @@ const OrderCreated = ({ classes }) => {
                 zašleme fakturu pouze v elektronické podobě.
             </Typography>
             <Typography variant="body1" className={classes.thankYou}>
-                Děkuji za Vaši objedávku
+                Děkuji za Vaši objednávku
             </Typography>
             <Typography variant="body1" className={classes.block}>
                 a přeji Vám, aby Vám náš produkt pomohl v organizaci Vaší domácnosti.
