@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
-    public JavaMailSender emailSender;
+    private JavaMailSender emailSender;
 
     @Override
     public void send(String to, String subject, String text) throws MailException {
@@ -23,7 +23,7 @@ public class EmailServiceImpl implements EmailService {
             messageHelper.setTo(to);
             messageHelper.setSubject(subject);
             messageHelper.setText(text, true);
-            
+
             emailSender.send(mimeMessage);
         } catch (MessagingException ex) {
             throw new MailSendException(ex.getMessage(), ex);
