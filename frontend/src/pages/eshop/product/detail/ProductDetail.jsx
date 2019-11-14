@@ -143,6 +143,7 @@ const ProductDetail = ({ product, classes }) => {
                         <Grid item xs={12} className={classes.shoppingCartWrapper}>
                             <ShoppingCartButton
                                 onClick={() => addItemToShoppingCart(product)}
+                                disabled={stockQuantityLeft <= 0}
                             />
                         </Grid>
                     </Grid>

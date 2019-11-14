@@ -54,7 +54,7 @@ const QuantityInput = ({
 
     return (
         <>
-            <Button onClick={handleMinus} variant="outlined" className={classes.minusBtn}>-</Button>
+            <Button onClick={handleMinus} variant="outlined" className={classes.minusBtn} disabled={value === 1}>-</Button>
             <TextField
                 value={value}
                 onChange={onChange}
@@ -71,7 +71,7 @@ const QuantityInput = ({
                 disabled
                 {...rest}
             />
-            <Button onClick={handlePlus} variant="outlined" className={classes.plusBtn}>+</Button>
+            <Button onClick={handlePlus} variant="outlined" className={classes.plusBtn} disabled={value >= maxVal}>+</Button>
         </>
     );
 };
