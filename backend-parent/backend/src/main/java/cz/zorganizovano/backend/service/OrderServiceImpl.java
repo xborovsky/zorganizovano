@@ -84,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
         Calendar cal = Calendar.getInstance();
         cal.setTime(now);
 
-        int year = cal.get(Calendar.YEAR);
+        int year = cal.get(Calendar.YEAR) % 100;
         int month = cal.get(Calendar.MONTH) + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
 

@@ -20,6 +20,7 @@ public class EmailServiceImpl implements EmailService {
         try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setFrom(ADMIN_EMAIL);
             messageHelper.setTo(to);
             messageHelper.setSubject(subject);
             messageHelper.setText(text, true);

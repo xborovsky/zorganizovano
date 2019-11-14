@@ -45,7 +45,7 @@ public class ContactEndpoint {
 
     @PostMapping
     public ResponseEntity<Void> submitContactForm(@Valid @RequestBody ContactFormBean contactFormBean) throws IOException {
-        LOG.info("Bandle contact form submit", contactFormBean);
+        LOG.info("Handle contact form submit", contactFormBean);
         if (recaptchaVerifier.isValid(contactFormBean.getRecaptchaToken())) {
             String recipient = EmailService.ADMIN_EMAIL;
             String subject = contactAdminEmail.getSubject();
