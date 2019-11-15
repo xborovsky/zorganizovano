@@ -22,7 +22,6 @@ import { getImgServerUrl } from 'util/img-util';
 
 const styles = theme => ({
     card : {
-        //cursor : 'pointer'
     },
     header : {
         backgroundColor : '#2e4b14',
@@ -50,7 +49,10 @@ const styles = theme => ({
         color : '#fff'
     },
     content : {
-        cursor : 'pointer'
+        cursor : 'pointer',
+        [theme.breakpoints.down('sm')] : {
+            paddingBottom : 0
+        }
     },
     cover: {
         height: 200,
@@ -60,19 +62,26 @@ const styles = theme => ({
         display : 'flex',
         alignItems: 'center',
         marginBottom: '.5rem',
-        justifyContent: 'flex-end'
+        [theme.breakpoints.up('lg')] : {
+            marginBottom: '.1rem'
+        }
+    },
+    quantityWrapper : {
+        display : 'flex',
+        alignItems: 'center'
     },
     priceWrapper : {
-        textAlign : 'right',
-        paddingTop : '5px !important',
-        paddingBottom : '5px !important'
+        textAlign : 'right'
     },
     cardActions : {
         marginRight : 15,
-        mefginLeft : 15
+        marginLeft : 15
     },
     quantityInput : {
         marginTop : '4px !important'
+    },
+    shoppingCartButton : {
+        flex : 1
     }
 });
 
@@ -147,27 +156,38 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>
                     <Typography variant="body2">{product.descriptionShort}</Typography>
-                    <ProductStockQuantity stockQuantityLeft={stockQuantityLeft} />
                 </CardContent>
 
                 <CardActions className={classes.cardActions}>
-                    <Grid container spacing={0} alignItems="center">
-                        <Grid item xs={12} className={classes.priceWrapper}>
-                            <Price value={product.price} />
+                    <Grid container spacing={1} alignItems="center" justifyContent="center">
+                        <Grid item xs={12}>
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <ProductStockQuantity stockQuantityLeft={stockQuantityLeft} />
+                                </Grid>
+                                <Grid item xs={6} className={classes.priceWrapper}>
+                                    <Price value={product.price} size={['xs', 'sm', 'md'].indexOf(width) === -1 ? 'xl' : 'normal'} />
+                                </Grid>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} className={classes.orderActionWrapper}>
-                            <QuantityInput
-                                value={quantity}
-                                onChange={handleChangeQuantity}
-                                maxVal={stockQuantityLeft}
-                                className={classes.quantityInput}
-                            />
-                        </Grid>
-                        <Grid item xs={12} className={classes.orderActionWrapper}>
-                            <ShoppingCartButton
-                                onClick={() => addToShoppingCart(product)}
-                                onlyIcon={false}
-                                disabled={stockQuantityLeft <= 0} />
+                        <Grid item xs={12}>
+                            <Grid container className={classes.quantityPriceWrapper} spacing={['lg', 'xl'].indexOf(width) !== -1 ? 1 : 0}>
+                                <Grid item xs={12} lg={8} xl={6} className={classes.quantityWrapper}>
+                                    <QuantityInput
+                                        value={quantity}
+                                        onChange={handleChangeQuantity}
+                                        maxVal={stockQuantityLeft}
+                                        className={classes.quantityInput}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} lg={4} xl={6} className={classes.orderActionWrapper}>
+                                    <ShoppingCartButton
+                                        onClick={() => addToShoppingCart(product)}
+                                        onlyIcon={['xs', 'sm', 'md'].indexOf(width) === -1}
+                                        disabled={stockQuantityLeft <= 0}
+                                        className={classes.shoppingCartButton} />
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </CardActions>

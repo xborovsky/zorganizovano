@@ -9,7 +9,8 @@ const styles = theme => ({
     input : {
         '&>div>input' : {
             color : '#000'
-        }
+        },
+        flex : 1
     },
     minusBtn : {
         cursor : 'pointer',
