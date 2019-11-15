@@ -56,7 +56,6 @@ const ShoppingCartButton = ({
             <span className={classes.text}>
                 Vložit do košíku
             </span>
-            }
         </Button>
 );
 
