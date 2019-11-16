@@ -337,7 +337,7 @@
             <column name="customer_id" type="BIGINT"/>
         </createIndex>
         
-        <createIndex indexName="orders_items_order_id_idx" tableName="order_items" unique="true">
+        <createIndex indexName="orders_items_order_id_idx" tableName="order_items">
             <column name="order_id" type="BIGINT"/>
         </createIndex>
         
