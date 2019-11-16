@@ -29,7 +29,7 @@
                             <tr>
                                 <th style="text-align: left; border : 1px solid #999;">Produkt</th>
                                 <th style="text-align: left; border : 1px solid #999;">Množství</th>
-                                <th style="text-align: left; border : 1px solid #999;" nowrap>Cena</th>
+                                <th style="text-align: left; border : 1px solid #999;" nowrap="nowrap">Cena</th>
                             </tr>
                             ${orderItems}
                         </table>
