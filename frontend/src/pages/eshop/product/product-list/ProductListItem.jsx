@@ -125,7 +125,7 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
             case 'xl':
             case 'lg':
             case 'md':
-                return 25;
+                return 35;
             case 'sm':
                 return 50;
             case 'xs':
