@@ -22,6 +22,9 @@ import { getImgServerUrl } from 'util/img-util';
 
 const styles = theme => ({
     card : {
+        display : 'flex',
+        flexDirection : 'column',
+        height : '100%'
     },
     header : {
         backgroundColor : '#2e4b14',
@@ -75,7 +78,8 @@ const styles = theme => ({
     },
     cardActions : {
         marginRight : 15,
-        marginLeft : 15
+        marginLeft : 15,
+        marginTop : 'auto'
     },
     quantityInput : {
         marginTop : '4px !important'
