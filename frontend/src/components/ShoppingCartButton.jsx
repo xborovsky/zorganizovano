@@ -4,11 +4,10 @@ import Button from '@material-ui/core/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import withStyles from '@material-ui/styles/withStyles';
-import Hidden from '@material-ui/core/Hidden';
 
 const styles = theme => ({
     root : {
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             width : '100%',
             paddingTop : 12,
             paddingBottom : 12
@@ -16,7 +15,7 @@ const styles = theme => ({
     },
     onlyIcon : {
         fontSize : '16pt',
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             width : '100%',
             paddingTop : 12,
             paddingBottom : 12
@@ -31,6 +30,7 @@ const ShoppingCartButton = ({
     onClick,
     onlyIcon = false,
     disabled = false,
+    className,
     classes
 }) => (
     onlyIcon ?
@@ -39,7 +39,7 @@ const ShoppingCartButton = ({
             color="primary"
             size="large"
             onClick={onClick}
-            className={classes.onlyIcon}
+            className={className ? [classes.onlyIcon, className].join(' ') : classes.root}
             title="Vložit do košíku"
             disabled={disabled}>
             <FontAwesomeIcon icon={faShoppingCart} />
@@ -49,17 +49,13 @@ const ShoppingCartButton = ({
             color="primary"
             size="large"
             onClick={onClick}
-            className={classes.root}
+            className={className ? [classes.root, className].join(' ') : classes.root}
             title="Vložit do košíku"
             disabled={disabled}>
             <FontAwesomeIcon icon={faShoppingCart} />
-            <Hidden smDown>
-                { !onlyIcon &&
-                    <span className={classes.text}>
-                        Vložit do košíku
-                    </span>
-                }
-            </Hidden>
+            <span className={classes.text}>
+                Vložit do košíku
+            </span>
         </Button>
 );
 

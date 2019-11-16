@@ -9,7 +9,10 @@ import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 
 const styles = theme => ({
     root : {
-        margin : '0 5vw'
+        margin : '0 5vw',
+        [theme.breakpoints.down('md')] : {
+            margin : 0
+        }
     },
     alert : {
         marginBottom : '2rem'

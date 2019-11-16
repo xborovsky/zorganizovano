@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Grid from '@material-ui/core/grid';
 import withStyles from '@material-ui/styles/withStyles';
+import withWidth from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -48,6 +49,9 @@ const styles = theme => ({
         justifyContent : 'flex-end',
         marginBottom : '.5rem'
     },
+    shoppingCartButton : {
+        flex : 1
+    },
     quantityInput : {
         marginTop : '4px !important'
     },
@@ -69,7 +73,7 @@ const styles = theme => ({
     }
 });
 
-const ProductDetail = ({ product, classes }) => {
+const ProductDetail = ({ product, classes, width }) => {
     const { state, dispatch } = useContext(ShoppingCartContext);
     const [ quantity, setQuantity ] = useState(1);
     const [ showSuccess, setShowSuccess ] = useState(undefined);
@@ -130,19 +134,22 @@ const ProductDetail = ({ product, classes }) => {
                 </Grid>
                 <Grid item xs={12} sm={6} className={classes.productText}>
                     <ProductSpec product={product} />
-                    <Grid container alignItems="center">
+                    <Grid container alignItems="center" spacing={['xs', 'sm'].indexOf(width) !== -1 ? 0 : 1}>
                         <Grid item xs={6}>
                             <ProductStockQuantity stockQuantityLeft={stockQuantityLeft} />
                         </Grid>
                         <Grid item xs={6} className={classes.priceWrapper}>
                             <Price value={product.price} size="xl" />
                         </Grid>
-                        <Grid item xs={12} className={classes.shoppingCartWrapper}>
+                        <Grid item xs={12} md={6} className={classes.shoppingCartWrapper}>
                             { getQuantityInput(product.stockQuantity > 0) }
                         </Grid>
-                        <Grid item xs={12} className={classes.shoppingCartWrapper}>
+                        <Grid item xs={12} md={6} className={classes.shoppingCartWrapper}>
                             <ShoppingCartButton
                                 onClick={() => addItemToShoppingCart(product)}
+                                onlyIcon={'md' === width}
+                                disabled={stockQuantityLeft <= 0}
+                                className={classes.shoppingCartButton}
                             />
                         </Grid>
                     </Grid>
@@ -170,4 +177,4 @@ ProductDetail.propTypes = {
     product : productDetailShape.isRequired
 };
 
-export default withStyles(styles)(ProductDetail);
+export default withStyles(styles)(withWidth()(ProductDetail));
