@@ -35,7 +35,7 @@
                         <br /><br />
                         ${customerInfo}
                     </td>
-                <\tr>
+                </tr>
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
