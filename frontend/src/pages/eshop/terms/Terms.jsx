@@ -65,7 +65,7 @@ const Terms = ({ classes }) => (
         <Typography className={classes.font} component="div">
             <p>
                 Tyto obchodní podmínky platí pro nákup v internetovém obchodě
-                www.zorganizovano.cz, jehož provozovatelem je <strong>Barbora Borovská, V Jamkách
+                www.zorganizovano.cz, jehož provozovatelem je<br /> <strong>Barbora Borovská, V Jamkách
                 354, Čakovičky 250 63, IČO: 01707736</strong>.<br />
                 <strong>Provozovatel není plátce DPH.</strong><br />
                 Obchodní podmínky určují a upřesňují práva a povinnosti prodávajícího a jeho zákazníků (dále jen kupujících).

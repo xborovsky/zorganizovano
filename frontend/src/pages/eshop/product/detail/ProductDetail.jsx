@@ -127,7 +127,7 @@ const ProductDetail = ({ product, classes, width }) => {
 
     return (
         <Paper className={classes.root}>
-            <Typography variant="h1">{ product.name }</Typography>
+            <Typography variant="h1">{ product.name.toUpperCase() }</Typography>
             <Typography variant="h2">{ product.subName }</Typography>
             <br />
             <Grid container>
