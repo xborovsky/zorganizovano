@@ -70,7 +70,11 @@ const OrderConfirmation = ({
          .catch(err => {
             setSubmitting(false);
             console.error(err);
-            onError('Problém komunikace se servrem');
+            if (err.response && err.response.status === 417) {
+                onError('Je mi líto, požadované zboží již není skladem. Zboží bude naskladněco do 3 dnů.');
+            } else {
+                onError('Problém komunikace se serverem.');
+            }
          });
     };
     return (

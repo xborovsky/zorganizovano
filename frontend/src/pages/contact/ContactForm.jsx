@@ -112,9 +112,17 @@ const ContactForm = ({ queryTypes, classes }) => {
                         })
                         .catch(err => {
                             console.error(err);
-                            setAjaxResult({
-                                error : 'Dotaz se nepovedlo odeslat.'
-                            });
+                            if (err.response && err.response.status === 403) {
+                                setAjaxResult({
+                                    error : `Je mi líto, systém Vás vyhodnotil jako robota. 
+                                            Pokud nejste robot, zkuste to, prosím, znovu. 
+                                            Případně můžete dotaz odeslat přímo na můj email.`
+                                });    
+                            } else {
+                                setAjaxResult({
+                                    error : 'Dotaz se nepovedlo odeslat.'
+                                });
+                            }
                             setSubmitting(false);
                         });
                 }}>

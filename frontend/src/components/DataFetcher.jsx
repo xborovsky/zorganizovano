@@ -37,7 +37,7 @@ const DataFetcher = ({
                 </Grid>
             </Grid> :
             error ?
-                <Alert type="error">Chyba spojení se serverem.</Alert> :
+                <Alert type="error">Problém komunikace se serverem.</Alert> :
                 children(data)
     );
 };

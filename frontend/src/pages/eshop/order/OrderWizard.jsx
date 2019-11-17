@@ -124,6 +124,7 @@ const OrderWizard = ({ classes }) => {
             </Hidden>
             { error && <Alert type="error">{error}</Alert> }
             {getStepContent(currentStep)}
+            { error && <Alert type="error">{error}</Alert> }
         </Paper>
     );
 };

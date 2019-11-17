@@ -11,6 +11,7 @@ import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.dao.OrderItemDao;
 import cz.zorganizovano.backend.dao.ShipmentAddressDao;
 import cz.zorganizovano.backend.dao.StockItemDao;
+import cz.zorganizovano.backend.endpoint.StockQuantityNotAvailableException;
 import cz.zorganizovano.backend.entity.Customer;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.InvoiceAddress;
@@ -159,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
 
     protected void updateStock(StockItem stockItem, ShoppingCartItem shoppingCartItem) {
         if (stockItem.getQuantity() < shoppingCartItem.getQuantity()) {
-            throw new IllegalStateException(
+            throw new StockQuantityNotAvailableException(
                 MessageFormat.format(
                     "Not available quantity in stock form item id={0}! Stock quantity={1}, requested quantity={2}",
                     stockItem.getId(), stockItem.getQuantity(), shoppingCartItem.getQuantity()

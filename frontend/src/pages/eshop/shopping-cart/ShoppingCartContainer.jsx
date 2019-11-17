@@ -134,7 +134,7 @@ const ShoppingCartContainer = () => {
                 </Grid>
             </Grid> :
             error ?
-                <Alert type="error">Chyba spojení se serverem.</Alert> :
+                <Alert type="error">Problém komunikace se serverem.</Alert> :
                 <>
                     <BreadcrumbsNav items={[{ name : 'Nákupní košík' }]} />
                     <ShoppingCart

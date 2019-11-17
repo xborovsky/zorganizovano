@@ -91,9 +91,9 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                         errors[backendError.field] = backendError.defaultMessage;
                     });
                     setErrors(errors);
-                    onError('Formulář obsahuje chyby');
+                    onError('Formulář obsahuje chyby.');
                 } else {
-                    onError('Problém komunikace se servrem');
+                    onError('Problém komunikace se serverem.');
                 }
             });
     };
