@@ -45,7 +45,8 @@ const styles = theme => ({
     },
     headerTitle : {
         fontSize : '1.2rem',
-        color : '#fff'
+        color : '#fff',
+        textTransform : 'uppercase'
     },
     headerSubtitle : {
         fontSize : '0.8rem',
@@ -53,6 +54,7 @@ const styles = theme => ({
     },
     content : {
         cursor : 'pointer',
+        textAlign : 'justify',
         [theme.breakpoints.down('sm')] : {
             paddingBottom : 0
         }

@@ -18,7 +18,7 @@ const TipsListItemTitlePicture = ({ tipId, tipName, classes, width }) => (
     <DataFetcher url={`/blog/posts/${tipId}/title-picture`}>
         {data => (
             <img
-                src={getImgServerUrl(data, ['xs', 'sm'].indexOf(width) > -1 ? 100 : 25)}
+                src={getImgServerUrl(data, ['xs', 'sm'].indexOf(width) > -1 ? 100 : 40)}
                 alt={tipName}
                 className={classes.root} />
         )}

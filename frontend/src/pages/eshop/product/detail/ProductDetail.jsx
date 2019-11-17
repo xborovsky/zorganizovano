@@ -67,6 +67,8 @@ const styles = theme => ({
     },
     productText : {
         padding : '0 1rem 2rem',
+        display : 'flex',
+        flexDirection : 'column',
         [theme.breakpoints.down('xs')] : {
             padding : '0 .6rem .5rem',
         }
@@ -134,7 +136,7 @@ const ProductDetail = ({ product, classes, width }) => {
                 </Grid>
                 <Grid item xs={12} sm={6} className={classes.productText}>
                     <ProductSpec product={product} />
-                    <Grid container alignItems="center" spacing={['xs', 'sm'].indexOf(width) !== -1 ? 0 : 1}>
+                    <Grid container alignItems="center" style={{ marginTop : 'auto' }} spacing={['xs', 'sm'].indexOf(width) !== -1 ? 0 : 1}>
                         <Grid item xs={6}>
                             <ProductStockQuantity stockQuantityLeft={stockQuantityLeft} />
                         </Grid>

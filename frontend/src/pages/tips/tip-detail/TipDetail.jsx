@@ -50,7 +50,7 @@ const styles = theme => ({
 
 const TipDetail = ({ tip, classes }) => {
     const matchesSmallDevice = useMediaQuery('(max-width:768px)');
-    const widthPct = matchesSmallDevice ? 95 : 30;
+    const widthPct = matchesSmallDevice ? 95 : 40;
 
     return (
         <>
