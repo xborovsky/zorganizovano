@@ -12,7 +12,7 @@ import withWidth from '@material-ui/core/withWidth';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { productShape } from '../product-prop-type';
-import Price from '../../../../components/Price';
+import Price from '../../../../../components/Price';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import ShoppingCartButton from 'components/ShoppingCartButton';

@@ -14,8 +14,17 @@ axios.interceptors.request.use(config => {
     const urlPrefix = process.env.NODE_ENV === "production" ? 
       "https://zorganizovano.cz:" : "http://localhost:";
     const port = config.url.startsWith('/img-api') ? 8082 : 8081;
+    const isAdmin = config.url.startsWith('/admin');
     const defaultContextPath = port === 8081 ? '/api' : '';
+
     config.url = join(`${urlPrefix}${port}${defaultContextPath}`, config.url);
+
+    if (isAdmin) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('jwtToken'))}`
+      };
+    }
   }
 
   return config;

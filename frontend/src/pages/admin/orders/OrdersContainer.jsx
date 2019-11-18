@@ -3,7 +3,7 @@ import React from 'react';
 import DataFetcher from 'components/DataFetcher';
 
 const OrdersContainer = () => (
-    <DataFetcher url='/admin/orders' headers={{ Authorization: `Bearer ${JSON.parse(localStorage.getItem('jwtToken'))}` }}>
+    <DataFetcher url='/admin/orders'>
         { data => console.log(data) }
     </DataFetcher>
 );
