@@ -56,7 +56,7 @@ const Login = ({ classes }) => {
                 <Typography component="h1" variant="h5">
                     Přihlášení do admin konzole
                 </Typography>
-                { error && <Alert type="error">TODO - chyba</Alert> }
+                { error && <Alert type="error">{error}</Alert> }
                 <Formik
                     initialValues={{
                         username : '',
@@ -65,7 +65,7 @@ const Login = ({ classes }) => {
                     validationSchema={LoginFormSchema}
                     onSubmit={(values, { setSubmitting, resetForm }) => {
                         setSubmitting(true);
-                        axios.post('/auth/login', {...values})
+                        axios.post('/auth/login', { ...values })
                             .then(res => {
                                 console.log(res);
                                 resetForm();
@@ -73,9 +73,13 @@ const Login = ({ classes }) => {
                             })
                             .catch(err => {
                                 console.error(err);
+                                if (err.response && err.response.status === 401) {
+                                    setError('Jméno nebo heslo není správné.');
+                                } else {
+                                    setError('Chyba na serveru.');
+                                }
                                 setSubmitting(false);
                             });
-
                     }}>
                         {({
                             values,
