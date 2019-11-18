@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -22,6 +23,7 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        padding : '20px'
     },
     avatar: {
         margin: theme.spacing(1),
@@ -49,11 +51,11 @@ const Login = ({ classes }) => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <div className={classes.paper}>
+            <Paper className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h6">
                     Přihlášení do admin konzole
                 </Typography>
                 { error && <Alert type="error">{error}</Alert> }
@@ -67,7 +69,7 @@ const Login = ({ classes }) => {
                         setSubmitting(true);
                         axios.post('/auth/login', { ...values })
                             .then(res => {
-                                console.log(res);
+                                localStorage.setItem("jwtToken", res.data);
                                 resetForm();
                                 setSubmitting(false);
                             })
@@ -141,7 +143,7 @@ const Login = ({ classes }) => {
                         )
                     }
                 </Formik>
-            </div>
+            </Paper>
         </Container>
     );
 };
