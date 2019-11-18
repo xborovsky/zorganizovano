@@ -21,6 +21,7 @@ const Contact = React.lazy(() => import('./pages/contact'));
 const ShoppingCart = React.lazy(() => import('./pages/eshop/shopping-cart'));
 const NotFound = React.lazy(() => import('./pages/not-found'));
 const AdminLogin = React.lazy(() => import('./pages/admin/login'));
+const AdminOrders = React.lazy(() => import("./pages/admin/orders"));
 
 const styles = theme => ({
   root: {
@@ -71,6 +72,7 @@ const App = ({ classes }) => {
                       <Route path="/contact" component={Contact} />
                       <Route path="/shopping-cart" component={ShoppingCart} />
                       <Route path="/admin/login" component={AdminLogin} />
+                      <Route path="/admin/orders" component={AdminOrders} />
                       <Route component={NotFound} />
                     </Switch>
                   </Suspense>

@@ -16,6 +16,7 @@ import Alert from 'components/Alert';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import { useHistory } from 'react-router-dom';
 
 const styles = theme => ({
     paper: {
@@ -48,6 +49,7 @@ const LoginFormSchema = Yup.object().shape({
 const Login = ({ classes }) => {
 
     const [ error, setError ] = useState(undefined);
+    const history = useHistory();
 
     return (
         <Container component="main" maxWidth="xs">
@@ -69,9 +71,10 @@ const Login = ({ classes }) => {
                         setSubmitting(true);
                         axios.post('/auth/login', { ...values })
                             .then(res => {
-                                localStorage.setItem("jwtToken", res.data);
+                                localStorage.setItem("jwtToken", JSON.stringify(res.data));
                                 resetForm();
                                 setSubmitting(false);
+                                history.push('/admin/orders');
                             })
                             .catch(err => {
                                 console.error(err);
