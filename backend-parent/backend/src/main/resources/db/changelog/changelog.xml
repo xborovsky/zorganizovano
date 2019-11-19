@@ -377,5 +377,14 @@
             <column name="username" type="VARCHAR(50)"/>
         </createIndex>
     </changeSet>
+
+    <changeSet id="order_details" author="borovsky">
+        <dropColumn tableName="orders" columnName="processed" />
+        
+        <addColumn tableName="orders">
+            <column name="payment_received" type="TIMESTAMP"/>
+            <column name="invoice_sent" type="TIMESTAMP"/>
+        </addColumn>
+    </changeSet>
     
 </databaseChangeLog>

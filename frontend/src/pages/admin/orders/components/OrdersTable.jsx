@@ -39,7 +39,8 @@ const OrdersTable = ({ orders }) => {
                         <TableCell>Číslo objednávky</TableCell>
                         <TableCell>Datum přijetí</TableCell>
                         <TableCell>Celková cena</TableCell>
-                        <TableCell>Zpracováno</TableCell>
+                        <TableCell>Platba přijata</TableCell>
+                        <TableCell>Faktura odeslána</TableCell>
                         <TableCell>Expedováno</TableCell>
                     </TableRow>
                 </TableHead>

@@ -32,8 +32,11 @@ public class Order implements Serializable {
     @Column(name = "maturity", nullable = false)
     private Date maturity;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "processed")
-    private Date processed;
+    @Column(name = "payment_received")
+    private Date paymentReceived;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "invoice_sent")
+    private Date invoiceSent;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "shipped")
     private Date shipped;
@@ -80,20 +83,28 @@ public class Order implements Serializable {
         this.maturity = maturity;
     }
 
-    public Date getProcessed() {
-        return processed;
-    }
-
-    public void setProcessed(Date processed) {
-        this.processed = processed;
-    }
-
     public Date getShipped() {
         return shipped;
     }
 
     public void setShipped(Date shipped) {
         this.shipped = shipped;
+    }
+
+    public Date getPaymentReceived() {
+        return paymentReceived;
+    }
+
+    public void setPaymentReceived(Date paymentReceived) {
+        this.paymentReceived = paymentReceived;
+    }
+
+    public Date getInvoiceSent() {
+        return invoiceSent;
+    }
+
+    public void setInvoiceSent(Date invoiceSent) {
+        this.invoiceSent = invoiceSent;
     }
 
     public Customer getCustomer() {
