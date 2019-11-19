@@ -8,17 +8,23 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
+import OrdersTableRow from './OrdersTableRow';
+
 const useStyles = makeStyles({
     root: {
-      width: '100%',
+      width: '95vw',
       overflowX: 'auto',
+      margin : '20px auto'
     },
     table: {
-      minWidth: 650,
+      minWidth: 650
     },
+    noRecord : {
+        textAlign : 'center'
+    }
   });
 
-const OrdersTable = ({ data }) => {
+const OrdersTable = ({ orders }) => {
     const classes = useStyles();
 
     return (
@@ -36,9 +42,22 @@ const OrdersTable = ({ data }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    <TableRow>
-                        <TableCell colSpan={7}>TODO</TableCell>
-                    </TableRow>
+                    { !orders || !orders.length ?
+                        <TableRow>
+                            <TableCell colSpan={7} className={classes.noRecord}>žádný záznam</TableCell>
+                        </TableRow> :
+                        orders.map((order, cnt) => (
+                            <OrdersTableRow
+                                key={order.id}
+                                rowNum={cnt+1}
+                                id={order.id}
+                                orderNum={order.orderNum}
+                                created={order.created}
+                                processed={order.processed}
+                                shipped={order.shipped}
+                            />
+                        ))
+                    }
                 </TableBody>
             </Table>
         </Paper>

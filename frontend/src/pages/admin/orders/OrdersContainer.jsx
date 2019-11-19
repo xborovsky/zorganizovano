@@ -6,7 +6,7 @@ import OrdersTable from './components/OrdersTable';
 const OrdersContainer = () => (
     <AuthDataFetcher url='/admin/orders'>
         { data => (
-            <OrdersTable />
+            <OrdersTable orders={data} />
         ) }
     </AuthDataFetcher>
 );

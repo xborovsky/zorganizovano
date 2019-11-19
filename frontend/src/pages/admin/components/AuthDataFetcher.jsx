@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import Alert from 'components/Alert';
 import { AuthContext } from '../AuthProvider';
@@ -16,6 +17,7 @@ const AuthDataFetcher = ({
     const [ data, setData ] = useState(undefined);
     const [ error, setError ] = useState(undefined);
     const { auth, logout } = useContext(AuthContext);
+    const history = useHistory();
 
     useEffect(() => {
         axios({
@@ -33,7 +35,7 @@ const AuthDataFetcher = ({
                 console.error(err);
                 if (err.response && err.response.status === 401) {
                     logout();
-                    return;
+                    history.push('/admin/login');
                 }
                 setError(true); // todo pass error to children
                 setLoading(false);
