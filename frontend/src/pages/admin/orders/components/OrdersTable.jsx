@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 import OrdersTableRow from './OrdersTableRow';
 
@@ -26,6 +27,7 @@ const useStyles = makeStyles({
 
 const OrdersTable = ({ orders }) => {
     const classes = useStyles();
+    const history = useHistory();
 
     return (
         <Paper className={classes.root}>
@@ -55,6 +57,7 @@ const OrdersTable = ({ orders }) => {
                                 created={order.created}
                                 processed={order.processed}
                                 shipped={order.shipped}
+                                onGoToDetail={id => history.push(`/admin/orders/${id}`)}
                             />
                         ))
                     }
