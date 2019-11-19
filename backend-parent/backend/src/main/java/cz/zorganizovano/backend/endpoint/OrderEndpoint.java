@@ -8,6 +8,7 @@ import cz.zorganizovano.backend.entity.ShipmentType;
 import cz.zorganizovano.backend.event.OrderCreatedEvent;
 import cz.zorganizovano.backend.payment.PaymentInfo;
 import cz.zorganizovano.backend.service.OrderService;
+import java.util.Date;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +55,7 @@ public class OrderEndpoint {
         PaymentInfo paymentInfo = new PaymentInfo(
             String.valueOf(created.getOrder().getOrderNum()),
             created.getTotalPrice(),
-            created.getOrder().getMaturity()
+            new Date()
         );
 
         eventPublisher.publishEvent(
