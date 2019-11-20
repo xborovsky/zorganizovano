@@ -35,7 +35,6 @@ const OrdersTable = ({ orders }) => {
                 <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
-                        <TableCell></TableCell>
                         <TableCell>Číslo objednávky</TableCell>
                         <TableCell>Datum přijetí</TableCell>
                         <TableCell>Celková cena</TableCell>
@@ -53,10 +52,12 @@ const OrdersTable = ({ orders }) => {
                             <OrdersTableRow
                                 key={order.id}
                                 rowNum={cnt+1}
-                                id={order.id}
+                                orderId={order.orderId}
                                 orderNum={order.orderNum}
                                 created={order.created}
-                                processed={order.processed}
+                                totalPrice={order.totalPrice}
+                                paymentReceived={order.paymentReceived}
+                                invoiceSent={order.invoiceSent}
                                 shipped={order.shipped}
                                 onGoToDetail={id => history.push(`/admin/orders/${id}`)}
                             />

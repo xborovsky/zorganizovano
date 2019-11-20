@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,6 +45,8 @@ public class Order implements Serializable {
     @OneToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+    @Enumerated(EnumType.STRING)
+    private ShipmentType shipmentType;
 
     public Order() {
     }
@@ -113,6 +117,14 @@ public class Order implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public ShipmentType getShipmentType() {
+        return shipmentType;
+    }
+
+    public void setShipmentType(ShipmentType shipmentType) {
+        this.shipmentType = shipmentType;
     }
 
     @Override

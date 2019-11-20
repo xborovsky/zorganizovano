@@ -58,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCreated(now);
         order.setMaturity(timeManager.getNextDate(DEFAULT_MATURITY));
         order.setOrderNum(genereateOrderNumber(now));
+        order.setShipmentType(shipmentType);
 
         Customer customer = createCustomer(customerInfo);
         order.setCustomer(customer);
@@ -152,7 +153,6 @@ public class OrderServiceImpl implements OrderService {
         shipmentAddress.setTownship(address.getTownship());
         shipmentAddress.setZipCode(address.getZipCode());
         shipmentAddress.setCountry(address.getCountry());
-        shipmentAddress.setShipmentType(ShipmentType.ZASILKOVNA);// TODO
         shipmentAddress.setOrder(order);
 
         return shipmentAddressDao.save(shipmentAddress);

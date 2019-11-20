@@ -2,52 +2,55 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { makeStyles } from '@material-ui/styles';
+import Price from 'components/Price';
+import { format, parseISO } from 'date-fns';
+
+import { DATE_TIME_FORMAT } from 'util/date-format-util';
 
 const useStyles = makeStyles({
-    iconLink : {
-        cursor : 'pointer'
+    tr : {
+        cursor : 'pointer',
+        '&:hover' : {
+            background : '#f3f3f3'
+        }
     }
 });
 
 const OrdersTableRow = ({
     rowNum,
-    id,
+    orderId,
     orderNum,
     created,
-    processed,
+    totalPrice,
+    paymentReceived,
+    invoiceSent,
     shipped,
     onGoToDetail
 }) => {
     const classes = useStyles();
 
     return (
-        <TableRow>
+        <TableRow className={classes.tr} onClick={() => onGoToDetail(orderId)}>
             <TableCell>{rowNum}</TableCell>
-            <TableCell>
-                <FontAwesomeIcon
-                    icon={faSearch}
-                    onClick={() => onGoToDetail(id)}
-                    className={classes.iconLink}
-                    title='Zobrazit detail objednávky' />
-            </TableCell>
             <TableCell>{orderNum}</TableCell>
-            <TableCell>{created}</TableCell>
-            <TableCell>TODO</TableCell>
-            <TableCell>{processed}</TableCell>
-            <TableCell>{shipped}</TableCell>
+            <TableCell>{format(parseISO(created), DATE_TIME_FORMAT)}</TableCell>
+            <TableCell><Price value={totalPrice} size="sm" /></TableCell>
+            <TableCell>{paymentReceived && format(parseISO(paymentReceived), DATE_TIME_FORMAT)}</TableCell>
+            <TableCell>{invoiceSent && format(parseISO(invoiceSent), DATE_TIME_FORMAT)}</TableCell>
+            <TableCell>{shipped && format(parseISO(shipped), DATE_TIME_FORMAT)}</TableCell>
         </TableRow>
     );
 };
 
 OrdersTableRow.propTypes = {
     rowNum : PropTypes.number.isRequired,
-    id : PropTypes.number.isRequired,
+    orderId : PropTypes.number.isRequired,
     orderNum : PropTypes.number.isRequired,
     created : PropTypes.string.isRequired,
-    processed : PropTypes.string,
+    totalPrice : PropTypes.number.isRequired,
+    paymentReceived : PropTypes.string,
+    invoiceSent : PropTypes.string,
     shipped : PropTypes.string,
     onGoToDetail : PropTypes.func.isRequired
 };

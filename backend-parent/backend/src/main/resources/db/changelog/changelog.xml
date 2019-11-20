@@ -386,5 +386,24 @@
             <column name="invoice_sent" type="TIMESTAMP"/>
         </addColumn>
     </changeSet>
+
+    <changeSet id="order_shipment_type_migration" author="borovsky">
+        <addColumn tableName="orders">
+            <column name="shipment_type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <sql>
+            UPDATE orders o 
+            SET o.shipment_type=(
+                SELECT IFNULL(
+                    (SELECT sa.shipment_type FROM shipment_addresses sa WHERE sa.order_id = o.id)
+                , 'CESKA_POSTA')
+            );
+        </sql>
+
+        <dropColumn tableName="shipment_addresses" columnName="shipment_type" />
+    </changeSet>
     
 </databaseChangeLog>
