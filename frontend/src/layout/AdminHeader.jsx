@@ -48,6 +48,7 @@ const useStyles = makeStyles(theme => ({
         display : 'flex',
         alignItems : 'center',
         textDecoration : 'none !important',
+        cursor : 'pointer',
         '&:active' : {
             backgroundColor : 'rgba(46, 75, 20, .8)'
         },
@@ -73,7 +74,7 @@ const useStyles = makeStyles(theme => ({
 
 const AdminHeader = () => {
     const classes = useStyles();
-    const { logout } = useContext(AuthContext);
+    const { auth, logout } = useContext(AuthContext);
 
     return (
         <>
@@ -87,10 +88,11 @@ const AdminHeader = () => {
                         </Typography>
                     </div>
                     <nav className={classes.nav}>
-                        <NavLink to="/eshop" className={classes.link} onClick={() => logout()}>
-                            <Typography variant="body2" element="span"><FontAwesomeIcon icon={faPowerOff} /> Odhlásit</Typography>
-                        </NavLink>
-
+                        { auth &&
+                            <span className={classes.link} onClick={() => logout()}>
+                                <Typography variant="body2" element="span"><FontAwesomeIcon icon={faPowerOff} /> Odhlásit</Typography>
+                            </span>
+                        }
                     </nav>
                 </Toolbar>
             </AppBar>

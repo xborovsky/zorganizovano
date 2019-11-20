@@ -5,6 +5,8 @@ import Loader from '../../components/Loader';
 import { AuthProvider } from './AuthProvider';
 import AdminHeader from 'layout/AdminHeader';
 
+import ProtectedRoute from 'components/ProtectedRoute';
+
 const Login = React.lazy(() => import('./login'));
 const Orders = React.lazy(() => import('./orders'));
 const OrderDetail = React.lazy(() => import('./order-detail'));
@@ -19,8 +21,8 @@ const AdminContainer = () => {
             <Suspense fallback={<Loader />}>
                 <Switch>
                     <Route path={`${match.path}/login`} component={Login} />
-                    <Route path={`${match.path}/orders/:id`} component={OrderDetail} />
-                    <Route path={`${match.path}/orders`} component={Orders} />
+                    <ProtectedRoute path={`${match.path}/orders/:id`} component={OrderDetail} />
+                    <ProtectedRoute path={`${match.path}/orders`} component={Orders} />
                     <Route component={NotFound} />
                 </Switch>
             </Suspense>
