@@ -3,6 +3,7 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import Loader from '../../components/Loader';
 import { AuthProvider } from './AuthProvider';
+import AdminHeader from 'layout/AdminHeader';
 
 const Login = React.lazy(() => import('./login'));
 const Orders = React.lazy(() => import('./orders'));
@@ -14,6 +15,7 @@ const AdminContainer = () => {
 
     return (
         <AuthProvider>
+            <AdminHeader />
             <Suspense fallback={<Loader />}>
                 <Switch>
                     <Route path={`${match.path}/login`} component={Login} />
