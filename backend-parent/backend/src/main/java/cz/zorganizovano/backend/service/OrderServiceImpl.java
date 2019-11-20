@@ -189,4 +189,10 @@ public class OrderServiceImpl implements OrderService {
             );
         }
     }
+
+    @Override
+    public double calculateTotalPrice(Order order) {
+        return orderItemDao.getTotalOrderItemsPrice(order.getId()) +
+            order.getShipmentType().getPrice();
+    }
 }

@@ -5,13 +5,13 @@ import java.util.Date;
 
 public class AdminOrderListItem {
 
-    private long orderId;
-    private long orderNum;
-    private Date created;
-    private double totalPrice;
-    private Date paymentReceived;
-    private Date invoiceSent;
-    private Date shipped;
+    private final long orderId;
+    private final long orderNum;
+    private final Date created;
+    private final double totalPrice;
+    private final Date paymentReceived;
+    private final Date invoiceSent;
+    private final Date shipped;
 
     public AdminOrderListItem(Order order, double totalPrice) {
         this.orderId = order.getId();
@@ -27,56 +27,28 @@ public class AdminOrderListItem {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
     public long getOrderNum() {
         return orderNum;
-    }
-
-    public void setOrderNum(long orderNum) {
-        this.orderNum = orderNum;
     }
 
     public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     public double getTotalPrice() {
         return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public Date getPaymentReceived() {
         return paymentReceived;
     }
 
-    public void setPaymentReceived(Date paymentReceived) {
-        this.paymentReceived = paymentReceived;
-    }
-
     public Date getInvoiceSent() {
         return invoiceSent;
-    }
-
-    public void setInvoiceSent(Date invoiceSent) {
-        this.invoiceSent = invoiceSent;
     }
 
     public Date getShipped() {
         return shipped;
     }
 
-    public void setShipped(Date shipped) {
-        this.shipped = shipped;
-    }
-    
 }
