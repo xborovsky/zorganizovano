@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -17,6 +17,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from 'react-router-dom';
+
+import { AuthContext } from '../AuthProvider';
 
 const styles = theme => ({
     paper: {
@@ -49,6 +51,7 @@ const LoginFormSchema = Yup.object().shape({
 const Login = ({ classes }) => {
 
     const [ error, setError ] = useState(undefined);
+    const { updateAuth } = useContext(AuthContext);
     const history = useHistory();
 
     return (
@@ -71,7 +74,7 @@ const Login = ({ classes }) => {
                         setSubmitting(true);
                         axios.post('/auth/login', { ...values })
                             .then(res => {
-                                localStorage.setItem("jwtToken", JSON.stringify(res.data));
+                                updateAuth(JSON.stringify(res.data));
                                 resetForm();
                                 setSubmitting(false);
                                 history.push('/admin/orders');
