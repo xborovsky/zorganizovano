@@ -195,4 +195,34 @@ public class OrderServiceImpl implements OrderService {
         return orderItemDao.getTotalOrderItemsPrice(order.getId()) +
             order.getShipmentType().getPrice();
     }
+
+    @Override
+    @Transactional
+    public Date updatePaymentReceivedDate(Order order) {
+        Date now = timeManager.getCurrentDate();
+        order.setPaymentReceived(now);
+        orderDao.save(order);
+
+        return now;
+    }
+
+    @Override
+    @Transactional
+    public Date updateInvoiceSentDate(Order order) {
+        Date now = timeManager.getCurrentDate();
+        order.setInvoiceSent(now);
+        orderDao.save(order);
+
+        return now;
+    }
+
+    @Override
+    @Transactional
+    public Date updateShippedDate(Order order) {
+        Date now = timeManager.getCurrentDate();
+        order.setShipped(now);
+        orderDao.save(order);
+
+        return now;
+    }
 }

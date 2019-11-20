@@ -13,18 +13,23 @@ import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.ShipmentAddress;
 import cz.zorganizovano.backend.service.OrderService;
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin/orders")
 public class OrdersEnpoint {
+    private static final Logger LOG = LoggerFactory.getLogger(OrdersEnpoint.class);
 
     @Autowired
     private OrderDao orderDao;
@@ -68,6 +73,27 @@ public class OrdersEnpoint {
         } else {
             throw new ResourceNotFoundException(MessageFormat.format("Order {0} not found!", id));
         }
+    }
+
+    @PostMapping("/{id}/{dateProperty}")
+    public Date udpateDate(@PathVariable long id, @PathVariable String dateProperty) {
+        Optional<Order> orderMaybe = orderDao.findById(id);
+        if (!orderMaybe.isPresent()) {
+            throw new ResourceNotFoundException(MessageFormat.format("Order {0} not found!", id));
+        }
+
+        Order order = orderMaybe.get();
+        switch(dateProperty) {
+            case "paymentReceived":
+                return orderService.updatePaymentReceivedDate(order);
+            case "invoiceSent":
+                return orderService.updateInvoiceSentDate(order);
+            case "shipped":
+                return orderService.updateShippedDate(order);
+            default:
+                LOG.warn(MessageFormat.format("Unknown property {0}!", dateProperty));
+        }
+        return null;
     }
 
 }
