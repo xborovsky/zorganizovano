@@ -2,9 +2,15 @@ package cz.zorganizovano.backend.endpoint.admin;
 
 import cz.zorganizovano.backend.bean.admin.order.AdminOrderDetail;
 import cz.zorganizovano.backend.bean.admin.order.AdminOrderListItem;
+import cz.zorganizovano.backend.bean.admin.order.AdminOrderProductItem;
+import cz.zorganizovano.backend.dao.InvoiceAddressDao;
 import cz.zorganizovano.backend.dao.OrderDao;
+import cz.zorganizovano.backend.dao.OrderItemDao;
+import cz.zorganizovano.backend.dao.ShipmentAddressDao;
 import cz.zorganizovano.backend.endpoint.ResourceNotFoundException;
+import cz.zorganizovano.backend.entity.InvoiceAddress;
 import cz.zorganizovano.backend.entity.Order;
+import cz.zorganizovano.backend.entity.ShipmentAddress;
 import cz.zorganizovano.backend.service.OrderService;
 import java.text.MessageFormat;
 import java.util.List;
@@ -24,6 +30,12 @@ public class OrdersEnpoint {
     private OrderDao orderDao;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private InvoiceAddressDao invoiceAddressDao;
+    @Autowired
+    private ShipmentAddressDao shipmentAddressDao;
+    @Autowired
+    private OrderItemDao orderItemDao;
 
     @GetMapping
     public List<AdminOrderListItem> getAllOrders() {
@@ -38,7 +50,21 @@ public class OrdersEnpoint {
         Optional<Order> orderMaybe = orderDao.findById(id);
         if (orderMaybe.isPresent()) {
             Order order = orderMaybe.get();
-            return new AdminOrderDetail(order, orderService.calculateTotalPrice(order));
+            InvoiceAddress invoiceAddress = invoiceAddressDao.findByOrder(order);
+            Optional<ShipmentAddress> shipmentAddressMaybe = shipmentAddressDao.findByOrder(order);
+            List<AdminOrderProductItem> orderItems = orderItemDao.findByOrder(order)
+                    .stream()
+                    .map(item -> new AdminOrderProductItem(item))
+                    .collect(Collectors.toList());
+
+            return new AdminOrderDetail(
+                order,
+                orderService.calculateTotalPrice(order),
+                invoiceAddress,
+                shipmentAddressMaybe.orElse(null),
+                invoiceAddress.getOrder().getCustomer(),
+                orderItems
+            );
         } else {
             throw new ResourceNotFoundException(MessageFormat.format("Order {0} not found!", id));
         }

@@ -8,6 +8,7 @@ public class AdminOrderListItem {
     private final long orderId;
     private final long orderNum;
     private final Date created;
+    private final String shipmentType;
     private final double totalPrice;
     private final Date paymentReceived;
     private final Date invoiceSent;
@@ -17,6 +18,7 @@ public class AdminOrderListItem {
         this.orderId = order.getId();
         this.orderNum = order.getOrderNum();
         this.created = order.getCreated();
+        this.shipmentType = order.getShipmentType().getReadableName();
         this.totalPrice = totalPrice;
         this.paymentReceived = order.getPaymentReceived();
         this.invoiceSent = order.getInvoiceSent();
@@ -33,6 +35,10 @@ public class AdminOrderListItem {
 
     public Date getCreated() {
         return created;
+    }
+
+    public String getShipmentType() {
+        return shipmentType;
     }
 
     public double getTotalPrice() {

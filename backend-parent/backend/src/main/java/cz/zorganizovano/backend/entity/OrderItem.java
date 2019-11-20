@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ public class OrderItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
