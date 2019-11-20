@@ -44,7 +44,7 @@ public class OrdersEnpoint {
 
     @GetMapping
     public List<AdminOrderListItem> getAllOrders() {
-        return orderDao.findAll()
+        return orderDao.findNotShipped()
             .stream()
             .map(order -> new AdminOrderListItem(order, orderService.calculateTotalPrice(order)))
             .collect(Collectors.toList());
