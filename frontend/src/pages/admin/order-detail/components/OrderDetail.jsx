@@ -20,7 +20,7 @@ import { AuthContext } from 'pages/admin/AuthProvider';
 
 const useStyles = makeStyles({
     root : {
-        margin : '20px 5vw'
+        marginTop : 10
     },
     th : {
         fontWeight : 'bold',
