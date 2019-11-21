@@ -22,6 +22,7 @@
     "react-material": "^0.3.2",
     "react-recaptcha-v3": "^1.1.0",
     "react-router-dom": "^5.1.2",
+    "react-router-sitemap": "^1.2.0",
     "react-scripts": "3.2.0",
     "source-map-explorer": "^2.1.0",
     "string-template": "^1.0.0",
@@ -33,7 +34,8 @@
     "build": "react-scripts build && gzipper ./build/static/js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "sitemap": "node sitemap-builder.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +53,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/register": "^7.7.0",
     "prop-types": "^15.7.2"
   }
 }
