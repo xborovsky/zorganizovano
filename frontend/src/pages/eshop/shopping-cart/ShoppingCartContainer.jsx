@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Helmet } from 'react-helmet';
 
 import ShoppingCartContext from './state-management/ShoppingCartContext';
 import Alert from 'components/Alert';
@@ -136,6 +137,9 @@ const ShoppingCartContainer = () => {
             error ?
                 <Alert type="error">Problém komunikace se serverem.</Alert> :
                 <>
+                    <Helmet>
+                        <meta name="description" content='TODO' />
+                    </Helmet>
                     <BreadcrumbsNav items={[{ name : 'Nákupní košík' }]} />
                     <ShoppingCart
                         items={serverCartItems}

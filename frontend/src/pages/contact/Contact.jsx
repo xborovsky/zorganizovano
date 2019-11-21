@@ -2,6 +2,7 @@ import React from 'react';
 import withStyles from '@material-ui/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { Helmet } from 'react-helmet';
 
 import SocialLinks from 'components/SocialLinks';
 import ContactEmail from 'components/ContactEmail';
@@ -38,27 +39,32 @@ const styles = theme => ({
 });
 
 const Contact = ({ classes }) => (
-    <Grid container>
-        <Grid item xs={false} sm={1} md={2}></Grid>
-        <Grid item xs={12} sm={5} md={4} className={classes.contactPhotoWrapper}>
-            <ContactPhoto className={classes.contactPhoto} />
+    <>
+        <Helmet>
+            <meta name="description" content='V případě dotazů, připomínek, nebo návrhů mě neváhejte kontaktovat!' />
+        </Helmet>
+        <Grid container>
+            <Grid item xs={false} sm={1} md={2}></Grid>
+            <Grid item xs={12} sm={5} md={4} className={classes.contactPhotoWrapper}>
+                <ContactPhoto className={classes.contactPhoto} />
+            </Grid>
+            <Grid item xs={12} sm={5} md={4} className={classes.contactWrapper}>
+                <Typography className={classes.contact} style={{ fontWeight : 'bold' }}>Bára Borovská</Typography>
+                <Typography className={classes.contact}>+420 734 836 714</Typography>
+                <Typography className={classes.contact}>
+                    <ContactEmail reversedEmail='moc.liamg@onavozinagroz' />
+                </Typography>
+                <Typography className={classes.contact}>www.zorganizovano.cz</Typography>
+                <SocialLinks linkClass={classes.socialLink} iconClass={classes.socialIcon} />
+            </Grid>
+            <Grid item xs={false} sm={1} md={2}></Grid>
+            <Grid item xs={12}>
+                <DataFetcher url='/contact/query-types'>
+                    { data => <ContactForm queryTypes={data} /> }
+                </DataFetcher>
+            </Grid>
         </Grid>
-        <Grid item xs={12} sm={5} md={4} className={classes.contactWrapper}>
-            <Typography className={classes.contact} style={{ fontWeight : 'bold' }}>Bára Borovská</Typography>
-            <Typography className={classes.contact}>+420 734 836 714</Typography>
-            <Typography className={classes.contact}>
-                <ContactEmail reversedEmail='moc.liamg@onavozinagroz' />
-            </Typography>
-            <Typography className={classes.contact}>www.zorganizovano.cz</Typography>
-            <SocialLinks linkClass={classes.socialLink} iconClass={classes.socialIcon} />
-        </Grid>
-        <Grid item xs={false} sm={1} md={2}></Grid>
-        <Grid item xs={12}>
-            <DataFetcher url='/contact/query-types'>
-                { data => <ContactForm queryTypes={data} /> }
-            </DataFetcher>
-        </Grid>
-    </Grid>
+    </>
 );
 
 export default withStyles(styles)(Contact);

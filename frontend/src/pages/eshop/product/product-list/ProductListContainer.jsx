@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import ProductList from './ProductList';
 import MainText from './MainText';
@@ -7,6 +8,9 @@ import BreadcrumbsNav from 'components/BreadcrumbsNav';
 
 const ProductListContainer = ({ data }) => (
     <>
+        <Helmet>
+            <meta name="description" content='TODO' />
+        </Helmet>
         <BreadcrumbsNav items={[{ name : 'eshop' }]} />
         <MainText />
         <DataFetcher url='/item'>
