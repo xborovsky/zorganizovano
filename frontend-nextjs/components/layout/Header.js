@@ -137,22 +137,22 @@ const Header = ({ classes }) => {
                     </div>
                     <Hidden smDown>
                         <nav className={classes.nav}>
-                            <ActiveLink href="/eshop" activeClassName={classes.activeLink}>
+                            <ActiveLink href="public/eshop" activeClassName={classes.activeLink}>
                                 <a className={classes.link} href="/eshop">
                                     <Typography variant="body2" element="span">[ Eshop ]</Typography>
                                 </a>
                             </ActiveLink>
-                            <ActiveLink href="/tips" activeClassName={classes.activeLink}>
+                            <ActiveLink href="public/tips" activeClassName={classes.activeLink}>
                                 <a className={classes.link} href="/tips">
                                     <Typography variant="body2" element="span">[ U nás doma ]</Typography>
                                 </a>
                             </ActiveLink>
-                            <ActiveLink href="/contact" activeClassName={classes.activeLink}>
+                            <ActiveLink href="public/contact" activeClassName={classes.activeLink}>
                                 <a className={classes.link} href="/contact">
                                     <Typography variant="body2" element="span">[ Kontakt ]</Typography>
                                 </a>
                             </ActiveLink>
-                            <ActiveLink href="/shopping-cart" activeClassName={classes.activeLink}>
+                            <ActiveLink href="public/shopping-cart" activeClassName={classes.activeLink}>
                                 <a className={[classes.link, classes.shoppingCartLink].join(' ')} href="/shopping-cart">
                                     {/*<Typography variant="body2" element="span">{ totalPrice },-</Typography>*/}
                                     <Typography variant="body2" element="span">{ 0 },-</Typography>
@@ -170,28 +170,28 @@ const Header = ({ classes }) => {
                             <nav className={classes.mobileNav}>
                                 <Grid container>
                                     <Grid item xs={12}>
-                                        <ActiveLink href="/eshop" activeClassName={classes.activeLink}>
+                                        <ActiveLink href="public/eshop" activeClassName={classes.activeLink}>
                                             <a className={classes.link} href="/eshop">
                                                 <Typography variant="body2" element="span">[ Eshop ]</Typography>
                                             </a>
                                         </ActiveLink>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <ActiveLink href="/tips" activeClassName={classes.activeLink}>
+                                        <ActiveLink href="public/tips" activeClassName={classes.activeLink}>
                                             <a className={classes.link} href="/tips">
                                                 <Typography variant="body2" element="span">[ U nás doma ]</Typography>
                                             </a>
                                         </ActiveLink>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <ActiveLink href="/contact" activeClassName={classes.activeLink}>
+                                        <ActiveLink href="public/contact" activeClassName={classes.activeLink}>
                                             <a className={classes.link} href="/contact">
                                                 <Typography variant="body2" element="span">[ Kontakt ]</Typography>
                                             </a>
                                         </ActiveLink>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <ActiveLink href="/shopping-cart" activeClassName={classes.activeLink}>
+                                        <ActiveLink href="public/shopping-cart" activeClassName={classes.activeLink}>
                                             <a className={[classes.link, classes.shoppingCartLink].join(' ')} href="/shopping-cart">
                                                 {/*<Typography variant="body2" element="span">{ totalPrice },-</Typography>*/}
                                                 <Typography variant="body2" element="span">{ 0 },-</Typography>

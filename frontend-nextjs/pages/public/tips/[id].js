@@ -1,0 +1,96 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import ReactHtmlParser from 'react-html-parser';
+import withStyles from '@material-ui/styles/withStyles';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import format from 'string-template';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+import withPublicLayout from '~/components/hoc/withPublicLayout';
+import DataFetcher from '~/components/DataFetcher';
+import BreadcrumbsNav from '~/components/BreadcrumbsNav';
+//import { screenWidth, dpr } from '~/util/img-util';
+
+const styles = theme => ({
+    root : {
+        padding : '1rem 2rem'
+    },
+    breadcrumbsWrapper : {
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+    },
+    blogPost : {
+        textAlign : 'justify',
+        overflow : 'hidden',
+        '&>p' : {
+            textIndent : '3rem',
+            [theme.breakpoints.down('xs')] : {
+                textIndent : '2rem'
+            }
+        }
+    },
+    additionalLinkWrapper : {
+        display : 'block'
+    },
+    additionalLink : {
+        display : 'block',
+        width : '25%',
+        margin : '0 auto',
+        '&>img' : {
+            width : '100%'
+        },
+        [theme.breakpoints.down('xs')] : {
+            width : '70%'
+        },
+        [theme.breakpoints.down('sm')] : {
+            width : '50%'
+        }
+    }
+});
+
+const TipDetail = ({ classes }) => {
+    const router = useRouter();
+    const { id } = router.query;
+    const matchesSmallDevice = useMediaQuery('(max-width:768px)');
+    const widthPct = matchesSmallDevice ? 95 : 40;
+    /* TODO fetch nextjs... */
+    return (
+        <DataFetcher url={`/blog/posts/${id}`}>
+            { data => (
+                <>
+                    <BreadcrumbsNav items={[{ link : 'public/tips', name : 'U nás doma' }, { name : data.title }]} />
+                    <Paper className={classes.root}>
+                        <Typography variant="h1">{ data.title }</Typography>
+                        <span>{ data.publishedFormatted }</span>
+                        <Typography variant="body1" component="div" className={classes.blogPost}>
+                            { /*ReactHtmlParser(format(data.content, { screenWidth, dpr, widthPct }))*/ }
+                            { ReactHtmlParser(format(data.content, { screenWidth : 1920, dpr : 1, widthPct })) }
+                        </Typography>
+                        { (data.linkHref && data.linkContent) &&
+                            <Link to={data.linkHref} className={classes.additionalLink}>
+                                { /*ReactHtmlParser(format(data.content, { screenWidth, dpr, widthPct }))*/ }
+                                { ReactHtmlParser(format(data.linkContent, { screenWidth : 1920, dpr : 1, widthPct })) }
+                            </Link>
+                        }
+                    </Paper>
+                </>
+            ) }
+        </DataFetcher>
+    );
+};
+
+TipDetail.propTypes = {
+    /*tip : PropTypes.shape({
+        id : PropTypes.number.isRequired,
+        title : PropTypes.string.isRequired,
+        publishedFormatted : PropTypes.string.isRequired,
+        content : PropTypes.string.isRequired,
+        linkHref : PropTypes.string,
+        linkContent : PropTypes.string
+    }).isRequired*/
+}
+
+export default withPublicLayout(withStyles(styles)(TipDetail));

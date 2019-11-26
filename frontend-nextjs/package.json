@@ -25,6 +25,8 @@
     "react-html-parser": "^2.0.2",
     "react-image-gallery": "^0.9.1",
     "react-recaptcha-v3": "^1.1.0",
+    "string-template": "^1.0.0",
+    "url-join": "^4.0.1",
     "yup": "^0.27.0"
   },
   "devDependencies": {
