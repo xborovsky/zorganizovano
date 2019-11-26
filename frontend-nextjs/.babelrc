@@ -1,0 +1,18 @@
+{
+  "presets": [
+    "next/babel"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "env",
+        "next/babel"
+      ]
+    }
+  },
+  "plugins": [
+    [
+      "babel-plugin-root-import"
+    ]
+  ]
+}

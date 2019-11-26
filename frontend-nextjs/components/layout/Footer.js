@@ -1,0 +1,108 @@
+import React from 'react';
+import withStyles from '@material-ui/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Link from 'next/link';
+
+import SocialLinks from '~/components/SocialLinks';
+import ContactEmail from '~/components/ContactEmail';
+
+const styles = theme => ({
+    footer : {
+        padding: '3rem 10vw 2rem',
+        marginTop: 'auto',
+        backgroundColor : '#cfcfcf',
+        color : '#000',
+        textAlign : 'center',
+        [theme.breakpoints.down('xs')] : {
+            paddingTop : '1rem',
+            paddingBottom : '1rem'
+        }
+    },
+    left : {
+        textAlign : 'left',
+        [theme.breakpoints.down('xs')] : {
+            paddingTop : '.7rem',
+            textAlign : 'center'
+        }
+    },
+    link : {
+        cursor : 'pointer',
+        color : '#000',
+        '&:hover' : {
+            textDecoration : 'underline'
+        }
+    },
+    nativeLink : {
+        color : '#000',
+        marginRight : 5,
+        '&:active' : {
+            textDecoration : 'none',
+            color : '#000'
+        },
+        '&:visited' : {
+            textDecoration : 'none',
+            color : '#000'
+        }
+    },
+    yearWrapper : {
+        alignSelf : 'flex-end'
+    },
+    year : {
+        textAlign : 'right',
+        [theme.breakpoints.down('xs')] : {
+            textAlign : 'center'
+        }
+    },
+    socialIcon : {
+        fontSize : '2rem'
+    }
+});
+
+const Footer = ({ classes }) => (
+    <footer className={classes.footer}>
+        <Grid container>
+            <Grid item xs={12} sm={5} className={classes.left}>
+                <Link href="/eshop/terms">
+                    <Typography variant="body2" color="inherit" className={classes.link}>Obchodní podmínky</Typography>
+                </Link>
+                <Link href="/eshop/personal-data-protection-terms">
+                    <Typography variant="body2" color="inherit" className={classes.link}>Ochrana osobních údajů</Typography>
+                </Link>
+                <Link href="/eshop/reclamation-terms">
+                    <Typography variant="body2" color="inherit" className={classes.link}>Reklamace</Typography>
+                </Link>
+                <Link href="/eshop/faq">
+                    <Typography variant="body2" color="inherit" className={classes.link}>Nejčastěji kladené dotazy</Typography>
+                </Link>
+                <Link href="/contact">
+                    <Typography variant="body2" color="inherit" className={classes.link}>Kontakt</Typography>
+                </Link>
+                <br />
+                <SocialLinks linkClass={classes.nativeLink} iconClass={classes.socialIcon} />
+            </Grid>
+            <Grid item xs={12} sm={5} className={classes.left}>
+                <Typography variant="body2" color="inherit">ZORGANIZOVÁNO</Typography>
+                <div>
+                    <Typography variant="body2" color="inherit">Bára Borovská</Typography>
+                    <Typography variant="body2" color="inherit">+420 734 836 714</Typography>
+                    <Typography variant="body2" color="inherit">
+                        <ContactEmail reversedEmail="moc.liamg@onavozinagroz" />
+                    </Typography>
+                    <br />
+                    <Typography variant="body2">
+                        Dotaz, nápad, průšvih?&nbsp;
+                        <Link>
+                            <a href="/contact" className={classes.link} style={{ display : 'inline' }}>Napište mi!</a>
+                        </Link>
+                    </Typography>
+                </div>
+            </Grid>
+            <Grid item xs={12} sm={2} className={classes.yearWrapper}>
+                <Typography variant="body2" className={classes.year}>2019</Typography>
+            </Grid>
+        </Grid>
+    </footer>
+);
+
+export default withStyles(styles)(Footer);
