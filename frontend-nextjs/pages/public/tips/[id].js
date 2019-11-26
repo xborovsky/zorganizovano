@@ -10,7 +10,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import axios from 'axios';
 
 import withPublicLayout from '~/components/hoc/withPublicLayout';
-import DataFetcher from '~/components/DataFetcher';
 import BreadcrumbsNav from '~/components/BreadcrumbsNav';
 //import { screenWidth, dpr } from '~/util/img-util';
 
@@ -57,7 +56,7 @@ const TipDetail = ({ tip, classes }) => {
 
     return (
         <>
-            <BreadcrumbsNav items={[{ link : 'public/tips', name : 'U nás doma' }, { name : tip.title }]} />
+            <BreadcrumbsNav items={[{ link : '/public/tips', name : 'U nás doma' }, { name : tip.title }]} />
             <Paper className={classes.root}>
                 <Typography variant="h1">{ tip.title }</Typography>
                 <span>{ tip.publishedFormatted }</span>
