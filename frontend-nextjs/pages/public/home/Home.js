@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
 
+import withPublicLayout from '~/components/hoc/withPublicLayout';
 import MainText from './components/MainText';
 import LinkButton from './components/LinkButton';
 import { getImgServerUrl } from '~/util/img-util';
@@ -62,4 +63,4 @@ const Home = ({ classes, width }) => {
     );
 };
 
-export default withStyles(styles)(withWidth()(Home));
+export default withPublicLayout(withStyles(styles)(withWidth()(Home)));
