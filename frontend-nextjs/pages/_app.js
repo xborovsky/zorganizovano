@@ -6,6 +6,7 @@ var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
 const MyApp = ({ Component, pageProps }) => {
 
+    // TODO
     useEffect(() => {
         axios.interceptors.request.use(config => {
             // Concatenate base path if not an absolute URL
@@ -16,6 +17,7 @@ const MyApp = ({ Component, pageProps }) => {
                 const defaultContextPath = port === 8081 ? '/api' : '';
                 config.url = join(`${urlPrefix}${port}${defaultContextPath}`, config.url);
             }
+            console.log('config.url: ' + config.url);
 
             return config;
         });

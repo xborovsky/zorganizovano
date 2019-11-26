@@ -6,7 +6,7 @@ import withPublicLayout from '~/components/hoc/withPublicLayout';
 import BreadcrumbsNav from '~/components/BreadcrumbsNav';
 import TipsListItem from './components/TipsListItem';
 
-const TipsList = ({tips}) => (
+const TipsList = ({ tips }) => (
     <>
         <BreadcrumbsNav items={[{ name : 'U nás doma' }]} />
         <Grid container>
@@ -21,7 +21,7 @@ const TipsList = ({tips}) => (
 
 // TODO tips propTypes
 
-TipsList.getInitialProps = async() => {
+TipsList.getInitialProps = async () => {
     const tips = await axios.get(`/blog/posts`)
         .then(res => res.data)
         .catch(err => {
