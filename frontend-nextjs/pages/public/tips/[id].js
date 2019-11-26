@@ -5,9 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import ReactHtmlParser from 'react-html-parser';
 import withStyles from '@material-ui/styles/withStyles';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import format from 'string-template';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import axios from 'axios';
 
 import withPublicLayout from '~/components/hoc/withPublicLayout';
 import DataFetcher from '~/components/DataFetcher';
@@ -51,46 +51,53 @@ const styles = theme => ({
     }
 });
 
-const TipDetail = ({ classes }) => {
-    const router = useRouter();
-    const { id } = router.query;
+const TipDetail = ({ tip, classes }) => {
     const matchesSmallDevice = useMediaQuery('(max-width:768px)');
     const widthPct = matchesSmallDevice ? 95 : 40;
-    /* TODO fetch nextjs... */
+
     return (
-        <DataFetcher url={`/blog/posts/${id}`}>
-            { data => (
-                <>
-                    <BreadcrumbsNav items={[{ link : 'public/tips', name : 'U nás doma' }, { name : data.title }]} />
-                    <Paper className={classes.root}>
-                        <Typography variant="h1">{ data.title }</Typography>
-                        <span>{ data.publishedFormatted }</span>
-                        <Typography variant="body1" component="div" className={classes.blogPost}>
-                            { /*ReactHtmlParser(format(data.content, { screenWidth, dpr, widthPct }))*/ }
-                            { ReactHtmlParser(format(data.content, { screenWidth : 1920, dpr : 1, widthPct })) }
-                        </Typography>
-                        { (data.linkHref && data.linkContent) &&
-                            <Link to={data.linkHref} className={classes.additionalLink}>
-                                { /*ReactHtmlParser(format(data.content, { screenWidth, dpr, widthPct }))*/ }
-                                { ReactHtmlParser(format(data.linkContent, { screenWidth : 1920, dpr : 1, widthPct })) }
-                            </Link>
-                        }
-                    </Paper>
-                </>
-            ) }
-        </DataFetcher>
+        <>
+            <BreadcrumbsNav items={[{ link : 'public/tips', name : 'U nás doma' }, { name : tip.title }]} />
+            <Paper className={classes.root}>
+                <Typography variant="h1">{ tip.title }</Typography>
+                <span>{ tip.publishedFormatted }</span>
+                <Typography variant="body1" component="div" className={classes.blogPost}>
+                    { /*ReactHtmlParser(format(data.content, { screenWidth, dpr, widthPct }))*/ }
+                    { ReactHtmlParser(format(tip.content, { screenWidth : 1920, dpr : 1, widthPct })) }
+                </Typography>
+                { (tip.linkHref && tip.linkContent) &&
+                    <Link href={tip.linkHref}>
+                        <a href={tip.linkHref} className={classes.additionalLink}>
+                            { ReactHtmlParser(format(tip.linkContent, { screenWidth : 1920, dpr : 1, widthPct })) }
+                        </a>
+                    </Link>
+                }
+            </Paper>
+        </>
     );
 };
 
 TipDetail.propTypes = {
-    /*tip : PropTypes.shape({
+    tip : PropTypes.shape({
         id : PropTypes.number.isRequired,
         title : PropTypes.string.isRequired,
         publishedFormatted : PropTypes.string.isRequired,
         content : PropTypes.string.isRequired,
         linkHref : PropTypes.string,
         linkContent : PropTypes.string
-    }).isRequired*/
+    }).isRequired
 }
+
+TipDetail.getInitialProps = async ({ query }) => {
+    const id = query.id;
+    const tip = await axios.get(`/blog/posts/${id}`)
+        .then(res => res.data)
+        .catch(err => {
+            console.error(err);
+            return null;
+        });
+
+    return { tip };
+};
 
 export default withPublicLayout(withStyles(styles)(TipDetail));
