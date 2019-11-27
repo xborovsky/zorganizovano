@@ -5,8 +5,6 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import withPublicLayout from '~/components/hoc/withPublicLayout';
-
 const Faq = () => (
     <>
         <Typography variant="h1">Nejčastěji kladené dotazy</Typography>
@@ -94,4 +92,4 @@ const Faq = () => (
     </>
 );
 
-export default withPublicLayout(Faq);
+export default Faq;

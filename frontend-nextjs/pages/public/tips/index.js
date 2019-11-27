@@ -2,7 +2,6 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import fetch from 'isomorphic-unfetch';
 
-import withPublicLayout from '~/components/hoc/withPublicLayout';
 import BreadcrumbsNav from '~/components/BreadcrumbsNav';
 import TipsListItem from './components/TipsListItem';
 
@@ -28,4 +27,4 @@ TipsList.getInitialProps = async () => {
     return { tips };
 };
 
-export default withPublicLayout(TipsList);
+export default TipsList;

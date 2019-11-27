@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import withPublicLayout from '~/components/hoc/withPublicLayout';
 import SocialLinks from '~/components/SocialLinks';
 import ContactEmail from '~/components/ContactEmail';
 import DataFetcher from '~/components/DataFetcher';
@@ -66,4 +65,4 @@ const Contact = () => {
     );
 };
 
-export default withPublicLayout(Contact);
+export default Contact;

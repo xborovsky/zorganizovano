@@ -1,7 +1,6 @@
 import React from 'react';
 import fetch from 'isomorphic-unfetch';
 
-import withPublicLayout from '~/components/hoc/withPublicLayout';
 import BreadcrumbsNav from '~/components/BreadcrumbsNav';
 import MainText from './components/MainText';
 import ProductList from './components/ProductList';
@@ -24,4 +23,4 @@ Products.getInitialProps = async () => {
     return { products };
 };
 
-export default withPublicLayout(Products);
+export default Products;

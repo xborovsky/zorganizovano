@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 
-import withPublicLayout from '~/components/hoc/withPublicLayout';
 import ContactEmail from '~/components/ContactEmail';
 
 const styles = theme => ({
@@ -77,4 +76,4 @@ const Terms = ({ classes }) => (
     </Paper>
 );
 
-export default withPublicLayout(withStyles(styles)(Terms));
+export default withStyles(styles)(Terms);

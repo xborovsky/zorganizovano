@@ -9,7 +9,6 @@ import format from 'string-template';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import fetch from 'isomorphic-unfetch';
 
-import withPublicLayout from '~/components/hoc/withPublicLayout';
 import BreadcrumbsNav from '~/components/BreadcrumbsNav';
 //import { screenWidth, dpr } from '~/util/img-util';
 
@@ -95,4 +94,4 @@ TipDetail.getInitialProps = async ({ query }) => {
     return { tip };
 };
 
-export default withPublicLayout(withStyles(styles)(TipDetail));
+export default withStyles(styles)(TipDetail);

@@ -3,7 +3,6 @@ import fetch from 'isomorphic-unfetch';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import withPublicLayout from '~/components/hoc/withPublicLayout';
 import ShoppingCartContext from '~/components/global-context/ShoppingCartContext';
 import Alert from '~/components/Alert';
 import ShoppingCart from './components/ShoppingCart';
@@ -157,4 +156,4 @@ const ShoppingCartContainer = () => {
     );
 };
 
-export default withPublicLayout(ShoppingCartContainer);
+export default ShoppingCartContainer;

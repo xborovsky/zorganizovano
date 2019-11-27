@@ -17,7 +17,7 @@ const DataFetcher = ({
     const [ error, setError ] = useState(undefined);
 
     useEffect(() => {
-        fetch(url, {method, body : { ...requestParams }})
+        fetch(url, {method, headers : { ...requestParams }})
             .then(res => {
                 setData(res.json());
                 setLoading(false);

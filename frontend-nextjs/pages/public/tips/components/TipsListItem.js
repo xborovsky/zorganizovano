@@ -11,7 +11,8 @@ import TipsListItemTitlePicture from './TipsListItemTitlePicture';
 
 const styles = theme => ({
     root : {
-        cursor : 'pointer'
+        cursor : 'pointer',
+        marginBottom : '1rem'
     },
     title : {
         marginBottom : '1rem'
