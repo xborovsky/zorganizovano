@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 
 import withPublicLayout from '~/components/hoc/withPublicLayout';
 import ProductDetail from './components/ProductDetail';
@@ -17,12 +17,8 @@ const ProductDetailContainer = ({ product }) => {
 
 ProductDetailContainer.getInitialProps = async ({ query }) => {
     const id = query.id;
-    const product = await axios.get(`/item/${id}`)
-        .then(res => res.data)
-        .catch(err => {
-            //console.error(err);
-            return null;
-        }); // TODO
+    const res = await fetch(`${process.env.API_URL}/item/${id}`);
+    const product = await res.json();
 
     return { product };
 };

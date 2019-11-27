@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 
 import withPublicLayout from '~/components/hoc/withPublicLayout';
 import BreadcrumbsNav from '~/components/BreadcrumbsNav';
@@ -18,14 +18,8 @@ const Products = ({ products }) => (
 // TODO propTypes
 
 Products.getInitialProps = async () => {
-    const products = await axios.get('/item')
-        .then(res => res.data)
-        .catch(err => {
-            console.error(err);
-            return null;
-        }); // TODO
-
-    console.log(products);
+    const res = await fetch(`${process.env.API_URL}/item`);
+    const products = await res.json();
 
     return { products };
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -32,10 +32,10 @@ const ShoppingCartContainer = () => {
     const [ confirm, setConfirm ] = useState(initialConfirmData);
 
     useEffect(() => {
-        axios.post(
-            '/shopping-cart/items',
-            state ? state.map(item => item.id) : []
-        ).then(res => {
+        fetch('/shopping-cart/items', {
+            method : 'post',
+            body : state ? state.map(item => item.id) : []
+        }).then(res => {
             const serverVerifiedItems = res.data;
             const resultItems = state.map(sessionStorageItem => {
                 const verifiedItemIdx = serverVerifiedItems.findIndex(serverItem => serverItem.id === sessionStorageItem.id);

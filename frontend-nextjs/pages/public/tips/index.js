@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 
 import withPublicLayout from '~/components/hoc/withPublicLayout';
 import BreadcrumbsNav from '~/components/BreadcrumbsNav';
@@ -22,12 +22,8 @@ const TipsList = ({ tips }) => (
 // TODO tips propTypes
 
 TipsList.getInitialProps = async () => {
-    const tips = await axios.get(`/blog/posts`)
-        .then(res => res.data)
-        .catch(err => {
-            console.error(err);
-            return null;
-        });
+    const res = await fetch(`${process.env.API_URL}/blog/posts`);
+    const tips = await res.json();
 
     return { tips };
 };

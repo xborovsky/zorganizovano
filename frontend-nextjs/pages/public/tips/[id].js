@@ -7,7 +7,7 @@ import withStyles from '@material-ui/styles/withStyles';
 import Link from 'next/link';
 import format from 'string-template';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 
 import withPublicLayout from '~/components/hoc/withPublicLayout';
 import BreadcrumbsNav from '~/components/BreadcrumbsNav';
@@ -89,12 +89,8 @@ TipDetail.propTypes = {
 
 TipDetail.getInitialProps = async ({ query }) => {
     const id = query.id;
-    const tip = await axios.get(`/blog/posts/${id}`)
-        .then(res => res.data)
-        .catch(err => {
-            console.error(err);
-            return null;
-        });
+    const res = await fetch(`${process.env.API_URL}/blog/posts/${id}`);
+    const tip = await res.json();
 
     return { tip };
 };

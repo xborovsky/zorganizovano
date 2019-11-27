@@ -12,7 +12,7 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import Hidden from '@material-ui/core/Hidden';
 import { Grid } from '@material-ui/core';
 
-//import ShoppingCartContext from '../pages/eshop/shopping-cart/state-management/ShoppingCartContext';
+import ShoppingCartContext from '~/components/global-context/ShoppingCartContext';
 import Jumbotron from './Jumbotron';
 import ActiveLink from '~components/ActiveLink';
 
@@ -112,8 +112,8 @@ const StyledBadge = withStyles(theme => ({
 }))(Badge);
 
 const Header = ({ classes }) => {
-    //const { state } = useContext(ShoppingCartContext);
-    //const totalPrice = state.reduce((a, b) => a + ((b['price'] || 0) * b['quantity']), 0);
+    const { state } = useContext(ShoppingCartContext);
+    const totalPrice = state.reduce((a, b) => a + ((b['price'] || 0) * b['quantity']), 0);
     const [ showMobileMenu, setShowMobileMenu ] = useState(false);
 
     return (
@@ -154,12 +154,11 @@ const Header = ({ classes }) => {
                             </ActiveLink>
                             <ActiveLink href="/public/shopping-cart" activeClassName={classes.activeLink}>
                                 <a className={[classes.link, classes.shoppingCartLink].join(' ')} href="/public/shopping-cart">
-                                    {/*<Typography variant="body2" element="span">{ totalPrice },-</Typography>*/}
-                                    <Typography variant="body2" element="span">{ 0 },-</Typography>
+                                    <Typography variant="body2" element="span">{ totalPrice },-</Typography>
                                     <IconButton aria-label="cart" className={classes.shoppingCartIcon}>
-                                        {/*<StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
+                                        <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
                                             <FontAwesomeIcon icon={faShoppingCart} />
-                                        </StyledBadge>*/}
+                                        </StyledBadge>
                                     </IconButton>
                                 </a>
                             </ActiveLink>
@@ -193,12 +192,11 @@ const Header = ({ classes }) => {
                                     <Grid item xs={12}>
                                         <ActiveLink href="/public/shopping-cart" activeClassName={classes.activeLink}>
                                             <a className={[classes.link, classes.shoppingCartLink].join(' ')} href="/public/shopping-cart">
-                                                {/*<Typography variant="body2" element="span">{ totalPrice },-</Typography>*/}
-                                                <Typography variant="body2" element="span">{ 0 },-</Typography>
+                                                <Typography variant="body2" element="span">{ totalPrice },-</Typography>
                                                 <IconButton aria-label="cart" className={classes.shoppingCartIcon}>
-                                                    {/*<StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
+                                                    <StyledBadge badgeContent={state.reduce((a, b) => a + b.quantity, 0)} color="primary" className={classes.badge} max={99}>
                                                         <FontAwesomeIcon icon={faShoppingCart} />
-                                                    </StyledBadge>*/}
+                                                    </StyledBadge>
                                                 </IconButton>
                                             </a>
                                         </ActiveLink>

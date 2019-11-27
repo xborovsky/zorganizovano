@@ -14,7 +14,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import withStyles from '@material-ui/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-v3';
 
 import CharacterCounter from '~/components/CharacterCounter';
@@ -103,7 +103,13 @@ const ContactForm = ({ queryTypes, classes }) => {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
                     setAjaxResult({});
-                    axios.post('/contact', {...values, recaptchaToken})
+                    fetch('/contact', {
+                        method : 'post',
+                        body : {
+                            ...values,
+                            recaptchaToken
+                        }
+                    })
                         .then(_res => {
                             setAjaxResult({
                                 success : 'Dotaz byl úspěšně odeslán, děkujeme.'
