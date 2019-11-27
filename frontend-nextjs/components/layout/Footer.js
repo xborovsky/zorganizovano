@@ -63,19 +63,19 @@ const Footer = ({ classes }) => (
     <footer className={classes.footer}>
         <Grid container>
             <Grid item xs={12} sm={5} className={classes.left}>
-                <Link href="public/terms">
+                <Link href="/public/terms">
                     <Typography variant="body2" color="inherit" className={classes.link}>Obchodní podmínky</Typography>
                 </Link>
-                <Link href="public/personal-data-protection-terms">
+                <Link href="/public/personal-data-protection-terms">
                     <Typography variant="body2" color="inherit" className={classes.link}>Ochrana osobních údajů</Typography>
                 </Link>
-                <Link href="public/reclamation-terms">
+                <Link href="/public/reclamation-terms">
                     <Typography variant="body2" color="inherit" className={classes.link}>Reklamace</Typography>
                 </Link>
-                <Link href="public/faq">
+                <Link href="/public/faq">
                     <Typography variant="body2" color="inherit" className={classes.link}>Nejčastěji kladené dotazy</Typography>
                 </Link>
-                <Link href="public/contact">
+                <Link href="/public/contact">
                     <Typography variant="body2" color="inherit" className={classes.link}>Kontakt</Typography>
                 </Link>
                 <br />
@@ -92,8 +92,8 @@ const Footer = ({ classes }) => (
                     <br />
                     <Typography variant="body2">
                         Dotaz, nápad, průšvih?&nbsp;
-                        <Link href="public/contact">
-                            <a href="public/contact" className={classes.link} style={{ display : 'inline' }}>Napište mi!</a>
+                        <Link href="/public/contact">
+                            <a href="/public/contact" className={classes.link} style={{ display : 'inline' }}>Napište mi!</a>
                         </Link>
                     </Typography>
                 </div>

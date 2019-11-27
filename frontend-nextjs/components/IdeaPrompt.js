@@ -28,7 +28,7 @@ const IdeaPrompt = ({ className, classes }) => (
                 Chybí Vám něco u tohoto produktu?
             </Typography>
             <Typography variant="body1">
-                Pomozte mi, prosím, jej zdokonalit a napište své nápady, či připomínky <Link href='/contact'>zde</Link>.
+                Pomozte mi, prosím, jej zdokonalit a napište své nápady, či připomínky <Link href='/public/contact'>zde</Link>.
             </Typography>
         </Grid>
     </Grid>

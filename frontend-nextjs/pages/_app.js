@@ -1,29 +1,45 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import join from 'url-join';
+import Router from 'next/router';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
 const MyApp = ({ Component, pageProps }) => {
+    const [ loader, setLoader ] = useState(false);
 
-    // TODO
+    axios.interceptors.request.use(config => {
+        // Concatenate base path if not an absolute URL
+        if (!isAbsoluteURLRegex.test(config.url)) {
+            const urlPrefix = process.env.NODE_ENV === "production" ?
+                "https://zorganizovano.cz:" : "http://localhost:";
+            const port = config.url.startsWith('/img-api') ? 8082 : 8081;
+            const defaultContextPath = port === 8081 ? '/api' : '';
+            config.url = join(`${urlPrefix}${port}${defaultContextPath}`, config.url);
+        }
+
+        return config;
+    });
+
+    const showLoader = () => setLoader(true);
+    const hideLoader = () => setLoader(false);
+
     useEffect(() => {
-        axios.interceptors.request.use(config => {
-            // Concatenate base path if not an absolute URL
-            if (!isAbsoluteURLRegex.test(config.url)) {
-                const urlPrefix = process.env.NODE_ENV === "production" ?
-                    "https://zorganizovano.cz:" : "http://localhost:";
-                const port = config.url.startsWith('/img-api') ? 8082 : 8081;
-                const defaultContextPath = port === 8081 ? '/api' : '';
-                config.url = join(`${urlPrefix}${port}${defaultContextPath}`, config.url);
-            }
-            console.log('config.url: ' + config.url);
+        Router.events.on('routeChangeStart', showLoader);
+        Router.events.on('routeChangeComplete', hideLoader);
+        Router.events.on('routeChangeError', hideLoader);
 
-            return config;
-        });
+        return () => {
+            Router.events.off('routeChangeStart', showLoader);
+            Router.events.off('routeChangeComplete', hideLoader);
+            Router.events.off('routeChangeError', hideLoader);
+        }
     }, []);
 
-    return <Component {...pageProps} />
+    return loader ?
+        <CircularProgress /> :
+        <Component {...pageProps} />;
 }
 
 export default MyApp;
