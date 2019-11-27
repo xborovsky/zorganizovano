@@ -31,11 +31,16 @@ const ShoppingCartContainer = () => {
     const [ confirm, setConfirm ] = useState(initialConfirmData);
 
     useEffect(() => {
-        fetch('/shopping-cart/items', {
+        fetch(`${process.env.API_URL}/shopping-cart/items`, {
             method : 'post',
-            body : state ? state.map(item => item.id) : []
-        }).then(res => {
-            const serverVerifiedItems = res.data;
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(state ? state.map(item => item.id) : [])
+        })
+        .then(res => res.json())
+        .then(serverVerifiedItems => {
+            console.log(serverVerifiedItems);
             const resultItems = state.map(sessionStorageItem => {
                 const verifiedItemIdx = serverVerifiedItems.findIndex(serverItem => serverItem.id === sessionStorageItem.id);
                 if (verifiedItemIdx === -1) {

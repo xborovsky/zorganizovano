@@ -38,12 +38,12 @@ class ErrorBoundary extends Component {
 
     componentDidCatch(error, errorInfo) {
         console.error(error, errorInfo);
-        fetch('/client-error', {
+        fetch(`${process.env.API_URL}/client-error`, {
             method : 'post',
-            body : {
+            body : JSON.stringify({
                 error : JSON.stringify(errorInfo),
                 browser : JSON.stringify(Bowser.parse(window.navigator.userAgent))
-            }
+            })
         });
     }
 

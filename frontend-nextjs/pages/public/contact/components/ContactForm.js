@@ -103,12 +103,15 @@ const ContactForm = ({ queryTypes, classes }) => {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
                     setAjaxResult({});
-                    fetch('/contact', {
+                    fetch(`${process.env.API_URL}/contact`, {
                         method : 'post',
-                        body : {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body : JSON.stringify({
                             ...values,
                             recaptchaToken
-                        }
+                        })
                     })
                         .then(_res => {
                             setAjaxResult({
