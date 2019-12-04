@@ -10,7 +10,8 @@ import withStyles from '@material-ui/styles/withStyles';
 
 const styles = theme => ({
     root : {
-        cursor : 'pointer'
+        cursor : 'pointer',
+        marginBottom : '1rem'
     },
     title : {
         marginBottom : '1rem'
