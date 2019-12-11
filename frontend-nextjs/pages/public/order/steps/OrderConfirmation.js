@@ -71,7 +71,13 @@ const OrderConfirmation = ({
         .then(order => {
             setSubmitting(false);
             dispatch({ type : EMPTY_SHOPPING_CART });
-            Router.push({ pathname : '/eshop/order-created', state : { order } });
+            Router.push({
+                pathname : '/public/order-created',
+                query : {
+                    orderNum : order.orderNum,
+                    paymentInfo : order.paymentInfo // TODO takhle asi ne
+                }
+            });
          })
          .catch(err => {
             setSubmitting(false);
