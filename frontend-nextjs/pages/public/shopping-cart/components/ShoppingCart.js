@@ -51,8 +51,6 @@ const ShoppingCart = ({
 
     const goToOrder = () => {
         Router.push({ pathname : `/public/order` });
-        // TODO asi by chtelo neco typu ze ty itemy co jsou ve storage se poslou na server,
-        // zkontrolujou a do toho order wizardu poslou v ze serveru, aby to neslo rozbit...
     };
 
     return (
