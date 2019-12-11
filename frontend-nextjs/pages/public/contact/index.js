@@ -57,7 +57,7 @@ const Contact = () => {
             </Grid>
             <Grid item xs={false} sm={1} md={2}></Grid>
             <Grid item xs={12}>
-                <DataFetcher url='/contact/query-types'>
+                <DataFetcher url={`${process.env.API_URL}/contact/query-types`}>
                     { data => <ContactForm queryTypes={data} /> }
                 </DataFetcher>
             </Grid>

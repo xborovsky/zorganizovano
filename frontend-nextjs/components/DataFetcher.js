@@ -17,16 +17,18 @@ const DataFetcher = ({
     const [ error, setError ] = useState(undefined);
 
     useEffect(() => {
-        fetch(url, {method, headers : { ...requestParams }})
-            .then(res => {
-                setData(res.json());
-                setLoading(false);
-            })
-            .catch(err => {
+        const fetchData = async () => {
+            try {
+                const data = await fetch(url, {method, headers : { ...requestParams }});
+                setData(await data.json());
+            } catch(err) {
                 console.error(err);
                 setError(true); // todo pass error to children
-                setLoading(false);
-            });
+            }
+            setLoading(false);
+        };
+
+        fetchData();
     }, []);
 
     return (
