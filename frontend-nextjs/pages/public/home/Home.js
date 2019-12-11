@@ -41,19 +41,23 @@ const Home = ({ classes, width }) => {
             <Grid container justify="center" className={classes.gridWrapper}>
                 <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
                 <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
-                    <Link href="/tips">
-                        <LinkButton
-                            src={getImgServerUrl('other/Button2.jpg', getLinkButtonWidthPct())}
-                            alt="Jak to máme doma"
-                        />
+                    <Link>
+                        <a href="/public/tips">
+                            <LinkButton
+                                src={getImgServerUrl('other/Button2.jpg', getLinkButtonWidthPct())}
+                                alt="Jak to máme doma"
+                            />
+                        </a>
                     </Link>
                 </Grid>
                 <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
-                    <Link href="/eshop">
-                        <LinkButton
-                            src={getImgServerUrl('other/Button1.jpg', getLinkButtonWidthPct())}
-                            alt="Chci nakupovat"
-                        />
+                    <Link>
+                        <a href="/public/products">
+                            <LinkButton
+                                src={getImgServerUrl('other/Button1.jpg', getLinkButtonWidthPct())}
+                                alt="Chci nakupovat"
+                            />
+                        </a>
                     </Link>
                 </Grid>
                 <Grid item xs={false} sm={1} md={2} lg={3}></Grid>

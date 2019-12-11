@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -6,7 +6,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles } from '@material-ui/styles';
 
-import ShoppingCartContext from '~/components/global-context/ShoppingCartContext';
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/OrderConfirmation';
@@ -42,12 +41,11 @@ const defaultOrderData = {
     selectedZasilkovna : undefined
 };
 
-const OrderWizard = ({ deliveryOptions }) => {
+const OrderWizard = ({ deliveryOptions, shoppingCartItems }) => {
     const classes = useStyles();
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
-    const { state } = useContext(ShoppingCartContext);
-    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : [...state]}); // TODO tady bych mel dostat komplet info i o zbozi... asi nejak ze serveru...
+    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : shoppingCartItems ? [...shoppingCartItems] : undefined});
     const [error, setError] = useState(undefined);
 
     const getStepContent = step => {
@@ -133,11 +131,28 @@ const OrderWizard = ({ deliveryOptions }) => {
     );
 };
 
-OrderWizard.getInitialProps = async () => {
-    const res = await fetch(`${process.env.API_URL}/order/delivery-options`);
-    const deliveryOptions = await res.json();
+OrderWizard.getInitialProps = async (ctx) => {
+    const { res } = ctx;
+    const [res1, res2] = await Promise.all([
+        fetch(`${process.env.API_URL}/order/delivery-options`),
+        fetch(`${process.env.API_URL}/shopping-cart/items`)
+    ]);
 
-    return { deliveryOptions };
+    const deliveryOptions = await res1.json();
+    const shoppingCartItems = await res2.json();
+
+    if (!shoppingCartItems || !shoppingCartItems.length) {
+        res.writeHead(302, {
+            Location: '/public/shopping-cart'
+        })
+        res.end();
+    }
+
+// TODO error handling???
+    return {
+        deliveryOptions : deliveryOptions || [],
+        shoppingCartItems
+    };
 };
 
 export default OrderWizard;
