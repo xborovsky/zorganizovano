@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/styles/withStyles';
 import { Formik, Form } from 'formik';
@@ -7,7 +7,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Hidden from '@material-ui/core/Hidden';
-import Router from 'next/router';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 
@@ -16,8 +15,8 @@ import ShoppingCart from './order-confirmation/ShoppingCart';
 import CustomerInfo from './order-confirmation/CustomerInfo';
 import Section from './order-confirmation/Section';
 import ShoppingCartSm from './order-confirmation/ShoppingCartSm';
-import ShoppingCartContext from '~/components/global-context/ShoppingCartContext';
 import { EMPTY_SHOPPING_CART } from '~/components/global-context/ShoppingCartActions';
+import OrderCreated from './OrderCreated';
 
 const styles = theme => ({
     totalPrice : {
@@ -40,7 +39,7 @@ const OrderConfirmation = ({
     classes
 }) => {
 
-    const { dispatch } = useContext(ShoppingCartContext);
+    const [orderCreatedData, setOrderCreatedData] = useState(undefined);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -71,12 +70,9 @@ const OrderConfirmation = ({
         .then(order => {
             setSubmitting(false);
             dispatch({ type : EMPTY_SHOPPING_CART });
-            Router.push({
-                pathname : '/public/order-created',
-                query : {
-                    orderNum : order.orderNum,
-                    paymentInfo : order.paymentInfo // TODO takhle asi ne
-                }
+            setOrderCreatedData({
+                orderNum : order.orderNum,
+                paymentInfo : order.paymentInfo
             });
          })
          .catch(err => {
@@ -92,88 +88,95 @@ const OrderConfirmation = ({
 
     const selectedDelivery = deliveryOptions.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
 
-    return (
-        <Formik
-            initialValues={{ orderTermsApproval : false }}
-            validate={values => {
-                let errors = {};
+    if (orderCreatedData) {
+        <OrderCreated
+            orderNum={orderCreatedData.orderNum}
+            paymentInfo={orderCreatedData.paymentInfo}
+        />
+    } else {
+        return (
+            <Formik
+                initialValues={{ orderTermsApproval : false }}
+                validate={values => {
+                    let errors = {};
 
-                if (!values.orderTermsApproval) {
-                    errors.orderTermsApproval = 'Tento údaj je povinný.';
-                }
+                    if (!values.orderTermsApproval) {
+                        errors.orderTermsApproval = 'Tento údaj je povinný.';
+                    }
 
-                return errors;
-            }}
-            onSubmit={handleFinishOrder}>
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    isSubmitting
-                }) => (
-                    <Form>
-                        <div>
-                            <Section title='Objednáváte si tyto položky'>
-                                <Hidden smDown>
-                                    <ShoppingCart
-                                        items={orderData.shoppingCart}
-                                        selectedDelivery={selectedDelivery} />
-                                </Hidden>
-                                <Hidden mdUp>
-                                    <ShoppingCartSm
-                                        items={orderData.shoppingCart}
-                                        selectedDelivery={selectedDelivery} />
-                                </Hidden>
-                            </Section>
-                            <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
-                                <CustomerInfo
-                                    data={orderData.customerInfo}
-                                    shipment={{
-                                        shipmentType : orderData.shipmentType,
-                                        shippingAddress : orderData.selectedZasilkovna
-                                    }} />
-                            </Section>
-                            <Section className={classes.totalPrice}>
-                                Celková cena: {
-                                    orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.priceSingle), 0) +
-                                    selectedDelivery.price
-                                },- Kč
-                            </Section>
-                        </div>
-                        <FormControl error={touched.orderTermsApproval && !!errors.orderTermsApproval} fullWidth style={{ alignItems : 'flex-end', marginBottom : '-3rem' }}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        id="orderTermsApproval"
-                                        name="orderTermsApproval"
-                                        checked={values.orderTermsApproval}
-                                        onChange={handleChange}
-                                        color="primary"
-                                    />
-                                }
-                                label={<Link to='/eshop/terms' target="_blank">Souhlasím s obchodními podmínkami</Link>}
+                    return errors;
+                }}
+                onSubmit={handleFinishOrder}>
+                    {({
+                        values,
+                        errors,
+                        touched,
+                        handleChange,
+                        isSubmitting
+                    }) => (
+                        <Form>
+                            <div>
+                                <Section title='Objednáváte si tyto položky'>
+                                    <Hidden smDown>
+                                        <ShoppingCart
+                                            items={orderData.shoppingCart}
+                                            selectedDelivery={selectedDelivery} />
+                                    </Hidden>
+                                    <Hidden mdUp>
+                                        <ShoppingCartSm
+                                            items={orderData.shoppingCart}
+                                            selectedDelivery={selectedDelivery} />
+                                    </Hidden>
+                                </Section>
+                                <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
+                                    <CustomerInfo
+                                        data={orderData.customerInfo}
+                                        shipment={{
+                                            shipmentType : orderData.shipmentType,
+                                            shippingAddress : orderData.selectedZasilkovna
+                                        }} />
+                                </Section>
+                                <Section className={classes.totalPrice}>
+                                    Celková cena: {
+                                        orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.priceSingle), 0) +
+                                        selectedDelivery.price
+                                    },- Kč
+                                </Section>
+                            </div>
+                            <FormControl error={touched.orderTermsApproval && !!errors.orderTermsApproval} fullWidth style={{ alignItems : 'flex-end', marginBottom : '-3rem' }}>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            id="orderTermsApproval"
+                                            name="orderTermsApproval"
+                                            checked={values.orderTermsApproval}
+                                            onChange={handleChange}
+                                            color="primary"
+                                        />
+                                    }
+                                    label={<Link to='/eshop/terms' target="_blank">Souhlasím s obchodními podmínkami</Link>}
+                                />
+                                <FormHelperText id="orderTermsApproval-error">
+                                    {touched.orderTermsApproval && errors.orderTermsApproval}
+                                </FormHelperText>
+                            </FormControl>
+                            <WizardButtons
+                                prev={{
+                                    show : true,
+                                    onClick : onGoToPrevStep
+                                }}
+                                next={{
+                                    finishOrder : true,
+                                    loading : isSubmitting,
+                                    disabled : !values.orderTermsApproval
+                                }}
                             />
-                            <FormHelperText id="orderTermsApproval-error">
-                                {touched.orderTermsApproval && errors.orderTermsApproval}
-                            </FormHelperText>
-                        </FormControl>
-                        <WizardButtons
-                            prev={{
-                                show : true,
-                                onClick : onGoToPrevStep
-                            }}
-                            next={{
-                                finishOrder : true,
-                                loading : isSubmitting,
-                                disabled : !values.orderTermsApproval
-                            }}
-                        />
-                    </Form>
-                )
-            }
-        </Formik>
-    );
+                        </Form>
+                    )
+                }
+            </Formik>
+        );
+    }
 };
 
 OrderConfirmation.propTypes = {

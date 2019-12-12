@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/styles/withStyles';
-import { useRouter } from 'next/router';
 
-import PaymentQR from './components/PaymentQR';
-import PaymentInfo from './components/PaymentInfo';
-import Alert from 'components/Alert';
+import PaymentQR from '../components/PaymentQR';
+import PaymentInfo from '../components/PaymentInfo';
+import Alert from '~/components/Alert';
 
 
 const styles = theme => ({
@@ -24,11 +24,11 @@ const styles = theme => ({
     }
 });
 
-const OrderCreated = ({ classes }) => {
-    const router = useRouter();
-    const orderNum = router.query.orderNum;
-    const paymentInfo = router.query.paymentInfo;
-
+const OrderCreated = ({
+    classes,
+    orderNum,
+    paymentInfo
+}) => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -69,5 +69,7 @@ const OrderCreated = ({ classes }) => {
         </>
     );
 };
+
+OrderCreated.propTypes = {}; // TODO
 
 export default withStyles(styles)(OrderCreated);

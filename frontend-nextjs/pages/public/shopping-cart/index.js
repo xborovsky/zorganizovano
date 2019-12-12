@@ -22,7 +22,6 @@ const initialConfirmData = {
     onConfirm : undefined
 };
 
-// TODO SSR getInitialProps???
 const ShoppingCartContainer = () => {
     const [ serverCartItems, setServerCartItems ] = useState(undefined);
     const [ loading, setLoading ] = useState(true);
@@ -40,7 +39,6 @@ const ShoppingCartContainer = () => {
         })
         .then(res => res.json())
         .then(serverVerifiedItems => {
-            console.log(serverVerifiedItems);
             const resultItems = state.map(sessionStorageItem => {
                 const verifiedItemIdx = serverVerifiedItems.findIndex(serverItem => serverItem.id === sessionStorageItem.id);
                 if (verifiedItemIdx === -1) {

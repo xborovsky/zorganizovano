@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles } from '@material-ui/styles';
+import { useRouter }  from 'next/router';
 
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/OrderConfirmation';
 import Alert from '~/components/Alert';
+import ShoppingCartContext from '~/components/global-context/ShoppingCartContext';
+import { Router } from 'next/router';
 
 const getSteps = () => ['Zákazník', 'Doprava a platba', 'Potvrzení objednávky'];
-
-// TODO tu by to chcelo skontrolovat ci ma nieco v kosiku a ak nie tak mu zobrazit ze objednavka nejde vytvorit!
 
 const useStyles = makeStyles(theme => ({
     root : {
@@ -41,12 +42,22 @@ const defaultOrderData = {
     selectedZasilkovna : undefined
 };
 
-const OrderWizard = ({ deliveryOptions, shoppingCartItems }) => {
+const OrderWizard = ({ deliveryOptions }) => {
     const classes = useStyles();
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
-    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : shoppingCartItems ? [...shoppingCartItems] : undefined});
+    const { state } = useContext(ShoppingCartContext);
+    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : state});
     const [error, setError] = useState(undefined);
+    const router = useRouter();
+
+    console.log(orderData);
+
+    useEffect(() => {
+        if (!orderData.shoppingCart || !orderData.shoppingCart.length) {
+            router.push('/public/shopping-cart');
+        }
+    }, [orderData]);
 
     const getStepContent = step => {
         switch (step) {
@@ -131,27 +142,13 @@ const OrderWizard = ({ deliveryOptions, shoppingCartItems }) => {
     );
 };
 
-OrderWizard.getInitialProps = async (ctx) => {
-    const { res } = ctx;
-    const [res1, res2] = await Promise.all([
-        fetch(`${process.env.API_URL}/order/delivery-options`),
-        fetch(`${process.env.API_URL}/shopping-cart/items`)
-    ]);
-
-    const deliveryOptions = await res1.json();
-    const shoppingCartItems = await res2.json();
-
-    if (!shoppingCartItems || !shoppingCartItems.length) {
-        res.writeHead(302, {
-            Location: '/public/shopping-cart'
-        })
-        res.end();
-    }
+OrderWizard.getInitialProps = async () => {
+    const res = await fetch(`${process.env.API_URL}/order/delivery-options`);
+    const deliveryOptions = await res.json();
 
 // TODO error handling???
     return {
-        deliveryOptions : deliveryOptions || [],
-        shoppingCartItems
+        deliveryOptions : deliveryOptions || []
     };
 };
 
