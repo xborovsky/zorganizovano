@@ -359,5 +359,51 @@
         </createIndex>
 
     </changeSet>
+
+    <changeSet id="users" author="borovsky">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="password" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createIndex indexName="users_username_idx" tableName="users">
+            <column name="username" type="VARCHAR(50)"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="order_details" author="borovsky">
+        <dropColumn tableName="orders" columnName="processed" />
+        
+        <addColumn tableName="orders">
+            <column name="payment_received" type="TIMESTAMP"/>
+            <column name="invoice_sent" type="TIMESTAMP"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="order_shipment_type_migration" author="borovsky">
+        <addColumn tableName="orders">
+            <column name="shipment_type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <sql>
+            UPDATE orders o 
+            SET o.shipment_type=(
+                SELECT IFNULL(
+                    (SELECT sa.shipment_type FROM shipment_addresses sa WHERE sa.order_id = o.id)
+                , 'CESKA_POSTA')
+            );
+        </sql>
+
+        <dropColumn tableName="shipment_addresses" columnName="shipment_type" />
+    </changeSet>
     
 </databaseChangeLog>

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,14 +34,19 @@ public class Order implements Serializable {
     @Column(name = "maturity", nullable = false)
     private Date maturity;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "processed")
-    private Date processed;
+    @Column(name = "payment_received")
+    private Date paymentReceived;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "invoice_sent")
+    private Date invoiceSent;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "shipped")
     private Date shipped;
     @OneToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+    @Enumerated(EnumType.STRING)
+    private ShipmentType shipmentType;
 
     public Order() {
     }
@@ -80,14 +87,6 @@ public class Order implements Serializable {
         this.maturity = maturity;
     }
 
-    public Date getProcessed() {
-        return processed;
-    }
-
-    public void setProcessed(Date processed) {
-        this.processed = processed;
-    }
-
     public Date getShipped() {
         return shipped;
     }
@@ -96,12 +95,36 @@ public class Order implements Serializable {
         this.shipped = shipped;
     }
 
+    public Date getPaymentReceived() {
+        return paymentReceived;
+    }
+
+    public void setPaymentReceived(Date paymentReceived) {
+        this.paymentReceived = paymentReceived;
+    }
+
+    public Date getInvoiceSent() {
+        return invoiceSent;
+    }
+
+    public void setInvoiceSent(Date invoiceSent) {
+        this.invoiceSent = invoiceSent;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public ShipmentType getShipmentType() {
+        return shipmentType;
+    }
+
+    public void setShipmentType(ShipmentType shipmentType) {
+        this.shipmentType = shipmentType;
     }
 
     @Override

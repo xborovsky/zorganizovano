@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ public class InvoiceAddress implements Serializable {
     private String zipCode;
     @Column(name = "country", nullable = false)
     private String country;
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;

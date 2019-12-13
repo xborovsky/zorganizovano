@@ -58,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCreated(now);
         order.setMaturity(timeManager.getNextDate(DEFAULT_MATURITY));
         order.setOrderNum(genereateOrderNumber(now));
+        order.setShipmentType(shipmentType);
 
         Customer customer = createCustomer(customerInfo);
         order.setCustomer(customer);
@@ -152,7 +153,6 @@ public class OrderServiceImpl implements OrderService {
         shipmentAddress.setTownship(address.getTownship());
         shipmentAddress.setZipCode(address.getZipCode());
         shipmentAddress.setCountry(address.getCountry());
-        shipmentAddress.setShipmentType(ShipmentType.ZASILKOVNA);// TODO
         shipmentAddress.setOrder(order);
 
         return shipmentAddressDao.save(shipmentAddress);
@@ -188,5 +188,41 @@ public class OrderServiceImpl implements OrderService {
                 shipmentAddress.getCountry()
             );
         }
+    }
+
+    @Override
+    public double calculateTotalPrice(Order order) {
+        return orderItemDao.getTotalOrderItemsPrice(order.getId()) +
+            order.getShipmentType().getPrice();
+    }
+
+    @Override
+    @Transactional
+    public Date updatePaymentReceivedDate(Order order) {
+        Date now = timeManager.getCurrentDate();
+        order.setPaymentReceived(now);
+        orderDao.save(order);
+
+        return now;
+    }
+
+    @Override
+    @Transactional
+    public Date updateInvoiceSentDate(Order order) {
+        Date now = timeManager.getCurrentDate();
+        order.setInvoiceSent(now);
+        orderDao.save(order);
+
+        return now;
+    }
+
+    @Override
+    @Transactional
+    public Date updateShippedDate(Order order) {
+        Date now = timeManager.getCurrentDate();
+        order.setShipped(now);
+        orderDao.save(order);
+
+        return now;
     }
 }

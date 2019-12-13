@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import Hidden from '@material-ui/core/Hidden';
 
-import ShoppingCartContext from '../pages/eshop/shopping-cart/state-management/ShoppingCartContext';
+import ShoppingCartContext from '../pages/public/eshop/shopping-cart/state-management/ShoppingCartContext';
 import Jumbotron from 'layout/Jumbotron';
 import { Grid } from '@material-ui/core';
 

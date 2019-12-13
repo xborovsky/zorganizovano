@@ -7,9 +7,9 @@ import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import ProductSpec from './ProductSpec';
-import Price from '../../../../components/Price';
+import Price from '../../../../../components/Price';
 import { productDetailShape } from '../product-prop-type';
-import IdeaPrompt from '../../../../components/IdeaPrompt';
+import IdeaPrompt from '../../../../../components/IdeaPrompt';
 import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import Details from './Details';
