@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { Switch, Route, useRouteMatch, Redirect } from "react-router-dom";
 
 import Loader from '../../components/Loader';
 import { AuthProvider } from './AuthProvider';
@@ -20,7 +20,7 @@ const AdminContainer = () => {
             <AdminHeader />
             <Suspense fallback={<Loader />}>
                 <Switch>
-                    <Route path={`${match.path}/login`} component={Login} />
+                    <Route path={[`${match.path}/`, `${match.path}/login`]} exact component={Login} />
                     <ProtectedRoute path={`${match.path}/orders/:id`} component={OrderDetail} />
                     <ProtectedRoute path={`${match.path}/orders`} component={Orders} />
                     <Route component={NotFound} />
