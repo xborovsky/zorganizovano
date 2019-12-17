@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
+import { Helmet } from 'react-helmet';
 
 import ContactEmail from 'components/ContactEmail';
 
@@ -21,6 +22,10 @@ const styles = theme => ({
 
 const Terms = ({ classes }) => (
     <Paper className={classes.root}>
+        <Helmet>
+            <meta name="description" content='Vážení klienti, abych mohla plnit závazky k vám, mým klientům a dalším institucím a zákonným
+                požadavkům podle legislativy, musím zpracovávat některé vaše osobní údaje.' />
+        </Helmet>
         <Typography variant="h1">Podmínky ochrany osobních údajů</Typography>
         <Typography className={classes.font} component="div">
             <p>

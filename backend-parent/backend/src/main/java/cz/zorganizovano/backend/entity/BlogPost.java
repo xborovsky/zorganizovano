@@ -35,6 +35,8 @@ public class BlogPost implements Serializable {
     private String linkHref;
     @Column(name = "link_content", nullable = true, columnDefinition = "TEXT")
     private String linkContent;
+    @Column(name = "meta_title", columnDefinition = "TEXT")
+    private String metaTitle;
 
     public BlogPost() {
     }
@@ -109,6 +111,14 @@ public class BlogPost implements Serializable {
 
     public void setLinkContent(String linkContent) {
         this.linkContent = linkContent;
+    }
+
+    public String getMetaTitle() {
+        return metaTitle;
+    }
+
+    public void setMetaTitle(String metaTitle) {
+        this.metaTitle = metaTitle;
     }
 
     @Override

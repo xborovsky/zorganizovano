@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
+import { Helmet } from 'react-helmet';
 
 import ContactEmail from 'components/ContactEmail';
 
@@ -32,6 +33,10 @@ const styles = theme => ({
 
 const Terms = ({ classes }) => (
     <Paper className={classes.root}>
+        <Helmet>
+            <meta name="description" content='Chcete zboží vyměnit nebo vrátit? Pokud jste si objednali zboží, které není úplně podle
+                Vašich představ, ráda Vám jej vyměním za jiné zboží.' />
+        </Helmet>
         <Typography variant="h1">REKLAMACE</Typography>
         <Typography className={classes.font} component="div">
             <p>

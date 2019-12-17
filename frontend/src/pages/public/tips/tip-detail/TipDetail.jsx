@@ -7,6 +7,7 @@ import withStyles from '@material-ui/styles/withStyles';
 import { Link } from 'react-router-dom';
 import format from 'string-template';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Helmet } from 'react-helmet';
 
 import BreadcrumbsNav from 'components/BreadcrumbsNav';
 import { screenWidth, dpr } from 'util/img-util';
@@ -54,6 +55,11 @@ const TipDetail = ({ tip, classes }) => {
 
     return (
         <>
+            { tip.metaTitle &&
+                <Helmet>
+                    <meta name="description" content={tip.metaTitle} />
+                </Helmet>
+            }
             <BreadcrumbsNav items={[{ link : '/tips', name : 'U nás doma' }, { name : tip.title }]} />
             <Paper className={classes.root}>
                 <Typography variant="h1">{ tip.title }</Typography>

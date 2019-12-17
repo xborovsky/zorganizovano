@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
+import { Helmet } from 'react-helmet';
 
 import MainText from './MainText';
 import LinkButton from './LinkButton';
@@ -37,6 +38,10 @@ const Home = ({ classes, width }) => {
 
     return (
         <>
+            <Helmet>
+                <meta name="description" content={`Márovi-manželovi začala hokejová sezóna a babičky, tak ty máme daleko - a tak je zorganizovanost celé naší rodiny asi
+                    jediné východisko, jak to celé zvládnout v pohodě, bez stresu a o úsměvu a úctě si povíme zase v jiné pohádce 🙂`} />
+            </Helmet>
             <MainText />
             <Grid container justify="center" className={classes.gridWrapper}>
                 <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
