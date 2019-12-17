@@ -41,7 +41,7 @@ const styles = theme => ({
 const Contact = ({ classes }) => (
     <>
         <Helmet>
-            <meta name="description" content='V případě dotazů, připomínek, nebo návrhů mě neváhejte kontaktovat!' />
+            <meta name="description" content='Dotaz, nápad, průšvih? Chcete pomoci se zorganizovanim domacnosti? Napište mi! Zavolejte! Bára B. +420 734 836 714' />
         </Helmet>
         <Grid container>
             <Grid item xs={false} sm={1} md={2}></Grid>

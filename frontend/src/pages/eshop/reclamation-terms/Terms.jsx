@@ -34,7 +34,8 @@ const styles = theme => ({
 const Terms = ({ classes }) => (
     <Paper className={classes.root}>
         <Helmet>
-            <meta name="description" content='TODO' />
+            <meta name="description" content='Chcete zboží vyměnit nebo vrátit? Pokud jste si objednali zboží, které není úplně podle
+                Vašich představ, ráda Vám jej vyměním za jiné zboží.' />
         </Helmet>
         <Typography variant="h1">REKLAMACE</Typography>
         <Typography className={classes.font} component="div">

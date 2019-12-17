@@ -28,6 +28,8 @@ public class Item implements Serializable {
     private double price;
     @Column(name = "discount_price", nullable = true)
     private Double discountPrice;
+    @Column(name = "meta_title", columnDefinition = "TEXT")
+    private String metaTitle;
 
     public Item() {
     }
@@ -82,6 +84,14 @@ public class Item implements Serializable {
 
     public void setDiscountPrice(Double discountPrice) {
         this.discountPrice = discountPrice;
+    }
+
+    public String getMetaTitle() {
+        return metaTitle;
+    }
+
+    public void setMetaTitle(String metaTitle) {
+        this.metaTitle = metaTitle;
     }
 
     @Override

@@ -5,6 +5,7 @@ import withWidth from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Helmet } from 'react-helmet';
 
 import ProductSpec from './ProductSpec';
 import Price from '../../../../components/Price';
@@ -127,6 +128,11 @@ const ProductDetail = ({ product, classes, width }) => {
 
     return (
         <Paper className={classes.root}>
+            { product.metaTitle &&
+                <Helmet>
+                    <meta name="description" content={product.metaTitle} />
+                </Helmet>
+            }
             <Typography variant="h1">{ product.name.toUpperCase() }</Typography>
             <Typography variant="h2">{ product.subName }</Typography>
             <br />

@@ -9,7 +9,8 @@ import { Helmet } from 'react-helmet';
 const Faq = () => (
     <div>
         <Helmet>
-            <meta name="description" content='TODO' />
+            <meta name="description" content='Kdo zboží vyrábí? Jak je zboží zabaleno? Za jak dlouho od objednání mi zboží dorazí?
+                Jaké nabízíte možnosti přepravy? Proč se u vás dá platit pouze převodem na účet?' />
         </Helmet>
         <Typography variant="h1">Nejčastěji kladené dotazy</Typography>
         <ExpansionPanel>

@@ -23,7 +23,8 @@ const styles = theme => ({
 const Terms = ({ classes }) => (
     <Paper className={classes.root}>
         <Helmet>
-            <meta name="description" content='TODO' />
+            <meta name="description" content='Vážení klienti, abych mohla plnit závazky k vám, mým klientům a dalším institucím a zákonným
+                požadavkům podle legislativy, musím zpracovávat některé vaše osobní údaje.' />
         </Helmet>
         <Typography variant="h1">Podmínky ochrany osobních údajů</Typography>
         <Typography className={classes.font} component="div">

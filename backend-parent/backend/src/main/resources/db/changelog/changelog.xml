@@ -360,4 +360,13 @@
 
     </changeSet>
     
+    <changeSet id="seo" author="borovsky">
+        <addColumn tableName="blog_posts">
+            <column name="meta_title" type="TEXT" />
+        </addColumn>
+        <addColumn tableName="items">
+            <column name="meta_title" type="TEXT" />
+        </addColumn>
+    </changeSet>
+    
 </databaseChangeLog>

@@ -55,9 +55,11 @@ const TipDetail = ({ tip, classes }) => {
 
     return (
         <>
-            <Helmet>
-                <meta name="description" content='V prvním díle seriálu zvaném jak si zorganizovat čas Vám přiblížím, jak se organizujeme doma my a jak jsme se museli "přeorganizovat" po narození detí.' />
-            </Helmet>
+            { tip.metaTitle &&
+                <Helmet>
+                    <meta name="description" content={tip.metaTitle} />
+                </Helmet>
+            }
             <BreadcrumbsNav items={[{ link : '/tips', name : 'U nás doma' }, { name : tip.title }]} />
             <Paper className={classes.root}>
                 <Typography variant="h1">{ tip.title }</Typography>

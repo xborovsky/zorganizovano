@@ -63,7 +63,8 @@ const styles = theme => ({
 const Terms = ({ classes }) => (
     <Paper className={classes.root}>
         <Helmet>
-            <meta name="description" content='TODO' />
+            <meta name="description" content='Tyto obchodní podmínky platí pro nákup v internetovém obchodě www.zorganizovano.cz, jehož provozovatelem je
+                Barbora Borovská, V Jamkách 354, Čakovičky 250 63, IČO: 01707736. Provozovatel není plátce DPH.' />
         </Helmet>
         <Typography variant="h1">Obchodní podmínky</Typography>
         <Typography className={classes.font} component="div">
