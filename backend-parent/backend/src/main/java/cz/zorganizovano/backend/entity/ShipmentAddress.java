@@ -1,10 +1,9 @@
 package cz.zorganizovano.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,11 +27,10 @@ public class ShipmentAddress implements Serializable {
     private String zipCode;
     @Column(name = "country", nullable = false)
     private String country;
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
-    @Enumerated(EnumType.STRING)
-    private ShipmentType shipmentType;
 
     public ShipmentAddress() {
     }
@@ -87,14 +85,6 @@ public class ShipmentAddress implements Serializable {
 
     public void setOrder(Order order) {
         this.order = order;
-    }
-
-    public ShipmentType getShipmentType() {
-        return shipmentType;
-    }
-
-    public void setShipmentType(ShipmentType shipmentType) {
-        this.shipmentType = shipmentType;
     }
 
     @Override

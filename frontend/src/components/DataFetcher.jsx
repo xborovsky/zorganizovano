@@ -9,7 +9,6 @@ import Alert from './Alert';
 const DataFetcher = ({
     url,
     method = 'GET',
-    axiosRequestParams = {},
     children
 }) => {
     const [ loading, setLoading ] = useState(true);
@@ -17,7 +16,10 @@ const DataFetcher = ({
     const [ error, setError ] = useState(undefined);
 
     useEffect(() => {
-        axios({method, url, ...axiosRequestParams})
+        axios({
+            method,
+            url
+        })
             .then(res => {
                 setData(res.data);
                 setLoading(false);
@@ -44,8 +46,7 @@ const DataFetcher = ({
 
 DataFetcher.propTypes = {
     url : PropTypes.string.isRequired,
-    method : PropTypes.string,
-    axiosRequestParams : PropTypes.object
+    method : PropTypes.string
 };
 
 export default DataFetcher;
