@@ -61,6 +61,7 @@ const OrdersTable = ({ orders }) => {
                                 paymentReceived={order.paymentReceived}
                                 invoiceSent={order.invoiceSent}
                                 shipped={order.shipped}
+                                storno={order.storno}
                                 onGoToDetail={id => history.push(`/admin/orders/${id}`)}
                             />
                         ))

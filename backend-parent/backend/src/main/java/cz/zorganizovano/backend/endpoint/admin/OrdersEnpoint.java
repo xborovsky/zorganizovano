@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -43,8 +44,8 @@ public class OrdersEnpoint {
     private OrderItemDao orderItemDao;
 
     @GetMapping
-    public List<AdminOrderListItem> getAllOrders() {
-        return orderDao.findNotShippedNotStorno()
+    public List<AdminOrderListItem> getAllOrders(@RequestParam("shipped") boolean showShipped, @RequestParam("storno") boolean showStorno) {
+        return orderDao.findOrders(showShipped, showStorno)
             .stream()
             .map(order -> new AdminOrderListItem(order, orderService.calculateTotalPrice(order)))
             .collect(Collectors.toList());

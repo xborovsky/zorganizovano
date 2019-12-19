@@ -10,7 +10,7 @@ public interface OrderDao extends JpaRepository<Order, Long> {
     @Query("SELECT COUNT(o) FROM Order o WHERE DATE(o.created) = CURDATE()")
     long countTodayOrders();
 
-    @Query("SELECT o FROM Order o WHERE o.shipped IS NULL AND o.storno IS NULL ORDER BY o.created DESC")
-    List<Order> findNotShippedNotStorno();
+    @Query("SELECT o FROM Order o WHERE (o.shipped IS NULL OR (?1 = true AND o.shipped IS NOT NULL)) AND (o.storno IS NULL OR (?2 = true AND o.storno IS NOT NULL)) ORDER BY o.created DESC")
+    List<Order> findOrders(boolean shipped, boolean storno);
 
 }

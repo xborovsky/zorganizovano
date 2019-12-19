@@ -13,6 +13,7 @@ public class AdminOrderListItem {
     private final Date paymentReceived;
     private final Date invoiceSent;
     private final Date shipped;
+    private final Date storno;
 
     public AdminOrderListItem(Order order, double totalPrice) {
         this.orderId = order.getId();
@@ -23,6 +24,7 @@ public class AdminOrderListItem {
         this.paymentReceived = order.getPaymentReceived();
         this.invoiceSent = order.getInvoiceSent();
         this.shipped = order.getShipped();
+        this.storno = order.getStorno();
     }
 
     public long getOrderId() {
@@ -55,6 +57,10 @@ public class AdminOrderListItem {
 
     public Date getShipped() {
         return shipped;
+    }
+
+    public Date getStorno() {
+        return storno;
     }
 
 }

@@ -13,6 +13,18 @@ const useStyles = makeStyles({
         cursor : 'pointer',
         '&:hover' : {
             background : '#f3f3f3'
+        },
+        '&.shipped' : {
+            background: '#ddd',
+            '&:hover' : {
+                background : '#ccc'
+            }
+        },
+        '&.storno' : {
+            background: '#aaa',
+            '&:hover' : {
+                background : '#999'
+            }
         }
     }
 });
@@ -27,12 +39,14 @@ const OrdersTableRow = ({
     paymentReceived,
     invoiceSent,
     shipped,
+    storno,
     onGoToDetail
 }) => {
     const classes = useStyles();
+    const additionalClass = storno ? 'storno' : shipped ? 'shipped' : undefined;
 
     return (
-        <TableRow className={classes.tr} onClick={() => onGoToDetail(orderId)}>
+        <TableRow className={[classes.tr, additionalClass].join(' ')} onClick={() => onGoToDetail(orderId)}>
             <TableCell>{rowNum}</TableCell>
             <TableCell>{orderNum}</TableCell>
             <TableCell>{format(parseISO(created), DATE_TIME_FORMAT)}</TableCell>
@@ -55,6 +69,7 @@ OrdersTableRow.propTypes = {
     paymentReceived : PropTypes.string,
     invoiceSent : PropTypes.string,
     shipped : PropTypes.string,
+    storno : PropTypes.string,
     onGoToDetail : PropTypes.func.isRequired
 };
 

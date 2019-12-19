@@ -40,7 +40,7 @@ const AuthDataFetcher = ({
                 setError(true); // todo pass error to children
                 setLoading(false);
             });
-    }, []);
+    }, [url]);
 
     return (
         loading ?
