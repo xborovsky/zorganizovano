@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import Main from '../../layout/Main';
 import Header from '../../layout/Header';
+import Footer from '../../layout/Footer';
 import Loader from '../../components/Loader';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import ShoppingCartContext from './eshop/shopping-cart/state-management/ShoppingCartContext';
@@ -18,13 +19,13 @@ const NotFound = React.lazy(() => import('../not-found'));
 const getInitialShoppingCartState = () => {
     const storage = window.sessionStorage.getItem('shoppingCart') ? JSON.parse(window.sessionStorage.getItem('shoppingCart')) : [];
     const storageDeduplicated = [];
-  
+
     storage.forEach(item => {
       if (!storageDeduplicated.find(i => i.id === item.id)) {
         storageDeduplicated.push(item);
       }
     });
-  
+
     window.sessionStorage.setItem("shoppingCart", JSON.stringify(storageDeduplicated));
     return storageDeduplicated;
 };
@@ -35,7 +36,7 @@ const PublicContainer = () => {
     useEffect(() => {
         window.sessionStorage.setItem("shoppingCart", JSON.stringify(state));
     }, [state]);
-    
+
     return (
         <ShoppingCartContext.Provider value={{ state, dispatch }}>
             <Header />
@@ -53,6 +54,7 @@ const PublicContainer = () => {
                     </Suspense>
                 </ErrorBoundary>
             </Main>
+            <Footer />
         </ShoppingCartContext.Provider>
     );
 };
