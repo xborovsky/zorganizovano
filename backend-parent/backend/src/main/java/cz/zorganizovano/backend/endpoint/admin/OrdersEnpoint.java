@@ -44,7 +44,7 @@ public class OrdersEnpoint {
 
     @GetMapping
     public List<AdminOrderListItem> getAllOrders() {
-        return orderDao.findNotShipped()
+        return orderDao.findNotShippedNotStorno()
             .stream()
             .map(order -> new AdminOrderListItem(order, orderService.calculateTotalPrice(order)))
             .collect(Collectors.toList());
@@ -90,6 +90,8 @@ public class OrdersEnpoint {
                 return orderService.updateInvoiceSentDate(order);
             case "shipped":
                 return orderService.updateShippedDate(order);
+            case "storno":
+                return orderService.updateStornoDate(order);
             default:
                 LOG.warn(MessageFormat.format("Unknown property {0}!", dateProperty));
         }

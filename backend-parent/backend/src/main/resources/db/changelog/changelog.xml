@@ -414,5 +414,11 @@
             <column name="meta_title" type="TEXT" />
         </addColumn>
     </changeSet>
+
+    <changeSet id="order_storno" author="borovsky">
+        <addColumn tableName="orders">
+            <column name="storno" type="TIMESTAMP" />
+        </addColumn>
+    </changeSet>
     
 </databaseChangeLog>

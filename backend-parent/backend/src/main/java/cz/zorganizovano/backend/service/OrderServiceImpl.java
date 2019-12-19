@@ -225,4 +225,14 @@ public class OrderServiceImpl implements OrderService {
 
         return now;
     }
+
+    @Override
+    @Transactional
+    public Date updateStornoDate(Order order) {
+        Date now = timeManager.getCurrentDate();
+        order.setStorno(now);
+        orderDao.save(order);
+
+        return now;
+    }
 }

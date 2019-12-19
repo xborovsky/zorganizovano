@@ -22,4 +22,6 @@ public interface OrderService {
     Date updateInvoiceSentDate(Order order);
 
     Date updateShippedDate(Order order);
+
+    Date updateStornoDate(Order order);
 }

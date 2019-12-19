@@ -47,6 +47,9 @@ public class Order implements Serializable {
     private Customer customer;
     @Enumerated(EnumType.STRING)
     private ShipmentType shipmentType;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "storno")
+    private Date storno;
 
     public Order() {
     }
@@ -125,6 +128,14 @@ public class Order implements Serializable {
 
     public void setShipmentType(ShipmentType shipmentType) {
         this.shipmentType = shipmentType;
+    }
+
+    public Date getStorno() {
+        return storno;
+    }
+
+    public void setStorno(Date storno) {
+        this.storno = storno;
     }
 
     @Override

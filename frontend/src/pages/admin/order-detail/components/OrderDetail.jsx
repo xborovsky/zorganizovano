@@ -39,7 +39,8 @@ const OrderDetail = ({ order }) => {
     const [processingDates, setProcessingDates] = useState({
         paymentReceived : order.paymentReceived,
         invoiceSent : order.invoiceSent,
-        shipped : order.shipped
+        shipped : order.shipped,
+        storno : order.storno
     });
     const { auth, logout } = useContext(AuthContext);
 
@@ -155,6 +156,10 @@ const OrderDetail = ({ order }) => {
                             <TableCell className={classes.th}>Expedováno:</TableCell>
                             <TableCell>{ dateOrCheckbox('shipped') }</TableCell>
                         </TableRow>
+                        <TableRow>
+                            <TableCell className={classes.th}>Storno:</TableCell>
+                            <TableCell>{ dateOrCheckbox('storno') }</TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </Paper>
@@ -172,6 +177,7 @@ OrderDetail.propTypes = {
         paymentReceived : PropTypes.string,
         invoiceSent : PropTypes.string,
         shipped : PropTypes.string,
+        storno : PropTypes.string,
         customer : PropTypes.shape({
             firstName : PropTypes.string.isRequired,
             lastName : PropTypes.string.isRequired,
