@@ -420,5 +420,16 @@
             <column name="storno" type="TIMESTAMP" />
         </addColumn>
     </changeSet>
-    
+
+    <changeSet id="server_notifications" author="borovsky">
+        <createTable tableName="server_notifications">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="text" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

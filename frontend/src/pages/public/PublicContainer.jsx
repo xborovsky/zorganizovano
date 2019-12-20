@@ -8,6 +8,7 @@ import Loader from '../../components/Loader';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import ShoppingCartContext from './eshop/shopping-cart/state-management/ShoppingCartContext';
 import shoppingCartReducer from './eshop/shopping-cart/state-management/ShoppingCartReducer';
+import ServerNotification from 'components/ServerNotification';
 
 const Home = React.lazy(() => import('./home'));
 const Tips = React.lazy(() => import('./tips'));
@@ -40,6 +41,7 @@ const PublicContainer = () => {
     return (
         <ShoppingCartContext.Provider value={{ state, dispatch }}>
             <Header />
+            <ServerNotification />
             <Main>
                 <ErrorBoundary>
                     <Suspense fallback={<Loader />}>

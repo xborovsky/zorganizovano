@@ -3,13 +3,13 @@ import withStyles from '@material-ui/styles/withStyles';
 
 const styles = theme => ({
     root : {
-        margin : '2vh 5vw 5vh',
+        margin : '6vh 5vw 5vh',
         position : 'relative',
         [theme.breakpoints.down('sm')] : {
-            margin : '1vh 3vw 2vh'
+            margin : '4vh 3vw 2vh'
         },
         [theme.breakpoints.down('xs')] : {
-            margin : '0 3vw 2vh'
+            margin : '3vh 3vw 2vh'
         }
     }
 });
