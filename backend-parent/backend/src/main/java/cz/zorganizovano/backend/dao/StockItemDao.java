@@ -9,6 +9,6 @@ public interface StockItemDao extends JpaRepository<StockItem, Long> {
 
     StockItem findByItem(Item item);
 
-    List<StockItem> findByDisplayOnEshop(boolean displayOnEshop);
+    List<StockItem> findByDisplayOnEshopByOrderByIdDesc(boolean displayOnEshop);
 
 }

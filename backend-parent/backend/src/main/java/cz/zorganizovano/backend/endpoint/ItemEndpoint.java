@@ -27,7 +27,7 @@ public class ItemEndpoint {
     
     @GetMapping
     public List<ItemListEntry> getAllItems() {
-        List<StockItem> stockItems = stockItemDao.findByDisplayOnEshop(true);
+        List<StockItem> stockItems = stockItemDao.findByDisplayOnEshopByOrderByIdDesc(true);
         return stockItems.stream()
             .map(stockItem -> new ItemListEntry(stockItem))
             .collect(Collectors.toList());
