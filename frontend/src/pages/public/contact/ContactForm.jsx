@@ -80,7 +80,7 @@ const ContactForm = ({ queryTypes, classes }) => {
 
     return (
         <Paper className={classes.root}>
-            <Typography variant="h1">Napište mi</Typography>
+            <Typography variant="h1">Napište nám</Typography>
             { showAlert() }
             <Formik
                 initialValues={{

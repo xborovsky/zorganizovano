@@ -11,7 +11,6 @@ import shoppingCartReducer from './eshop/shopping-cart/state-management/Shopping
 import ServerNotification from 'components/ServerNotification';
 
 const Home = React.lazy(() => import('./home'));
-const Tips = React.lazy(() => import('./tips'));
 const Eshop = React.lazy(() => import('./eshop'));
 const Contact = React.lazy(() => import('./contact'));
 const ShoppingCart = React.lazy(() => import('./eshop/shopping-cart'));
@@ -47,7 +46,6 @@ const PublicContainer = () => {
                     <Suspense fallback={<Loader />}>
                         <Switch>
                             <Route exact path="/" component={Home} />
-                            <Route path="/tips" component={Tips} />
                             <Route path="/eshop" component={Eshop} />
                             <Route path="/contact" component={Contact} />
                             <Route path="/shopping-cart" component={ShoppingCart} />

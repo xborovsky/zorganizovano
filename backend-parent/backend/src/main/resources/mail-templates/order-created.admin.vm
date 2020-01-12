@@ -43,10 +43,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 16pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        <br /><br />
-                        ZORGANIZOVANO.cz
-                        <br /><br />
+                    <td style="font-size: 10pt; padding-left: 20px; padding-right: 20px; padding-top: 10px; padding-bottom: 10px; color: #000; background-color: #c6bcb2;">
+                        <center>
+                            <a href="https://www.livy.cz" style="color: #000;">www.livy.cz</a><br /><br />
+                            LIVY - LIŠKA VYŠITÁ<br />
+                            +420 734 517 244<br />
+                            eshoplivy@gmail.com
+                        </center>
                     </td>
                 </tr>
             </table>

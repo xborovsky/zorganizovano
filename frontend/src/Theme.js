@@ -5,14 +5,14 @@ const defaultTheme = createMuiTheme();
 let zorganizovanoTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#971c3c'
+      main: '#7a2a23'
     },
     secondary: {
       main: '#fff'
     }
   },
   typography: {
-    fontFamily: 'Roboto, Century Gothic, sans-serif',
+    fontFamily: 'Ubuntu, sans-serif',
     body1: {
       fontSize: '1.1rem',
       color: '#4a4a4a',

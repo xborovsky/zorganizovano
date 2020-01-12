@@ -49,12 +49,12 @@ const Contact = ({ classes }) => (
                 <ContactPhoto className={classes.contactPhoto} />
             </Grid>
             <Grid item xs={12} sm={5} md={4} className={classes.contactWrapper}>
-                <Typography className={classes.contact} style={{ fontWeight : 'bold' }}>Bára Borovská</Typography>
-                <Typography className={classes.contact}>+420 734 836 714</Typography>
+                <Typography className={classes.contact} style={{ fontWeight : 'bold' }}>Zuzana Spurná</Typography>
+                <Typography className={classes.contact}>+420 734 517 244</Typography>
                 <Typography className={classes.contact}>
-                    <ContactEmail reversedEmail='moc.liamg@onavozinagroz' />
+                    <ContactEmail reversedEmail='moc.liamg@yvilpohse' />
                 </Typography>
-                <Typography className={classes.contact}>www.zorganizovano.cz</Typography>
+                <Typography className={classes.contact}>www.livi.cz</Typography>
                 <SocialLinks linkClass={classes.socialLink} iconClass={classes.socialIcon} />
             </Grid>
             <Grid item xs={false} sm={1} md={2}></Grid>

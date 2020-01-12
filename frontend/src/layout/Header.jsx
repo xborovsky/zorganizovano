@@ -18,7 +18,7 @@ import { Grid } from '@material-ui/core';
 
 const styles = theme => ({
     appBar: {
-        backgroundColor : 'rgba(0, 0, 0, 0.7)',
+        backgroundColor : 'rgba(171, 96, 73, 0.8)',
         position : 'fixed'
     },
     toolbar: {
@@ -38,12 +38,14 @@ const styles = theme => ({
         alignItems : 'center'
     },
     toolbarTitle: {
+        fontFamily: "'Michroma', sans-serif",
         flexGrow: 1,
         textTransform : 'uppercase',
         color : '#fff',
         marginLeft : '2vw',
         display : 'flex',
         alignItems : 'center',
+        fontSize : '18pt',
         [theme.breakpoints.down('sm')] : {
             margin : '.7rem auto .7rem 1rem',
             display : 'block',
@@ -58,10 +60,10 @@ const styles = theme => ({
         alignItems : 'center',
         textDecoration : 'none !important',
         '&:active' : {
-            backgroundColor : 'rgba(46, 75, 20, .8)'
+            backgroundColor : 'rgba(131, 53, 0, .7)'
         },
         '&:hover' : {
-            backgroundColor : 'rgba(46, 75, 20, .8)'
+            backgroundColor : 'rgba(131, 53, 0, .7)'
         },
         [theme.breakpoints.down('sm')] : {
             justifyContent : 'center',
@@ -70,7 +72,7 @@ const styles = theme => ({
         }
     },
     activeLink : {
-        backgroundColor : 'rgba(46, 75, 20, .8)'
+        backgroundColor : 'rgba(131, 53, 0, .7)'
     },
     shoppingCartIcon : {
         color : '#fff',
@@ -104,7 +106,7 @@ const styles = theme => ({
 
 const StyledBadge = withStyles(theme => ({
     badge : {
-        backgroundColor : '#971c3c',
+        backgroundColor : '#c6bcb2',
         color : '#fff',
         fontSize : '10pt',
         transform : 'scale(0.9) translate(70%, -70%)'
@@ -123,7 +125,7 @@ const Header = ({ classes }) => {
                     <div className={classes.toolbarContent}>
                         <Typography variant="body1" color="inherit" noWrap className={classes.toolbarTitle}>
                             <NavLink to="/" className={classes.linkNoDecoration} exact onClick={() => setShowMobileMenu(false)}>
-                                Zorganizováno
+                                Livy
                             </NavLink>
                         </Typography>
                         <Hidden mdUp>
@@ -137,9 +139,6 @@ const Header = ({ classes }) => {
                         <nav className={classes.nav}>
                             <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink}>
                                 <Typography variant="body2" element="span">[ Eshop ]</Typography>
-                            </NavLink>
-                            <NavLink to="/tips" className={classes.link} activeClassName={classes.activeLink}>
-                                <Typography variant="body2" element="span">[ U nás doma ]</Typography>
                             </NavLink>
                             <NavLink to="/contact" className={classes.link} activeClassName={classes.activeLink}>
                                 <Typography variant="body2" element="span">[ Kontakt ]</Typography>

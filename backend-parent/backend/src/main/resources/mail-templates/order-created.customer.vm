@@ -10,16 +10,16 @@
         <center>
             <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
                 <tr>
-                    <td bgcolor="#2E4B14" align="center">
+                    <td bgcolor="#ab6049" align="center">
                         <br /><br />
-                        <a style="color: #FFF; text-decoration: none; font-size : 20pt;" href="https://zorganizovano.cz">ZORGANIZOVÁNO</a>
+                        <a style="color: #FFF; text-decoration: none; font-size : 20pt;" href="https://livy.cz">LIVY - Liška vyčitá</a>
                         <br /><br /><br />
                     </td>
                 </tr>
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
-                        Přijala jsem Vaši objednávku č. ${orderNum}
+                        Přijali jsme Vaši objednávku č. ${orderNum}
                         <br /><br />
                     </td>
                 </tr>
@@ -62,12 +62,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 10pt; padding-left: 20px; padding-right: 20px; padding-top: 10px; padding-bottom: 10px; color: #000; background-color: #cfcfcf;">
+                    <td style="font-size: 10pt; padding-left: 20px; padding-right: 20px; padding-top: 10px; padding-bottom: 10px; color: #000; background-color: #c6bcb2;">
                         <center>
-                            <a href="https://www.zorganizovano.cz" style="color: #000;">www.zorganizovano.cz</a><br /><br />
-                            Bára Borovská<br />
-                            +420 734 836 714<br />
-                            zorganizovano@gmail.com
+                            <a href="https://www.livy.cz" style="color: #000;">www.livy.cz</a><br /><br />
+                            LIVY - LIŠKA VYŠITÁ<br />
+                            +420 734 517 244<br />
+                            eshoplivy@gmail.com
                         </center>
                     </td>
                 </tr>

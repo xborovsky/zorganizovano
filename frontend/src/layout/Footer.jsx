@@ -11,7 +11,7 @@ const styles = theme => ({
     footer : {
         padding: '3rem 10vw 2rem',
         marginTop: 'auto',
-        backgroundColor : '#cfcfcf',
+        backgroundColor : '#c6bcb2',
         color : '#000',
         textAlign : 'center',
         [theme.breakpoints.down('xs')] : {
@@ -81,18 +81,17 @@ const Footer = ({ classes }) => (
                 <SocialLinks linkClass={classes.nativeLink} iconClass={classes.socialIcon} />
             </Grid>
             <Grid item xs={12} sm={5} className={classes.left}>
-                <Typography variant="body2" color="inherit">ZORGANIZOVÁNO</Typography>
+                <Typography variant="body2" color="inherit">LIVY - LIŠKA VYŠITÁ</Typography>
                 <div>
-                    <Typography variant="body2" color="inherit">Bára Borovská</Typography>
-                    <Typography variant="body2" color="inherit">+420 734 836 714</Typography>
                     <Typography variant="body2" color="inherit">
-                        <ContactEmail reversedEmail="moc.liamg@onavozinagroz" />
+                        <ContactEmail reversedEmail="moc.liamg@yvilpohse" />
                     </Typography>
+                    <Typography variant="body2" color="inherit">+420 734 517 244</Typography>
                     <br />
                     <Typography variant="body2">
                         Dotaz, nápad, průšvih?&nbsp;
                         <Link to="/contact" className={classes.link} style={{ display : 'inline' }}>
-                            Napište mi!
+                            Napište nám!
                         </Link>
                     </Typography>
                 </div>

@@ -27,7 +27,7 @@ const styles = theme => ({
         height : '100%'
     },
     header : {
-        backgroundColor : '#2e4b14',
+        backgroundColor : '#ab6049',
         color : '#fff',
         cursor : 'pointer',
         '&>.MuiCardHeader-content' : {
@@ -40,17 +40,19 @@ const styles = theme => ({
             }
         },
         '&:hover' : {
-            backgroundColor : '#6c815a'
+            backgroundColor : '#833500'
         }
     },
     headerTitle : {
         fontSize : '1.2rem',
         color : '#fff',
-        textTransform : 'uppercase'
+        textTransform : 'uppercase',
+        fontFamily: "'Shadows Into Light Two', cursive"
     },
     headerSubtitle : {
-        fontSize : '0.8rem',
-        color : '#fff'
+        fontSize : '1rem',
+        color : '#fff',
+        fontFamily: "'Shadows Into Light Two', cursive"
     },
     content : {
         cursor : 'pointer',
