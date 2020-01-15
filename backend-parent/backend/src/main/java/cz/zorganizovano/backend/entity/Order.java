@@ -37,6 +37,9 @@ public class Order implements Serializable {
     @Column(name = "payment_received")
     private Date paymentReceived;
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ready_to_ship")
+    private Date readyToShip;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "invoice_sent")
     private Date invoiceSent;
     @Temporal(TemporalType.TIMESTAMP)
@@ -104,6 +107,14 @@ public class Order implements Serializable {
 
     public void setPaymentReceived(Date paymentReceived) {
         this.paymentReceived = paymentReceived;
+    }
+
+    public Date getReadyToShip() {
+        return readyToShip;
+    }
+
+    public void setReadyToShip(Date readyToShip) {
+        this.readyToShip = readyToShip;
     }
 
     public Date getInvoiceSent() {

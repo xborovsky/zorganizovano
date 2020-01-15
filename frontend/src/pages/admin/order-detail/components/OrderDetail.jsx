@@ -32,12 +32,14 @@ const OrderDetail = ({ order }) => {
     const classes = useStyles();
     const [loader, setLoader] = useState({
         paymentReceived : false,
+        readyToShip : false,
         invoiceSent : false,
         shipped : false
     });
     const [error, setError] = useState(undefined);
     const [processingDates, setProcessingDates] = useState({
         paymentReceived : order.paymentReceived,
+        readyToShip : order.readyToShip,
         invoiceSent : order.invoiceSent,
         shipped : order.shipped,
         storno : order.storno
@@ -149,12 +151,16 @@ const OrderDetail = ({ order }) => {
                             <TableCell>{ dateOrCheckbox('paymentReceived') }</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell className={classes.th}>Faktura odeslána:</TableCell>
-                            <TableCell>{ dateOrCheckbox('invoiceSent') }</TableCell>
+                            <TableCell className={classes.th}>Připraveno k expedici:</TableCell>
+                            <TableCell>{ dateOrCheckbox('readyToShip') }</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell className={classes.th}>Expedováno:</TableCell>
                             <TableCell>{ dateOrCheckbox('shipped') }</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell className={classes.th}>Faktura odeslána:</TableCell>
+                            <TableCell>{ dateOrCheckbox('invoiceSent') }</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell className={classes.th}>Storno:</TableCell>

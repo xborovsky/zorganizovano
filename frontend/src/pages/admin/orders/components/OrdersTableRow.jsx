@@ -37,6 +37,7 @@ const OrdersTableRow = ({
     shipmentType,
     totalPrice,
     paymentReceived,
+    readyToShip,
     invoiceSent,
     shipped,
     storno,
@@ -53,8 +54,9 @@ const OrdersTableRow = ({
             <TableCell>{shipmentType}</TableCell>
             <TableCell><Price value={totalPrice} size="sm" /></TableCell>
             <TableCell>{paymentReceived && format(parseISO(paymentReceived), DATE_TIME_FORMAT)}</TableCell>
-            <TableCell>{invoiceSent && format(parseISO(invoiceSent), DATE_TIME_FORMAT)}</TableCell>
+            <TableCell>{readyToShip && format(parseISO(readyToShip), DATE_TIME_FORMAT)}</TableCell>
             <TableCell>{shipped && format(parseISO(shipped), DATE_TIME_FORMAT)}</TableCell>
+            <TableCell>{invoiceSent && format(parseISO(invoiceSent), DATE_TIME_FORMAT)}</TableCell>
         </TableRow>
     );
 };
@@ -67,6 +69,7 @@ OrdersTableRow.propTypes = {
     created : PropTypes.string.isRequired,
     totalPrice : PropTypes.number.isRequired,
     paymentReceived : PropTypes.string,
+    readyToShip : PropTypes.string,
     invoiceSent : PropTypes.string,
     shipped : PropTypes.string,
     storno : PropTypes.string,

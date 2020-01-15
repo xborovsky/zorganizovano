@@ -205,6 +205,16 @@ public class OrderServiceImpl implements OrderService {
 
         return now;
     }
+    
+    @Override
+    @Transactional
+    public Date updateReadyToShipDate(Order order) {
+        Date now = timeManager.getCurrentDate();
+        order.setReadyToShip(now);
+        orderDao.save(order);
+
+        return now;
+    }
 
     @Override
     @Transactional

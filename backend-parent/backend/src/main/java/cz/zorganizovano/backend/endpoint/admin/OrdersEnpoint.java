@@ -44,8 +44,8 @@ public class OrdersEnpoint {
     private OrderItemDao orderItemDao;
 
     @GetMapping
-    public List<AdminOrderListItem> getAllOrders(@RequestParam("shipped") boolean showShipped, @RequestParam("storno") boolean showStorno) {
-        return orderDao.findOrders(showShipped, showStorno)
+    public List<AdminOrderListItem> getAllOrders(@RequestParam("shipped") boolean showInvoiceSent, @RequestParam("storno") boolean showStorno) {
+        return orderDao.findOrders(showInvoiceSent, showStorno)
             .stream()
             .map(order -> new AdminOrderListItem(order, orderService.calculateTotalPrice(order)))
             .collect(Collectors.toList());
@@ -87,6 +87,8 @@ public class OrdersEnpoint {
         switch(dateProperty) {
             case "paymentReceived":
                 return orderService.updatePaymentReceivedDate(order);
+            case "readyToShip":
+                return orderService.updateReadyToShipDate(order);
             case "invoiceSent":
                 return orderService.updateInvoiceSentDate(order);
             case "shipped":

@@ -432,4 +432,10 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="order_ready_to_ship" author="borovsky">
+        <addColumn tableName="orders">
+            <column name="ready_to_ship" type="TIMESTAMP"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

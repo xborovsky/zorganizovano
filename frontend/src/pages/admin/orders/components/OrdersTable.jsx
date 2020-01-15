@@ -40,8 +40,9 @@ const OrdersTable = ({ orders }) => {
                         <TableCell>Doprava</TableCell>
                         <TableCell>Celková cena</TableCell>
                         <TableCell>Platba přijata</TableCell>
-                        <TableCell>Faktura odeslána</TableCell>
+                        <TableCell>Připraveno k expedici</TableCell>
                         <TableCell>Expedováno</TableCell>
+                        <TableCell>Faktura odeslána</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -59,6 +60,7 @@ const OrdersTable = ({ orders }) => {
                                 created={order.created}
                                 totalPrice={order.totalPrice}
                                 paymentReceived={order.paymentReceived}
+                                readyToShip={order.readyToShip}
                                 invoiceSent={order.invoiceSent}
                                 shipped={order.shipped}
                                 storno={order.storno}

@@ -18,6 +18,8 @@ public interface OrderService {
     double calculateTotalPrice(Order order);
 
     Date updatePaymentReceivedDate(Order order);
+    
+    Date updateReadyToShipDate(Order order);
 
     Date updateInvoiceSentDate(Order order);
 
