@@ -1,0 +1,9 @@
+type ContactQueryType {
+    id: ID!
+    type: String!
+    sortKey: Int
+}
+
+type Query {
+    contactQueryTypes: [ContactQueryType]! 
+}
