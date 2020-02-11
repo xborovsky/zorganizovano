@@ -10,7 +10,7 @@ const styles = theme => ({
     }
 });
 
-const ContactEmail = ({ reversedEmail = 'moc.liamg@onavozinagroz', classes }) => (
+const ContactEmail = ({ reversedEmail = 'moc.liamg@yvilpohse', classes }) => (
     <span className={classes.email}>
         { reversedEmail }
     </span>

@@ -50,6 +50,9 @@ const Terms = ({ classes }) => (
                 vyměním za jiné zboží.
             </p>
             <p>
+                Kupujícímu umožňuji výměnu zboží do 14 dnů od převzetí zásilky bez udání důvodu.
+            </p>
+            <p>
                 Pokud se rozhodnete pro výměnu, je nutné dodržet tyto <strong>základní podmínky</strong>:
             </p>
             <p>
@@ -67,8 +70,8 @@ const Terms = ({ classes }) => (
                 <li>zboží není schopné dalšího prodeje</li>
             </ul>
             <p>
-                Zboží je nutné zaslat na adresu <strong>Barbora Borovská, V Jamkách 354, Čakovičky
-                250 63</strong>, ze které Vám bylo původně odesláno.
+                Zboží je nutné zaslat na adresu <strong>Zuzana Spurná, Mlýnská 185, Všetaty 
+                277 16</strong>, ze které Vám bylo původně odesláno.
             </p>
             <p>
                 Zásilku ve vlastním zájmu pošlete jako doporučené psaní (v případě ztráty, nebo
@@ -102,7 +105,7 @@ const Terms = ({ classes }) => (
                 Kupní smlouvy informovat Prodávajícího formou jednostranného právního jednání
                 (například dopisem zaslaným prostřednictvím provozovatele poštovních služeb nebo
                 e-mailem).<br />
-                Zboží zašlete na adresu <strong>Barbora Borovská, V Jamkách 354, Čakovičky 250 63,</strong>
+                Zboží zašlete na adresu <strong>Zuzana Spurná, Mlýnská 185, Všetaty 277 16,</strong>
                 ze které Vám bylo původně zboží odesláno.
             </p>
             <p>
@@ -122,8 +125,8 @@ const Terms = ({ classes }) => (
             <p>
                 <span className={classes.h2}>Převzetí zboží:</span>
                 Zboží bez zbytečného odkladu, nejpozději do 14 dnů ode dne, kdy došlo k
-                odstoupení od Smlouvy, zašlete zpět na adresu Barbora Borovská, V Jamkách 354,
-                Čakovičky 250 63. Lhůta se považuje za zachovanou, pokud odešlete zboží zpět
+                odstoupení od Smlouvy, zašlete zpět na adresu Zuzana Spurná, Mlýnská 185,
+                Všetaty 277 16. Lhůta se považuje za zachovanou, pokud odešlete zboží zpět
                 před uplynutím 14 dnů.
             </p>
             <p>

@@ -29,16 +29,15 @@ const Terms = ({ classes }) => (
         <Typography variant="h1">Podmínky ochrany osobních údajů</Typography>
         <Typography className={classes.font} component="div">
             <p>
-                Barbora Borovská, V Jamkách 354, Čakovičky 250 63<br />
-                IČO: 01707736<br />
+                Zuzana Spurná, Mlýnská 185, Všetaty 277 16<br />
+                IČO: 87564955<br />
                 e-mail: <ContactEmail /><br /><br />
                 dále jen <strong>„Správce“</strong>
             </p>
             <p>
                 Vážení klienti,<br />
-                abych mohla plnit závazky k vám, mým klientům a dalším institucím a zákonným
-                požadavkům podle legislativy, musím zpracovávat některé vaše osobní údaje. K
-                tomu sděluji:<br />
+                abych mohla plnit závazky k vám, mým klientům a dalším institucím a zákonným požadavkům podle 
+                legislativy, musím zpracovávat některé vaše osobní údaje. K tomu sděluji:<br />
                 Správcem osobních údajů podle Nařízení (EU) 2016/679 (GDPR) je <strong>Správce</strong>.
                 Vaše osobní údaje zpracovávám z důvodu <strong>vyřízení Vašich objednávek a řešení
                 reklamací</strong>.<br />
@@ -75,7 +74,7 @@ const Terms = ({ classes }) => (
                 osobních údajů postupuji v rozporu s GDPR.
             </p>
             <p>
-                V Praze, dne 5.11.2019
+                V Praze, dne 18.12.2019
             </p>
         </Typography>
     </Paper>

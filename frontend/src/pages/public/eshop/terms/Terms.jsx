@@ -63,27 +63,27 @@ const styles = theme => ({
 const Terms = ({ classes }) => (
     <Paper className={classes.root}>
         <Helmet>
-            <meta name="description" content='Tyto obchodní podmínky platí pro nákup v internetovém obchodě www.zorganizovano.cz, jehož provozovatelem je
-                Barbora Borovská, V Jamkách 354, Čakovičky 250 63, IČO: 01707736. Provozovatel není plátce DPH.' />
+            <meta name="description" content='Tyto obchodní podmínky platí pro nákup v internetovém obchodě www.livy.cz, jehož provozovatelem je
+                Zuzana Spurná, Mlýnská 185, Všetaty, 277 16, IČO:. 87564955. Provozovatel není plátce DPH.' />
         </Helmet>
         <Typography variant="h1">Obchodní podmínky</Typography>
         <Typography className={classes.font} component="div">
             <p>
                 Tyto obchodní podmínky platí pro nákup v internetovém obchodě
-                www.zorganizovano.cz, jehož provozovatelem je<br /> <strong>Barbora Borovská, V Jamkách
-                354, Čakovičky 250 63, IČO: 01707736</strong>.<br />
+                www.livy.cz, jehož provozovatelem je<br /> <strong>Zuzana Spurná, Mlýnská 185, Všetaty,
+                277 16, IČO:. 87564955</strong>.<br />
                 <strong>Provozovatel není plátce DPH.</strong><br />
                 Obchodní podmínky určují a upřesňují práva a povinnosti prodávajícího a jeho zákazníků (dále jen kupujících).
             </p>
             <p>
                 <span className={classes.h2}>OBJEDNÁVKY:</span>
                 Veškeré objednávky podané prostřednictvím internetového obchodu jsou závazné.
-                Podáním objednávky kupující stvrzuje, že se seznámil s těmito obchodními
-                podmínkami včetně podmínek reklamace a že s nimi souhlasí. Objednávka je
-                návrhem kupní smlouvy. Kupní smlouva vzniká v okamžiku převzetí objednaného
-                zboží kupujícím. Podmínkou platnosti elektronické objednávky je vyplnění veškerých
-                předepsaných povinných údajů a náležitostí. Po zaslání objednávky obdržíte email s
-                potvrzením vaší objednávky a s termínem splatnosti 3 pracovních dnů.<br />
+                Podáním objednávky kupující stvrzuje, že se seznámil s těmito obchodními podmínkami
+                včetně podmínek reklamace a že s nimi souhlasí. Objednávka je návrhem kupní smlouvy.
+                Kupní smlouva vzniká v okamžiku převzetí objednaného zboží kupujícím. Podmínkou
+                platnosti elektronické objednávky je vyplnění veškerých předepsaných povinných údajů
+                a náležitostí. Po zaslání objednávky obdržíte email s potvrzením vaší objednávky
+                a s termínem splatnosti 3 pracovních dnů.<br />
                 Pokud bude kupující požadovat storno objednávky, je nutné storno provést písemně
                 na adresu <ContactEmail />. Místem dodání zboží je adresa uvedená
                 kupujícím v objednávkovém formuláři (v případě výběru dopravy Českou poštou
@@ -105,12 +105,12 @@ const Terms = ({ classes }) => (
                         </li>
                         <li>
                             Obchodní podmínky dále upravují práva a povinnosti smluvních stran při
-                            využívání webové stránky prodávajícího umístěné na adrese www.zorganizovano.cz
+                            využívání webové stránky prodávajícího umístěné na adrese www.livy.cz
                             (dále jen „webová stránka“) a další související právní vztahy.
                         </li>
                         <li>
-                            Prodávajícím a provozovatelem internetového obchodu www.zorganizovano.cz
-                            je Barbora Borovská, V Jamkách 354, Čakovičky 250 63, IČO: 01707736.
+                            Prodávajícím a provozovatelem internetového obchodu www.livy.cz
+                            je Zuzana Spurná, Mlýnská 185, Všetaty, 277 16, IČO: 87564955.
                         </li>
                         <li>
                             Ustanovení odchylná od obchodních podmínek je možné sjednat v kupní
@@ -142,16 +142,16 @@ const Terms = ({ classes }) => (
                             nezávazné a prodávající není povinen uzavřít kupní smlouvu ohledně tohoto zboží.
                         </li>
                         <li>
-                            Sortiment internetového obchodu www.zorganizovano.cz tvoří produkty vázané
-                            k organizaci domácnosti, povětšinou tiskoviny. Fotografie zboží jsou pořízeny tak,
-                            aby barevné provedení co nejvíce odpovídalo skutečnosti. Skutečná barevnost
-                            produktů se může lišit i vzhledem k nastavení monitoru.
+                        Sortiment internetového obchodu www.livy.cz tvoří produkty vázané k určitým příležitostem
+                        v roce, například svátků a produkty z látek. Fotografie zboží jsou pořízeny tak, aby
+                        barevné provedení co nejvíce odpovídalo skutečnosti. Skutečná barevnost produktů se
+                        může lišit i vzhledem k nastavení monitoru.
                         </li>
                         <li>
-                            Webové rozhraní obchodu obsahuje také informace o nákladech spojených s
-                            balením a dodáním zboží. Informace o nákladech spojených s balením a dodáním
-                            zboží uvedené ve webovém rozhraní obchodu platí pouze v případech, kdy je zboží
-                            doručováno v rámci území České republiky.
+                        Webové rozhraní obchodu obsahuje také informace o nákladech spojených s balením
+                        a dodáním zboží. Informace o nákladech spojených s balením a dodáním zboží uvedené
+                        ve webovém rozhraní obchodu platí pouze v případech, kdy je zboží doručováno v rámci
+                        území České republiky.
                         </li>
                         <li>
                             Pro objednání zboží vyplní kupující objednávkový formulář ve webovém
@@ -209,8 +209,8 @@ const Terms = ({ classes }) => (
                         <li>
                             Cenu zboží a případné náklady spojené s dodáním zboží dle kupní smlouvy
                             může kupující uhradit prodávajícímu bezhotovostně převodem na účet prodávajícího
-                            č.1957478013/3030, Iban CZ93 3030 0000 0019 5747 8013, BIC AIRACZPP vedený
-                            u společnosti Air Bank a.s. (dále jen „účet prodávajícího“).
+                            č.670100-2216698996/6210, IBAN CZ77 6210 6701 0022 1669 8996, BIC BREXCZPPXXX
+                            vedený u společnosti mBank S.A. (dále jen „účet prodávajícího“).
                         </li>
                         <li>
                             Společně s kupní cenou je kupující povinen zaplatit prodávajícímu také náklady
@@ -255,7 +255,7 @@ const Terms = ({ classes }) => (
                     Odstoupení od kupní smlouvy
                     <ol>
                         <li>
-                            Kupující bere na vědomí, že dle ustanovení zákona č. 89/2012 Sb.., občanský
+                            Kupující bere na vědomí, že dle ustanovení zákona č. 89/2012 Sb., občanský
                             zákoník, ve znění pozdějších předpisů (dále jen „občanský zákoník“), nelze mimo
                             jiné odstoupit od kupní smlouvy na dodávku zboží upraveného podle přání
                             kupujícího.
