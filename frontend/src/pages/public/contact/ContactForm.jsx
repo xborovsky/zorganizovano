@@ -245,7 +245,7 @@ const ContactForm = ({ queryTypes, classes }) => {
 ContactForm.propTypes = {
     queryTypes : PropTypes.arrayOf(
         PropTypes.shape({
-            id : PropTypes.number.isRequired,
+            id : PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
             type : PropTypes.string.isRequired
         })
     ).isRequired

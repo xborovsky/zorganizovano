@@ -5,6 +5,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 import join from 'url-join';
+import { ApolloProvider } from 'react-apollo'
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
 var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
@@ -21,7 +25,23 @@ axios.interceptors.request.use(config => {
   }
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const httpLink = createHttpLink({
+  uri : process.env.NODE_ENV === "production" ?
+    "https://zorganizovano.cz:8081/api/graphql" :
+    "http://localhost:8081/api/graphql"
+});
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache()
+})
+
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
