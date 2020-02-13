@@ -54,7 +54,7 @@ const Contact = ({ classes }) => (
                 <Typography className={classes.contact}>
                     <ContactEmail reversedEmail='moc.liamg@yvilpohse' />
                 </Typography>
-                <Typography className={classes.contact}>www.livi.cz</Typography>
+                <Typography className={classes.contact}>www.livy.cz</Typography>
                 <SocialLinks linkClass={classes.socialLink} iconClass={classes.socialIcon} />
             </Grid>
             <Grid item xs={false} sm={1} md={2}></Grid>
