@@ -15,6 +15,7 @@ const Eshop = React.lazy(() => import('./eshop'));
 const Contact = React.lazy(() => import('./contact'));
 const ShoppingCart = React.lazy(() => import('./eshop/shopping-cart'));
 const NotFound = React.lazy(() => import('../not-found'));
+const Events = React.lazy(() => import('./events'));
 
 const getInitialShoppingCartState = () => {
     const storage = window.sessionStorage.getItem('shoppingCart') ? JSON.parse(window.sessionStorage.getItem('shoppingCart')) : [];
@@ -49,6 +50,7 @@ const PublicContainer = () => {
                             <Route path="/eshop" component={Eshop} />
                             <Route path="/contact" component={Contact} />
                             <Route path="/shopping-cart" component={ShoppingCart} />
+                            <Route path="/events" component={Events} />
                             <Route component={NotFound} />
                         </Switch>
                     </Suspense>

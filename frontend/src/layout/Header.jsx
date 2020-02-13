@@ -137,6 +137,9 @@ const Header = ({ classes }) => {
                     </div>
                     <Hidden smDown>
                         <nav className={classes.nav}>
+                            <NavLink to="/events" className={classes.link} activeClassName={classes.activeLink}>
+                                <Typography variant="body2" element="span">[ Kdy a kde se uvidíme ]</Typography>
+                            </NavLink>
                             <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink}>
                                 <Typography variant="body2" element="span">[ Eshop ]</Typography>
                             </NavLink>
@@ -163,8 +166,8 @@ const Header = ({ classes }) => {
                                         </NavLink>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <NavLink to="/tips" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
-                                            <Typography variant="body2" element="span">[ U nás doma ]</Typography>
+                                        <NavLink to="/events" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
+                                            <Typography variant="body2" element="span">[ Kdy a kde se uvidíme ]</Typography>
                                         </NavLink>
                                     </Grid>
                                     <Grid item xs={12}>
