@@ -4,6 +4,19 @@ type ContactQueryType {
     sortKey: Int
 }
 
+type BlogPost {
+    id: ID!
+    published: String!
+    title: String!
+    contentPreview: String!
+    content: String!
+    titlePhoto: String!
+    linkHref: String
+    linkContent: String
+    metaTitle: String
+}
+
 type Query {
     contactQueryTypes: [ContactQueryType]! 
+    blogPosts: [BlogPost]!
 }
