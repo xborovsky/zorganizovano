@@ -1,8 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import InfoIcon from '@material-ui/icons/Info';
 import { Typography } from '@material-ui/core';
-import axios from 'axios';
+import { useQuery } from 'react-apollo';
+import { gql } from 'apollo-boost';
+
+const GET_SERVER_NOTIFICATION = gql`
+    {
+        serverNotification {
+            id
+            text
+        }
+    }
+`;
 
 const useStyles = makeStyles(theme => ({
     root : {
@@ -26,24 +36,14 @@ const useStyles = makeStyles(theme => ({
 
 const ServerNotification = () => {
     const classes = useStyles();
-    const [ notificationMsg, setNotificationMsg ] = useState(undefined);
-
-    useEffect(() => {
-        axios.get('/server-notification')
-            .then(res => setNotificationMsg(res.data))
-            .catch(err => {
-                if (!err.response || err.response.status !== 404) {
-                    console.error(err);
-                }
-            });
-    }, []);
+    const { data } = useQuery(GET_SERVER_NOTIFICATION);
 
     return (
-        notificationMsg ?
+        data ?
             <div className={classes.root}>
                 <InfoIcon className={classes.infoIcon} />
                 <Typography className={classes.text} component="span">
-                    { notificationMsg }
+                    { data.serverNotification.text }
                 </Typography>
             </div> :
             null

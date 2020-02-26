@@ -16,7 +16,13 @@ type BlogPost {
     metaTitle: String
 }
 
+type ServerNotification {
+    id: ID!
+    text: String!
+}
+
 type Query {
     contactQueryTypes: [ContactQueryType]! 
     blogPosts: [BlogPost]!
+    serverNotification: ServerNotification
 }
