@@ -39,11 +39,17 @@ const Home = ({ classes, width }) => {
     return (
         <>
             <Helmet>
-                <meta name="description" content={`Márovi-manželovi začala hokejová sezóna a babičky, tak ty máme daleko - a tak je zorganizovanost celé naší rodiny asi
-                    jediné východisko, jak to celé zvládnout v pohodě, bez stresu a o úsměvu a úctě si povíme zase v jiné pohádce 🙂`} />
+                <meta name="description" content={`Jsme dvě lišky vyšitý 🦊 taky dvě mámy na mateřský 👯‍♀️ a šijeme a děláme různý jiný legrácky pro vás a vaše liščata 🦊`} />
             </Helmet>
             <MainText />
             <Grid container justify="center" className={classes.gridWrapper}>
+                <Grid item xs={false} sm={1} md={2} lg={3}>
+                    <NavLink to="/events">
+                        <img src={'/img/events.jpg'} alt={'Kdy a kde se uvidíme'} style={{ width : '90%', display : 'block', margin : '0 auto' }} />
+                    </NavLink>
+                </Grid>
+            </Grid>
+            {/*<Grid container justify="center" className={classes.gridWrapper}>
                 <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
                 <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
                     <NavLink to="/tips">
@@ -62,7 +68,7 @@ const Home = ({ classes, width }) => {
                     </NavLink>
                 </Grid>
                 <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
-            </Grid>
+            </Grid>*/}
         </>
     );
 };

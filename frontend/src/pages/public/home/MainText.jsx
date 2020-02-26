@@ -7,7 +7,7 @@ import MainPageText from 'components/MainPageText';
 const MainText = () => (
     <MainPageText>
         <Typography variant="body1" style={{ marginBottom : '-1rem' }}>
-            Jsme dvě lišky vyšitý 🦊 taky dvě mámy na mateřský 👯‍♀️ a šijeme a děláme různý jiný legrácky pro vás a vaše liščata 🦊🧡
+            Jsme dvě lišky vyšitý 🦊 taky dvě mámy na mateřský 👯‍♀️ a šijeme a děláme různý jiný legrácky pro vás a vaše liščata 🦊
         </Typography>
     </MainPageText>
 );

@@ -30,11 +30,11 @@ const styles = theme => ({
 const Jumbotron = ({ src, classes }) => (
     <Paper className={classes.jumbotron}>
         {
-            <img
+            /*<img
                 className={classes.img}
                 src={getImgServerUrl(`other/${src}`)}
                 alt="background"
-            />
+            />*/
         }
     </Paper>
 );

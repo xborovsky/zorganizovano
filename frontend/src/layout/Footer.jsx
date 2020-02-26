@@ -71,12 +71,12 @@ const Footer = ({ classes }) => (
                 <Link to="/eshop/reclamation-terms" className={classes.link}>
                     <Typography variant="body2" color="inherit">Reklamace</Typography>
                 </Link>
-                <Link to="/eshop/faq" className={classes.link}>
+                {/*<Link to="/eshop/faq" className={classes.link}>
                     <Typography variant="body2" color="inherit">Nejčastěji kladené dotazy</Typography>
                 </Link>
                 <Link to="/contact" className={classes.link}>
                     <Typography variant="body2" color="inherit">Kontakt</Typography>
-                </Link>
+                </Link>*/}
                 <br />
                 <SocialLinks linkClass={classes.nativeLink} iconClass={classes.socialIcon} />
             </Grid>
@@ -87,13 +87,13 @@ const Footer = ({ classes }) => (
                         <ContactEmail reversedEmail="moc.liamg@yvilpohse" />
                     </Typography>
                     <Typography variant="body2" color="inherit">+420 734 517 244</Typography>
-                    <br />
+                    {/*<br />
                     <Typography variant="body2">
                         Dotaz, nápad, průšvih?&nbsp;
                         <Link to="/contact" className={classes.link} style={{ display : 'inline' }}>
                             Napište nám!
                         </Link>
-                    </Typography>
+                    </Typography>*/}
                 </div>
             </Grid>
             <Grid item xs={12} sm={2} className={classes.yearWrapper}>

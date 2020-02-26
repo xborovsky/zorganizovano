@@ -6,7 +6,7 @@ const styles = theme => ({
     img : {
         width : '90%',
         '&:hover' : {
-            transform: 'scale(1.2)'
+            transform: 'scale(1.1)'
         }
     }
 });
