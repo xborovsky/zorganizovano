@@ -48,8 +48,8 @@ const PublicContainer = () => {
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/eshop" component={Eshop} />
-                            {/*<Route path="/contact" component={Contact} />
-                            <Route path="/shopping-cart" component={ShoppingCart} />*/}
+                            <Route path="/contact" component={Contact} />
+                            <Route path="/shopping-cart" component={ShoppingCart} />
                             <Route path="/events" component={Events} />
                             <Route component={NotFound} />
                         </Switch>

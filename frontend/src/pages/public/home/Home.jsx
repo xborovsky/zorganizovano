@@ -45,30 +45,22 @@ const Home = ({ classes, width }) => {
             <Grid container justify="center" className={classes.gridWrapper}>
                 <Grid item xs={false} sm={1} md={2} lg={3}>
                     <NavLink to="/events">
-                        <img src={'/img/events.jpg'} alt={'Kdy a kde se uvidíme'} style={{ width : '90%', display : 'block', margin : '0 auto' }} />
-                    </NavLink>
-                </Grid>
-            </Grid>
-            {/*<Grid container justify="center" className={classes.gridWrapper}>
-                <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
-                <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
-                    <NavLink to="/tips">
                         <LinkButton
-                            src={getImgServerUrl('other/Button2.jpg', getLinkButtonWidthPct())}
-                            alt="Jak to máme doma"
+                            src={getImgServerUrl('img/events.jpg', getLinkButtonWidthPct())}
+                            alt="Kdy a kde se uvidíme"
                         />
                     </NavLink>
                 </Grid>
                 <Grid item xs={12} sm={5} md={4} lg={3} className={classes.gridItem}>
                     <NavLink to="/eshop">
                         <LinkButton
-                            src={getImgServerUrl('other/Button1.jpg', getLinkButtonWidthPct())}
+                            src={getImgServerUrl('img/eshop.jpg', getLinkButtonWidthPct())}
                             alt="Chci nakupovat"
                         />
                     </NavLink>
                 </Grid>
                 <Grid item xs={false} sm={1} md={2} lg={3}></Grid>
-            </Grid>*/}
+            </Grid>
         </>
     );
 };

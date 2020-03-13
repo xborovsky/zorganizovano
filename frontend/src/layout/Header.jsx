@@ -160,17 +160,17 @@ const Header = ({ classes }) => {
                         { showMobileMenu &&
                             <nav className={classes.mobileNav}>
                                 <Grid container>
-                                    {/*<Grid item xs={12}>
+                                    {<Grid item xs={12}>
                                         <NavLink to="/eshop" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
                                             <Typography variant="body2" element="span">[ Eshop ]</Typography>
                                         </NavLink>
-                                    </Grid>*/}
+                                    </Grid>}
                                     <Grid item xs={12}>
                                         <NavLink to="/events" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
                                             <Typography variant="body2" element="span">[ Kdy a kde se uvidíme ]</Typography>
                                         </NavLink>
                                     </Grid>
-                                    {/*<Grid item xs={12}>
+                                    {<Grid item xs={12}>
                                         <NavLink to="/contact" className={classes.link} activeClassName={classes.activeLink} onClick={() => setShowMobileMenu(false)}>
                                             <Typography variant="body2" element="span">[ Kontakt ]</Typography>
                                         </NavLink>
@@ -184,7 +184,7 @@ const Header = ({ classes }) => {
                                                 </StyledBadge>
                                             </IconButton>
                                         </NavLink>
-                                    </Grid>*/}
+                                    </Grid>}
                                 </Grid>
                             </nav>
                         }

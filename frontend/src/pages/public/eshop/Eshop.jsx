@@ -19,9 +19,9 @@ const Eshop = () => {
     return (
         <Suspense fallback={<Loader />}>
             <Switch>
-                {/*<Route path={`${match.path}/products/:id`}>
+                <Route path={`${match.path}/products/:id`}>
                     <ProductDetailContainer />
-                </Route>*/}
+                </Route>
                 <Route path={`${match.path}/faq`}>
                     <Faq />
                 </Route>
@@ -34,7 +34,7 @@ const Eshop = () => {
                 <Route path={`${match.path}/reclamation-terms`}>
                     <ReclamationTerms />
                 </Route>
-                {/*<Route path={`${match.path}/order`}>
+                <Route path={`${match.path}/order`}>
                     <OrderWizard />
                 </Route>
                 <Route path={`${match.path}/order-created`}>
@@ -42,7 +42,7 @@ const Eshop = () => {
                 </Route>
                 <Route path={match.path}>
                     <ProductListContainer />
-                </Route>*/}
+                </Route>
             </Switch>
         </Suspense>
     );
