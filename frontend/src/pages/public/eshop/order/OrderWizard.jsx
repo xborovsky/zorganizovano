@@ -47,7 +47,7 @@ const OrderWizard = ({ classes }) => {
     const steps = getSteps();
     const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : [...location.state.shoppingCart]});
     const [error, setError] = useState(undefined);
-
+console.log(orderData.shoppingCart);
     const getStepContent = step => {
         switch (step) {
             case 0: return (
@@ -73,6 +73,7 @@ const OrderWizard = ({ classes }) => {
                     }}
                     onGoToPrevStep={goToPrev}
                     onError={error => setError(error)}
+                    isFreeShippingAllowed={orderData.shoppingCart.filter(shoppingCartItem => shoppingCartItem.freeShipping).length === orderData.shoppingCart.length}
                 />
             );
             case 2: return (

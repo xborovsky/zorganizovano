@@ -19,6 +19,7 @@ import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
 import { getImgServerUrl } from 'util/img-util';
+import FreeShippingAlert from '../common/FreeShippingAlert';
 
 const styles = theme => ({
     card : {
@@ -176,6 +177,11 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
                                 </Grid>
                             </Grid>
                         </Grid>
+                        { product.freeShipping &&
+                            <Grid item xs={12}>
+                                <FreeShippingAlert />
+                            </Grid>
+                        }
                         <Grid item xs={12}>
                             <Grid container className={classes.quantityPriceWrapper} spacing={['lg', 'xl'].indexOf(width) !== -1 ? 1 : 0}>
                                 <Grid item xs={12} lg={8} xl={6} className={classes.quantityWrapper}>

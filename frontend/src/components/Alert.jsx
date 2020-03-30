@@ -30,7 +30,7 @@ const styles = theme => ({
     },
 });
 
-const Alert = ({ type, children, classes }) => {
+const Alert = ({ type, children, classes, className }) => {
     const getIcon = () => {
         switch (type) {
             case 'error': return <ErrorIcon className={classes.icon} />;
@@ -53,7 +53,7 @@ const Alert = ({ type, children, classes }) => {
 
     return (
         <SnackbarContent
-            className={`${classes.root} ${getClass()}`}
+            className={`${className} ${classes.root} ${getClass()}`}
             message={
                 <span>
                     {getIcon()}

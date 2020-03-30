@@ -20,7 +20,8 @@ const DeliveryForm = ({
     onGoToPrevStep,
     onGoToNextStep,
     initialFormData,
-    onError
+    onError,
+    isFreeShippingAllowed
 }) => {
     const [selectedZasilkovna, setSelectedZasilkovna] = useState(initialFormData.selectedZasilkovna);
 
@@ -82,39 +83,44 @@ const DeliveryForm = ({
                                 <FormControl component="fieldset" error={touched.deliveryOption && !!errors.deliveryOption}>
                                     <RadioGroup aria-label="delivery option" name="deliveryOption" value={values.deliveryOption} onChange={handleChange}>
                                         {
-                                            data.map(deliveryOption => (
-                                                <div key={deliveryOption.name}>
-                                                    <FormControlLabel
-                                                        value={deliveryOption.name}
-                                                        control={<Radio color="primary" />}
-                                                        label={`${deliveryOption.readableName} - ${deliveryOption.price},- Kč`}
-                                                    />
-                                                    {
-                                                        (values.deliveryOption &&
-                                                            values.deliveryOption.toLowerCase() === ZASILKOVNA &&
-                                                            deliveryOption.name.toLowerCase() === ZASILKOVNA) ?
-                                                            <>
-                                                                <Button
-                                                                    variant="contained"
-                                                                    color="primary"
-                                                                    type="button"
-                                                                    onClick={handleSelectZasilkovna}>
-                                                                    Vyberte zásilkovnu
-                                                                </Button>
-                                                                { selectedZasilkovna &&
-                                                                    <ZasilkovnaInfo
-                                                                        street={selectedZasilkovna.name}
-                                                                        township={selectedZasilkovna.city}
-                                                                        zipCode={selectedZasilkovna.zip}
-                                                                        country={selectedZasilkovna.country}
-                                                                        openingHours={selectedZasilkovna.openingHours.compactLong}
-                                                                    />
-                                                                }
-                                                            </> :
-                                                            null
-                                                    }
-                                                </div>
-                                            ))
+                                            data.map(deliveryOption => {
+                                                if (!isFreeShippingAllowed && deliveryOption.name.toUpperCase() === 'CESKA_POSTA_FREE') {
+                                                    return null;
+                                                }
+                                                return (
+                                                    <div key={deliveryOption.name}>
+                                                        <FormControlLabel
+                                                            value={deliveryOption.name}
+                                                            control={<Radio color="primary" />}
+                                                            label={`${deliveryOption.readableName} - ${deliveryOption.price},- Kč`}
+                                                        />
+                                                        {
+                                                            (values.deliveryOption &&
+                                                                values.deliveryOption.toLowerCase() === ZASILKOVNA &&
+                                                                deliveryOption.name.toLowerCase() === ZASILKOVNA) ?
+                                                                <>
+                                                                    <Button
+                                                                        variant="contained"
+                                                                        color="primary"
+                                                                        type="button"
+                                                                        onClick={handleSelectZasilkovna}>
+                                                                        Vyberte zásilkovnu
+                                                                    </Button>
+                                                                    { selectedZasilkovna &&
+                                                                        <ZasilkovnaInfo
+                                                                            street={selectedZasilkovna.name}
+                                                                            township={selectedZasilkovna.city}
+                                                                            zipCode={selectedZasilkovna.zip}
+                                                                            country={selectedZasilkovna.country}
+                                                                            openingHours={selectedZasilkovna.openingHours.compactLong}
+                                                                        />
+                                                                    }
+                                                                </> :
+                                                                null
+                                                        }
+                                                    </div>
+                                                );
+                                            })
                                         }
                                     </RadioGroup>
                                     <FormHelperText id="deliveryOption-error">{touched.deliveryOption && errors.deliveryOption}</FormHelperText>

@@ -9,13 +9,15 @@ public class ShoppingCartItemResponse {
     private final String subName;
     private final double priceSingle;
     private final int warehouseCnt;
+    private final boolean freeShipping;
 
-    public ShoppingCartItemResponse(Item item, int warehouseCnt) {
+    public ShoppingCartItemResponse(Item item, int warehouseCnt, boolean freeShipping) {
         this.id = item.getId();
         this.name = item.getName();
         this.subName = item.getSubName();
         this.priceSingle = item.getPrice();
         this.warehouseCnt = warehouseCnt;
+        this.freeShipping = freeShipping;
     }
 
     public long getId() {
@@ -36,6 +38,10 @@ public class ShoppingCartItemResponse {
 
     public int getWarehouseCnt() {
         return warehouseCnt;
+    }
+
+    public boolean isFreeShipping() {
+        return freeShipping;
     }
 
     @Override
