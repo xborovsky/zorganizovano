@@ -2,6 +2,7 @@ package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.item.ItemDetailDTO;
 import cz.zorganizovano.backend.bean.item.ItemListEntry;
+import cz.zorganizovano.backend.dao.FreeShippedItemsDao;
 import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.entity.ItemDetail;
@@ -24,12 +25,14 @@ public class ItemEndpoint {
     private StockItemDao stockItemDao;
     @Autowired
     private ItemDetailDao stockItemDetailDao;
+    @Autowired
+    private FreeShippedItemsDao freeShippedItemsDao;
     
     @GetMapping
     public List<ItemListEntry> getAllItems() {
         List<StockItem> stockItems = stockItemDao.findByDisplayOnEshop(true);
         return stockItems.stream()
-            .map(stockItem -> new ItemListEntry(stockItem))
+            .map(stockItem -> new ItemListEntry(stockItem, freeShippedItemsDao.isFreeShipment(stockItem.getItem())))
             .collect(Collectors.toList());
     }
 
@@ -40,7 +43,7 @@ public class ItemEndpoint {
             StockItem stockItem = stockItemMaybe.get();
             List<ItemDetail> itemDetails = stockItemDetailDao.findByItem(stockItem.getItem());
 
-            return new ItemDetailDTO(stockItem, itemDetails);
+            return new ItemDetailDTO(stockItem, itemDetails, freeShippedItemsDao.isFreeShipment(stockItem.getItem()));
         } else {
             throw new ResourceNotFoundException(MessageFormat.format("Item {0} not found!", id));
         }

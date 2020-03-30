@@ -14,8 +14,9 @@ public class ItemDetailDTO {
     private final Double discountPrice;
     private final int stockQuantity;
     private final List<ItemDetail> details;
+    private final boolean freeShipping;
 
-    public ItemDetailDTO(StockItem stockItem, List<ItemDetail> itemDetails) {
+    public ItemDetailDTO(StockItem stockItem, List<ItemDetail> itemDetails, boolean freeShipping) {
         this.id = stockItem.getId();
         this.name = stockItem.getItem().getName();
         this.subName = stockItem.getItem().getSubName();
@@ -24,6 +25,7 @@ public class ItemDetailDTO {
         this.discountPrice = stockItem.getItem().getDiscountPrice();
         this.stockQuantity = stockItem.getQuantity();
         this.details = itemDetails;
+        this.freeShipping = freeShipping;
     }
 
     public long getId() {
@@ -56,6 +58,10 @@ public class ItemDetailDTO {
 
     public List<ItemDetail> getDetails() {
         return details;
+    }
+
+    public boolean isFreeShipping() {
+        return freeShipping;
     }
 
 }

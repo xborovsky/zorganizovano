@@ -51,7 +51,8 @@ const ShoppingCartContainer = () => {
                         subName : serverVerifiedItems[verifiedItemIdx].subName,
                         priceSingle : serverVerifiedItems[verifiedItemIdx].priceSingle,
                         quantity : sessionStorageItem.quantity,
-                        warehouseCnt : serverVerifiedItems[verifiedItemIdx].warehouseCnt
+                        warehouseCnt : serverVerifiedItems[verifiedItemIdx].warehouseCnt,
+                        freeShipping : serverVerifiedItems[verifiedItemIdx].freeShipping
                     };
                 }
             });
