@@ -10,7 +10,7 @@ import { AuthContext } from 'pages/admin/AuthProvider';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
-        backgroundColor : 'rgba(0, 0, 0, 0.7)',
+        backgroundColor : 'rgba(171, 96, 73, 0.8)',
     },
     toolbar: {
         display : 'flex',
@@ -50,10 +50,10 @@ const useStyles = makeStyles(theme => ({
         textDecoration : 'none !important',
         cursor : 'pointer',
         '&:active' : {
-            backgroundColor : 'rgba(46, 75, 20, .8)'
+            backgroundColor : 'rgba(131, 53, 0, .7)'
         },
         '&:hover' : {
-            backgroundColor : 'rgba(46, 75, 20, .8)'
+            backgroundColor : 'rgba(131, 53, 0, .7)'
         },
         [theme.breakpoints.down('sm')] : {
             justifyContent : 'center',
@@ -83,7 +83,7 @@ const AdminHeader = () => {
                     <div className={classes.toolbarContent}>
                         <Typography variant="body1" color="inherit" noWrap className={classes.toolbarTitle}>
                             <NavLink to="/" className={classes.linkNoDecoration} exact>
-                                Zorganizováno - Admin konzole
+                                LIVY - Admin konzole
                             </NavLink>
                         </Typography>
                     </div>
