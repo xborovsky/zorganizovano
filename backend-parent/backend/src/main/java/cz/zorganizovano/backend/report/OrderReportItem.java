@@ -12,6 +12,7 @@ import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.entity.ShipmentAddress;
 import java.io.IOException;
 import java.util.List;
+import org.springframework.core.io.ClassPathResource;
 
 public class OrderReportItem {
 
@@ -72,7 +73,7 @@ public class OrderReportItem {
     
     private PdfFont getFont() throws IOException {
         return PdfFontFactory.createFont(
-            OrderReportItem.class.getClassLoader().getResource("fonts/Roboto-Regular.ttf").getFile(), 
+            new ClassPathResource("fonts/Roboto-Regular.ttf").getPath(),
             "Cp1250", 
             true
         );
