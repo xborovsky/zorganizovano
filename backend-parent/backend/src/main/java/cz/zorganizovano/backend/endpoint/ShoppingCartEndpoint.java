@@ -1,7 +1,6 @@
 package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.shopping_cart.ShoppingCartItemResponse;
-import cz.zorganizovano.backend.dao.FreeShippedItemsDao;
 import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.entity.StockItem;
 import java.util.HashSet;
@@ -19,8 +18,6 @@ public class ShoppingCartEndpoint {
 
     @Autowired
     private StockItemDao stockItemDao;
-    @Autowired
-    private FreeShippedItemsDao freeShippedItemsDao;
 
     @PostMapping("/items")
     public Set<ShoppingCartItemResponse> getShoppingCartItems(@RequestBody List<Long> stockItemIds) {
@@ -32,7 +29,7 @@ public class ShoppingCartEndpoint {
             .forEachOrdered((stockItemMaybe) -> {
                 StockItem stockItem = stockItemMaybe.get();
                 resultItems.add(
-                    new ShoppingCartItemResponse(stockItem.getItem(), stockItem.getQuantity(), freeShippedItemsDao.isFreeShipment(stockItem.getItem()))
+                    new ShoppingCartItemResponse(stockItem.getItem(), stockItem.getQuantity())
                 );
             }
         );

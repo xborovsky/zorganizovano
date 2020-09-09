@@ -10,7 +10,7 @@
     </parent>
     <groupId>cz.zorganizovano</groupId>
     <artifactId>backend</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.1</version>
     <name>backend</name>
     <description>Demo project for Spring Boot</description>
 
@@ -117,6 +117,18 @@
             <groupId>com.graphql-java</groupId>
             <artifactId>graphiql-spring-boot-starter</artifactId>
             <version>5.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext7-core</artifactId>
+            <version>7.1.12</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.4</version>
         </dependency>
         
         <dependency>

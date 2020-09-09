@@ -12,9 +12,8 @@ public class ItemListEntry {
     private final Double discountPrice;
     private final int stockQuantity;
     private final String thumbnailLocation;
-    private final boolean freeShipping;
 
-    public ItemListEntry(StockItem stockItem, boolean freeShipping) {
+    public ItemListEntry(StockItem stockItem) {
         this.id = stockItem.getId();
         this.name = stockItem.getItem().getName();
         this.subName = stockItem.getItem().getSubName();
@@ -25,7 +24,6 @@ public class ItemListEntry {
         this.discountPrice = stockItem.getItem().getDiscountPrice();
         this.stockQuantity = stockItem.getQuantity();
         this.thumbnailLocation = stockItem.getThumbnailLocation();
-        this.freeShipping = freeShipping;
     }
 
     public long getId() {
@@ -58,10 +56,6 @@ public class ItemListEntry {
 
     public String getThumbnailLocation() {
         return thumbnailLocation;
-    }
-
-    public boolean isFreeShipping() {
-        return freeShipping;
     }
 
 }

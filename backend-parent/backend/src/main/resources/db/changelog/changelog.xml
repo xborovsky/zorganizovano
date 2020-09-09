@@ -437,23 +437,5 @@
             <column name="ready_to_ship" type="TIMESTAMP"/>
         </addColumn>
     </changeSet>
-    
-    <changeSet id="free_shipped_items" author="borovsky">
-        <createTable tableName="free_shipped_items">
-            <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="item_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        
-        <addForeignKeyConstraint
-            baseColumnNames="item_id"
-            baseTableName="free_shipped_items"
-            constraintName="fk_free_shipped_items_item"
-            referencedColumnNames="id"
-            referencedTableName="items" />
-    </changeSet>
 
 </databaseChangeLog>

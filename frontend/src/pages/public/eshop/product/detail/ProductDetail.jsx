@@ -19,7 +19,6 @@ import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
-import FreeShippingAlert from '../common/FreeShippingAlert';
 
 const styles = theme => ({
     root : {
@@ -150,11 +149,6 @@ const ProductDetail = ({ product, classes, width }) => {
                         <Grid item xs={6} className={classes.priceWrapper}>
                             <Price value={product.price} size="xl" />
                         </Grid>
-                        { product.freeShipping &&
-                            <Grid item xs={12}>
-                                <FreeShippingAlert />
-                            </Grid>
-                        }
                         <Grid item xs={12} md={6} className={classes.shoppingCartWrapper}>
                             { getQuantityInput(product.stockQuantity > 0) }
                         </Grid>
