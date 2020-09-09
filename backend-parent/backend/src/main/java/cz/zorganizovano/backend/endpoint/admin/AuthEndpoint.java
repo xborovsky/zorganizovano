@@ -30,8 +30,6 @@ public class AuthEndpoint {
 
     @PostMapping("/login")
     public ResponseEntity<String> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-        System.out.println("authenticationRequest.getUsername(): " + authenticationRequest.getUsername());
-        System.out.println("authenticationRequest.getPassword(): " + authenticationRequest.getPassword());
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final UserDetails userDetails = jwtUserDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
