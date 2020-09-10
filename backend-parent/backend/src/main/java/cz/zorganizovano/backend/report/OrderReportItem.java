@@ -1,6 +1,5 @@
 package cz.zorganizovano.backend.report;
 
-import com.google.common.base.Joiner;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.layout.borders.Border;
@@ -9,7 +8,6 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
-import cz.zorganizovano.backend.entity.ShipmentAddress;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.core.io.ClassPathResource;
@@ -19,13 +17,13 @@ public class OrderReportItem {
     private final Order order;
     private final List<OrderItem> orderItems;
     private final double totalPrice;
-    private final ShipmentAddress shipmentAddress;
+    private final String address;
 
-    public OrderReportItem(Order order, List<OrderItem> orderItems, double totalPrice, ShipmentAddress shipmentAddress) {
+    public OrderReportItem(Order order, List<OrderItem> orderItems, double totalPrice, String address) {
         this.order = order;
         this.orderItems = orderItems;
         this.totalPrice = totalPrice;
-        this.shipmentAddress = shipmentAddress;
+        this.address = address;
     }
     
     public Table buildForReport() throws IOException {
@@ -45,6 +43,7 @@ public class OrderReportItem {
             cell.add(new Paragraph(orderItem.getQuantity() + "ks " + orderItem.getItem().getName() + " (" + (orderItem.getPrice() * orderItem.getQuantity()) + ",-)").setFont(font).setFontSize(8));
         });
         cell.add(new Paragraph(order.getShipmentType().getReadableName()).setFont(font).setBold()).setFontSize(10);
+        cell.add(new Paragraph(""));
 
         return cell;
     }
@@ -55,18 +54,7 @@ public class OrderReportItem {
         cell.add(new Paragraph(order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName()).setFont(font).setFontSize(8));
         cell.add(new Paragraph(order.getCustomer().getEmail()).setFont(font).setFontSize(8));
         cell.add(new Paragraph(order.getCustomer().getPhoneNo()).setFont(font).setFontSize(8));
-
-        if (shipmentAddress != null) {
-            cell.add(new Paragraph(
-                Joiner.on(", ")
-                    .join(
-                        shipmentAddress.getStreet(), 
-                        shipmentAddress.getTownship(),
-                        shipmentAddress.getZipCode(),
-                        shipmentAddress.getCountry()
-                    )
-            ).setFont(font).setFontSize(8));
-        }
+        cell.add(new Paragraph(address).setFont(font).setFontSize(8));
         
         return cell;
     }
