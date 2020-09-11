@@ -28,14 +28,26 @@ const OrdersContainer = () => {
     const { auth } = useContext(AuthContext);
     const [ isGenerateReportProgress, setGenerateReportProgress ] = useState(false);
     const [ reportErrorMsg, setReportErrorMsg ] = useState(undefined);
+    const [ checkedOrderIds, setCheckedOrderIds ] = useState([]);
+
+    const handleOrderCheckboxClick = orderNum => e => {
+        if (e.currentTarget.checked) {
+            setCheckedOrderIds([...checkedOrderIds, orderNum]);
+        } else {
+            setCheckedOrderIds(checkedOrderIds.filter(on => on !== orderNum));
+        }
+    };
 
     const handleGenerateReportClicked = () => {
         setGenerateReportProgress(true);
         setReportErrorMsg(undefined);
 
         axios({
-            method : 'GET',
+            method : 'POST',
             url : '/admin/orders/report',
+            data : {
+                orderIds : checkedOrderIds
+            },
             headers : {
                 'Authorization' : `Bearer ${auth}`
             },
@@ -84,24 +96,27 @@ const OrdersContainer = () => {
                     label="Zobrazit storno"
                 />
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    type="button"
-                    onClick={handleGenerateReportClicked}
-                    disabled={isGenerateReportProgress}>
-                    { isGenerateReportProgress ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Stáhnout report' }
-                </Button>
+                { checkedOrderIds.length > 0 &&
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="button"
+                        onClick={handleGenerateReportClicked}
+                        disabled={isGenerateReportProgress}>
+                        { isGenerateReportProgress ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Stáhnout report' }
+                    </Button>
+                }
             </FormGroup>
 
             { reportErrorMsg && <Alert type="error">{reportErrorMsg}</Alert> }
 
             <AuthDataFetcher url={`/admin/orders?shipped=${showShipped}&storno=${showStorno}`}>
                 { data => (
-                    <>
-
-                        <OrdersTable orders={data} />
-                    </>
+                    <OrdersTable 
+                        orders={data}
+                        checkedOrderIds={checkedOrderIds}
+                        onOrderCheckboxClick={handleOrderCheckboxClick}
+                    />
                 ) }
             </AuthDataFetcher>
         </>

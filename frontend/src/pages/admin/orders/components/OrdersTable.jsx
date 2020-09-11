@@ -25,15 +25,20 @@ const useStyles = makeStyles({
     }
   });
 
-const OrdersTable = ({ orders }) => {
+const OrdersTable = ({ 
+    orders,
+    checkedOrderIds,
+    onOrderCheckboxClick
+}) => {
     const classes = useStyles();
     const history = useHistory();
-
+    
     return (
         <Paper className={classes.root}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                        <TableCell></TableCell>
                         <TableCell></TableCell>
                         <TableCell>Číslo objednávky</TableCell>
                         <TableCell>Datum přijetí</TableCell>
@@ -48,11 +53,11 @@ const OrdersTable = ({ orders }) => {
                 <TableBody>
                     { !orders || !orders.length ?
                         <TableRow>
-                            <TableCell colSpan={7} className={classes.noRecord}>žádný záznam</TableCell>
+                            <TableCell colSpan={8} className={classes.noRecord}>žádný záznam</TableCell>
                         </TableRow> :
                         orders.map((order, cnt) => (
                             <OrdersTableRow
-                                key={order.id}
+                                key={order.orderId}
                                 rowNum={cnt+1}
                                 orderId={order.orderId}
                                 orderNum={order.orderNum}
@@ -65,6 +70,8 @@ const OrdersTable = ({ orders }) => {
                                 shipped={order.shipped}
                                 storno={order.storno}
                                 onGoToDetail={id => history.push(`/admin/orders/${id}`)}
+                                checked={checkedOrderIds.indexOf(order.orderId) > -1}
+                                onOrderCheckboxClick={onOrderCheckboxClick}
                             />
                         ))
                     }
@@ -74,6 +81,10 @@ const OrdersTable = ({ orders }) => {
     );
 };
 
-OrdersTable.propTypes = {}; // TODO
+OrdersTable.propTypes = {
+    data : PropTypes.array.isRequired,
+    checkedOrderIds : PropTypes.arrayOf(PropTypes.number.isRequired),
+    onOrderCheckboxClick : PropTypes.func.isRequired
+}; // TODO
 
 export default OrdersTable;

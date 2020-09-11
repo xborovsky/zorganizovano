@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/styles';
 import Price from 'components/Price';
 import { format, parseISO } from 'date-fns';
@@ -41,13 +42,30 @@ const OrdersTableRow = ({
     invoiceSent,
     shipped,
     storno,
-    onGoToDetail
+    onGoToDetail,
+    checked,
+    onOrderCheckboxClick
 }) => {
     const classes = useStyles();
     const additionalClass = storno ? 'storno' : shipped ? 'shipped' : undefined;
 
+    const handleRowClick = e => onGoToDetail(orderId);
+
+    const handleChbxClick = e => e.stopPropagation();
+
     return (
-        <TableRow className={[classes.tr, additionalClass].join(' ')} onClick={() => onGoToDetail(orderId)}>
+        <TableRow 
+            className={[classes.tr, additionalClass].join(' ')} 
+            onClick={handleRowClick}>
+            <TableCell>
+                <Checkbox 
+                    checked={checked} 
+                    onClick={handleChbxClick}
+                    onChange={onOrderCheckboxClick(orderId)} 
+                    name={`chbx-${orderId}`} 
+                    color='primary'
+                />
+            </TableCell>
             <TableCell>{rowNum}</TableCell>
             <TableCell>{orderNum}</TableCell>
             <TableCell>{format(parseISO(created), DATE_TIME_FORMAT)}</TableCell>
@@ -73,7 +91,9 @@ OrdersTableRow.propTypes = {
     invoiceSent : PropTypes.string,
     shipped : PropTypes.string,
     storno : PropTypes.string,
-    onGoToDetail : PropTypes.func.isRequired
+    onGoToDetail : PropTypes.func.isRequired,
+    checked : PropTypes.bool.isRequired,
+    onOrderCheckboxClick : PropTypes.func.isRequired
 };
 
 export default OrdersTableRow;

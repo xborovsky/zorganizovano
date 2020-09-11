@@ -2,6 +2,7 @@ package cz.zorganizovano.backend.endpoint.admin;
 
 import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.entity.Order;
+import cz.zorganizovano.backend.report.OrderReportFormData;
 import cz.zorganizovano.backend.service.OrderReportService;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -11,7 +12,8 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +27,10 @@ public class OrdersReportEndpoint {
     @Autowired
     private OrderReportService orderReportService;
 
-    @GetMapping(produces = MediaType.APPLICATION_PDF_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_PDF_VALUE)
     @ResponseBody
-    public ResponseEntity<InputStreamResource> getAllOrders() throws IOException {
-        List<Order> orders = orderDao.findOrdersForReport();
+    public ResponseEntity<InputStreamResource> getAllOrders(@RequestBody OrderReportFormData orderReportData) throws IOException {
+        List<Order> orders = orderDao.findOrdersForReport(orderReportData.getOrderIds());
         ByteArrayInputStream bis = orderReportService.generateReport(orders);
 
         return new ResponseEntity(new InputStreamResource(bis), HttpStatus.OK);
