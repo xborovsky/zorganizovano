@@ -22,7 +22,6 @@ import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.manager.TimeManager;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setCreated(now);
         order.setMaturity(timeManager.getNextDate(DEFAULT_MATURITY));
-        order.setOrderNum(genereateOrderNumber(now));
+        order.setOrderNum(new Date().getTime());
         order.setShipmentType(shipmentType);
 
         Customer customer = createCustomer(customerInfo);
@@ -80,28 +79,6 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
                 .reduce(0.0, Double::sum) + shipmentType.getPrice()
         );
-    }
-
-    protected long genereateOrderNumber(Date now) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(now);
-
-        int year = cal.get(Calendar.YEAR) % 100;
-        int month = cal.get(Calendar.MONTH) + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(year);
-        sb.append(String.format("%02d", month));
-        sb.append(String.format("%02d", day));
-
-        long todayOrdersCnt = orderDao.countTodayOrders();
-        if (todayOrdersCnt % 1000 == 999) {
-            throw new IllegalStateException("Orders limit reached!");
-        }
-        sb.append(String.format("%03d", todayOrdersCnt + 1));
-
-        return Long.parseLong(sb.toString());
     }
 
     protected List<OrderItem> createOrderItems(ShoppingCart shoppingCart, Order order) {
