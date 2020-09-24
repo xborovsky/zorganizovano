@@ -22,6 +22,7 @@ import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.manager.TimeManager;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,9 @@ public class OrderServiceImpl implements OrderService {
 
         order = orderDao.save(order);
 
+        order.setOrderNum(genereateOrderNumber(now, order.getId()));
+        orderDao.save(order);
+
         List<OrderItem> orderItems = createOrderItems(shoppingCart, order);
         InvoiceAddress invoiceAddress = createInvoiceAddress(customerInfo, order);
         ShipmentAddress shipmentAddress = null;
@@ -79,6 +83,23 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
                 .reduce(0.0, Double::sum) + shipmentType.getPrice()
         );
+    }
+
+    protected long genereateOrderNumber(Date now, long orderId) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(now);
+
+        int year = cal.get(Calendar.YEAR) % 100;
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(year);
+        sb.append(String.format("%02d", month));
+        sb.append(String.format("%02d", day));
+        sb.append(String.format("%04d", orderId % 10000));
+
+        return Long.parseLong(sb.toString());
     }
 
     protected List<OrderItem> createOrderItems(ShoppingCart shoppingCart, Order order) {

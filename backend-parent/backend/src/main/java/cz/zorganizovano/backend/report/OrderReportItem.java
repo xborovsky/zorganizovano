@@ -11,7 +11,6 @@ import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.OrderItem;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import org.springframework.core.io.ClassPathResource;
 
@@ -43,7 +42,7 @@ public class OrderReportItem {
     private Cell buildLeftColumn(Order order, List<OrderItem> orderItems, PdfFont font) {
         Cell cell = new Cell().setBorder(Border.NO_BORDER);
         cell.add(new Paragraph(Long.toString(order.getOrderNum())).setFont(font).setBold().setFontSize(10));
-        cell.add(new Paragraph(SDF.format(order.getCreated())));
+        cell.add(new Paragraph(SDF.format(order.getCreated())).setFont(font).setFontSize(8));
         
         orderItems.stream().forEach(orderItem -> {
             cell.add(new Paragraph(orderItem.getQuantity() + "ks " + orderItem.getItem().getName() + " (" + (int)(orderItem.getPrice() * orderItem.getQuantity()) + ",-)").setFont(font).setFontSize(8));
