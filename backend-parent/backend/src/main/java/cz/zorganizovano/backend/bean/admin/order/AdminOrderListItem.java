@@ -11,6 +11,7 @@ public class AdminOrderListItem {
     private final String shipmentType;
     private final double totalPrice;
     private final Date paymentReceived;
+    private final Date readyToShip;
     private final Date invoiceSent;
     private final Date shipped;
     private final Date storno;
@@ -22,6 +23,7 @@ public class AdminOrderListItem {
         this.shipmentType = order.getShipmentType().getReadableName();
         this.totalPrice = totalPrice;
         this.paymentReceived = order.getPaymentReceived();
+        this.readyToShip = order.getReadyToShip();
         this.invoiceSent = order.getInvoiceSent();
         this.shipped = order.getShipped();
         this.storno = order.getStorno();
@@ -49,6 +51,10 @@ public class AdminOrderListItem {
 
     public Date getPaymentReceived() {
         return paymentReceived;
+    }
+
+    public Date getReadyToShip() {
+        return readyToShip;
     }
 
     public Date getInvoiceSent() {
