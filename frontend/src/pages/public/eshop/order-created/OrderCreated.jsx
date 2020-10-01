@@ -36,9 +36,9 @@ const OrderCreated = ({ classes }) => {
             <Alert type="success">Objednávka <strong>{orderNum}</strong> byla úspěšně vytvořena</Alert>
             <Typography variant="body1" className={classes.block}>
                 Děkuji za Vaši objednávku,<br /><br />
-                Vaše objednávka byla úspěšně potvrzena. Zboží expeduji po připsání platby
-                na účet. Pokud platba nebude připsána do 5 pracovních dnů, objednávka bude
-                automaticky zrušena.
+                Vaše objednávka byla úspěšně potvrzena. Zboží expeduji do tří pracovních dní po připsání platby
+                na účet (do 10 pracovních dní, pokud objednávka obsahuje položku Plstěný diář). Pokud platba nebude
+                připsána do 3 pracovních dnů, objednávka bude automaticky zrušena.
             </Typography>
             <Typography variant="body1">
                 Údaje pro platbu:

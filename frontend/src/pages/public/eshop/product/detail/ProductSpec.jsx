@@ -3,6 +3,7 @@ import withStyles from '@material-ui/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import { productDetailShape } from '../product-prop-type';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
+import ReactHtmlParser from 'react-html-parser';
 
 const styles = theme => ({
     root : {
@@ -16,7 +17,7 @@ const styles = theme => ({
 const ProductSpec = ({ product, classes }) => (
     <div className={classes.root}>
         <Typography variant="body1" className={classes.inlineDisplay}>
-            { product.description.substring(0, 300) + '...' }&nbsp;
+            { ReactHtmlParser(product.description.substring(0, 300)) }...&nbsp;
         </Typography>
         <Typography variant="body1" className={classes.inlineDisplay}>
             <AnchorLink href='#full-desc' offset="80">(detailní popis)</AnchorLink>
