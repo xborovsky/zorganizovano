@@ -35,6 +35,7 @@ const CustomerFormSchema = Yup.object().shape({
         .max(100, 'Zadaný údaj je moc dlouhý.')
         .required('Prosím, zadejte ulici a číslo popisné.'),
     zipCode : Yup.string()
+        .max(5, 'Prosím, zadejte PSČ o délce 5 znaků.')
         .matches(/^[0-9]{5}$/, 'Prosím, zadejte PSČ ve správném tvaru.')
         .required('Prosím, zadejte PSČ.'),
     township : Yup.string()
@@ -126,6 +127,9 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 value={values.firstName}
                                                 autoComplete="fname"
                                                 onChange={handleChange}
+                                                inputProps={{
+                                                    maxLength : 50
+                                                }}
                                             />
                                             <FormHelperText id="firstName-error">{touched.firstName && errors.firstName}</FormHelperText>
                                         </FormControl>
@@ -139,6 +143,9 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 value={values.lastName}
                                                 autoComplete="lname"
                                                 onChange={handleChange}
+                                                inputProps={{
+                                                    maxLength : 50
+                                                }}
                                             />
                                             <FormHelperText id="lastName-error">{touched.lastName && errors.lastName}</FormHelperText>
                                         </FormControl>
@@ -185,6 +192,9 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 value={values.street}
                                                 autoComplete="billing street"
                                                 onChange={handleChange}
+                                                inputProps={{
+                                                    maxLength : 100
+                                                }}
                                             />
                                             <FormHelperText id="street-error">{touched.street && errors.street}</FormHelperText>
                                         </FormControl>
@@ -198,6 +208,9 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 value={values.zipCode}
                                                 autoComplete="billing zipCode"
                                                 onChange={handleChange}
+                                                inputProps={{
+                                                    maxLength : 5
+                                                }}
                                             />
                                             <FormHelperText id="zipCode-error">{touched.zipCode && errors.zipCode}</FormHelperText>
                                         </FormControl>
@@ -211,6 +224,9 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 value={values.township}
                                                 autoComplete="billing township"
                                                 onChange={handleChange}
+                                                inputProps={{
+                                                    maxLength : 100
+                                                }}
                                             />
                                             <FormHelperText id="township-error">{touched.township && errors.township}</FormHelperText>
                                         </FormControl>
