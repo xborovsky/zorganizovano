@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize(using = ShipmentTypeSerializer.class)
 public enum ShipmentType {
 
-    ZASILKOVNA("Zásilkovna", 70),
+    ZASILKOVNA("Zásilkovna", 79),
     CESKA_POSTA("Česká pošta", 89);
 
     private final String readableName;
