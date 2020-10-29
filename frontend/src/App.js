@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import withStyles from '@material-ui/styles/withStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
+import * as Sentry from "@sentry/react";
 
 import Loader from './components/Loader';
-import ErrorBoundary from './components/ErrorBoundary';
 
 import zorganizovanoTheme from './Theme';
+import ErrorPage from 'components/ErrorPage';
 
 const AdminContainer = React.lazy(() => import("./pages/admin/AdminContainer"));
 const PublicContainer = React.lazy(() => import("./pages/public/PublicContainer"));
@@ -27,14 +28,14 @@ const App = ({ classes }) => (
     <CssBaseline />
     <ThemeProvider theme={zorganizovanoTheme}>
       <Router>
-        <ErrorBoundary middleOfScreen>
-            <Suspense fallback={<Loader />}>
-              <Switch>
-                <Route path="/admin" component={AdminContainer} />
-                <Route component={PublicContainer} />
-              </Switch>
-            </Suspense>
-          </ErrorBoundary>
+      <Sentry.ErrorBoundary fallback={<ErrorPage middleOfScreen />}>
+          <Suspense fallback={<Loader />}>
+            <Switch>
+              <Route path="/admin" component={AdminContainer} />
+              <Route component={PublicContainer} />
+            </Switch>
+          </Suspense>
+        </Sentry.ErrorBoundary>
       </Router>
     </ThemeProvider>
   </div>

@@ -9,6 +9,8 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 
 Sentry.init({
   dsn: "https://b166b9c7a03d4d3f8905df95b372c7ef@o468021.ingest.sentry.io/5495326",

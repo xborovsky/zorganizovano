@@ -5,7 +5,6 @@ import Main from '../../layout/Main';
 import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';
 import Loader from '../../components/Loader';
-import ErrorBoundary from '../../components/ErrorBoundary';
 import ShoppingCartContext from './eshop/shopping-cart/state-management/ShoppingCartContext';
 import shoppingCartReducer from './eshop/shopping-cart/state-management/ShoppingCartReducer';
 import ServerNotification from 'components/ServerNotification';
@@ -43,18 +42,16 @@ const PublicContainer = () => {
             <Header />
             <ServerNotification />
             <Main>
-                <ErrorBoundary>
-                    <Suspense fallback={<Loader />}>
-                        <Switch>
-                            <Route exact path="/" component={Home} />
-                            <Route path="/tips" component={Tips} />
-                            <Route path="/eshop" component={Eshop} />
-                            <Route path="/contact" component={Contact} />
-                            <Route path="/shopping-cart" component={ShoppingCart} />
-                            <Route component={NotFound} />
-                        </Switch>
-                    </Suspense>
-                </ErrorBoundary>
+                <Suspense fallback={<Loader />}>
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/tips" component={Tips} />
+                        <Route path="/eshop" component={Eshop} />
+                        <Route path="/contact" component={Contact} />
+                        <Route path="/shopping-cart" component={ShoppingCart} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </Suspense>
             </Main>
             <Footer />
         </ShoppingCartContext.Provider>
