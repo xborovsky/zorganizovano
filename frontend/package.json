@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "1.4.11-SNAPSHOT",
+  "version": "1.4.11",
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
@@ -40,6 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && gzipper ./build/static/js",
+    "postbuild": "node uploadSourcemaps.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
@@ -66,6 +67,7 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.11.5",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "sentry-files": "^1.0.1"
   }
 }

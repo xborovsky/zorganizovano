@@ -14,6 +14,7 @@ import { Integrations } from "@sentry/tracing";
 
 Sentry.init({
   dsn: "https://b166b9c7a03d4d3f8905df95b372c7ef@o468021.ingest.sentry.io/5495326",
+  release: "marek-borovsky@" + process.env.npm_package_version,
   integrations: [
     new Integrations.BrowserTracing(),
   ],
