@@ -42,6 +42,7 @@ const OrdersTable = ({
                         <TableCell></TableCell>
                         <TableCell>Číslo objednávky</TableCell>
                         <TableCell>Datum přijetí</TableCell>
+                        <TableCell>Jméno</TableCell>
                         <TableCell>Doprava</TableCell>
                         <TableCell>Celková cena</TableCell>
                         <TableCell>Platba přijata</TableCell>
@@ -63,6 +64,7 @@ const OrdersTable = ({
                                 orderNum={order.orderNum}
                                 shipmentType={order.shipmentType}
                                 created={order.created}
+                                customerName={order.customerName}
                                 totalPrice={order.totalPrice}
                                 paymentReceived={order.paymentReceived}
                                 readyToShip={order.readyToShip}
