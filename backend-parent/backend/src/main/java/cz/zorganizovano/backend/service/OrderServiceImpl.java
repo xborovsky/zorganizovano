@@ -6,6 +6,7 @@ import cz.zorganizovano.backend.bean.order.OrderCreatedDTO;
 import cz.zorganizovano.backend.bean.order.ShoppingCart;
 import cz.zorganizovano.backend.bean.order.ShoppingCartItem;
 import cz.zorganizovano.backend.dao.CustomerDao;
+import cz.zorganizovano.backend.dao.DiscountCodeDao;
 import cz.zorganizovano.backend.dao.InvoiceAddressDao;
 import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.dao.OrderItemDao;
@@ -13,6 +14,7 @@ import cz.zorganizovano.backend.dao.ShipmentAddressDao;
 import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.endpoint.StockQuantityNotAvailableException;
 import cz.zorganizovano.backend.entity.Customer;
+import cz.zorganizovano.backend.entity.DiscountCode;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.InvoiceAddress;
 import cz.zorganizovano.backend.entity.OrderItem;
@@ -20,11 +22,13 @@ import cz.zorganizovano.backend.entity.ShipmentAddress;
 import cz.zorganizovano.backend.entity.ShipmentType;
 import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.manager.TimeManager;
+import cz.zorganizovano.backend.validator.DiscountCodeValidator;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,26 +51,36 @@ public class OrderServiceImpl implements OrderService {
     private StockItemDao stockItemDao;
     @Autowired
     private OrderItemDao orderItemDao;
-    
+    @Autowired
+    private DiscountCodeDao discountCodeDao;
+    @Autowired
+    private DiscountCodeValidator discountCodeValidator;
 
     @Override
     @Transactional
     public OrderCreatedDTO createOrder(CustomerInfo customerInfo, AddressDTO shippingAddress,
-            ShoppingCart shoppingCart, ShipmentType shipmentType) {
+            ShoppingCart shoppingCart, ShipmentType shipmentType, String discountCode) {
+        DiscountCode discountCodeEntity = null;
+        if (discountCode != null) {
+            Optional<DiscountCode> discountCodeEntityMaybe = discountCodeDao.findByCode(discountCode);
+            if (discountCodeEntityMaybe.isPresent()) {
+                discountCodeEntity = discountCodeEntityMaybe.get();
+            }
+        }
+        
         Date now = timeManager.getCurrentDate();
         Order order = new Order();
         order.setCreated(now);
         order.setMaturity(timeManager.getNextDate(DEFAULT_MATURITY));
         order.setOrderNum(new Date().getTime());
         order.setShipmentType(shipmentType);
+        order.setShipmentPrice(shipmentType.getPrice());
+        order.setDiscountCode(discountCodeEntity);
 
         Customer customer = createCustomer(customerInfo);
         order.setCustomer(customer);
 
         order = orderDao.save(order);
-
-        order.setOrderNum(genereateOrderNumber(now, order.getId()));
-        orderDao.save(order);
 
         List<OrderItem> orderItems = createOrderItems(shoppingCart, order);
         InvoiceAddress invoiceAddress = createInvoiceAddress(customerInfo, order);
@@ -74,14 +88,26 @@ public class OrderServiceImpl implements OrderService {
         if (shippingAddress != null) {
             shipmentAddress = createShipmentAddress(shippingAddress, order);
         }
+        
+        order.setOrderNum(genereateOrderNumber(now, order.getId()));
+        if (discountCodeEntity != null) {
+            order.setDiscountValue(calculateDiscount(orderItemDao.getTotalOrderItemsPrice(order.getId()), discountCodeEntity));
+        }
+        
+        double totalPrice = calculateTotalPrice(order, discountCodeEntity);
+        orderDao.save(order);
+        
+        if (discountCodeEntity != null && discountCodeEntity.isOneTime()) {
+            discountCodeEntity.setUsed(true);
+            discountCodeDao.save(discountCodeEntity);
+        }
 
         return new OrderCreatedDTO(
             order, 
             orderItems, 
             getShippingAddress(invoiceAddress, shipmentAddress),
-            orderItems.stream()
-                .map(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
-                .reduce(0.0, Double::sum) + shipmentType.getPrice()
+            totalPrice,
+            discountCodeEntity
         );
     }
 
@@ -189,9 +215,36 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public double calculateTotalPrice(Order order) {
-        return orderItemDao.getTotalOrderItemsPrice(order.getId()) +
-            order.getShipmentType().getPrice();
+    public double calculateTotalPrice(Order order, DiscountCode discountCode) {
+        double totalPrice = orderItemDao.getTotalOrderItemsPrice(order.getId());
+        double discount = calculateDiscount(totalPrice, discountCode);
+
+        return calculateTotalPrice(totalPrice, order.getShipmentType().getPrice(), discount);
+    }
+    
+    @Override
+    public double calculateTotalPrice(Order order, double discountValue) {
+        double totalPrice = orderItemDao.getTotalOrderItemsPrice(order.getId());
+
+        return calculateTotalPrice(totalPrice, order.getShipmentType().getPrice(), discountValue);
+    }
+
+    protected double calculateTotalPrice(double totalItemsPrice, double shipmentPrice, double discountValue) {
+        double totalPriceWithoutShipment = totalItemsPrice - discountValue;
+
+        return (totalPriceWithoutShipment < 0 ? 0 : totalPriceWithoutShipment) + shipmentPrice;
+    }
+    
+    protected double calculateDiscount(double totalItemsPrice, DiscountCode discountCode) {
+        if (discountCode == null || !discountCodeValidator.isValid(discountCode)) {
+            return 0;
+        }
+
+        if (discountCode.isPercentage()) {
+            return (int) Math.round(totalItemsPrice * discountCode.getDiscount() / 100);
+        }
+
+        return discountCode.getDiscount();
     }
 
     @Override

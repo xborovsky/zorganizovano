@@ -11,6 +11,7 @@ public class OrderFormBean {
     private ShipmentType shipmentType;
     @Valid
     private ShoppingCart shoppingCart;
+    private String discountCode;
 
     public CustomerInfo getCustomerInfo() {
         return customerInfo;
@@ -44,9 +45,17 @@ public class OrderFormBean {
         this.shoppingCart = shoppingCart;
     }
 
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
+    }
+
     @Override
     public String toString() {
-        return "OrderFormBean{" + "customerInfo=" + customerInfo + ", shippingAddress=" + shippingAddress + ", shipmentType=" + shipmentType + ", shoppingCart=" + shoppingCart + '}';
+        return "OrderFormBean{" + "customerInfo=" + customerInfo + ", shippingAddress=" + shippingAddress + ", shipmentType=" + shipmentType + ", shoppingCart=" + shoppingCart + ", discountCode=" + discountCode + '}';
     }
 
 }

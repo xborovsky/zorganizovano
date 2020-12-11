@@ -9,24 +9,28 @@ public class AdminOrderListItem {
     private final long orderNum;
     private final Date created;
     private final String shipmentType;
+    private final double shipmentPrice;
     private final double totalPrice;
     private final Date paymentReceived;
     private final Date readyToShip;
     private final Date invoiceSent;
     private final Date shipped;
     private final Date storno;
+    private final double discountValue;
 
     public AdminOrderListItem(Order order, double totalPrice) {
         this.orderId = order.getId();
         this.orderNum = order.getOrderNum();
         this.created = order.getCreated();
         this.shipmentType = order.getShipmentType().getReadableName();
+        this.shipmentPrice = order.getShipmentPrice();
         this.totalPrice = totalPrice;
         this.paymentReceived = order.getPaymentReceived();
         this.readyToShip = order.getReadyToShip();
         this.invoiceSent = order.getInvoiceSent();
         this.shipped = order.getShipped();
         this.storno = order.getStorno();
+        this.discountValue = order.getDiscountValue();
     }
 
     public long getOrderId() {
@@ -67,6 +71,14 @@ public class AdminOrderListItem {
 
     public Date getStorno() {
         return storno;
+    }
+
+    public double getShipmentPrice() {
+        return shipmentPrice;
+    }
+
+    public double getDiscountValue() {
+        return discountValue;
     }
 
 }

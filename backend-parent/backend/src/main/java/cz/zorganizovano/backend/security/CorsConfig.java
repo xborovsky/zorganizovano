@@ -20,8 +20,8 @@ public class CorsConfig {
         config.setAllowCredentials(true);
         // Don't do this in production, use a proper list  of allowed origins
         config.setAllowedOrigins(Collections.singletonList("*"));
-        config.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
+        config.setAllowedMethods(Collections.singletonList("*"));
+        config.setAllowedHeaders(Collections.singletonList("*"));
         source.registerCorsConfiguration("/**", config);
         
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));

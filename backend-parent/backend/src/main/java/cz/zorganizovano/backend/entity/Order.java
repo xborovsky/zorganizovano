@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -50,9 +51,16 @@ public class Order implements Serializable {
     private Customer customer;
     @Enumerated(EnumType.STRING)
     private ShipmentType shipmentType;
+    @Column(name = "shipment_price", nullable = false)
+    private double shipmentPrice;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "storno")
     private Date storno;
+    @ManyToOne
+    @JoinColumn(name = "discount_code_id")
+    private DiscountCode discountCode;
+    @Column(name = "discount_value")
+    private double discountValue;
 
     public Order() {
     }
@@ -141,12 +149,36 @@ public class Order implements Serializable {
         this.shipmentType = shipmentType;
     }
 
+    public double getShipmentPrice() {
+        return shipmentPrice;
+    }
+
+    public void setShipmentPrice(double shipmentPrice) {
+        this.shipmentPrice = shipmentPrice;
+    }
+
     public Date getStorno() {
         return storno;
     }
 
     public void setStorno(Date storno) {
         this.storno = storno;
+    }
+
+    public DiscountCode getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(DiscountCode discountCode) {
+        this.discountCode = discountCode;
+    }
+
+    public double getDiscountValue() {
+        return discountValue;
+    }
+
+    public void setDiscountValue(double discountValue) {
+        this.discountValue = discountValue;
     }
 
     @Override

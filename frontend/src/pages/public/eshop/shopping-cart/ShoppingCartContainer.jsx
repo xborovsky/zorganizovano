@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Helmet } from 'react-helmet';
 
-import ShoppingCartContext from './state-management/ShoppingCartContext';
+import useShoppingCartContext from './state-management/use-shopping-cart-context';
 import Alert from 'components/Alert';
 import ShoppingCart from './components/ShoppingCart';
 import {
@@ -27,7 +27,7 @@ const ShoppingCartContainer = () => {
     const [ serverCartItems, setServerCartItems ] = useState(undefined);
     const [ loading, setLoading ] = useState(true);
     const [ error, setError ] = useState(false);
-    const { state, dispatch } = useContext(ShoppingCartContext);
+    const { state, dispatch } = useShoppingCartContext();
     const [ confirm, setConfirm ] = useState(initialConfirmData);
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/styles/withStyles';
 import { Formik, Form } from 'formik';
@@ -15,10 +15,14 @@ import WizardButtons from '../../components/WizardButtons';
 import ShoppingCart from './components/ShoppingCart';
 import CustomerInfo from './components/CustomerInfo';
 import Section from './components/Section';
-import DataFetcher from 'components/DataFetcher';
 import ShoppingCartSm from './components/ShoppingCartSm';
-import ShoppingCartContext from '../../../shopping-cart/state-management/ShoppingCartContext';
 import { EMPTY_SHOPPING_CART } from '../../../shopping-cart/state-management/ShoppingCartActions';
+import useShoppingCartContext from '../../../shopping-cart/state-management/use-shopping-cart-context';
+import DiscountCodeSetup from './components/DiscountCodeSetup';
+import { calculateCartSum } from 'pages/public/eshop/shopping-cart/util/cart-sum-calculator';
+import useFetch from 'hooks/use-fetch';
+import Alert from 'components/Alert';
+import { CircularProgress } from '@material-ui/core';
 
 const styles = theme => ({
     totalPrice : {
@@ -40,8 +44,15 @@ const OrderConfirmation = ({
     classes
 }) => {
 
-    const { dispatch } = useContext(ShoppingCartContext);
+    const { dispatch, discountCode, setDiscountCode } = useShoppingCartContext();
     const history = useHistory();
+    const { data:deliveryOptions, isLoading:isLoadingDeliveryOptions, error:deliveryOptionsFetchError } = useFetch('/order/delivery-options');
+    const selectedDelivery = deliveryOptions?.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
+    const cartSum = calculateCartSum(
+        orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.priceSingle), 0),
+        selectedDelivery?.price || 0,
+        discountCode
+    );
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -61,10 +72,12 @@ const OrderConfirmation = ({
             } : null,
             shoppingCart : {
                 items : serverDataShoppingCart
-            }
+            },
+            discountCode : discountCode.code
          }).then(res => {
             setSubmitting(false);
             dispatch({ type : EMPTY_SHOPPING_CART });
+            setDiscountCode(undefined);
             history.push({ pathname : '/eshop/order-created', state : { order : res.data } });
          })
          .catch(err => {
@@ -77,94 +90,100 @@ const OrderConfirmation = ({
             }
          });
     };
+
+    if (deliveryOptionsFetchError) {
+        return <Alert type="error">Problém komunikace se serverem.</Alert>;
+    } else if (isLoadingDeliveryOptions) {
+        return <CircularProgress />;
+    }
+
     return (
-        <DataFetcher url='/order/delivery-options'>
-            { data => {
-                const selectedDelivery = data.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
-                return (
-                    <Formik
-                        initialValues={{ orderTermsApproval : false }}
-                        validate={values => {
-                            let errors = {};
+        <Formik
+            initialValues={{ orderTermsApproval : false }}
+            validate={values => {
+                let errors = {};
 
-                            if (!values.orderTermsApproval) {
-                                errors.orderTermsApproval = 'Tento údaj je povinný.';
-                            }
+                if (!values.orderTermsApproval) {
+                    errors.orderTermsApproval = 'Tento údaj je povinný.';
+                }
 
-                            return errors;
-                        }}
-                        onSubmit={handleFinishOrder}>
-                            {({
-                                values,
-                                errors,
-                                touched,
-                                handleChange,
-                                isSubmitting
-                            }) => (
-                                <Form>
-                                    <div>
-                                        <Section title='Objednáváte si tyto položky'>
-                                            <Hidden smDown>
-                                                <ShoppingCart
-                                                    items={orderData.shoppingCart}
-                                                    selectedDelivery={selectedDelivery} />
-                                            </Hidden>
-                                            <Hidden mdUp>
-                                                <ShoppingCartSm
-                                                    items={orderData.shoppingCart}
-                                                    selectedDelivery={selectedDelivery} />
-                                            </Hidden>
-                                        </Section>
-                                        <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
-                                            <CustomerInfo
-                                                data={orderData.customerInfo}
-                                                shipment={{
-                                                    shipmentType : orderData.shipmentType,
-                                                    shippingAddress : orderData.selectedZasilkovna
-                                                }} />
-                                        </Section>
-                                        <Section className={classes.totalPrice}>
-                                            Celková cena: {
-                                                orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.priceSingle), 0) +
-                                                selectedDelivery.price
-                                            },- Kč
-                                        </Section>
-                                    </div>
-                                    <FormControl error={touched.orderTermsApproval && !!errors.orderTermsApproval} fullWidth style={{ alignItems : 'flex-end', marginBottom : '-3rem' }}>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    id="orderTermsApproval"
-                                                    name="orderTermsApproval"
-                                                    checked={values.orderTermsApproval}
-                                                    onChange={handleChange}
-                                                    color="primary"
-                                                />
-                                            }
-                                            label={<Link to='/eshop/terms' target="_blank">Souhlasím s obchodními podmínkami</Link>}
-                                        />
-                                        <FormHelperText id="orderTermsApproval-error">
-                                            {touched.orderTermsApproval && errors.orderTermsApproval}
-                                        </FormHelperText>
-                                    </FormControl>
-                                    <WizardButtons
-                                        prev={{
-                                            show : true,
-                                            onClick : onGoToPrevStep
-                                        }}
-                                        next={{
-                                            finishOrder : true,
-                                            loading : isSubmitting,
-                                            disabled : !values.orderTermsApproval
-                                        }}
+                return errors;
+            }}
+            onSubmit={handleFinishOrder}>
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    isSubmitting
+                }) => (
+                    <Form>
+                        <div>
+                            <Section title='Objednáváte si tyto položky'>
+                                <Hidden smDown>
+                                    <ShoppingCart
+                                        intermediateSum={cartSum.cartIntermediateSum}
+                                        totalSum={cartSum.totalSum}
+                                        items={orderData.shoppingCart}
+                                        selectedDelivery={selectedDelivery}
+                                        discountValue={cartSum.discountCodeDisplayValue}
                                     />
-                                </Form>
-                            )
-                        }
-                    </Formik>
-                );
-            } }
-        </DataFetcher>
+                                </Hidden>
+                                <Hidden mdUp>
+                                    <ShoppingCartSm
+                                        intermediateSum={cartSum.cartIntermediateSum}
+                                        totalSum={cartSum.totalSum}
+                                        items={orderData.shoppingCart}
+                                        selectedDelivery={selectedDelivery} 
+                                        discountValue={cartSum.discountCodeDisplayValue}
+                                    />
+                                </Hidden>
+                                <DiscountCodeSetup />
+                            </Section>
+                            <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
+                                <CustomerInfo
+                                    data={orderData.customerInfo}
+                                    shipment={{
+                                        shipmentType : orderData.shipmentType,
+                                        shippingAddress : orderData.selectedZasilkovna
+                                    }} />
+                            </Section>
+                            <Section className={classes.totalPrice}>
+                                Celková cena: { cartSum.totalSum },- Kč
+                            </Section>
+                        </div>
+                        <FormControl error={touched.orderTermsApproval && !!errors.orderTermsApproval} fullWidth style={{ alignItems : 'flex-end', marginBottom : '-3rem' }}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        id="orderTermsApproval"
+                                        name="orderTermsApproval"
+                                        checked={values.orderTermsApproval}
+                                        onChange={handleChange}
+                                        color="primary"
+                                    />
+                                }
+                                label={<Link to='/eshop/terms' target="_blank">Souhlasím s obchodními podmínkami</Link>}
+                            />
+                            <FormHelperText id="orderTermsApproval-error">
+                                {touched.orderTermsApproval && errors.orderTermsApproval}
+                            </FormHelperText>
+                        </FormControl>
+                        <WizardButtons
+                            prev={{
+                                show : true,
+                                onClick : onGoToPrevStep
+                            }}
+                            next={{
+                                finishOrder : true,
+                                loading : isSubmitting,
+                                disabled : !values.orderTermsApproval
+                            }}
+                        />
+                    </Form>
+                )
+            }
+        </Formik>
     );
 };
 

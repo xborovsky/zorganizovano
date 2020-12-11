@@ -8,6 +8,7 @@ import Loader from '../../components/Loader';
 import ShoppingCartContext from './eshop/shopping-cart/state-management/ShoppingCartContext';
 import shoppingCartReducer from './eshop/shopping-cart/state-management/ShoppingCartReducer';
 import ServerNotification from 'components/ServerNotification';
+import useSessionStorage from 'hooks/use-session-storage';
 
 const Home = React.lazy(() => import('./home'));
 const Tips = React.lazy(() => import('./tips'));
@@ -32,13 +33,14 @@ const getInitialShoppingCartState = () => {
 
 const PublicContainer = () => {
     const [state, dispatch] = useReducer(shoppingCartReducer, getInitialShoppingCartState());
+    const [ discountCode, setDiscountCode ] = useSessionStorage('discountCode');
 
     useEffect(() => {
         window.sessionStorage.setItem("shoppingCart", JSON.stringify(state));
     }, [state]);
 
     return (
-        <ShoppingCartContext.Provider value={{ state, dispatch }}>
+        <ShoppingCartContext.Provider value={{ state, dispatch, discountCode, setDiscountCode }}>
             <Header />
             <ServerNotification />
             <Main>

@@ -11,7 +11,7 @@ import ProductSpec from './ProductSpec';
 import Price from '../../../../../components/Price';
 import { productDetailShape } from '../product-prop-type';
 import IdeaPrompt from '../../../../../components/IdeaPrompt';
-import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
+import useShoppingCartContext from '../../shopping-cart/state-management/use-shopping-cart-context';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import Details from './Details';
 import ProductGallery from './ProductGallery';
@@ -77,7 +77,7 @@ const styles = theme => ({
 });
 
 const ProductDetail = ({ product, classes, width }) => {
-    const { state, dispatch } = useContext(ShoppingCartContext);
+    const { state, dispatch } = useShoppingCartContext();
     const [ quantity, setQuantity ] = useState(1);
     const [ showSuccess, setShowSuccess ] = useState(undefined);
     const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;

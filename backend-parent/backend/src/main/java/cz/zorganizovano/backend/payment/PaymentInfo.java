@@ -75,6 +75,10 @@ public class PaymentInfo implements PaymentDefaults {
     }
 
     public String getDateFormatted() {
+        return new SimpleDateFormat("dd.MM.yyyy").format(date);
+    }
+    
+    public String getDateFormattedForQRCode() {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 

@@ -13,7 +13,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { productShape } from '../product-prop-type';
 import Price from '../../../../../components/Price';
-import ShoppingCartContext from '../../shopping-cart/state-management/ShoppingCartContext';
+import useShoppingCartContext from '../../shopping-cart/state-management/use-shopping-cart-context';
 import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/ShoppingCartActions';
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
@@ -96,7 +96,7 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
     const history = useHistory();
     const location = useLocation();
     const [ quantity, setQuantity ] = useState(1);
-    const { state, dispatch } = useContext(ShoppingCartContext);
+    const { state, dispatch } = useShoppingCartContext();
     const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;
     const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
 

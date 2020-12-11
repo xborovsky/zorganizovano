@@ -51,8 +51,8 @@ public class OrderReportServiceImpl implements OrderReportService {
     private void addRows(Table table, List<Order> orders) throws IOException {
         for (Order order : orders) {
             List<OrderItem> orderItems = orderItemDao.findByOrder(order);
-            double totalPrice = orderService.calculateTotalPrice(order);
-            OrderReportItem orderReportItem = new OrderReportItem(order, orderItems, totalPrice, getShipmentAddress(order));
+            double totalPrice = orderService.calculateTotalPrice(order, order.getDiscountValue());
+            OrderReportItem orderReportItem = new OrderReportItem(order, orderItems, totalPrice, getShipmentAddress(order), order.getDiscountValue());
 
             table.addCell(orderReportItem.buildForReport());
         }

@@ -116,7 +116,15 @@ const OrderDetail = ({ order }) => {
                         </TableRow>
                         <TableRow>
                             <TableCell className={classes.th}>Celková cena:</TableCell>
-                            <TableCell><Price value={order.totalPrice} size="sm" /></TableCell>
+                            <TableCell>
+                                <Price value={order.totalPrice} size="sm" />
+                                { order.discountValue > 0 &&
+                                    <>
+                                        <br />
+                                        SLEVA: <Price value={order.discountValue} size="sm" /> ({ order.discountCode || '???' })
+                                    </>
+                                }
+                            </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell className={classes.th}>Zákazník:</TableCell>

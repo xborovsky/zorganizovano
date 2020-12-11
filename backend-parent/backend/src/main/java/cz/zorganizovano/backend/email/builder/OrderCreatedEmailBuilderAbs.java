@@ -24,6 +24,13 @@ public abstract class OrderCreatedEmailBuilderAbs {
                 .append("</tr>");
         }
 
+        if (order.getDiscountValue() > 0) {
+            subTotal -= order.getDiscountValue();
+            sb.append("<tr>")
+                .append("<td style=\"border-bottom : 1px solid #999; color : #ccc;\" colspan=\"2\">").append("Sleva:").append("</td>")
+                .append("<td style=\"text-align: right; border-bottom : 1px solid #999; color : #ccc;\" nowrap=\"nowrap\">-").append(DF.format(order.getDiscountValue())).append(",- Kč</td>")
+                .append("</tr>");
+        }
         sb.append("<tr>")
             .append("<td style=\"border-bottom : 1px solid #999; color : #ccc;\" colspan=\"2\">").append("Mezisoučet:").append("</td>")
             .append("<td style=\"text-align: right; border-bottom : 1px solid #999; color : #ccc;\" nowrap=\"nowrap\">").append(DF.format(subTotal)).append(",- Kč</td>")

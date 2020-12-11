@@ -437,5 +437,69 @@
             <column name="ready_to_ship" type="TIMESTAMP"/>
         </addColumn>
     </changeSet>
+    
+    <changeSet id="discount_codes" author="borovsky">
+        <createTable tableName="discount_codes">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="code" type="VARCHAR(20)">
+                <constraints nullable="false" />
+            </column>
+            <column name="discount" type="INT">
+                <constraints nullable="false" />
+            </column>
+            <column name="valid_until" type="TIMESTAMP" />
+            <column name="one_time" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="used" type="BOOLEAN" />
+            <column name="percentage" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="discount_codes_index" author="borovsky">
+        <createIndex indexName="discount_codes_code_idx" tableName="discount_codes">
+            <column name="code" type="VARCHAR(20)"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="order_discount_code" author="borovsky">
+        <addColumn tableName="orders">
+            <column name="discount_code_id" type="BIGINT" />
+            <column name="shipment_price" type="DOUBLE" />
+            <column name="discount_value" type="DOUBLE" defaultValueNumeric="0" />
+        </addColumn>
+
+        <addForeignKeyConstraint
+            baseColumnNames="discount_code_id"
+            baseTableName="orders"
+            constraintName="fk_order_discount_code"
+            referencedColumnNames="id"
+            referencedTableName="discount_codes"
+            onDelete="SET NULL"
+        />
+    </changeSet>
+
+    <changeSet id="order_shipment_price_nonnull" author="borovsky">
+        <sql>
+            UPDATE orders o 
+            SET o.shipment_price = (
+                CASE 
+                    WHEN o.shipment_type = 'CESKA_POSTA' THEN 89
+                    ELSE 79
+                END
+            );
+        </sql>
+
+        <addNotNullConstraint
+            tableName="orders"
+            columnName="shipment_price"  
+            columnDataType="double"
+            defaultNullValue="0" 
+        />  
+    </changeSet>
 
 </databaseChangeLog>

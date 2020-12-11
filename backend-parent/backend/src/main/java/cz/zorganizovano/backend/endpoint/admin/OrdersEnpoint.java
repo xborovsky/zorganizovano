@@ -47,7 +47,7 @@ public class OrdersEnpoint {
     public List<AdminOrderListItem> getAllOrders(@RequestParam("shipped") boolean showInvoiceSent, @RequestParam("storno") boolean showStorno) {
         return orderDao.findOrders(showInvoiceSent, showStorno)
             .stream()
-            .map(order -> new AdminOrderListItem(order, orderService.calculateTotalPrice(order)))
+            .map(order -> new AdminOrderListItem(order, orderService.calculateTotalPrice(order, order.getDiscountValue())))
             .collect(Collectors.toList());
     }
 
@@ -65,7 +65,7 @@ public class OrdersEnpoint {
 
             return new AdminOrderDetail(
                 order,
-                orderService.calculateTotalPrice(order),
+                orderService.calculateTotalPrice(order, order.getDiscountValue()),
                 invoiceAddress,
                 shipmentAddressMaybe.orElse(null),
                 invoiceAddress.getOrder().getCustomer(),

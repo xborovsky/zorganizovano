@@ -49,7 +49,8 @@ public class OrderEndpoint {
             order.getCustomerInfo(),
             order.getShippingAddress(),
             order.getShoppingCart(),
-            order.getShipmentType()
+            order.getShipmentType(),
+            order.getDiscountCode()
         );
         
         PaymentInfo paymentInfo = new PaymentInfo(

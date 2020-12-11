@@ -22,12 +22,14 @@ public class OrderReportItem {
     private final List<OrderItem> orderItems;
     private final double totalPrice;
     private final String address;
+    private final double discountValue;
 
-    public OrderReportItem(Order order, List<OrderItem> orderItems, double totalPrice, String address) {
+    public OrderReportItem(Order order, List<OrderItem> orderItems, double totalPrice, String address, double discountValue) {
         this.order = order;
         this.orderItems = orderItems;
         this.totalPrice = totalPrice;
         this.address = address;
+        this.discountValue = discountValue;
     }
     
     public Table buildForReport() throws IOException {
@@ -56,6 +58,13 @@ public class OrderReportItem {
     private Cell buildRightColumn(Order order, PdfFont font) throws IOException {
         Cell cell = new Cell().setBorder(Border.NO_BORDER);
         cell.add(new Paragraph((int)totalPrice + ",- Kč").setFont(font).setBold().setFontSize(10));
+        if (discountValue > 0) {
+            cell.add(
+                new Paragraph("SLEVA: " + discountValue + ",- Kč (" + (order.getDiscountCode() != null ? order.getDiscountCode().getCode() : "???") + ")")
+                    .setFont(font)
+                    .setFontSize(8)
+            );
+        }
         cell.add(new Paragraph(order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName()).setFont(font).setFontSize(8));
         cell.add(new Paragraph(order.getCustomer().getEmail()).setFont(font).setFontSize(8));
         cell.add(new Paragraph(order.getCustomer().getPhoneNo()).setFont(font).setFontSize(8));

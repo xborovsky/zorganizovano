@@ -22,6 +22,8 @@ public class AdminOrderDetail {
     private final ShipmentAddress shipmentAddress;
     private final Customer customer;
     private final List<AdminOrderProductItem> orderItems;
+    private final double discountValue;
+    private final String discountCode;
 
     public AdminOrderDetail(Order order, double totalPrice, InvoiceAddress invoiceAddress, ShipmentAddress shipmentAddress, Customer customer, List<AdminOrderProductItem> orderItems) {
         this.orderId = order.getId();
@@ -36,6 +38,8 @@ public class AdminOrderDetail {
         this.shipmentAddress = shipmentAddress;
         this.customer = customer;
         this.orderItems = orderItems;
+        this.discountValue = order.getDiscountValue();
+        this.discountCode = order.getDiscountCode() == null ? null : order.getDiscountCode().getCode();
     }
 
     public long getOrderId() {
@@ -84,6 +88,14 @@ public class AdminOrderDetail {
 
     public List<AdminOrderProductItem> getOrderItems() {
         return orderItems;
+    }
+
+    public double getDiscountValue() {
+        return discountValue;
+    }
+
+    public String getDiscountCode() {
+        return discountCode;
     }
 
 }

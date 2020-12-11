@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import Hidden from '@material-ui/core/Hidden';
 
-import ShoppingCartContext from '../pages/public/eshop/shopping-cart/state-management/ShoppingCartContext';
+import useShoppingCartContext from '../pages/public/eshop/shopping-cart/state-management/use-shopping-cart-context';
 import Jumbotron from 'layout/Jumbotron';
 import { Grid } from '@material-ui/core';
 
@@ -112,7 +112,7 @@ const StyledBadge = withStyles(theme => ({
 }))(Badge);
 
 const Header = ({ classes }) => {
-    const { state } = useContext(ShoppingCartContext);
+    const { state } = useShoppingCartContext();
     const totalPrice = state.reduce((a, b) => a + ((b['price'] || 0) * b['quantity']), 0);
     const [ showMobileMenu, setShowMobileMenu ] = useState(false);
 
