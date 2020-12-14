@@ -73,7 +73,7 @@ const OrderConfirmation = ({
             shoppingCart : {
                 items : serverDataShoppingCart
             },
-            discountCode : discountCode.code
+            discountCode : discountCode?.code
          }).then(res => {
             setSubmitting(false);
             dispatch({ type : EMPTY_SHOPPING_CART });
