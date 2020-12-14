@@ -34,7 +34,7 @@ const TrackingNumberInput = ({
         })
             .then(res => {
                 setShowLoader(false);
-                onSuccess(res);
+                onSuccess(res.data);
             })
             .catch(error => {
                 if (error.response && error.response.status === 401) {
