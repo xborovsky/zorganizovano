@@ -502,4 +502,10 @@
         />  
     </changeSet>
 
+    <changeSet id="order_tracking_number" author="borovsky">
+        <addColumn tableName="orders">
+            <column name="tracking_number" type="VARCHAR(40)" />
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

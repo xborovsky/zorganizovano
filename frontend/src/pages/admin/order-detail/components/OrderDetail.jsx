@@ -17,6 +17,7 @@ import { OrderItemPropType } from './OrderItemPropType';
 import OrderDetailItems from './OrderDetailItems';
 import Alert from 'components/Alert';
 import { AuthContext } from 'pages/admin/AuthProvider';
+import TrackingNumberInput from './TrackingNumberInput';
 
 const useStyles = makeStyles({
     root : {
@@ -36,7 +37,7 @@ const OrderDetail = ({ order }) => {
         invoiceSent : false,
         shipped : false
     });
-    const [error, setError] = useState(undefined);
+    const [alertMessage, setAlertMessage] = useState(undefined);
     const [processingDates, setProcessingDates] = useState({
         paymentReceived : order.paymentReceived,
         readyToShip : order.readyToShip,
@@ -72,7 +73,7 @@ const OrderDetail = ({ order }) => {
                     logout();
                 }
                 console.error(error);
-                setError('Ups, něco se pokazilo!');
+                setAlertMessage({ type : 'error', message : 'Ups, něco se pokazilo!' });
                 setLoader({
                     ...loader,
                     [datePropertyName] : false
@@ -94,7 +95,7 @@ const OrderDetail = ({ order }) => {
 
     return (
         <div className={classes.root}>
-            { error && <Alert type="error">{error}</Alert> }
+            { alertMessage && <Alert type={alertMessage.type}>{alertMessage.message}</Alert> }
             <Paper >
                 <Table>
                     <TableBody>
@@ -164,7 +165,18 @@ const OrderDetail = ({ order }) => {
                         </TableRow>
                         <TableRow>
                             <TableCell className={classes.th}>Expedováno:</TableCell>
-                            <TableCell>{ dateOrCheckbox('shipped') }</TableCell>
+                            <TableCell>
+                            { order.shipmentType.name === 'ZASILKOVNA' ?
+                                    dateOrCheckbox('shipped') :
+                                    processingDates['shipped'] ?
+                                        format(parseISO(processingDates['shipped']), DATE_TIME_FORMAT) :
+                                        <TrackingNumberInput
+                                            orderId={order.orderId}
+                                            onSuccess={res => setProcessingDates(prev => ({ ...prev, shipped : res }))}
+                                            onError={() => setAlertMessage({ type : 'error', message : 'Ups, něco se pokazilo!' })}
+                                        />
+                                }
+                            </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell className={classes.th}>Faktura odeslána:</TableCell>

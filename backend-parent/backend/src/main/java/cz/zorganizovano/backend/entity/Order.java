@@ -61,6 +61,8 @@ public class Order implements Serializable {
     private DiscountCode discountCode;
     @Column(name = "discount_value")
     private double discountValue;
+    @Column(name = "trackingNumber")
+    private String trackingNumber;
 
     public Order() {
     }
@@ -179,6 +181,14 @@ public class Order implements Serializable {
 
     public void setDiscountValue(double discountValue) {
         this.discountValue = discountValue;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
     }
 
     @Override

@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="x-apple-disable-message-reformatting" />
-        <title>Objednávka přijata</title>
+        <title>Objednávka předána k přepravě</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body style="margin: 0; padding: 0; font-family: sans-serif; ">
@@ -19,38 +19,12 @@
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
-                        Přijala jsem Vaši objednávku č. ${orderNum}
+                        Objednávka č. <b style="font-size: 16pt;">${orderNum}</b> byla předána Vámi zvolenému přepravci.
+                        #if($trackingNumber)
+                            <br /><br />
+                            Zásilku můžete sledovat zde: <a href="https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers=${trackingNumber}" target="_blank">${trackingNumber}</a>
+                        #end
                         <br /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 9pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        <table cellpadding="10" cellspacing="0" style="border : 2px solid #999; border-collapse: collapse;">
-                            <tr>
-                                <th style="text-align: left; border : 1px solid #999;">Produkt</th>
-                                <th style="text-align: left; border : 1px solid #999;">Množství</th>
-                                <th style="text-align: left; border : 1px solid #999;" nowrap="nowrap">Cena</th>
-                            </tr>
-                            ${orderItems}
-                        </table>
-                        <br /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        Pokud jste tak již neučinili, cenu objednávky prosím uhraďte do 3 pracovních dnů na účet:
-                        <br /><br />
-                        ${paymentDetails}
-                        <br /><br />
-                        V případě, že objednávka nebude uhrazena v požadované lhůtě, bude stornována.
-                        <br /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        <br /><br />
-                        Zboží Vám bude doručeno na adresu:<br />
-                        ${shippingAddress}
                     </td>
                 </tr>
                 <tr>

@@ -19,38 +19,9 @@
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
-                        Přijala jsem Vaši objednávku č. ${orderNum}
+                        Platba za objednávku č. <b style="font-size: 16pt;">${orderNum}</b> byla přijata.
                         <br /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 9pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        <table cellpadding="10" cellspacing="0" style="border : 2px solid #999; border-collapse: collapse;">
-                            <tr>
-                                <th style="text-align: left; border : 1px solid #999;">Produkt</th>
-                                <th style="text-align: left; border : 1px solid #999;">Množství</th>
-                                <th style="text-align: left; border : 1px solid #999;" nowrap="nowrap">Cena</th>
-                            </tr>
-                            ${orderItems}
-                        </table>
-                        <br /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        Pokud jste tak již neučinili, cenu objednávky prosím uhraďte do 3 pracovních dnů na účet:
-                        <br /><br />
-                        ${paymentDetails}
-                        <br /><br />
-                        V případě, že objednávka nebude uhrazena v požadované lhůtě, bude stornována.
-                        <br /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        <br /><br />
-                        Zboží Vám bude doručeno na adresu:<br />
-                        ${shippingAddress}
+                        Vaše objednávka bude expedována do 3 pracovních dnů.*
                     </td>
                 </tr>
                 <tr>
@@ -58,6 +29,13 @@
                         <br /><br />
                         Děkuji za Váš nákup,<br />
                         Bára
+                        <br /><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
+                        <br /><br />
+                        * Pakliže Vaše objednávka obsahuje zboží Plstěný diář, bude expedována do 10 pracovních dnů. Všechny objednávky vzniklé od 3.12.2020 budou expedovány až v lednu 2021. Děkuji za pochopení a všem přeji klidné prožití vánočních svátků.
                         <br /><br />
                     </td>
                 </tr>

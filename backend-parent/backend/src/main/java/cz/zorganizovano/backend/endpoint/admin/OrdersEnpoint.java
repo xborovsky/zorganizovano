@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.endpoint.admin;
 
+import cz.zorganizovano.backend.bean.TrackingNumberRequest;
 import cz.zorganizovano.backend.bean.admin.order.AdminOrderDetail;
 import cz.zorganizovano.backend.bean.admin.order.AdminOrderListItem;
 import cz.zorganizovano.backend.bean.admin.order.AdminOrderProductItem;
@@ -11,6 +12,7 @@ import cz.zorganizovano.backend.endpoint.ResourceNotFoundException;
 import cz.zorganizovano.backend.entity.InvoiceAddress;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.ShipmentAddress;
+import cz.zorganizovano.backend.service.AdminOrderManager;
 import cz.zorganizovano.backend.service.OrderService;
 import java.text.MessageFormat;
 import java.util.Date;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +45,8 @@ public class OrdersEnpoint {
     private ShipmentAddressDao shipmentAddressDao;
     @Autowired
     private OrderItemDao orderItemDao;
+    @Autowired
+    private AdminOrderManager adminOrderManager;
 
     @GetMapping
     public List<AdminOrderListItem> getAllOrders(@RequestParam("shipped") boolean showInvoiceSent, @RequestParam("storno") boolean showStorno) {
@@ -77,7 +82,7 @@ public class OrdersEnpoint {
     }
 
     @PostMapping("/{id}/{dateProperty}")
-    public Date udpateDate(@PathVariable long id, @PathVariable String dateProperty) {
+    public Date udpateDate(@PathVariable long id, @PathVariable String dateProperty, @RequestBody TrackingNumberRequest trackingNumberRequest) {
         Optional<Order> orderMaybe = orderDao.findById(id);
         if (!orderMaybe.isPresent()) {
             throw new ResourceNotFoundException(MessageFormat.format("Order {0} not found!", id));
@@ -86,15 +91,15 @@ public class OrdersEnpoint {
         Order order = orderMaybe.get();
         switch(dateProperty) {
             case "paymentReceived":
-                return orderService.updatePaymentReceivedDate(order);
+                return adminOrderManager.updatePaymentReceivedDate(order);
             case "readyToShip":
-                return orderService.updateReadyToShipDate(order);
+                return adminOrderManager.updateReadyToShipDate(order);
             case "invoiceSent":
-                return orderService.updateInvoiceSentDate(order);
+                return adminOrderManager.updateInvoiceSentDate(order);
             case "shipped":
-                return orderService.updateShippedDate(order);
+                return adminOrderManager.updateShippedDate(order, trackingNumberRequest.getTrackingNumber());
             case "storno":
-                return orderService.updateStornoDate(order);
+                return adminOrderManager.updateStornoDate(order);
             default:
                 LOG.warn(MessageFormat.format("Unknown property {0}!", dateProperty));
         }

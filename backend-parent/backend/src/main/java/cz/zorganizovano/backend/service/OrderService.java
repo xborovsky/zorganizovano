@@ -7,7 +7,6 @@ import cz.zorganizovano.backend.bean.order.ShoppingCart;
 import cz.zorganizovano.backend.entity.DiscountCode;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.ShipmentType;
-import java.util.Date;
 
 public interface OrderService {
 
@@ -20,13 +19,4 @@ public interface OrderService {
 
     double calculateTotalPrice(Order order, double discountValue);
 
-    Date updatePaymentReceivedDate(Order order);
-    
-    Date updateReadyToShipDate(Order order);
-
-    Date updateInvoiceSentDate(Order order);
-
-    Date updateShippedDate(Order order);
-
-    Date updateStornoDate(Order order);
 }
