@@ -22,7 +22,7 @@
                         Objednávka č. <b style="font-size: 16pt;">${orderNum}</b> byla předána Vámi zvolenému přepravci.
                         #if($trackingNumber)
                             <br /><br />
-                            Zásilku můžete sledovat zde: <a href="https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers=${trackingNumber}" target="_blank">${trackingNumber}</a>
+                            Zásilku můžete sledovat zde: <a href="https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers=${trackingNumber}" target="_blank">https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers=${trackingNumber}</a>
                         #end
                         <br /><br />
                     </td>

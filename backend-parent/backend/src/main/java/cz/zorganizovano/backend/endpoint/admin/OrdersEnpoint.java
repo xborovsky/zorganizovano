@@ -82,7 +82,7 @@ public class OrdersEnpoint {
     }
 
     @PostMapping("/{id}/{dateProperty}")
-    public Date udpateDate(@PathVariable long id, @PathVariable String dateProperty, @RequestBody TrackingNumberRequest trackingNumberRequest) {
+    public Date udpateDate(@PathVariable long id, @PathVariable String dateProperty, @RequestBody(required = false) TrackingNumberRequest trackingNumberRequest) {
         Optional<Order> orderMaybe = orderDao.findById(id);
         if (!orderMaybe.isPresent()) {
             throw new ResourceNotFoundException(MessageFormat.format("Order {0} not found!", id));
