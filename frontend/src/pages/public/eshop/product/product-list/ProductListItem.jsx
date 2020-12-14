@@ -27,7 +27,7 @@ const styles = theme => ({
         height : '100%'
     },
     header : {
-        backgroundColor : '#2e4b14',
+        backgroundColor : '#444',
         color : '#fff',
         cursor : 'pointer',
         '&>.MuiCardHeader-content' : {
@@ -40,7 +40,7 @@ const styles = theme => ({
             }
         },
         '&:hover' : {
-            backgroundColor : '#6c815a'
+            backgroundColor : '#000'
         }
     },
     headerTitle : {

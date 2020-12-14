@@ -58,10 +58,12 @@ const styles = theme => ({
         alignItems : 'center',
         textDecoration : 'none !important',
         '&:active' : {
-            backgroundColor : 'rgba(46, 75, 20, .8)'
+            backgroundColor : '#ededed',
+            color : 'black'
         },
         '&:hover' : {
-            backgroundColor : 'rgba(46, 75, 20, .8)'
+            backgroundColor : '#ededed',
+            color : 'black'
         },
         [theme.breakpoints.down('sm')] : {
             justifyContent : 'center',
@@ -70,10 +72,11 @@ const styles = theme => ({
         }
     },
     activeLink : {
-        backgroundColor : 'rgba(46, 75, 20, .8)'
+        backgroundColor : '#ededed',
+        color : 'black'
     },
     shoppingCartIcon : {
-        color : '#fff',
+        color : 'inherit',
         fontSize : 14,
         padding : '0 !important',
         "&:hover": {
