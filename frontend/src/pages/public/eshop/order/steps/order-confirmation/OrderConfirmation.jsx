@@ -91,6 +91,12 @@ const OrderConfirmation = ({
          });
     };
 
+    const onFormKeyDown = e => {
+        if ((e.charCode || e.keyCode) === 13) {
+            e.preventDefault();
+        }
+    };
+
     if (deliveryOptionsFetchError) {
         return <Alert type="error">Problém komunikace se serverem.</Alert>;
     } else if (isLoadingDeliveryOptions) {
@@ -117,7 +123,7 @@ const OrderConfirmation = ({
                     handleChange,
                     isSubmitting
                 }) => (
-                    <Form>
+                    <Form onKeyDown={onFormKeyDown}>
                         <div>
                             <Section title='Objednáváte si tyto položky'>
                                 <Hidden smDown>

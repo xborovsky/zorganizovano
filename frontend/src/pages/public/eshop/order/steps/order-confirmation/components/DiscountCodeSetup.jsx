@@ -49,6 +49,12 @@ const DiscountCodeSetup = () => {
                 setProgress(false);
             });
     };
+
+    const handleKeyDown = e => {
+        if ((e.charCode || e.keyCode) === 13) {
+            handleCheckCodeClick();
+        }
+    };
     
     return (
         <Grid container className={classes.root}>
@@ -59,6 +65,7 @@ const DiscountCodeSetup = () => {
                     margin="dense"
                     variant="outlined"
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     value={discountCode}
                     inputProps={{
                         maxLength : 20
