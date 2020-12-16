@@ -62,6 +62,7 @@ const OrderWizard = ({ classes }) => {
             );
             case 1: return (
                 <DeliveryForm
+                    orderItemIds={orderData.shoppingCart.map(item => item.id)}
                     initialFormData={{
                         deliveryOption : orderData.shipmentType,
                         selectedZasilkovna : orderData.selectedZasilkovna,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/styles/withStyles';
 import { Formik, Form } from 'formik';
@@ -46,13 +46,31 @@ const OrderConfirmation = ({
 
     const { dispatch, discountCode, setDiscountCode } = useShoppingCartContext();
     const history = useHistory();
-    const { data:deliveryOptions, isLoading:isLoadingDeliveryOptions, error:deliveryOptionsFetchError } = useFetch('/order/delivery-options');
+    const [isLoadingDeliveryOptions, seIsLoadingDeliveryOptions] = useState(true);
+    const [deliveryOptions, setDeliveryOptions] = useState(undefined);
+    const [deliveryOptionsFetchError, setDeliveryOptionsFetchError] = useState(false);
     const selectedDelivery = deliveryOptions?.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
     const cartSum = calculateCartSum(
         orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.priceSingle), 0),
         selectedDelivery?.price || 0,
         discountCode
     );
+
+    useEffect(() => {
+        const fetchData = () => {
+            axios.post('/order/delivery-options', { orderItemIds : orderData.shoppingCart.map(item => item.id) })
+                .then(res => {
+                    setDeliveryOptions(res.data);
+                    seIsLoadingDeliveryOptions(false);
+                }).catch(err => {
+                    onError('Ups, něco se pokazilo.');
+                    setDeliveryOptionsFetchError(true);
+                    seIsLoadingDeliveryOptions(false);
+                });
+            };
+
+        fetchData();
+    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);

@@ -8,21 +8,42 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Formik, Form } from 'formik';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { CircularProgress } from '@material-ui/core';
+import axios from 'axios';
 
 import WizardButtons from '../components/WizardButtons';
 import ZasilkovnaInfo from '../components/ZasilkovnaInfo';
-import DataFetcher from 'components/DataFetcher';
 
 const PACKETA_API_KEY = '78f6dc3fd19b4bc1';
 const ZASILKOVNA = 'zasilkovna';
 
 const DeliveryForm = ({
+    orderItemIds,
     onGoToPrevStep,
     onGoToNextStep,
     initialFormData,
     onError
 }) => {
     const [selectedZasilkovna, setSelectedZasilkovna] = useState(initialFormData.selectedZasilkovna);
+    const [isDeliveryOptionsLoading, seIsDeliveryOptionsLoading] = useState(true);
+    const [deliveryOptions, setDeliveryOptions] = useState(undefined);
+    const [deliveryOptionsLoadingError, setDeliveryOptionsLoadingError] = useState(false);
+
+    useEffect(() => {
+        const fetchData = () => {
+            axios.post('/order/delivery-options', { orderItemIds })
+                .then(res => {
+                    setDeliveryOptions(res.data);
+                    seIsDeliveryOptionsLoading(false);
+                }).catch(err => {
+                    onError('Ups, něco se pokazilo.');
+                    setDeliveryOptionsLoadingError(true);
+                    seIsDeliveryOptionsLoading(false);
+                });
+            };
+
+        fetchData();
+    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -62,8 +83,9 @@ const DeliveryForm = ({
     };
 
     return (
-        <DataFetcher url='/order/delivery-options'>
-            { data => (
+        <>
+            { isDeliveryOptionsLoading && <CircularProgress /> }
+            { (!isDeliveryOptionsLoading && !deliveryOptionsLoadingError) &&
                 <Formik
                     initialValues={initialFormValues}
                     validate={validateForm}
@@ -82,7 +104,7 @@ const DeliveryForm = ({
                                 <FormControl component="fieldset" error={touched.deliveryOption && !!errors.deliveryOption}>
                                     <RadioGroup aria-label="delivery option" name="deliveryOption" value={values.deliveryOption} onChange={handleChange}>
                                         {
-                                            data.map(deliveryOption => (
+                                            deliveryOptions.map(deliveryOption => (
                                                 <div key={deliveryOption.name}>
                                                     <FormControlLabel
                                                         value={deliveryOption.name}
@@ -146,12 +168,13 @@ const DeliveryForm = ({
                             </Form>
                         )}
                 </Formik>
-            ) }
-        </DataFetcher>
+            }
+        </>
     );
 };
 
 DeliveryForm.propTypes = {
+    orderItemIds : PropTypes.arrayOf(PropTypes.number).isRequired,
     onGoToPrevStep : PropTypes.func.isRequired,
     onGoToNextStep : PropTypes.func.isRequired,
     initialFormData : PropTypes.shape({

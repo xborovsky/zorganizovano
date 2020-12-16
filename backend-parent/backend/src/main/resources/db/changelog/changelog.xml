@@ -507,5 +507,11 @@
             <column name="tracking_number" type="VARCHAR(40)" />
         </addColumn>
     </changeSet>
+    
+    <changeSet id="stock_items_online_shipment" author="borovsky">
+        <addColumn tableName="stock_items">
+            <column name="enable_online_shipment" type="BOOLEAN" defaultValueBoolean="false" />
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

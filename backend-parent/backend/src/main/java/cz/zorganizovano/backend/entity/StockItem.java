@@ -27,6 +27,8 @@ public class StockItem implements Serializable {
     private boolean displayOnEshop = false;
     @Column(name = "thumbnail_location", nullable = true)
     private String thumbnailLocation;
+    @Column(name = "enable_online_shipment", nullable = false)
+    private boolean enableOnlineShipment = false;
 
     public StockItem() {
     }
@@ -73,6 +75,14 @@ public class StockItem implements Serializable {
 
     public void setThumbnailLocation(String thumbnailLocation) {
         this.thumbnailLocation = thumbnailLocation;
+    }
+
+    public boolean isEnableOnlineShipment() {
+        return enableOnlineShipment;
+    }
+
+    public void setEnableOnlineShipment(boolean enableOnlineShipment) {
+        this.enableOnlineShipment = enableOnlineShipment;
     }
 
     @Override

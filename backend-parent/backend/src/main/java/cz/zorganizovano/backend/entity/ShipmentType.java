@@ -7,7 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public enum ShipmentType {
 
     ZASILKOVNA("Zásilkovna", 79),
-    CESKA_POSTA("Česká pošta", 89);
+    CESKA_POSTA("Česká pošta", 89),
+    ONLINE("Online (pouze pro dárkové poukazy)", 0);
 
     private final String readableName;
     private final double price;
