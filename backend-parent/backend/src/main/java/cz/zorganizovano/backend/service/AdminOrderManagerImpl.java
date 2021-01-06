@@ -2,12 +2,18 @@ package cz.zorganizovano.backend.service;
 
 import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.email.EmailService;
+import cz.zorganizovano.backend.email.builder.InvoiceCreatedEmail;
 import cz.zorganizovano.backend.email.builder.OrderShippedEmail;
 import cz.zorganizovano.backend.email.builder.PaymentReceivedEmail;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.manager.TimeManager;
+import cz.zorganizovano.backend.report.InvoiceCreator;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +30,13 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
     private PaymentReceivedEmail paymentReceivedEmail;
     @Autowired
     private OrderShippedEmail orderShippedEmail;
+    @Autowired
+    private InvoiceCreatedEmail invoiceCreatedEmail;
+    @Autowired
+    private InvoiceCreator invoiceCreator;
+
+    @Value("${zorganizovano.invoice.export.location}")
+    private String invoicesFolderLocation;
     
     @Override
     @Transactional
@@ -49,10 +62,18 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
 
     @Override
     @Transactional
-    public Date updateInvoiceSentDate(Order order) {
+    public Date updateInvoiceSentDate(Order order) throws IOException, SQLException {
         Date now = timeManager.getCurrentDate();
         order.setInvoiceSent(now);
         orderDao.save(order);
+        
+        invoiceCreator.exportInvoice(order);
+        emailService.send(
+            order.getCustomer().getEmail(), 
+            invoiceCreatedEmail.getSubject(), 
+            invoiceCreatedEmail.build(order),
+            new File(invoicesFolderLocation + File.separator + order.getOrderNum() + ".pdf")
+        );
 
         return now;
     }

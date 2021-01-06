@@ -1,5 +1,7 @@
 package cz.zorganizovano.backend.email;
 
+import java.io.File;
+import java.io.IOException;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,24 @@ public class EmailServiceImpl implements EmailService {
             messageHelper.setTo(to);
             messageHelper.setSubject(subject);
             messageHelper.setText(text, true);
+
+            emailSender.send(mimeMessage);
+        } catch (MessagingException ex) {
+            throw new MailSendException(ex.getMessage(), ex);
+        }
+    }
+    
+    @Override
+    public void send(String to, String subject, String text, File attachment) throws MailException, IOException {
+         try {
+            MimeMessage mimeMessage = emailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+            messageHelper.setFrom(ADMIN_EMAIL);
+            messageHelper.setTo(to);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(text, true);
+
+            messageHelper.addAttachment(attachment.getName(), attachment);
 
             emailSender.send(mimeMessage);
         } catch (MessagingException ex) {

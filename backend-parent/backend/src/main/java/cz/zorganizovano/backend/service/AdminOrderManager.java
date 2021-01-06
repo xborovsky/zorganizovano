@@ -1,6 +1,8 @@
 package cz.zorganizovano.backend.service;
 
 import cz.zorganizovano.backend.entity.Order;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 
 public interface AdminOrderManager {
@@ -9,7 +11,7 @@ public interface AdminOrderManager {
     
     Date updateReadyToShipDate(Order order);
 
-    Date updateInvoiceSentDate(Order order);
+    Date updateInvoiceSentDate(Order order) throws IOException, SQLException;
 
     Date updateShippedDate(Order order, String trackingNumber);
 
