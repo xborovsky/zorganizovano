@@ -46,6 +46,8 @@ public class InvoiceCreatorImpl implements InvoiceCreator {
 
     @Value("${zorganizovano.invoice.export.location}")
     private String invoicesFolderLocation;
+    @Value("${zorganizovano.invoice.template.location}")
+    private String invoicesJasperTemplateLocation;
     
     @Autowired
     private OrderService orderService;
@@ -59,7 +61,7 @@ public class InvoiceCreatorImpl implements InvoiceCreator {
     @PostConstruct
     public void init() {
         try {
-            this.jasperFile = new File(ResourceUtils.getFile("classpath:jasper-templates/invoice.jasper").toURI());
+            this.jasperFile = new File(invoicesJasperTemplateLocation + File.separator + "invoice.jasper");
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -106,8 +108,8 @@ public class InvoiceCreatorImpl implements InvoiceCreator {
         params.put("DUE_DATE", SDF.format(order.getMaturity()));
         params.put("CUSTOMER", buildCustomerInfo(order));
         params.put("TOTAL_PRICE", (int)orderService.calculateTotalPrice(order, order.getDiscountValue()) + PRICE_SUFFIX);
-        params.put("LOGO", ImageIO.read(ResourceUtils.getFile("classpath:jasper-templates/images/Z_logo_pozitiv.png")));
-        params.put("SIGNATURE", ImageIO.read(ResourceUtils.getFile("classpath:jasper-templates/images/razitko_podpis.jpg")));
+        params.put("LOGO", ImageIO.read(new File(invoicesJasperTemplateLocation + File.separator + "images" + File.separator + "Z_logo_pozitiv.png")));
+        params.put("SIGNATURE", ImageIO.read(new File(invoicesJasperTemplateLocation + File.separator + "images" + File.separator + "razitko_podpis.jpg")));
 
         List<InvoiceItem> invoiceItems = orderItemDao.findByOrder(order).stream()
             .map(orderItem -> new InvoiceItem(orderItem))
