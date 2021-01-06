@@ -14,6 +14,8 @@ import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.ShipmentAddress;
 import cz.zorganizovano.backend.service.AdminOrderManager;
 import cz.zorganizovano.backend.service.OrderService;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
@@ -82,7 +84,7 @@ public class OrdersEnpoint {
     }
 
     @PostMapping("/{id}/{dateProperty}")
-    public Date udpateDate(@PathVariable long id, @PathVariable String dateProperty, @RequestBody(required = false) TrackingNumberRequest trackingNumberRequest) {
+    public Date udpateDate(@PathVariable long id, @PathVariable String dateProperty, @RequestBody(required = false) TrackingNumberRequest trackingNumberRequest) throws IOException, SQLException {
         Optional<Order> orderMaybe = orderDao.findById(id);
         if (!orderMaybe.isPresent()) {
             throw new ResourceNotFoundException(MessageFormat.format("Order {0} not found!", id));

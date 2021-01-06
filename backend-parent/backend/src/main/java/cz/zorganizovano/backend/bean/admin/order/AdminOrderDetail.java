@@ -18,6 +18,8 @@ public class AdminOrderDetail {
     private final Date paymentReceived;
     private final Date invoiceSent;
     private final Date shipped;
+    private final Date readyToShip;
+    private final Date storno;
     private final InvoiceAddress invoiceAddress;
     private final ShipmentAddress shipmentAddress;
     private final Customer customer;
@@ -34,6 +36,8 @@ public class AdminOrderDetail {
         this.paymentReceived = order.getPaymentReceived();
         this.invoiceSent = order.getInvoiceSent();
         this.shipped = order.getShipped();
+        this.readyToShip = order.getReadyToShip();
+        this.storno = order.getStorno();
         this.invoiceAddress = invoiceAddress;
         this.shipmentAddress = shipmentAddress;
         this.customer = customer;
@@ -96,6 +100,14 @@ public class AdminOrderDetail {
 
     public String getDiscountCode() {
         return discountCode;
+    }
+
+    public Date getReadyToShip() {
+        return readyToShip;
+    }
+
+    public Date getStorno() {
+        return storno;
     }
 
 }
