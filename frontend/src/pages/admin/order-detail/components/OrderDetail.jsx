@@ -149,7 +149,7 @@ const OrderDetail = ({ order }) => {
                                 <TableCell className={classes.th}>Doručovací adresa:</TableCell>
                                 <TableCell>
                                     {order.shipmentAddress.street}<br />
-                                    {order.shipmentAddress.township}<br />>
+                                    {order.shipmentAddress.township}<br />
                                     {order.shipmentAddress.zipCode}<br />
                                     {order.shipmentAddress.country}<br />
                                 </TableCell>

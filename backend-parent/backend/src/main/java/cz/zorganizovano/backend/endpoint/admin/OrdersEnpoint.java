@@ -99,7 +99,7 @@ public class OrdersEnpoint {
             case "invoiceSent":
                 return adminOrderManager.updateInvoiceSentDate(order);
             case "shipped":
-                return adminOrderManager.updateShippedDate(order, trackingNumberRequest.getTrackingNumber());
+                return adminOrderManager.updateShippedDate(order, trackingNumberRequest == null ? null : trackingNumberRequest.getTrackingNumber());
             case "storno":
                 return adminOrderManager.updateStornoDate(order);
             default:
