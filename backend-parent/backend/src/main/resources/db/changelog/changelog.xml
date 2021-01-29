@@ -513,5 +513,12 @@
             <column name="enable_online_shipment" type="BOOLEAN" defaultValueBoolean="false" />
         </addColumn>
     </changeSet>
+    
+    <changeSet id="discount_code_unique" author="borovsky">
+        <addUniqueConstraint
+            tableName="discount_codes"
+            columnNames="code"
+        />
+    </changeSet>
 
 </databaseChangeLog>

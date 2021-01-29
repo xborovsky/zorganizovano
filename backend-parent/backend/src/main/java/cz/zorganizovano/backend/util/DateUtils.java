@@ -10,4 +10,8 @@ public class DateUtils {
         return new Date().before(date);
     }
     
+    public boolean isAfterCurrentTimestamp(Date date) {
+        return new Date().after(date);
+    }
+    
 }

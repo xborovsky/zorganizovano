@@ -21,7 +21,7 @@ public class DiscountCode implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
-    @Column(name = "code", nullable = false)
+    @Column(name = "code", nullable = false, unique = true)
     private String code;
     @Column(name = "discount", nullable = false)
     private int discount;
