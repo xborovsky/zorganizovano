@@ -36,10 +36,6 @@ public class DiscountCodesEndpoint {
     
     @GetMapping
     public List<DiscountCode> getDiscountCodes() {
-        for (DiscountCode dc : discountCodeDao.findAll()) {
-            System.out.println(dc.getCode());
-            System.out.println(dc.getValidUntil());
-        }
         return discountCodeDao.findAll(Sort.by(discountCodesOrders));
     }
 
