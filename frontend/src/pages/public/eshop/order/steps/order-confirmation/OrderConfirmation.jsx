@@ -20,7 +20,6 @@ import { EMPTY_SHOPPING_CART } from '../../../shopping-cart/state-management/Sho
 import useShoppingCartContext from '../../../shopping-cart/state-management/use-shopping-cart-context';
 import DiscountCodeSetup from './components/DiscountCodeSetup';
 import { calculateCartSum } from 'pages/public/eshop/shopping-cart/util/cart-sum-calculator';
-import useFetch from 'hooks/use-fetch';
 import Alert from 'components/Alert';
 import { CircularProgress } from '@material-ui/core';
 

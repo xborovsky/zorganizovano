@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
-const useSessionStorage = key => {
+const useSessionStorage = (key, initialState) => {
     const getInitialState = () => {
         const sess = window.localStorage.getItem('key');
-        return !sess ? undefined : JSON.parse(sess);
+        return !sess ? initialState : JSON.parse(sess);
     };
 
     const [value, setValue] = useState(getInitialState);

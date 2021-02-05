@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +32,9 @@ public class Item implements Serializable {
     private Double discountPrice;
     @Column(name = "meta_title", columnDefinition = "TEXT")
     private String metaTitle;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = true)
+    private ItemCategory itemCategory;
 
     public Item() {
     }
@@ -92,6 +97,14 @@ public class Item implements Serializable {
 
     public void setMetaTitle(String metaTitle) {
         this.metaTitle = metaTitle;
+    }
+
+    public ItemCategory getItemCategory() {
+        return itemCategory;
+    }
+
+    public void setItemCategory(ItemCategory itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
     @Override

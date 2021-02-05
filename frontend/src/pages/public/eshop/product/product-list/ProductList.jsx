@@ -29,6 +29,10 @@ const ProductList = ({ products, classes }) => {
     return (
         <div className={classes.root}>
             <Grid container spacing={5}>
+                { 
+                    products.length === 0 && 
+                        <Grid item xs={12}>Produkty v této sekci pro vás usilovně připravujeme...</Grid> 
+                }
                 {
                     products.map(product => (
                         <ProductListItem

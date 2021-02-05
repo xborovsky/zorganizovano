@@ -2,6 +2,7 @@ package cz.zorganizovano.backend.endpoint;
 
 import cz.zorganizovano.backend.bean.item.ItemDetailDTO;
 import cz.zorganizovano.backend.bean.item.ItemListEntry;
+import cz.zorganizovano.backend.dao.ItemCategoryDao;
 import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.entity.ItemDetail;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cz.zorganizovano.backend.dao.ItemDetailDao;
+import cz.zorganizovano.backend.entity.ItemCategory;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/item")
@@ -24,10 +28,21 @@ public class ItemEndpoint {
     private StockItemDao stockItemDao;
     @Autowired
     private ItemDetailDao stockItemDetailDao;
-    
+    @Autowired
+    private ItemCategoryDao itemCategoryDao;
+
     @GetMapping
-    public List<ItemListEntry> getAllItems() {
-        List<StockItem> stockItems = stockItemDao.findByDisplayOnEshopOrderByIdDesc(true);
+    public List<ItemListEntry> getAllItems(@RequestParam(name = "categoryId", required = false) Long categoryId) {
+        List<StockItem> stockItems;
+        if (categoryId == null) {
+            stockItems = stockItemDao.findByDisplayOnEshopOrderByIdDesc(true);
+        } else {
+            Optional<ItemCategory> itemCategoryOpt = itemCategoryDao.findById(categoryId);
+            stockItems = itemCategoryOpt.isPresent() ? 
+                stockItemDao.findNotHiddenByItemCategory(itemCategoryOpt.get(), Sort.by(Sort.Direction.DESC, "id")) :
+                stockItemDao.findByDisplayOnEshopOrderByIdDesc(true);
+        }
+
         return stockItems.stream()
             .map(stockItem -> new ItemListEntry(stockItem))
             .collect(Collectors.toList());

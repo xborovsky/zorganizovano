@@ -12,17 +12,19 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 
-Sentry.init({
-  dsn: "https://b166b9c7a03d4d3f8905df95b372c7ef@o468021.ingest.sentry.io/5495326",
-  release: "marek-borovsky@" + process.env.npm_package_version,
-  integrations: [
-    new Integrations.BrowserTracing(),
-  ],
+if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
+  Sentry.init({
+    dsn: "https://b166b9c7a03d4d3f8905df95b372c7ef@o468021.ingest.sentry.io/5495326",
+    release: "marek-borovsky@" + process.env.npm_package_version,
+    integrations: [
+      new Integrations.BrowserTracing(),
+    ],
 
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
-  tracesSampleRate: 1.0,
-});
+    // We recommend adjusting this value in production, or using tracesSampler
+    // for finer control
+    tracesSampleRate: 1.0,
+  });
+}
 
 var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 

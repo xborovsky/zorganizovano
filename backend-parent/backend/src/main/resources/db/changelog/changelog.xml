@@ -521,4 +521,60 @@
         />
     </changeSet>
 
+    <changeSet id="item_categories" author="borovsky">
+        <createTable tableName="item_categories">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="parent_id" type="BIGINT" />
+            <column name="name" type="VARCHAR(40)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createIndex indexName="item_categories_parent_id_idx" tableName="item_categories">
+            <column name="parent_id" type="BIGINT"/>
+        </createIndex>
+
+        <addForeignKeyConstraint
+            baseColumnNames="parent_id"
+            baseTableName="item_categories"
+            constraintName="fk_item_categories_parent"
+            referencedColumnNames="id"
+            referencedTableName="item_categories"
+            onDelete="NO ACTION"
+            onUpdate="NO ACTION"
+        />
+
+        <addColumn tableName="items">
+            <column name="category_id" type="BIGINT" />
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="item_categories_inserts" author="borovsky">
+        <insert tableName="item_categories">
+            <column name="name" value="eshop"/>
+        </insert>
+        <insert tableName="item_categories">
+            <column name="parent_id" value="1"/>
+            <column name="name" value="kalendáře"/>
+        </insert>
+        <insert tableName="item_categories">
+            <column name="parent_id" value="1"/>
+            <column name="name" value="diáře"/>
+        </insert>
+        <insert tableName="item_categories">
+            <column name="parent_id" value="1"/>
+            <column name="name" value="plánovače"/>
+        </insert>
+        <insert tableName="item_categories">
+            <column name="parent_id" value="1"/>
+            <column name="name" value="štítky"/>
+        </insert>
+        <insert tableName="item_categories">
+            <column name="parent_id" value="1"/>
+            <column name="name" value="poukazy"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
