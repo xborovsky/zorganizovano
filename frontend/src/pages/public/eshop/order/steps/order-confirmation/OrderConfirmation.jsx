@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/styles/withStyles';
 import { Formik, Form } from 'formik';
@@ -18,10 +18,10 @@ import Section from './components/Section';
 import ShoppingCartSm from './components/ShoppingCartSm';
 import { EMPTY_SHOPPING_CART } from '../../../shopping-cart/state-management/ShoppingCartActions';
 import useShoppingCartContext from '../../../shopping-cart/state-management/use-shopping-cart-context';
+import { getCountryEnumName } from '../../../../../../util/country-util';
 import DiscountCodeSetup from './components/DiscountCodeSetup';
 import { calculateCartSum } from 'pages/public/eshop/shopping-cart/util/cart-sum-calculator';
-import Alert from 'components/Alert';
-import { CircularProgress } from '@material-ui/core';
+import OrderContext from '../../OrderContext';
 
 const styles = theme => ({
     totalPrice : {
@@ -39,37 +39,16 @@ const styles = theme => ({
 const OrderConfirmation = ({
     onGoToPrevStep,
     onError,
-    orderData,
     classes
 }) => {
-
     const { dispatch, discountCode, setDiscountCode } = useShoppingCartContext();
+    const { customerInfo, customerAddress, selectedDelivery, shoppingCart } = useContext(OrderContext);
     const history = useHistory();
-    const [isLoadingDeliveryOptions, seIsLoadingDeliveryOptions] = useState(true);
-    const [deliveryOptions, setDeliveryOptions] = useState(undefined);
-    const [deliveryOptionsFetchError, setDeliveryOptionsFetchError] = useState(false);
-    const selectedDelivery = deliveryOptions?.find(deliveryOption => deliveryOption.name.toLowerCase() === orderData.shipmentType.toLowerCase());
     const cartSum = calculateCartSum(
-        orderData.shoppingCart.reduce((a, b) => a + (b.quantity * b.priceSingle), 0),
-        selectedDelivery?.price || 0,
+        shoppingCart.reduce((a, b) => a + (b.quantity * b.priceSingle), 0),
+        selectedDelivery.type.price || 0,
         discountCode
     );
-
-    useEffect(() => {
-        const fetchData = () => {
-            axios.post('/order/delivery-options', { orderItemIds : orderData.shoppingCart.map(item => item.id) })
-                .then(res => {
-                    setDeliveryOptions(res.data);
-                    seIsLoadingDeliveryOptions(false);
-                }).catch(err => {
-                    onError('Ups, něco se pokazilo.');
-                    setDeliveryOptionsFetchError(true);
-                    seIsLoadingDeliveryOptions(false);
-                });
-            };
-
-        fetchData();
-    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -77,15 +56,22 @@ const OrderConfirmation = ({
 
     const handleFinishOrder = (values, { setSubmitting }) => {
         setSubmitting(true);
-        const serverDataShoppingCart = orderData.shoppingCart.map(item => { return {itemId : item.id, quantity : item.quantity} });
+        const serverDataShoppingCart = shoppingCart.map(item => { return {itemId : item.id, quantity : item.quantity} });
         axios.post(
             '/order/confirm', {
-            ...orderData,
-            shippingAddress : orderData.selectedZasilkovna ? {
-                street : orderData.selectedZasilkovna.name,
-                township : orderData.selectedZasilkovna.city,
-                zipCode : orderData.selectedZasilkovna.zip,
-                country : 'Česká republika'
+            customerInfo : {
+                ...customerInfo,
+                address : {
+                    ...customerAddress,
+                    country : customerAddress.country.enumName
+                }
+            },
+            shipmentType : selectedDelivery.type.name,
+            shippingAddress : selectedDelivery.zasilkovna ? {
+                street : selectedDelivery.zasilkovna.name,
+                township : selectedDelivery.zasilkovna.city,
+                zipCode : selectedDelivery.zasilkovna.zip,
+                country : getCountryEnumName(selectedDelivery.zasilkovna.country)
             } : null,
             shoppingCart : {
                 items : serverDataShoppingCart
@@ -114,12 +100,6 @@ const OrderConfirmation = ({
         }
     };
 
-    if (deliveryOptionsFetchError) {
-        return <Alert type="error">Problém komunikace se serverem.</Alert>;
-    } else if (isLoadingDeliveryOptions) {
-        return <CircularProgress />;
-    }
-
     return (
         <Formik
             initialValues={{ orderTermsApproval : false }}
@@ -147,8 +127,6 @@ const OrderConfirmation = ({
                                     <ShoppingCart
                                         intermediateSum={cartSum.cartIntermediateSum}
                                         totalSum={cartSum.totalSum}
-                                        items={orderData.shoppingCart}
-                                        selectedDelivery={selectedDelivery}
                                         discountValue={cartSum.discountCodeDisplayValue}
                                     />
                                 </Hidden>
@@ -156,20 +134,13 @@ const OrderConfirmation = ({
                                     <ShoppingCartSm
                                         intermediateSum={cartSum.cartIntermediateSum}
                                         totalSum={cartSum.totalSum}
-                                        items={orderData.shoppingCart}
-                                        selectedDelivery={selectedDelivery} 
                                         discountValue={cartSum.discountCodeDisplayValue}
                                     />
                                 </Hidden>
                                 <DiscountCodeSetup />
                             </Section>
                             <Section title='Zkontrolujte, prosím, Vaše kontaktní údaje a doručovací adresu'>
-                                <CustomerInfo
-                                    data={orderData.customerInfo}
-                                    shipment={{
-                                        shipmentType : orderData.shipmentType,
-                                        shippingAddress : orderData.selectedZasilkovna
-                                    }} />
+                                <CustomerInfo />
                             </Section>
                             <Section className={classes.totalPrice}>
                                 Celková cena: { cartSum.totalSum },- Kč
@@ -213,7 +184,6 @@ const OrderConfirmation = ({
 OrderConfirmation.propTypes = {
     onGoToPrevStep : PropTypes.func.isRequired,
     onError : PropTypes.func.isRequired,
-    orderData : PropTypes.shape({}).isRequired // TODO
 };
 
 export default withStyles(styles)(OrderConfirmation);

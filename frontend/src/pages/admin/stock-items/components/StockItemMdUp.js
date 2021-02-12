@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button, makeStyles, TableCell, TableRow } from '@material-ui/core';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';

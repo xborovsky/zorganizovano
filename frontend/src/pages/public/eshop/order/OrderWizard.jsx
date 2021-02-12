@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -11,6 +11,9 @@ import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
 import OrderConfirmation from './steps/order-confirmation/OrderConfirmation';
 import Alert from 'components/Alert';
+import useDeliveryCountries from './hooks/use-delivery-countries';
+import Loader from 'components/Loader';
+import OrderContext from './OrderContext';
 
 const getSteps = () => ['Zákazník', 'Doprava a platba', 'Potvrzení objednávky'];
 
@@ -34,44 +37,32 @@ const styles = theme => ({
     }
 });
 
-const defaultOrderData = {
-    customerInfo : undefined,
-    shoppingCart : undefined,
-    selectedZasilkovna : undefined
-};
-
 const OrderWizard = ({ classes }) => {
 
     const location = useLocation();
     const [currentStep, setCurrentStep] = useState(0);
     const steps = getSteps();
-    const [orderData, setOrderData] = useState({...defaultOrderData, shoppingCart : [...location.state.shoppingCart]});
+    const { deliveryCountries, isFetching:isFetchingDeliveryCountries, error:deliveryCountriesFetchError } = useDeliveryCountries();
+    const [ customerInfo, setCustomerInfo ] = useState(undefined);
+    const [ customerAddress, setCustomerAddress ] = useState(undefined);
+    const [ selectedDelivery, setSelectedDelivery ] = useState(undefined);
     const [error, setError] = useState(undefined);
+
+    useEffect(() => {
+        deliveryCountriesFetchError && setError('Problém komunikace se serverem.');
+    }, [deliveryCountriesFetchError]);
 
     const getStepContent = step => {
         switch (step) {
             case 0: return (
                 <CustomerForm
-                    initialFormData={orderData.customerInfo}
-                    onGoToNextStep={customerInfo => {
-                        setOrderData({...orderData, ...customerInfo});
-                        goToNext();
-                    }}
+                    onGoToNextStep={goToNext}
                     onError={error => setError(error)}
                 />
             );
             case 1: return (
                 <DeliveryForm
-                    orderItemIds={orderData.shoppingCart.map(item => item.id)}
-                    initialFormData={{
-                        deliveryOption : orderData.shipmentType,
-                        selectedZasilkovna : orderData.selectedZasilkovna,
-                        paymentType : 'bankTransfer'
-                    }}
-                    onGoToNextStep={shipping => {
-                        setOrderData({...orderData, ...shipping});
-                        goToNext();
-                    }}
+                    onGoToNextStep={goToNext}
                     onGoToPrevStep={goToPrev}
                     onError={error => setError(error)}
                 />
@@ -80,7 +71,6 @@ const OrderWizard = ({ classes }) => {
                 <OrderConfirmation
                     onGoToPrevStep={goToPrev}
                     onError={error => setError(error)}
-                    orderData={orderData}
                 />
             );
             default: throw new Error('Unknown step!');
@@ -124,8 +114,22 @@ const OrderWizard = ({ classes }) => {
                 </Stepper>
             </Hidden>
             { error && <Alert type="error">{error}</Alert> }
-            {getStepContent(currentStep)}
-            { error && <Alert type="error">{error}</Alert> }
+            { isFetchingDeliveryCountries ? 
+                <Loader /> :
+                <OrderContext.Provider value={{
+                    customerInfo,
+                    customerAddress,
+                    selectedDelivery,
+                    allowedDeliveryCountries : deliveryCountries,
+                    shoppingCart : [...location.state.shoppingCart],
+                    setCustomerInfo,
+                    setCustomerAddress,
+                    setSelectedDelivery
+                }}>
+                    { getStepContent(currentStep) }
+                </OrderContext.Provider>
+            }
+            { (error && currentStep === 2) && <Alert type="error">{error}</Alert> }
         </Paper>
     );
 };

@@ -17,7 +17,7 @@ public interface StockItemDao extends JpaRepository<StockItem, Long> {
     @Query("SELECT stockItem "
             + "FROM StockItem stockItem "
             + "WHERE stockItem.displayOnEshop=true "
-            + "AND stockItem.item.itemCategory=?1")
-    List<StockItem> findNotHiddenByItemCategory(ItemCategory itemCategory, Sort sort);
+            + "AND stockItem.item.itemCategory IN (?1)")
+    List<StockItem> findNotHiddenByItemCategories(List<ItemCategory> itemCategory, Sort sort);
 
 }

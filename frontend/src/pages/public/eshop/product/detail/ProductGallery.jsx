@@ -6,6 +6,8 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import DataFetcher from 'components/DataFetcher';
 import { getImgServerUrl } from 'util/img-util';
 
+import './ProductGallery.css';
+
 const EMPTY_PICTURES = {
     original : '/img/icons/image-square-outline.svg',
     thumbnail : '/img/icons/image-square-outline.svg'

@@ -6,19 +6,23 @@ import cz.zorganizovano.backend.bean.order.OrderCreatedDTO;
 import cz.zorganizovano.backend.bean.order.OrderFormBean;
 import cz.zorganizovano.backend.bean.order.OrderSuccessResponse;
 import cz.zorganizovano.backend.dao.StockItemDao;
+import cz.zorganizovano.backend.entity.ShipmentCountry;
 import cz.zorganizovano.backend.entity.ShipmentType;
 import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.event.OrderCreatedEvent;
 import cz.zorganizovano.backend.payment.PaymentInfo;
 import cz.zorganizovano.backend.service.OrderService;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,9 +45,14 @@ public class OrderEndpoint {
     public void validateCustomer(@Valid @RequestBody CustomerInfo customer) {
         // pouze validace, ok
     }
+    
+    @GetMapping("/delivery-countries")
+    public ShipmentCountry[] getDeliveryCountries() {
+        return ShipmentCountry.values();
+    }
 
     @PostMapping("/delivery-options")
-    public ShipmentType[] getDeliveryOptions(@RequestBody DeliveryOptionsRequest request) {
+    public List<ShipmentType> getDeliveryOptions(@RequestBody DeliveryOptionsRequest request) {
         boolean showOnlineShipmentOption = true;
         for (long orderItemId : request.getOrderItemIds()) {
             Optional<StockItem> stockItem = stockItemDao.findById(orderItemId);
@@ -51,12 +60,15 @@ public class OrderEndpoint {
                 showOnlineShipmentOption = false;
             }
         }
-        
+
         if (showOnlineShipmentOption) {
-            return ShipmentType.values();
-        } else {
-            return new ShipmentType[] { ShipmentType.ZASILKOVNA, ShipmentType.CESKA_POSTA };
+            return ShipmentType.getShipmentTypesByDeliveryCountry(request.getSelectedCountry()).stream()
+                .collect(Collectors.toList());
         }
+
+        return ShipmentType.getShipmentTypesByDeliveryCountry(request.getSelectedCountry()).stream()
+            .filter(shipmentType -> shipmentType != ShipmentType.ONLINE)
+            .collect(Collectors.toList());
     }
 
     @PostMapping("/confirm")

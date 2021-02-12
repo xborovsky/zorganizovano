@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { makeStyles, Paper, Table, TableBody } from '@material-ui/core';
 
 import StockItemContainer from './StockItemContainer';
 

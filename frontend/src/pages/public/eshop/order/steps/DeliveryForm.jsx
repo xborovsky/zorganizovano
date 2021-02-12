@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -9,64 +9,48 @@ import Button from '@material-ui/core/Button';
 import { Formik, Form } from 'formik';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { CircularProgress } from '@material-ui/core';
-import axios from 'axios';
 
 import WizardButtons from '../components/WizardButtons';
 import ZasilkovnaInfo from '../components/ZasilkovnaInfo';
+import OrderContext from '../OrderContext';
+import useDeliveryOptions from '../hooks/use-delivery-options';
 
 const PACKETA_API_KEY = '78f6dc3fd19b4bc1';
 const ZASILKOVNA = 'zasilkovna';
+const ZASIELKOVNA = 'zasielkovna';
+
+const INITIAL_FORM_DATA = {
+    deliveryOption : '', 
+    paymentMethod : 'bankTransfer'
+};
 
 const DeliveryForm = ({
-    orderItemIds,
     onGoToPrevStep,
     onGoToNextStep,
-    initialFormData,
-    onError
 }) => {
-    const [selectedZasilkovna, setSelectedZasilkovna] = useState(initialFormData.selectedZasilkovna);
-    const [isDeliveryOptionsLoading, seIsDeliveryOptionsLoading] = useState(true);
-    const [deliveryOptions, setDeliveryOptions] = useState(undefined);
-    const [deliveryOptionsLoadingError, setDeliveryOptionsLoadingError] = useState(false);
-
-    useEffect(() => {
-        const fetchData = () => {
-            axios.post('/order/delivery-options', { orderItemIds })
-                .then(res => {
-                    setDeliveryOptions(res.data);
-                    seIsDeliveryOptionsLoading(false);
-                }).catch(err => {
-                    onError('Ups, něco se pokazilo.');
-                    setDeliveryOptionsLoadingError(true);
-                    seIsDeliveryOptionsLoading(false);
-                });
-            };
-
-        fetchData();
-    }, []);
+    const { selectedDelivery, setSelectedDelivery, shoppingCart, customerAddress } = useContext(OrderContext);
+    const { isFetchingDeliveryOptions, deliveryOptions, deliveryOptionsFetchError } = useDeliveryOptions(shoppingCart.map(item => item.id), customerAddress.country.enumName);
+    const initialFormValues = selectedDelivery ? {...selectedDelivery} : INITIAL_FORM_DATA;
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    const handleSelectZasilkovna = () => {
+    const handleSelectZasilkovna = setErrors => e => {
+        setErrors({});
         window.Packeta.Widget.pick(PACKETA_API_KEY, setSelectedPickupPoint);
     };
 
     const setSelectedPickupPoint = point => {
-        setSelectedZasilkovna(point);
+        setSelectedDelivery({...selectedDelivery, zasilkovna : point});
     };
-
-    const initialFormValues = initialFormData ?
-        {...initialFormData} :
-        { deliveryOption : '', paymentMethod : 'bankTransfer' };
 
     const validateForm = values => {
         let errors = {};
         if (!values.deliveryOption || !values.deliveryOption.trim()) {
             errors.deliveryOption = 'Vyberte prosím způsob doručení!';
         }
-        if (values.deliveryOption.toLowerCase() === ZASILKOVNA && !selectedZasilkovna) {
+        if ([ZASILKOVNA, ZASIELKOVNA].includes(values.deliveryOption.toLowerCase()) && !selectedDelivery?.zasilkovna) {
             errors.deliveryOption = 'Vyberte prosím zásilkovnu!';
         }
         return errors;
@@ -75,17 +59,16 @@ const DeliveryForm = ({
     const handleSubmit = (values, { setSubmitting }) => {
         setSubmitting(true);
         // TODO validace na serveru
-        onGoToNextStep({
-            shipmentType : values.deliveryOption,
-            selectedZasilkovna
-        });
-        return false;
+        setSelectedDelivery({ 
+            ...selectedDelivery, 
+            type : deliveryOptions.find(deliveryOption => deliveryOption.name === values.deliveryOption) });
+        onGoToNextStep();
     };
 
     return (
         <>
-            { isDeliveryOptionsLoading && <CircularProgress /> }
-            { (!isDeliveryOptionsLoading && !deliveryOptionsLoadingError) &&
+            { isFetchingDeliveryOptions && <CircularProgress /> }
+            { (!isFetchingDeliveryOptions && !deliveryOptionsFetchError) &&
                 <Formik
                     initialValues={initialFormValues}
                     validate={validateForm}
@@ -95,8 +78,10 @@ const DeliveryForm = ({
                             errors,
                             touched,
                             handleChange,
-                            isSubmitting
-                        }) => (
+                            isSubmitting,
+                            setErrors
+                        }) => {
+                            return (
                             <Form>
                                 <Typography variant="h6" gutterBottom>
                                     Vyberte typ dopravy
@@ -104,7 +89,7 @@ const DeliveryForm = ({
                                 <FormControl component="fieldset" error={touched.deliveryOption && !!errors.deliveryOption}>
                                     <RadioGroup aria-label="delivery option" name="deliveryOption" value={values.deliveryOption} onChange={handleChange}>
                                         {
-                                            deliveryOptions.map(deliveryOption => (
+                                            deliveryOptions.filter(deliveryOption => deliveryOption.deliveryCountries.includes(customerAddress.country.enumName)).map(deliveryOption => (
                                                 <div key={deliveryOption.name}>
                                                     <FormControlLabel
                                                         value={deliveryOption.name}
@@ -113,23 +98,23 @@ const DeliveryForm = ({
                                                     />
                                                     {
                                                         (values.deliveryOption &&
-                                                            values.deliveryOption.toLowerCase() === ZASILKOVNA &&
-                                                            deliveryOption.name.toLowerCase() === ZASILKOVNA) ?
+                                                            [ZASILKOVNA, ZASIELKOVNA].includes(values.deliveryOption.toLowerCase()) &&
+                                                            [ZASILKOVNA, ZASIELKOVNA].includes(deliveryOption.name.toLowerCase())) ?
                                                             <>
                                                                 <Button
                                                                     variant="contained"
                                                                     color="primary"
                                                                     type="button"
-                                                                    onClick={handleSelectZasilkovna}>
+                                                                    onClick={handleSelectZasilkovna(setErrors)}>
                                                                     Vyberte zásilkovnu
                                                                 </Button>
-                                                                { selectedZasilkovna &&
+                                                                { selectedDelivery?.zasilkovna &&
                                                                     <ZasilkovnaInfo
-                                                                        street={selectedZasilkovna.name}
-                                                                        township={selectedZasilkovna.city}
-                                                                        zipCode={selectedZasilkovna.zip}
-                                                                        country={selectedZasilkovna.country}
-                                                                        openingHours={selectedZasilkovna.openingHours.compactLong}
+                                                                        street={selectedDelivery.zasilkovna.name}
+                                                                        township={selectedDelivery.zasilkovna.city}
+                                                                        zipCode={selectedDelivery.zasilkovna.zip}
+                                                                        country={selectedDelivery.zasilkovna.country}
+                                                                        openingHours={selectedDelivery.zasilkovna.openingHours.compactLong}
                                                                     />
                                                                 }
                                                             </> :
@@ -166,7 +151,7 @@ const DeliveryForm = ({
                                     }}
                                 />
                             </Form>
-                        )}
+                        )}}
                 </Formik>
             }
         </>
@@ -174,13 +159,8 @@ const DeliveryForm = ({
 };
 
 DeliveryForm.propTypes = {
-    orderItemIds : PropTypes.arrayOf(PropTypes.number).isRequired,
     onGoToPrevStep : PropTypes.func.isRequired,
-    onGoToNextStep : PropTypes.func.isRequired,
-    initialFormData : PropTypes.shape({
-        deliveryoption : PropTypes.string
-    }),
-    onError : PropTypes.func.isRequired
+    onGoToNextStep : PropTypes.func.isRequired
 };
 
 export default DeliveryForm;

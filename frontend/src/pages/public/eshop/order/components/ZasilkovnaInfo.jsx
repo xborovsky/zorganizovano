@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import ReactHtmlParser from 'react-html-parser';
 
+import { getCountryName } from '../../../../../util/country-util';
+
 const styles = theme => ({
     root : {
         border : '1px solid #ccc',
@@ -26,7 +28,7 @@ const ZasilkovnaInfo = ({
             <Typography>{street}</Typography>
             <Typography>{township}</Typography>
             <Typography>{zipCode}</Typography>
-            <Typography>{country === 'cz' ? 'Česká republika' : null}</Typography>
+            <Typography>{getCountryName(country)}</Typography>
             <br />
             <Typography>Otevírací doba</Typography>
             <Typography>{ ReactHtmlParser(openingHours) }</Typography>

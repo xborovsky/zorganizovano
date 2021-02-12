@@ -1,5 +1,7 @@
 package cz.zorganizovano.backend.bean.order;
 
+import cz.zorganizovano.backend.entity.ShipmentCountry;
+import cz.zorganizovano.backend.validator.EnumNamePattern;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -12,13 +14,13 @@ public class AddressDTO {
     @NotBlank(message = "Pole PSČ je povinné")
     @Pattern(regexp = "\\d{5}", message = "PSČ není validní")
     private String zipCode;
-    @NotBlank(message = "Pole Země je povinné")
-    private String country;
+    @EnumNamePattern(regexp = "CESKA_REPUBLIKA|SLOVENSKA_REPUBLIKA", message = "Pole země je povinné")
+    private ShipmentCountry country;
 
     public AddressDTO() {
     }
 
-    public AddressDTO(String street, String township, String zipCode, String country) {
+    public AddressDTO(String street, String township, String zipCode, ShipmentCountry country) {
         this.street = street;
         this.township = township;
         this.zipCode = zipCode;
@@ -49,11 +51,11 @@ public class AddressDTO {
         this.zipCode = zipCode;
     }
 
-    public String getCountry() {
+    public ShipmentCountry getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(ShipmentCountry country) {
         this.country = country;
     }
 

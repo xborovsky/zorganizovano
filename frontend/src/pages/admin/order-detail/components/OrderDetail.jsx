@@ -144,7 +144,7 @@ const OrderDetail = ({ order }) => {
                                 {order.invoiceAddress.country}
                             </TableCell>
                         </TableRow>
-                        { order.shipmentType.name === 'ZASILKOVNA' &&
+                        { ['zasilkovna', 'zasielkovna'].includes(order.shipmentType.name.toLowerCase()) &&
                             <TableRow>
                                 <TableCell className={classes.th}>Doručovací adresa:</TableCell>
                                 <TableCell>

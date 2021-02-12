@@ -19,6 +19,7 @@ import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.InvoiceAddress;
 import cz.zorganizovano.backend.entity.OrderItem;
 import cz.zorganizovano.backend.entity.ShipmentAddress;
+import cz.zorganizovano.backend.entity.ShipmentCountry;
 import cz.zorganizovano.backend.entity.ShipmentType;
 import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.manager.TimeManager;
@@ -165,7 +166,7 @@ public class OrderServiceImpl implements OrderService {
         invoiceAddress.setStreet(customerInfo.getAddress().getStreet());
         invoiceAddress.setTownship(customerInfo.getAddress().getTownship());
         invoiceAddress.setZipCode(customerInfo.getAddress().getZipCode());
-        invoiceAddress.setCountry(customerInfo.getAddress().getCountry());
+        invoiceAddress.setCountry(customerInfo.getAddress().getCountry().getName());
         invoiceAddress.setOrder(order);
 
         return invoiceAddressDao.save(invoiceAddress);
@@ -176,7 +177,7 @@ public class OrderServiceImpl implements OrderService {
         shipmentAddress.setStreet(address.getStreet());
         shipmentAddress.setTownship(address.getTownship());
         shipmentAddress.setZipCode(address.getZipCode());
-        shipmentAddress.setCountry(address.getCountry());
+        shipmentAddress.setCountry(address.getCountry().getName());
         shipmentAddress.setOrder(order);
 
         return shipmentAddressDao.save(shipmentAddress);
@@ -202,14 +203,14 @@ public class OrderServiceImpl implements OrderService {
                 invoiceAddress.getStreet(),
                 invoiceAddress.getTownship(),
                 invoiceAddress.getZipCode(),
-                invoiceAddress.getCountry()
+                ShipmentCountry.findByName(invoiceAddress.getCountry())
             );
         } else {
             return new AddressDTO(
                 shipmentAddress.getStreet(),
                 shipmentAddress.getTownship(),
                 shipmentAddress.getZipCode(),
-                shipmentAddress.getCountry()
+                ShipmentCountry.findByName(shipmentAddress.getCountry())
             );
         }
     }

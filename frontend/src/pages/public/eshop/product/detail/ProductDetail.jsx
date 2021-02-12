@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/grid';
 import withStyles from '@material-ui/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';

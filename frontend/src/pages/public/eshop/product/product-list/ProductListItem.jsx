@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -61,7 +61,8 @@ const styles = theme => ({
     },
     cover: {
         height: 200,
-        cursor : 'pointer'
+        cursor : 'pointer',
+        backgroundSize : 'contain !important'
     },
     orderActionWrapper : {
         display : 'flex',

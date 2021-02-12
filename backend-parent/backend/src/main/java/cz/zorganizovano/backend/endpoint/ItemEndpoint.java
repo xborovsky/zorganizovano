@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cz.zorganizovano.backend.dao.ItemDetailDao;
 import cz.zorganizovano.backend.entity.ItemCategory;
+import cz.zorganizovano.backend.service.ItemCategoryService;
+import java.util.ArrayList;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,17 +32,24 @@ public class ItemEndpoint {
     private ItemDetailDao stockItemDetailDao;
     @Autowired
     private ItemCategoryDao itemCategoryDao;
+    @Autowired
+    private ItemCategoryService itemCategoryService;
 
     @GetMapping
     public List<ItemListEntry> getAllItems(@RequestParam(name = "categoryId", required = false) Long categoryId) {
-        List<StockItem> stockItems;
+        List<StockItem> stockItems = new ArrayList<>();
         if (categoryId == null) {
             stockItems = stockItemDao.findByDisplayOnEshopOrderByIdDesc(true);
         } else {
             Optional<ItemCategory> itemCategoryOpt = itemCategoryDao.findById(categoryId);
-            stockItems = itemCategoryOpt.isPresent() ? 
-                stockItemDao.findNotHiddenByItemCategory(itemCategoryOpt.get(), Sort.by(Sort.Direction.DESC, "id")) :
-                stockItemDao.findByDisplayOnEshopOrderByIdDesc(true);
+            if (!itemCategoryOpt.isPresent()) {
+                stockItems = stockItemDao.findByDisplayOnEshopOrderByIdDesc(true);
+            } else {
+                List<ItemCategory> subcategories = itemCategoryService.findAllSubCategoryIdsForCategory(itemCategoryOpt.get().getId());
+                if (!subcategories.isEmpty()) {
+                    stockItems = stockItemDao.findNotHiddenByItemCategories(subcategories, Sort.by(Sort.Direction.DESC, "id"));
+                }
+            }
         }
 
         return stockItems.stream()

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +16,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import WizardButtons from '../components/WizardButtons';
+import OrderContext from '../OrderContext';
 
 const CustomerFormSchema = Yup.object().shape({
     firstName : Yup.string()
@@ -42,29 +43,33 @@ const CustomerFormSchema = Yup.object().shape({
         .max(100, 'Zadaný údaj je moc dlouhý.')
         .required('Prosím, zadejte město.'),
     country : Yup.string()
-        .min(15, 'Zadaný údaj je moc krátký.')
-        .max(15, 'Zadaný údaj je moc dlouhý.')
+        .oneOf(['CESKA_REPUBLIKA', 'SLOVENSKA_REPUBLIKA'], 'Země není validní.')
         .required('Prosím, zadejte zemi.'),
     personalDataHandleApproval : Yup.bool()
         .oneOf([true], 'Tento údaj je povinný.')
+        .required('Tento údaj je povinný.')
 });
 
-const EMPTY_FORM = {
+const EMPTY_CUSTOMER_INFO = {
     firstName : '',
     lastName : '',
     email : '',
     phoneNo : '',
-    street : '',
-    zipCode : '',
-    township : '',
-    country : 'Česká republika',
     personalDataHandleApproval : false
 };
 
-const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
-    const initialFormValues = initialFormData ?
-        {...initialFormData, ...initialFormData.address, ...initialFormData.personalDataHandleApproval} :
-        EMPTY_FORM;
+const EMPTY_CUSTOMER_ADDRESS = {
+    street : '',
+    zipCode : '',
+    township : '',
+    country : '',
+};
+
+const CustomerForm = ({ onGoToNextStep, onError }) => {
+    const { customerInfo, customerAddress, setCustomerInfo, setCustomerAddress, allowedDeliveryCountries } = useContext(OrderContext);
+    const initialCustomerInfo = customerInfo ? { ...customerInfo } : EMPTY_CUSTOMER_INFO;
+    const initialCustomerAddress = customerAddress ? { ...customerAddress, country : customerAddress.country.enumName } : EMPTY_CUSTOMER_ADDRESS;
+    const initialFormValues = { ...initialCustomerInfo, ...initialCustomerAddress };
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -74,15 +79,13 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
         setSubmitting(true);
         axios.post('/order/customer', {...values})
             .then(_res => {
-                const customer = (({firstName, lastName, email, phoneNo}) => ({firstName, lastName, email, phoneNo}))(values);
-                const address = (({street, township, zipCode, country}) => ({street, township, zipCode, country}))(values);
-                onGoToNextStep({
-                    customerInfo : {
-                        ...customer,
-                        address,
-                        personalDataHandleApproval : values.personalDataHandleApproval
-                    }
-                })
+                const customer = (({firstName, lastName, email, phoneNo, personalDataHandleApproval}) => ({firstName, lastName, email, phoneNo, personalDataHandleApproval}))(values);
+                const address = (({street, township, zipCode}) => ({street, township, zipCode}))(values);
+                address.country = allowedDeliveryCountries.find(deliveryCountry => deliveryCountry.enumName === values.country);
+
+                setCustomerInfo(customer);
+                setCustomerAddress(address);
+                onGoToNextStep();
             })
             .catch(err => {
                 setSubmitting(false);
@@ -103,11 +106,12 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
         <Formik
             initialValues={initialFormValues}
             validationSchema={CustomerFormSchema}
+            validateOnChange={false}
+            validateOnBlur={false}
             onSubmit={handleFormSubmit}>
                 {({
                     values,
                     errors,
-                    touched,
                     handleChange,
                     isSubmitting
                 }) => (
@@ -119,7 +123,7 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                 </Typography>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.firstName && !!errors.firstName} fullWidth>
+                                        <FormControl error={!!errors.firstName} fullWidth>
                                             <InputLabel htmlFor="firstName">Jméno</InputLabel>
                                             <Input
                                                 id="firstName"
@@ -131,11 +135,11 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                     maxLength : 50
                                                 }}
                                             />
-                                            <FormHelperText id="firstName-error">{touched.firstName && errors.firstName}</FormHelperText>
+                                            <FormHelperText id="firstName-error">{errors.firstName}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.lastName && !!errors.lastName} fullWidth>
+                                        <FormControl error={!!errors.lastName} fullWidth>
                                             <InputLabel htmlFor="lastName">Příjmení</InputLabel>
                                             <Input
                                                 id="lastName"
@@ -147,11 +151,11 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                     maxLength : 50
                                                 }}
                                             />
-                                            <FormHelperText id="lastName-error">{touched.lastName && errors.lastName}</FormHelperText>
+                                            <FormHelperText id="lastName-error">{errors.lastName}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.email && !!errors.email} fullWidth>
+                                        <FormControl error={!!errors.email} fullWidth>
                                             <InputLabel htmlFor="email">Email</InputLabel>
                                             <Input
                                                 id="email"
@@ -160,11 +164,11 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 autoComplete="email"
                                                 onChange={handleChange}
                                             />
-                                            <FormHelperText id="email-error">{touched.email && errors.email}</FormHelperText>
+                                            <FormHelperText id="email-error">{errors.email}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.phoneNo && !!errors.phoneNo} fullWidth>
+                                        <FormControl error={!!errors.phoneNo} fullWidth>
                                             <InputLabel htmlFor="phoneNo">Telefon</InputLabel>
                                             <Input
                                                 id="phoneNo"
@@ -173,7 +177,7 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 autoComplete="phoneNo"
                                                 onChange={handleChange}
                                             />
-                                            <FormHelperText id="phoneNo-error">{touched.phoneNo && errors.phoneNo}</FormHelperText>
+                                            <FormHelperText id="phoneNo-error">{errors.phoneNo}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                 </Grid>
@@ -184,7 +188,7 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                 </Typography>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.street && !!errors.street} fullWidth>
+                                        <FormControl error={!!errors.street} fullWidth>
                                             <InputLabel htmlFor="lastName">Ulice a č.p.</InputLabel>
                                             <Input
                                                 id="street"
@@ -196,11 +200,11 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                     maxLength : 100
                                                 }}
                                             />
-                                            <FormHelperText id="street-error">{touched.street && errors.street}</FormHelperText>
+                                            <FormHelperText id="street-error">{errors.street}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.zipCode && !!errors.zipCode} fullWidth>
+                                        <FormControl error={!!errors.zipCode} fullWidth>
                                             <InputLabel htmlFor="zipCode">PSČ</InputLabel>
                                             <Input
                                                 id="zipCode"
@@ -212,11 +216,11 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                     maxLength : 5
                                                 }}
                                             />
-                                            <FormHelperText id="zipCode-error">{touched.zipCode && errors.zipCode}</FormHelperText>
+                                            <FormHelperText id="zipCode-error">{errors.zipCode}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.township && !!errors.township} fullWidth>
+                                        <FormControl error={!!errors.township} fullWidth>
                                             <InputLabel htmlFor="township">Obec</InputLabel>
                                             <Input
                                                 id="township"
@@ -228,11 +232,11 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                     maxLength : 100
                                                 }}
                                             />
-                                            <FormHelperText id="township-error">{touched.township && errors.township}</FormHelperText>
+                                            <FormHelperText id="township-error">{errors.township}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.country && !!errors.country} fullWidth>
+                                        <FormControl error={!!errors.country} fullWidth>
                                             <InputLabel htmlFor="country">Země</InputLabel>
                                             <Select
                                                 value={values.country}
@@ -240,17 +244,18 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                                 inputProps={{
                                                     name: 'country',
                                                     id: 'country'
-                                                }}
-                                                >
-                                                <MenuItem value={'Česká republika'}>Česká republika</MenuItem>
+                                                }}>
+                                                    { allowedDeliveryCountries.map(deliveryCountry => (
+                                                        <MenuItem value={deliveryCountry.enumName} key={deliveryCountry.enumName}>{deliveryCountry.name}</MenuItem>
+                                                    )) }
                                             </Select>
-                                            <FormHelperText id="country-error">{touched.country && errors.country}</FormHelperText>
+                                            <FormHelperText id="country-error">{errors.country}</FormHelperText>
                                         </FormControl>
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item xs={12} style={{ textAlign : 'right', marginTop : '-4rem', marginBottom : '-2rem' }}>
-                                <FormControl error={touched.personalDataHandleApproval && !!errors.personalDataHandleApproval} fullWidth style={{ alignItems : 'flex-end' }}>
+                                <FormControl error={!!errors.personalDataHandleApproval} fullWidth style={{ alignItems : 'flex-end' }}>
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -264,7 +269,7 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
                                         label={<Link to='/eshop/personal-data-protection-terms' target="_blank">Souhlasím se zpracováním osobních údajů</Link>}
                                     />
                                     <FormHelperText id="personalDataHandleApproval-error">
-                                        {touched.personalDataHandleApproval && errors.personalDataHandleApproval}
+                                        {errors.personalDataHandleApproval}
                                     </FormHelperText>
                                 </FormControl>
                             </Grid>
@@ -280,16 +285,6 @@ const CustomerForm = ({ onGoToNextStep, initialFormData, onError }) => {
 };
 
 CustomerForm.propTypes = {
-    initialFormData : PropTypes.shape({
-        firstName : PropTypes.string,
-        lastName : PropTypes.string,
-        email : PropTypes.string,
-        phoneNo : PropTypes.string,
-        street : PropTypes.string,
-        zipCode : PropTypes.string,
-        township : PropTypes.string,
-        country : PropTypes.string
-    }),
     onGoToNextStep : PropTypes.func.isRequired,
     onError : PropTypes.func.isRequired
 };

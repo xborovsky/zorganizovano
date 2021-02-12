@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import withStyles from '@material-ui/styles/withStyles';
+
+import OrderContext from '../../../OrderContext';
 
 const styles = theme => ({
     card : {
@@ -20,11 +21,10 @@ const styles = theme => ({
 });
 
 const CustomerInfo = ({
-    data,
-    shipment,
     classes
 }) => {
-    const zasilkovna = shipment.shipmentType.toLowerCase() === 'zasilkovna';
+    const { customerInfo, customerAddress, selectedDelivery } = useContext(OrderContext);
+    const zasilkovna = ['zasilkovna', 'zasielkovna'].includes(selectedDelivery.type.name.toLowerCase());
     const mdCols = zasilkovna ? 4 : 6;
 
     return (
@@ -34,9 +34,9 @@ const CustomerInfo = ({
                     <CardContent>
                         <Typography className={classes.title}>Osobní údaje</Typography>
                         <Typography className={classes.content}>
-                            {data.firstName} {data.lastName}<br />
-                            {data.email}<br />
-                            {data.phoneNo}<br />
+                            {customerInfo.firstName} {customerInfo.lastName}<br />
+                            {customerInfo.email}<br />
+                            {customerInfo.phoneNo}<br />
                         </Typography>
                     </CardContent>
                 </Card>
@@ -44,29 +44,29 @@ const CustomerInfo = ({
             <Grid item xs={12} md={mdCols}>
                 <Card className={classes.card}>
                     <CardContent>
-                        <Typography className={classes.title}>{zasilkovna ? 'Kontaktní adresa' : 'Doručovací adresa' }</Typography>
+                        <Typography className={classes.title}>{selectedDelivery.zasilkovna ? 'Kontaktní adresa' : 'Doručovací adresa' }</Typography>
                         <Typography className={classes.content}>
-                            {data.address.street}<br />
-                            {data.address.township}<br />
-                            {data.address.zipCode}<br />
-                            {data.address.country}<br />
+                            {customerAddress.street}<br />
+                            {customerAddress.township}<br />
+                            {customerAddress.zipCode}<br />
+                            {customerAddress.country.name}<br />
                         </Typography>
                     </CardContent>
                 </Card>
             </Grid>
-            { zasilkovna &&
+            { selectedDelivery.zasilkovna &&
                 <Grid item xs={12} md={mdCols}>
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography className={classes.title}>Doručovací adresa</Typography>
                             <Typography className={classes.content}>
-                                {shipment.shipmentType}<br />
-                                {shipment.shippingAddress &&
+                                {selectedDelivery.type.readableName}<br />
+                                {selectedDelivery.zasilkovna &&
                                     <>
-                                        {shipment.shippingAddress.name}<br />
-                                        {shipment.shippingAddress.city}<br />
-                                        {shipment.shippingAddress.zip}<br />
-                                        Česká republika<br />
+                                        {selectedDelivery.zasilkovna.name}<br />
+                                        {selectedDelivery.zasilkovna.city}<br />
+                                        {selectedDelivery.zasilkovna.zip}<br />
+                                        {selectedDelivery.zasilkovna.country.name}<br />
                                     </>
                                 }
                             </Typography>
@@ -76,30 +76,6 @@ const CustomerInfo = ({
             }
         </Grid>
     );
-};
-
-CustomerInfo.propTypes = {
-    data : PropTypes.shape({
-        firstName : PropTypes.string.isRequired,
-        lastName : PropTypes.string.isRequired,
-        email : PropTypes.string.isRequired,
-        phoneNo : PropTypes.string.isRequired,
-        address : PropTypes.shape({
-            street : PropTypes.string.isRequired,
-            township : PropTypes.string.isRequired,
-            zipCode : PropTypes.string.isRequired,
-            country : PropTypes.string.isRequired
-        }).isRequired
-    }).isRequired,
-    shipment : PropTypes.shape({
-        shipmentType : PropTypes.string.isRequired,
-        shippingAddress : PropTypes.shape({
-            street : PropTypes.string.isRequired,
-            township : PropTypes.string.isRequired,
-            zipCode : PropTypes.string.isRequired,
-            country : PropTypes.string.isRequired
-        })
-    }).isRequired
 };
 
 export default withStyles(styles)(CustomerInfo);
