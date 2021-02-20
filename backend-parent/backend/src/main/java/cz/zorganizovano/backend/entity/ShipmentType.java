@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @JsonSerialize(using = ShipmentTypeSerializer.class)
 public enum ShipmentType {
 
-    ZASILKOVNA("Zásilkovna", 70, new ShipmentCountry[] { ShipmentCountry.CESKA_REPUBLIKA }),
+    ZASILKOVNA("Zásilkovna", 79, new ShipmentCountry[] { ShipmentCountry.CESKA_REPUBLIKA }),
     CESKA_POSTA("Česká pošta", 89, new ShipmentCountry[] { ShipmentCountry.CESKA_REPUBLIKA }),
     ONLINE("Online (pouze pro dárkové poukazy)", 0, new ShipmentCountry[] { ShipmentCountry.CESKA_REPUBLIKA, ShipmentCountry.SLOVENSKA_REPUBLIKA }),
     ZASIELKOVNA("Zásielkovňa", 129, new ShipmentCountry[] { ShipmentCountry.SLOVENSKA_REPUBLIKA });
