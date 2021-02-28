@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
@@ -18,7 +17,8 @@ import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
-import { getImgServerUrl } from 'util/img-util';
+import { getImgServerPreviewUrl, getImgServerUrl } from 'util/img-util';
+import ProgressiveImage from 'components/progressive-image/ProgressiveImage';
 
 const styles = theme => ({
     card : {
@@ -62,7 +62,7 @@ const styles = theme => ({
     cover: {
         height: 200,
         cursor : 'pointer',
-        backgroundSize : 'contain !important'
+        objectFit : 'contain !important'
     },
     orderActionWrapper : {
         display : 'flex',
@@ -156,11 +156,17 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
                     titleTypographyProps={classes.headerTitle}
                     subheaderTypographyProps={classes.headerSubtitle}
                 />
-                <CardMedia
+                <ProgressiveImage
+                    lowQualitySrc={getImgServerPreviewUrl(product.thumbnailLocation)}
+                    highQualitySrc={getImgServerUrl(product.thumbnailLocation, getProductPhotoWidthPct())}
+                    onClick={goToDetail}
+                    className={classes.cover}
+                />
+                {/*<CardMedia
                     className={classes.cover}
                     image={getImgServerUrl(product.thumbnailLocation, getProductPhotoWidthPct())}
                     onClick={goToDetail}
-                />
+                />*/}
                 <CardContent onClick={goToDetail} className={classes.content}>
                     <Typography variant="body2">{product.descriptionShort}</Typography>
                 </CardContent>
