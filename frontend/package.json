@@ -17,7 +17,7 @@
     "@sentry/tracing": "^5.27.1",
     "a11y-react-emoji": "^1.1.2",
     "apollo-boost": "^0.4.9",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bowser": "^2.10.0",
     "date-fns": "^2.16.1",
     "formik": "^1.5.8",
