@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.bean.item;
 
+import cz.zorganizovano.backend.entity.ItemCategory;
 import cz.zorganizovano.backend.entity.ItemDetail;
 import cz.zorganizovano.backend.entity.StockItem;
 import java.util.List;
@@ -14,6 +15,7 @@ public class ItemDetailDTO {
     private final Double discountPrice;
     private final int stockQuantity;
     private final List<ItemDetail> details;
+    private final ItemCategory itemCategory;
 
     public ItemDetailDTO(StockItem stockItem, List<ItemDetail> itemDetails) {
         this.id = stockItem.getId();
@@ -24,6 +26,7 @@ public class ItemDetailDTO {
         this.discountPrice = stockItem.getItem().getDiscountPrice();
         this.stockQuantity = stockItem.getQuantity();
         this.details = itemDetails;
+        this.itemCategory = stockItem.getItem().getItemCategory();
     }
 
     public long getId() {
@@ -56,6 +59,10 @@ public class ItemDetailDTO {
 
     public List<ItemDetail> getDetails() {
         return details;
+    }
+
+    public ItemCategory getItemCategory() {
+        return itemCategory;
     }
 
 }
