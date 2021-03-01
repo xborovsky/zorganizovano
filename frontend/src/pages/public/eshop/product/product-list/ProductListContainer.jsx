@@ -7,7 +7,7 @@ import ProductList from './ProductList';
 import ItemCategoriesFilter from './item-categories-filter';
 import Alert from 'components/Alert';
 import useFetch from '../../../../../hooks/use-fetch';
-import ProductListBreadcrumbs from './ProductListBreadcrumbs';
+import ProductBreadcrumbs from '../common/ProductBreadcrumbs';
 
 const ProductListContainer = () => {
     const history = useHistory();
@@ -38,7 +38,7 @@ const ProductListContainer = () => {
                         <>
                             { breadcrumbsData &&
                                 <Grid item xs={12}>
-                                    <ProductListBreadcrumbs categories={breadcrumbsData} />
+                                    <ProductBreadcrumbs categoriesTree={breadcrumbsData} />
                                 </Grid>
                             }
                             { categories &&
