@@ -12,7 +12,7 @@ const ProgressiveImage = ({
   ...rest 
 }) => {
   const [src, { blur }] = useProgressiveImg(lowQualitySrc, highQualitySrc);
-  const classes = [className || '', blur ? 'blurred' : 'non-blurred']. join(' ');
+  const classes = [className || '', blur ? 'blurred' : 'non-blurred'].join(' ');
 
   return (
     <img
