@@ -166,7 +166,7 @@ const OrderDetail = ({ order }) => {
                         <TableRow>
                             <TableCell className={classes.th}>Expedováno:</TableCell>
                             <TableCell>
-                            { order.shipmentType.name === 'ZASILKOVNA' ?
+                            { order.shipmentType.name === 'ZASILKOVNA' || order.shipmentType.name === 'ZASIELKOVNA' ?
                                     dateOrCheckbox('shipped') :
                                     processingDates['shipped'] ?
                                         format(parseISO(processingDates['shipped']), DATE_TIME_FORMAT) :
