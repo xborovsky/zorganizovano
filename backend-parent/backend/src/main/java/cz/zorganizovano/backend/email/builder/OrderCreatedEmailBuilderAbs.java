@@ -87,7 +87,7 @@ public abstract class OrderCreatedEmailBuilderAbs {
             .append(address.getStreet()).append("<br />")
             .append(address.getTownship()).append("<br />")
             .append(address.getZipCode()).append("<br />")
-            .append(address.getCountry())
+            .append(address.getCountry().getName())
             .toString();
     }
 
