@@ -74,7 +74,7 @@ const Terms = ({ classes }) => (
                 Zásilku ve vlastním zájmu pošlete jako doporučené psaní (v případě ztráty, nebo
                 znehodnocení balíku si ho budete moci s podacím lístkem na poště vyreklamovat).
                 Vyměněné zboží Vám bude odesláno Českou poštou na Vaši adresu za cenu
-                poštovného pro ČR ve výši 89,- Kč. Na tuto částku Vám přijde faktura na mail.
+                poštovného pro ČR ve výši 129,- Kč. Na tuto částku Vám přijde faktura na mail.
             </p>
             <p>
                 V případě nesplnění některé z výše uvedených podmínek nebudeme akceptovat
