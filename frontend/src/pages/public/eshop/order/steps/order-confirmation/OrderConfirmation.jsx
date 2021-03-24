@@ -87,7 +87,7 @@ const OrderConfirmation = ({
             setSubmitting(false);
             console.error(err);
             if (err.response && err.response.status === 417) {
-                onError('Je mi líto, požadované zboží již není skladem. Zboží bude naskladněco do 3 dnů.');
+                onError('Je mi líto, požadované zboží již není skladem. Zboží bude naskladněco do 5 dnů.');
             } else {
                 onError('Problém komunikace se serverem.');
             }
