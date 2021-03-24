@@ -219,7 +219,7 @@ const Terms = ({ classes }) => (
                         </li>
                         <li>
                             V případě platby v hotovosti je kupní cena splatná při převzetí zboží. V případě
-                            bezhotovostní platby je kupní cena splatná do 5 pracovních dnů od uzavření kupní
+                            bezhotovostní platby je kupní cena splatná do 3 pracovních dnů od uzavření kupní
                             smlouvy.
                         </li>
                         <li>

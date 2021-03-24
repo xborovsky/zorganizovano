@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
-                        Pokud jste tak již neučinili, cenu objednávky prosím uhraďte do 5 pracovních dnů na účet:
+                        Pokud jste tak již neučinili, cenu objednávky prosím uhraďte do 3 pracovních dnů na účet:
                         <br /><br />
                         ${paymentDetails}
                         <br /><br />
