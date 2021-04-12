@@ -1,7 +1,7 @@
 package cz.zorganizovano.backend.security;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ public class CorsConfig {
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         // Don't do this in production, use a proper list  of allowed origins
-        config.setAllowedOrigins(Collections.singletonList("*"));
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(Collections.singletonList("*"));
         config.setAllowedHeaders(Collections.singletonList("*"));
         source.registerCorsConfiguration("/**", config);
