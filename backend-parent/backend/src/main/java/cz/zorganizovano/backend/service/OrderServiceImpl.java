@@ -220,6 +220,7 @@ public class OrderServiceImpl implements OrderService {
         double totalPrice = orderItemDao.getTotalOrderItemsPrice(order.getId());
         double discount = calculateDiscount(totalPrice, discountCode);
 
+        // vypocitat cenu dopravy dle aktualni ceny z enumu
         return calculateTotalPrice(totalPrice, order.getShipmentType().getPrice(), discount);
     }
     
@@ -227,7 +228,8 @@ public class OrderServiceImpl implements OrderService {
     public double calculateTotalPrice(Order order, double discountValue) {
         double totalPrice = orderItemDao.getTotalOrderItemsPrice(order.getId());
 
-        return calculateTotalPrice(totalPrice, order.getShipmentType().getPrice(), discountValue);
+        // cenu dopravy pocitat dle te ktera byla aktualni pri vytvoreni objednavky
+        return calculateTotalPrice(totalPrice, order.getShipmentPrice(), discountValue);
     }
 
     protected double calculateTotalPrice(double totalItemsPrice, double shipmentPrice, double discountValue) {
