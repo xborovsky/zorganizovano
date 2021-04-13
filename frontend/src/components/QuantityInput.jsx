@@ -60,16 +60,18 @@ const QuantityInput = ({
                 value={value}
                 onChange={onChange}
                 type="number"
+                label=""
                 className={`${classes.input} ${className || ''}`}
-                InputLabelProps={{ shrink: true }}
                 margin="dense"
                 variant="outlined"
                 InputProps={{
                     endAdornment: <InputAdornment position="end">ks</InputAdornment>,
-                    inputProps: { min : 1, max: maxVal }
+                    inputProps: { min : 1, max: maxVal },
+                    readOnly: true
                 }}
                 style={{ marginTop : 0, minWidth : 100 }}
                 disabled
+                autoComplete="off"
                 {...rest}
             />
             <Button onClick={handlePlus} variant="outlined" className={classes.plusBtn} disabled={value >= maxVal}>+</Button>
