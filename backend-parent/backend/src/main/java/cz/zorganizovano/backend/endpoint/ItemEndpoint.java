@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.endpoint;
 
+import cz.zorganizovano.backend.bean.PaginatedData;
 import cz.zorganizovano.backend.bean.item.ItemDetailDTO;
 import cz.zorganizovano.backend.bean.item.ItemListEntry;
 import cz.zorganizovano.backend.dao.ItemCategoryDao;
@@ -19,12 +20,16 @@ import cz.zorganizovano.backend.dao.ItemDetailDao;
 import cz.zorganizovano.backend.entity.ItemCategory;
 import cz.zorganizovano.backend.service.ItemCategoryService;
 import java.util.ArrayList;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/item")
 public class ItemEndpoint {
+    
+    private static final int MAX_LIMIT = 50;
 
     @Autowired
     private StockItemDao stockItemDao;
@@ -36,25 +41,37 @@ public class ItemEndpoint {
     private ItemCategoryService itemCategoryService;
 
     @GetMapping
-    public List<ItemListEntry> getAllItems(@RequestParam(name = "categoryId", required = false) Long categoryId) {
+    public PaginatedData<ItemListEntry> getAllItems(
+        @RequestParam(name = "categoryId", required = false) Long categoryId,
+        @RequestParam(name = "limit", required = true) int limit,
+        @RequestParam(name = "page", required = true) int page) {
+        Pageable pagination = PageRequest.of(page< 0 ? 0 : page, limit > MAX_LIMIT ? MAX_LIMIT : limit, Sort.by(Sort.Direction.DESC, "id"));
+        
         List<StockItem> stockItems = new ArrayList<>();
+        long totalCnt = 0;
         if (categoryId == null) {
-            stockItems = stockItemDao.findByDisplayOnEshopOrderByIdDesc(true);
+            stockItems = stockItemDao.findByDisplayOnEshop(true, pagination);
+            totalCnt = stockItemDao.countByDisplayOnEshop(true);
         } else {
             Optional<ItemCategory> itemCategoryOpt = itemCategoryDao.findById(categoryId);
             if (!itemCategoryOpt.isPresent()) {
-                stockItems = stockItemDao.findByDisplayOnEshopOrderByIdDesc(true);
+                stockItems = stockItemDao.findByDisplayOnEshop(true, pagination);
+                totalCnt = stockItemDao.countByDisplayOnEshop(true);
             } else {
                 List<ItemCategory> subcategories = itemCategoryService.findAllSubCategoryIdsForCategory(itemCategoryOpt.get().getId());
                 if (!subcategories.isEmpty()) {
-                    stockItems = stockItemDao.findNotHiddenByItemCategories(subcategories, Sort.by(Sort.Direction.DESC, "id"));
+                    stockItems = stockItemDao.findNotHiddenByItemCategories(subcategories, pagination);
+                    totalCnt = stockItemDao.countNotHiddenByItemCategories(subcategories);
                 }
             }
         }
 
-        return stockItems.stream()
-            .map(stockItem -> new ItemListEntry(stockItem))
-            .collect(Collectors.toList());
+        return new PaginatedData(
+            stockItems.stream()
+                .map(stockItem -> new ItemListEntry(stockItem))
+                .collect(Collectors.toList()),
+            totalCnt
+        );
     }
 
     @GetMapping("/{id}")

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
-const useSessionStorage = (key, initialState) => {
+const useLocalStorage = (key, initialState) => {
     const getInitialState = () => {
-        const sess = window.sessionStorage.getItem(key);
+        const sess = window.localStorage.getItem(key);
         return !sess ? initialState : JSON.parse(sess);
     };
 
@@ -10,13 +10,13 @@ const useSessionStorage = (key, initialState) => {
    
     useEffect(() => {
         if (value === undefined) {
-            sessionStorage.removeItem(key);
+            window.localStorage.removeItem(key);
         } else {
-            sessionStorage.setItem(key, JSON.stringify(value));
+            window.localStorage.setItem(key, JSON.stringify(value));
         }
     }, [key, value]);
 
     return [value, setValue];
 };
 
-export default useSessionStorage;
+export default useLocalStorage;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useHistory, useLocation } from 'react-router-dom';
 import { CircularProgress, Grid } from '@material-ui/core';
@@ -8,17 +8,38 @@ import ItemCategoriesFilter from './item-categories-filter';
 import Alert from 'components/Alert';
 import useFetch from '../../../../../hooks/use-fetch';
 import ProductBreadcrumbs from '../common/ProductBreadcrumbs';
+import PaginationContext from './pagination/PaginationContext';
+import BottomPaginationPanel from './pagination/BottomPaginationPanel';
+import TopPaginationPanel from './pagination/TopPaginationPanel';
+import useLocalStorage from 'hooks/use-local-storage';
+
+const DEFAULT_PAGE_SIZE = 9;
+const DEFAULT_PAGE = 1;
 
 const ProductListContainer = () => {
     const history = useHistory();
     const routeQuery = new URLSearchParams(useLocation().search);
+    const [ currentPageSize, setCurrentPageSize ] = useLocalStorage("products.pageSize", DEFAULT_PAGE_SIZE);
     const currentSelectedCategory = +routeQuery.get('categoryId');
-    const { data, isLoading, error } = useFetch(currentSelectedCategory ? `/item?categoryId=${currentSelectedCategory}` : '/item');
+    const page = +routeQuery.get('page') || DEFAULT_PAGE;
+    const itemsPerPage = +routeQuery.get('limit') || currentPageSize;
+    const { data, isLoading, error } = useFetch(currentSelectedCategory ? `/item?categoryId=${currentSelectedCategory}&limit=${itemsPerPage}&page=${page-1}` : `/item?limit=${itemsPerPage}&page=${page-1}`);
     const { data:categories, isLoading:isLoadingCategories } = useFetch(`/item-category/${currentSelectedCategory || 1}/children`);
     const { data:breadcrumbsData, isLoading:isLoadingBreadcrumbsData } = useFetch(`/item-category/${currentSelectedCategory || 1}`);
     const isLoadingAny = isLoading || isLoadingCategories || isLoadingBreadcrumbsData;
+    const isFirstRender = useRef(true);
 
     const handleCategoryClick = id => e => history.push(`?categoryId=${id}`);
+
+    useEffect(() => {
+        if (!isFirstRender.current) {
+            history.push(`/eshop/products?categoryId=${currentSelectedCategory}&limit=${currentPageSize}&page=${1}`);
+        }
+      }, [currentPageSize])
+      
+      useEffect(() => { 
+            isFirstRender.current = false;
+      }, []);
 
     return (
         <>
@@ -49,9 +70,23 @@ const ProductListContainer = () => {
                                     />
                                 </Grid>
                             }
-                            <Grid item xs={12}>
-                                <ProductList products={data} />
-                            </Grid>
+                            <PaginationContext.Provider value={{
+                                pageSize : itemsPerPage,
+                                page,
+                                currentSelectedCategory,
+                                totalItems : data.totalItems,
+                                setPageSize : setCurrentPageSize
+                            }}>
+                                <Grid item xs={12}>
+                                    <TopPaginationPanel />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <ProductList products={data.data} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <BottomPaginationPanel />
+                                </Grid>
+                            </PaginationContext.Provider>
                         </>
                 }
             </Grid>

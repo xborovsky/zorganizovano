@@ -102,7 +102,7 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
     const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
 
     const goToDetail = () => {
-        history.push(`${location.pathname}/products/${product.id}`);
+        history.push(`${location.pathname}/${product.id}`);
     };
 
     const addToShoppingCart = item => {
