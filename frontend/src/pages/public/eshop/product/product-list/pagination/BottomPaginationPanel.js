@@ -37,7 +37,7 @@ const BottomPaginationPanel = () => {
                     <Grid item xs={12} style={{ float : 'right' }}>
                         <Pagination />
                     </Grid>
-                    <Grid item xs={12} style={{ float : 'right' }}>
+                    <Grid item xs={12} style={{ float : 'right', marginTop : 10 }}>
                         <PaginationInfo />
                     </Grid>
                 </Grid>
