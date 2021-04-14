@@ -101,9 +101,7 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
     const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;
     const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
 
-    const goToDetail = () => {
-        history.push(`${location.pathname}/${product.id}`);
-    };
+    const goToDetail = () => history.push(`/eshop/products/${product.id}`);
 
     const addToShoppingCart = item => {
         const shoppingCartItem = {
