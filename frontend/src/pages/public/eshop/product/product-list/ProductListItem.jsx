@@ -8,7 +8,12 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { AdvancedImage, responsive, lazyload, placeholder } from '@cloudinary/react';
+import { pad } from "@cloudinary/base/actions/resize";
+import { auto } from "@cloudinary/base/qualifiers/format";
+import { format, quality } from "@cloudinary/base/actions/delivery";
+import { auto as qAuto } from "@cloudinary/base/qualifiers/quality";
 
 import { productShape } from '../product-prop-type';
 import Price from '../../../../../components/Price';
@@ -17,8 +22,8 @@ import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
-import { getImgServerPreviewUrl, getImgServerUrl } from 'util/img-util';
-import ProgressiveImage from 'components/progressive-image/ProgressiveImage';
+import { getCloudinaryImageName } from 'util/img-util';
+import useCloudinary from 'hooks/use-cloudinary';
 
 const styles = theme => ({
     card : {
@@ -59,11 +64,6 @@ const styles = theme => ({
             paddingBottom : 0
         }
     },
-    cover: {
-        height: 200,
-        cursor : 'pointer',
-        objectFit : 'contain !important'
-    },
     orderActionWrapper : {
         display : 'flex',
         alignItems: 'center',
@@ -94,8 +94,8 @@ const styles = theme => ({
 
 const ProductListItem = ({ product, onSuccess, classes, width }) => {
 
+    const cloudinary = useCloudinary();
     const history = useHistory();
-    const location = useLocation();
     const [ quantity, setQuantity ] = useState(1);
     const { state, dispatch } = useShoppingCartContext();
     const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;
@@ -125,22 +125,14 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
         setQuantity(newValue);
     };
 
-    const getProductPhotoWidthPct = () => {
-        switch (width) {
-            case 'xl':
-            case 'lg':
-            case 'md':
-                return 35;
-            case 'sm':
-                return 50;
-            case 'xs':
-                return 100;
-            default : return 100;
-        }
-    };
-
     const headerTitle = <Typography varian="h5" className={classes.headerTitle}>{product.name}</Typography>;
     const headerSubtitle = <Typography varian="h6" className={classes.headerSubtitle}>{product.subName}</Typography>;
+
+    const image = cloudinary
+        .image(getCloudinaryImageName(product.thumbnailLocation))
+        .resize(pad().height(200).width(350))
+        .delivery(format(auto()))
+        .delivery(quality(qAuto()));
 
     return (
         <Grid item xs={12} sm={6} md={4}>
@@ -154,17 +146,12 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
                     titleTypographyProps={classes.headerTitle}
                     subheaderTypographyProps={classes.headerSubtitle}
                 />
-                <ProgressiveImage
-                    lowQualitySrc={getImgServerPreviewUrl(product.thumbnailLocation)}
-                    highQualitySrc={getImgServerUrl(product.thumbnailLocation, getProductPhotoWidthPct())}
+                <AdvancedImage 
+                    cldImg={image} 
+                    plugins={[lazyload('30px 0px 30px 0px', 0.1), responsive(), placeholder('blur')]}
                     onClick={goToDetail}
-                    className={classes.cover}
+                    height="200"
                 />
-                {/*<CardMedia
-                    className={classes.cover}
-                    image={getImgServerUrl(product.thumbnailLocation, getProductPhotoWidthPct())}
-                    onClick={goToDetail}
-                />*/}
                 <CardContent onClick={goToDetail} className={classes.content}>
                     <Typography variant="body2">{product.descriptionShort}</Typography>
                 </CardContent>
