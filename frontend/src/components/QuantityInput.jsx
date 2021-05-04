@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -38,6 +38,20 @@ const QuantityInput = ({
     classes,
     ...rest
 }) => {
+    const inputRef = useRef();
+
+    useEffect(() => {
+        if (inputRef?.current) {
+            const foundByClassArr = inputRef.current.getElementsByClassName("PrivateNotchedOutline-legend-60");
+            if (foundByClassArr.length > 0) {
+                const foundSpanArr = foundByClassArr[0].getElementsByTagName("span");
+                if (foundSpanArr.length > 0) {
+                    const foundSpan = foundSpanArr[0];
+                    foundSpan.innerHTML = '&nbsp;';
+                }
+            }
+        }
+    }, [inputRef]);
 
     const handlePlus = () => {
         if (value + 1 > maxVal) {
@@ -64,6 +78,7 @@ const QuantityInput = ({
                 className={`${classes.input} ${className || ''}`}
                 margin="dense"
                 variant="outlined"
+                ref={inputRef}
                 InputProps={{
                     endAdornment: <InputAdornment position="end">ks</InputAdornment>,
                     inputProps: { min : 1, max: maxVal },
