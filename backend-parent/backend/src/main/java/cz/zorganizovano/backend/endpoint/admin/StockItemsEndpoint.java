@@ -26,7 +26,7 @@ public class StockItemsEndpoint {
     
     @GetMapping
     public List<AdminStockItem> getAdminStockItems() {
-        return stockItemDao.findByDisplayOnEshopOrderByIdDesc(true)
+        return stockItemDao.findByDisplayOnEshopOrderByQuantityAsc(true)
             .stream()
             .map(stockItem -> new AdminStockItem(stockItem))
             .collect(Collectors.toList());
