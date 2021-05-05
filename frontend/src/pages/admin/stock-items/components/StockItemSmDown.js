@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, makeStyles, TableCell, TableRow } from '@material-ui/core';
+import { Button, makeStyles, TableCell, TableRow, TextField } from '@material-ui/core';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import ErrorIcon from '@material-ui/icons/Error';
 
-import QuantityInput from '../../../../components/QuantityInput';
 import Loader from '../../../../components/Loader';
 import { StockItemContext } from './StockItemContext';
 
@@ -35,20 +34,23 @@ const StockItemSmDown = ({
                 <table>
                     <tbody>
                         <tr>
-                            <td nowrap="true">ID:</td>
-                            <td>{ itemId }</td>
-                        </tr>
-                        <tr>
-                            <td nowrap="true">Název:</td>
                             <td>{ name }</td>
                         </tr>
                         <tr>
-                            <td nowrap="true" style={{ verticalAlign : 'top' }}>Kusů skladem:</td>
                             <td>
-                                <QuantityInput
+                                <TextField
+                                    label=""
+                                    type="number"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    variant="outlined"
                                     value={quantity}
                                     onChange={onQuantityChange}
-                                    maxVal={99}
+                                    size="small"
+                                    InputProps={{
+                                        inputProps: {  min: 0 }
+                                    }}
                                 />
                                 <br />
                                 { showSaveCancel &&
@@ -84,6 +86,7 @@ const StockItemSmDown = ({
                         </tr>
                     </tbody>
                 </table>
+                <hr />
             </TableCell>
         </TableRow>
     );

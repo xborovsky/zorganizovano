@@ -17,7 +17,7 @@ const StockItemListSmDown = ({ data }) => {
 
     return (
         <Paper className={classes.root}>
-            <Table>
+            <Table size="small">
                 <TableBody>
                     { data.map((stockItem, cnt) => (
                         <StockItemContainer

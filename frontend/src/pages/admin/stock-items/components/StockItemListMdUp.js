@@ -20,11 +20,9 @@ const StockItemListMdUp = ({ data }) => {
 
     return (
         <Paper className={classes.root}>
-            <Table className={classes.table}>
+            <Table className={classes.table} size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>ID produktu</TableCell>
                         <TableCell>Název</TableCell>
                         <TableCell>Kusů skladem</TableCell>
                     </TableRow>

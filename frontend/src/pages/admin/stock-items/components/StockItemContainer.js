@@ -28,8 +28,8 @@ const StockItemContainer = ({
         setLocalQuantity(quantity);
     }, [quantity]);
 
-    const handleChangeLocalQuantity = newVal => {
-        setLocalQuantity(newVal);
+    const handleChangeLocalQuantity = e => {
+        setLocalQuantity(+e.currentTarget.value);
         setShowSaveCancel(true);
         setShowSuccess(false);
         setError(undefined);

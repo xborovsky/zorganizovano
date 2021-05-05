@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, makeStyles, TableCell, TableRow } from '@material-ui/core';
+import { Button, makeStyles, TableCell, TableRow, TextField } from '@material-ui/core';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import ErrorIcon from '@material-ui/icons/Error';
 
-import QuantityInput from '../../../../components/QuantityInput';
 import Loader from '../../../../components/Loader';
 import { StockItemContext } from './StockItemContext';
 
@@ -30,14 +29,21 @@ const StockItemMdUp = ({
     
     return (
         <TableRow>
-            <TableCell width="5%">{ rowNum }</TableCell>
-            <TableCell width="10%">{ itemId }</TableCell>
-            <TableCell width="45%">{ name }</TableCell>
+            <TableCell width="60%">{ name }</TableCell>
             <TableCell width="40%" nowrap="true">
-                <QuantityInput
+                <TextField
+                    label=""
+                    type="number"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    variant="outlined"
                     value={quantity}
                     onChange={onQuantityChange}
-                    maxVal={99}
+                    size="small"
+                    InputProps={{
+                        inputProps: {  min: 0 }
+                    }}
                 />
                 { showSaveCancel &&
                     <div style={{ marginLeft : 20, display : 'inline' }}>
