@@ -2,16 +2,15 @@ import React, { useState, useContext } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
 
 import AuthDataFetcher from '../components/AuthDataFetcher';
 import OrdersTable from './components/OrdersTable';
 import { AuthContext } from '../AuthProvider';
 import Alert from '../../../components/Alert';
+import ActionButtons from './components/ActionButtons';
 
 const useStyles = makeStyles(theme => ({
     filtersContainer : {
@@ -27,6 +26,7 @@ const OrdersContainer = () => {
     const [ showStorno, setShowStorno ] = useState(false);
     const { auth } = useContext(AuthContext);
     const [ isGenerateReportProgress, setGenerateReportProgress ] = useState(false);
+    const [ isGenerateZasilkovnaCSVProgress, setGenerateZasilkovnaCSVProgress ] = useState(false);
     const [ reportErrorMsg, setReportErrorMsg ] = useState(undefined);
     const [ checkedOrderIds, setCheckedOrderIds ] = useState([]);
 
@@ -69,6 +69,37 @@ const OrdersContainer = () => {
         });
     };
 
+    const handleGenerateZasilkovnaCSV = () => {
+        setGenerateZasilkovnaCSVProgress(true);
+        setReportErrorMsg(undefined);
+
+        axios({
+            method : 'POST',
+            url : '/admin/orders/zasilkovna-csv',
+            data : {
+                orderIds : checkedOrderIds
+            },
+            headers : {
+                'Authorization' : `Bearer ${auth}`
+            },
+            responseType: "blob"
+        }).then(res => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "zasilkovna-csv.csv");
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+            setGenerateZasilkovnaCSVProgress(false);
+        })
+        .catch(err => {
+            console.error(err);
+            setGenerateZasilkovnaCSVProgress(false);
+            setReportErrorMsg('CSV pro zásilkovnu se nepodařilo stáhnout.');
+        });
+    };
+
     return (
         <>
             <FormGroup row className={classes.filtersContainer}>
@@ -97,14 +128,12 @@ const OrdersContainer = () => {
                 />
 
                 { checkedOrderIds.length > 0 &&
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        type="button"
-                        onClick={handleGenerateReportClicked}
-                        disabled={isGenerateReportProgress}>
-                        { isGenerateReportProgress ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Stáhnout report' }
-                    </Button>
+                    <ActionButtons
+                        onGenerateReportClicked={handleGenerateReportClicked}
+                        isGenerateReportProgress={isGenerateReportProgress}
+                        onGenerateZasilkovnaCSVClicked={handleGenerateZasilkovnaCSV}
+                        isGenerateZasilkovnaCSVProgress={isGenerateZasilkovnaCSVProgress}
+                    />
                 }
             </FormGroup>
 
