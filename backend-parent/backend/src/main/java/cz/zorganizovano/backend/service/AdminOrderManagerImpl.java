@@ -4,6 +4,7 @@ import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.email.EmailService;
 import cz.zorganizovano.backend.email.builder.InvoiceCreatedEmail;
 import cz.zorganizovano.backend.email.builder.OrderShippedEmail;
+import cz.zorganizovano.backend.email.builder.OrderStornoEmail;
 import cz.zorganizovano.backend.email.builder.PaymentReceivedEmail;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.manager.TimeManager;
@@ -34,6 +35,8 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
     private InvoiceCreatedEmail invoiceCreatedEmail;
     @Autowired
     private InvoiceCreator invoiceCreator;
+    @Autowired
+    private OrderStornoEmail orderStornoEmail;
 
     @Value("${zorganizovano.invoice.export.location}")
     private String invoicesFolderLocation;
@@ -101,6 +104,8 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
         Date now = timeManager.getCurrentDate();
         order.setStorno(now);
         orderDao.save(order);
+
+        emailService.send(order.getCustomer().getEmail(), orderStornoEmail.getSubject(), orderStornoEmail.build(order));
 
         return now;
     }
