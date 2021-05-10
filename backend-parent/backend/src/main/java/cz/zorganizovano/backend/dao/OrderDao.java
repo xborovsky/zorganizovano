@@ -16,4 +16,7 @@ public interface OrderDao extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o WHERE o.id IN(?1) ORDER BY o.created DESC")
     List<Order> findOrdersForReport(List<Long> orderIds);
 
+    @Query("SELECT o FROM Order o WHERE o.paymentReceived IS NULL")
+    List<Order> findUnpaidOrders();
+
 }

@@ -577,4 +577,30 @@
         </insert>
     </changeSet>
 
+    <changeSet id="payment_reminders" author="borovsky">
+        <createTable tableName="payment_reminders">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sent" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseColumnNames="order_id"
+            baseTableName="payment_reminders"
+            constraintName="fk_payment_reminders_order"
+            referencedColumnNames="id"
+            referencedTableName="orders"
+            onDelete="CASCADE" />
+
+        <createIndex indexName="payment_reminders_order_id_idx" tableName="payment_reminders" unique="true">
+            <column name="order_id" type="BIGINT"/>
+        </createIndex>
+    </changeSet>
+
 </databaseChangeLog>
