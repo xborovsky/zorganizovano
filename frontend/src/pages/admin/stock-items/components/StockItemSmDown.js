@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, makeStyles, TableCell, TableRow, TextField } from '@material-ui/core';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import ErrorIcon from '@material-ui/icons/Error';
+import EditIcon from '@material-ui/icons/Edit';
 
 import Loader from '../../../../components/Loader';
 import { StockItemContext } from './StockItemContext';
@@ -14,6 +15,11 @@ const useStyles = makeStyles(theme => ({
     },
     rowNum : {
         textAlign : 'center'
+    },
+    link : {
+        color : '#0000EE',
+        textDecoration : 'underline',
+        cursor : 'pointer'
     }
 }));
 
@@ -23,18 +29,20 @@ const StockItemSmDown = ({
     quantity,
     onSaveClick,
     onCancelClick,
-    onQuantityChange
+    onQuantityChange,
+    onEditClick,
+    onDetailClick
 }) => {
     const classes = useStyles();
     const { showSaveCancel, showSaveProgress, error, showSuccess } = useContext(StockItemContext);
 
     return (
         <TableRow>
-            <TableCell>
+            <TableCell width="95%">
                 <table>
                     <tbody>
                         <tr>
-                            <td>{ name }</td>
+                            <td><span className={classes.link} onClick={onDetailClick}>{ name }</span></td>
                         </tr>
                         <tr>
                             <td>
@@ -88,6 +96,13 @@ const StockItemSmDown = ({
                 </table>
                 <hr />
             </TableCell>
+            <TableCell width="5%">
+                <EditIcon 
+                    style={{ cursor : 'pointer' }}
+                    title="Editovat"
+                    onClick={onEditClick}    
+                />
+            </TableCell>
         </TableRow>
     );
 };
@@ -98,7 +113,9 @@ StockItemSmDown.propTypes = {
     quantity : PropTypes.number.isRequired,
     onSaveClick : PropTypes.func.isRequired,
     onCancelClick : PropTypes.func.isRequired,
-    onQuantityChange : PropTypes.func.isRequired
+    onQuantityChange : PropTypes.func.isRequired,
+    onEditClick : PropTypes.func.isRequired,
+    onDetailClick : PropTypes.func.isRequired
 };
 
 export default StockItemSmDown;

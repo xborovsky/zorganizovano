@@ -20,6 +20,9 @@ const useStyles = makeStyles({
     table: {
       minWidth: 650
     },
+    tableHead : {
+        backgroundColor : '#ddd'
+    },
     noRecord : {
         textAlign : 'center'
     }
@@ -36,7 +39,7 @@ const OrdersTable = ({
     return (
         <Paper className={classes.root}>
             <Table className={classes.table} aria-label="simple table">
-                <TableHead>
+                <TableHead className={classes.tableHead}>
                     <TableRow>
                         <TableCell></TableCell>
                         <TableCell></TableCell>

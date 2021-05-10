@@ -12,7 +12,11 @@ const useStyles = makeStyles({
     }
 });
 
-const StockItemListSmDown = ({ data }) => {
+const StockItemListSmDown = ({ 
+    data, 
+    onEditClick,
+    onDetailClick
+}) => {
     const classes = useStyles();
 
     return (
@@ -27,6 +31,8 @@ const StockItemListSmDown = ({ data }) => {
                             quantity={stockItem.quantity}
                             rowNum={cnt + 1}
                             key={stockItem.id}
+                            onEditClick={onEditClick}
+                            onDetailClick={onDetailClick}
                         />
                     )) }
                 </TableBody>
@@ -41,7 +47,9 @@ StockItemListSmDown.propTypes = {
         itemId : PropTypes.number.isRequired,
         name : PropTypes.string.isRequired,
         quantity : PropTypes.number.isRequired,
-    }))
+    })),
+    onEditClick : PropTypes.func.isRequired,
+    onDetailClick : PropTypes.func.isRequired
 };
 
 export default StockItemListSmDown;

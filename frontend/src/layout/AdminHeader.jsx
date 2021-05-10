@@ -50,10 +50,10 @@ const useStyles = makeStyles(theme => ({
         textDecoration : 'none !important',
         cursor : 'pointer',
         '&:active' : {
-            backgroundColor : 'rgba(46, 75, 20, .8)'
+            backgroundColor : '#777'
         },
         '&:hover' : {
-            backgroundColor : 'rgba(46, 75, 20, .8)'
+            backgroundColor : '#777'
         },
         [theme.breakpoints.down('sm')] : {
             justifyContent : 'center',

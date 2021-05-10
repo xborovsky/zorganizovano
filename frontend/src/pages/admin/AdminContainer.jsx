@@ -12,6 +12,7 @@ const Login = React.lazy(() => import('./login'));
 const Orders = React.lazy(() => import('./orders'));
 const OrderDetail = React.lazy(() => import('./order-detail'));
 const StockItems = React.lazy(() => import('./stock-items'));
+const CreateStockItem = React.lazy(() => import('./stock-item-create'));
 const DiscountCodes = React.lazy(() => import('./discount-codes'));
 const NotFound = React.lazy(() => import('../not-found'));
 
@@ -36,6 +37,7 @@ const AdminContainer = () => {
                     <Route path={[`${match.path}/`, `${match.path}/login`]} exact component={Login} />
                     <ProtectedRoute path={`${match.path}/orders/:id`} component={OrderDetail} />
                     <ProtectedRoute path={`${match.path}/orders`} component={Orders} />
+                    <ProtectedRoute path={`${match.path}/stock-items/create`} component={CreateStockItem} />
                     <ProtectedRoute path={`${match.path}/stock-items`} component={StockItems} />
                     <ProtectedRoute path={`${match.path}/discount-codes`} component={DiscountCodes} />
                     <Route component={NotFound} />

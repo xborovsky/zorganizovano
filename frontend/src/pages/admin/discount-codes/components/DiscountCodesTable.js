@@ -14,6 +14,12 @@ const useStyles = makeStyles({
     },
     table: {
       minWidth: 650
+    },
+    tableHead : {
+        backgroundColor : '#ddd'
+    },
+    tableHeadSearch : {
+        backgroundColor : '#fff'
     }
 });
 
@@ -88,8 +94,8 @@ const DiscountCodesTable = ({
     return (
         <Paper className={classes.root}>
             <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
+                <TableHead className={classes.tableHead}>
+                    <TableRow className={classes.tableHeadSearch}>
                         <TableCell colSpan={6}>
                             <TextField 
                                 value={searchFilter}

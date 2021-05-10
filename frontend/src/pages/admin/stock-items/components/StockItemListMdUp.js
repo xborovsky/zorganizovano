@@ -12,19 +12,27 @@ const useStyles = makeStyles({
     },
     table: {
       minWidth: 650
+    },
+    tableHead : {
+        backgroundColor : '#ddd'
     }
 });
 
-const StockItemListMdUp = ({ data }) => {
+const StockItemListMdUp = ({ 
+    data, 
+    onEditClick,
+    onDetailClick
+}) => {
     const classes = useStyles();
 
     return (
         <Paper className={classes.root}>
             <Table className={classes.table} size="small">
-                <TableHead>
+                <TableHead className={classes.tableHead}>
                     <TableRow>
                         <TableCell>Název</TableCell>
                         <TableCell>Kusů skladem</TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -36,6 +44,8 @@ const StockItemListMdUp = ({ data }) => {
                             quantity={stockItem.quantity}
                             rowNum={cnt + 1}
                             key={stockItem.id}
+                            onEditClick={onEditClick}
+                            onDetailClick={onDetailClick}
                         />
                     )) }
                 </TableBody>
@@ -50,7 +60,9 @@ StockItemListMdUp.propTypes = {
         itemId : PropTypes.number.isRequired,
         name : PropTypes.string.isRequired,
         quantity : PropTypes.number.isRequired
-    }))
+    })),
+    onEditClick : PropTypes.func.isRequired,
+    onDetailClick : PropTypes.func.isRequired
 };
 
 export default StockItemListMdUp;

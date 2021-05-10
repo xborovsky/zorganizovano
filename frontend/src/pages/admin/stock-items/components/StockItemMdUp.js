@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, makeStyles, TableCell, TableRow, TextField } from '@material-ui/core';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import ErrorIcon from '@material-ui/icons/Error';
+import EditIcon from '@material-ui/icons/Edit';
 
 import Loader from '../../../../components/Loader';
 import { StockItemContext } from './StockItemContext';
@@ -11,6 +12,11 @@ const useStyles = makeStyles(theme => ({
     icon : {
         verticalAlign : 'middle',
         marginLeft : 10
+    },
+    link : {
+        color : '#0000EE',
+        textDecoration : 'underline',
+        cursor : 'pointer'
     }
 }));
 
@@ -21,7 +27,9 @@ const StockItemMdUp = ({
     rowNum,
     onSaveClick,
     onCancelClick,
-    onQuantityChange
+    onQuantityChange,
+    onEditClick,
+    onDetailClick
 }) => {
     const classes = useStyles();
 
@@ -29,7 +37,7 @@ const StockItemMdUp = ({
     
     return (
         <TableRow>
-            <TableCell width="60%">{ name }</TableCell>
+            <TableCell width="55%"><span className={classes.link} onClick={onDetailClick}>{ name }</span></TableCell>
             <TableCell width="40%" nowrap="true">
                 <TextField
                     label=""
@@ -75,6 +83,13 @@ const StockItemMdUp = ({
                     /> 
                 }
             </TableCell>
+            <TableCell width="5%">
+                <EditIcon
+                    style={{ cursor : 'pointer' }}
+                    title="Editovat"
+                    onClick={onEditClick}    
+                />
+            </TableCell>
         </TableRow>
     );
 };
@@ -86,7 +101,9 @@ StockItemMdUp.propTypes = {
     rowNum : PropTypes.number.isRequired,
     onSaveClick : PropTypes.func.isRequired,
     onCancelClick : PropTypes.func.isRequired,
-    onQuantityChange : PropTypes.func.isRequired
+    onQuantityChange : PropTypes.func.isRequired,
+    onEditClick : PropTypes.func.isRequired,
+    onDetailClick : PropTypes.func.isRequired
 };
 
 export default StockItemMdUp;
