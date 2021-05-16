@@ -11,6 +11,7 @@ import useFetchAuth from 'hooks/use-fetch-auth';
 import Loader from 'components/Loader';
 import Alert from 'components/Alert';
 import StockItemDetailDialog from '../stock-item-detail';
+import { removeAccents } from 'util/string-util';
 
 const StockItems = () => {
     const [ showCreateDialog, setShowCreateDialog ] = useState(false);
@@ -19,6 +20,10 @@ const StockItems = () => {
     const [ alertMsg, setAlertMsg ] = useState(undefined);
     const [ stockItemToEdit, setStockItemToEdit ] = useState(undefined);
     const [ stockItemDetail, setStockItemDetail ] = useState(undefined);
+    const [ searchFilter, setSearchFilter ] = useState('');
+    const stockItemsFiltered = data?.filter(si => searchFilter.length === 0 ? true : removeAccents(si.name.toLowerCase()).includes(removeAccents(searchFilter.toLowerCase())));
+
+    const handleSearchFilterChange = e => setSearchFilter(e.currentTarget.value);
 
     const handleShowCreateDialog = () => setShowCreateDialog(true);
 
@@ -66,14 +71,18 @@ const StockItems = () => {
                 <Grid item xs={12}>
                     <Hidden mdUp>
                         <StockItemListSmDown 
-                            data={data} 
+                            data={stockItemsFiltered} 
+                            searchFilter={searchFilter}
+                            onSearchFilterChange={handleSearchFilterChange}
                             onEditClick={handleEditClick}
                             onDetailClick={handleShowDetailClick}
                         />
                     </Hidden>
                     <Hidden smDown>
                         <StockItemListMdUp 
-                            data={data}
+                            data={stockItemsFiltered} 
+                            searchFilter={searchFilter}
+                            onSearchFilterChange={handleSearchFilterChange}
                             onEditClick={handleEditClick}
                             onDetailClick={handleShowDetailClick}
                         />

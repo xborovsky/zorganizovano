@@ -19,7 +19,6 @@ const TrackingNumberInput = ({
     const handleBlur = e => setValue(e.currentTarget.value.trim());
 
     const handleSubmit = e => {
-        console.log(value);
         e.preventDefault();
         setShowLoader(true);
         axios({

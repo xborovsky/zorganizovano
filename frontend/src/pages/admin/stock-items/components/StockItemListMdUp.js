@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { makeStyles, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core';
 
 import StockItemContainer from './StockItemContainer';
 
@@ -15,11 +15,16 @@ const useStyles = makeStyles({
     },
     tableHead : {
         backgroundColor : '#ddd'
+    },
+    tableHeadSearch : {
+        backgroundColor : '#fff'
     }
 });
 
 const StockItemListMdUp = ({ 
     data, 
+    searchFilter,
+    onSearchFilterChange,
     onEditClick,
     onDetailClick
 }) => {
@@ -29,6 +34,16 @@ const StockItemListMdUp = ({
         <Paper className={classes.root}>
             <Table className={classes.table} size="small">
                 <TableHead className={classes.tableHead}>
+                    <TableRow className={classes.tableHeadSearch}>
+                        <TableCell colSpan={6}>
+                            <TextField 
+                                value={searchFilter}
+                                placeholder="Vyhledejte položku"
+                                onChange={onSearchFilterChange}
+                                fullWidth
+                            />
+                        </TableCell>
+                    </TableRow>
                     <TableRow>
                         <TableCell>Název</TableCell>
                         <TableCell>Kusů skladem</TableCell>
@@ -61,6 +76,8 @@ StockItemListMdUp.propTypes = {
         name : PropTypes.string.isRequired,
         quantity : PropTypes.number.isRequired
     })),
+    searchFilter : PropTypes.string,
+    onSearchFilterChange : PropTypes.func.isRequired,
     onEditClick : PropTypes.func.isRequired,
     onDetailClick : PropTypes.func.isRequired
 };
