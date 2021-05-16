@@ -42,7 +42,6 @@ const ProductGallery = ({ productId }) => {
     return (
         <DataFetcher url={`/picture-item/${productId}`}>
             { data => {
-                console.log(getCloudinaryImages(data));
                 const images = data.length ?
                     getCloudinaryImages(data) :
                     [EMPTY_PICTURES];

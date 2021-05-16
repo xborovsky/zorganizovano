@@ -602,5 +602,25 @@
             <column name="order_id" type="BIGINT"/>
         </createIndex>
     </changeSet>
+    
+    <changeSet id="sql_picture_names_update" author="borovsky">
+        <sql dbms="mysql">
+            update stock_items
+                set thumbnail_location = (
+                    case 
+                        when thumbnail_location like 'products/%' then substring(thumbnail_location, 10)
+                        else thumbnail_location
+                    END
+                );
+            
+            update stock_item_pictures
+            set src = (
+                case 
+                    when src like 'products/%' then substring(src, 10)
+                    else src
+                END
+            );
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>
