@@ -19,14 +19,18 @@
                 <tr>
                     <td style="font-size: 12pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
-                        Objednávka č. <b style="font-size: 16pt;">${orderNum}</b> nebyla dosud zaplacena.
+                        U vaší objednávky č. <b style="font-size: 16pt;">${orderNum}</b> dosud nebyla zaznamenána platba. Ráda bych se zeptala,
+                        zda máte o svou objednávku stále zájem. S vaší zabalenou objednávkou budu čekat ještě 3 pracovní dny na přijetí
+                        platby, v opačném případě budu nucena vaši objednávku stornovat.
+                        <br /><br />
+                        Děkuji za pochopení a přeji příjemný den.
                     </td>
                 </tr>
                 <tr>
                     <td style="font-size: 16pt; padding-left: 10px; padding-right: 10px; color: #4a4a4a;">
                         <br /><br />
                         S pozdravem,<br />
-                        Bára
+                        Bára B.
                         <br /><br />
                     </td>
                 </tr>
