@@ -4,11 +4,13 @@ import cz.zorganizovano.backend.entity.Order;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.pdfbox.util.Charsets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,8 @@ public class ZasilkovnaCSVGeneratorServiceImpl implements ZasilkovnaCSVGenerator
     @Override
     public ByteArrayInputStream buildCSVFile(List<Order> orders) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT);
+        OutputStreamWriter osw =new OutputStreamWriter(out, Charsets.WINDOWS_1252.name());
+        CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(osw), CSVFormat.DEFAULT);
 
         for (Order order : orders) {
             double totalPrice = orderService.calculateTotalPrice(order, order.getDiscountValue());
