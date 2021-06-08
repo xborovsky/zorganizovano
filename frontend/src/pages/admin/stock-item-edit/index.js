@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Dialog, DialogContent, DialogTitle, Grid, IconButton, makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 
 import Alert from 'components/Alert';
 import Loader from 'components/Loader';
-import useFetch from 'hooks/use-fetch';
 import useFetchAuth from 'hooks/use-fetch-auth';
 import StockItemCreateEditForm from '../stock-item-create/components/StockItemCreateEditForm';
 
@@ -25,8 +26,10 @@ const StockItemEditDialog = ({
 }) => {
     const classes = useStyles();
     const [ alert, setAlert ] = useState(undefined);
-    const { isLoading : isLoadingCategories, data : categories, error : categoriesLoadingError } = useFetch('/item-category');
-    const { isLoading, data, error:fetchError } = useFetchAuth(`/admin/stock-items/${id}`);
+    const { isLoading : isLoadingCategories, data : categories, error : categoriesLoadingError } = useQuery('item-categories', () =>
+        axios.get('/item-category').then(res => res.data)
+    );
+    const { isLoading, data, error:fetchError } = useFetchAuth(['admin-stock-item', id], `/admin/stock-items/${id}`);
 
     useEffect(() => {
         if (categoriesLoadingError || fetchError) {

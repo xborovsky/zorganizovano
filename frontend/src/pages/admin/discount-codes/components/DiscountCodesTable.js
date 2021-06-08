@@ -108,7 +108,7 @@ const DiscountCodesTable = ({
                     <TableRow>
                         <TableCell></TableCell>
                         { headCells.map(headCell => (
-                            <TableCell sortDirection={orderBy === headCell.id ? order : false}>
+                            <TableCell sortDirection={orderBy === headCell.id ? order : false} key={headCell.id}>
                                 <TableSortLabel
                                     active={orderBy === headCell.id}
                                     direction={orderBy === headCell.id ? order : 'asc'}

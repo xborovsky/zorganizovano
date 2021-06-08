@@ -8,7 +8,7 @@ const TipDetailContainer = () => {
     let { id } = useParams();
 
     return (
-        <DataFetcher url={`/blog/posts/${id}`}>
+        <DataFetcher queryId={['block-post', id]} url={`/blog/posts/${id}`}>
             { data => ( <TipDetail tip={data} /> ) }
         </DataFetcher>
     );

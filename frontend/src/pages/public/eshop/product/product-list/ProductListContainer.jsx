@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useHistory, useLocation } from 'react-router-dom';
 import { CircularProgress, Grid } from '@material-ui/core';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 
 import ProductList from './ProductList';
 import ItemCategoriesFilter from './item-categories-filter';
@@ -23,9 +25,15 @@ const ProductListContainer = () => {
     const currentSelectedCategory = +routeQuery.get('categoryId');
     const page = +routeQuery.get('page') || DEFAULT_PAGE;
     const itemsPerPage = +routeQuery.get('limit') || currentPageSize;
-    const { data, isLoading, error } = useFetch(currentSelectedCategory ? `/item?categoryId=${currentSelectedCategory}&limit=${itemsPerPage}&page=${page-1}` : `/item?limit=${itemsPerPage}&page=${page-1}`);
-    const { data:categories, isLoading:isLoadingCategories } = useFetch(`/item-category/${currentSelectedCategory || 1}/children`);
-    const { data:breadcrumbsData, isLoading:isLoadingBreadcrumbsData } = useFetch(`/item-category/${currentSelectedCategory || 1}`);
+    const { data, isLoading, error } = useQuery(['products', currentSelectedCategory, page, itemsPerPage], () =>
+        axios.get(currentSelectedCategory ? `/item?categoryId=${currentSelectedCategory}&limit=${itemsPerPage}&page=${page-1}` : `/item?limit=${itemsPerPage}&page=${page-1}`).then(res => res.data)
+    );
+    const { data:categories, isLoading:isLoadingCategories } = useQuery(['categories', currentSelectedCategory || 1], () =>
+        axios.get(`/item-category/${currentSelectedCategory || 1}/children`).then(res => res.data)
+    );
+    const { data:breadcrumbsData, isLoading:isLoadingBreadcrumbsData } = useQuery(['breadcrumbs', currentSelectedCategory || 1], () =>
+        axios.get(`/item-category/${currentSelectedCategory || 1}`).then(res => res.data)
+    );
     const isLoadingAny = isLoading || isLoadingCategories || isLoadingBreadcrumbsData;
     const isFirstRender = useRef(true);
 

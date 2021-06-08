@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useFetch from 'hooks/use-fetch';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 import { CircularProgress, Grid } from '@material-ui/core';
 
 import ProductDetail from './ProductDetail';
@@ -9,8 +10,12 @@ import ProductBreadcrumbs from '../common/ProductBreadcrumbs';
 
 const ProductDetailContainer = () => {
     let { id } = useParams();
-    const { data, isLoading, error } = useFetch(`/item/${id}`);
-    const { data:breadcrumbsData, isLoading:isLoadingBreadcrumbsData } = useFetch(`/item-category/${data?.itemCategory?.id || 1}`);
+    const { data, isLoading, error } = useQuery(['item-detail', id], () => 
+        axios.get(`/item/${id}`).then(res => res.data)
+    );
+    const { data:breadcrumbsData, isLoading:isLoadingBreadcrumbsData } = useQuery(['breadcrumbs', data?.itemCategory?.id || 1], () =>
+        axios.get(`/item-category/${data?.itemCategory?.id || 1}`).then(res => res.data)
+    );
     const isLoadingAny = isLoading || isLoadingBreadcrumbsData;
 
     return (

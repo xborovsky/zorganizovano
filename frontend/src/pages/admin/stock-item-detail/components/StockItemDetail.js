@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 
 const StockItemDetail = ({ id }) => {
     const classes = useStyles();
-    const { isLoading, data, error:fetchError } = useFetchAuth(`/admin/stock-items/${id}`);
+    const { isLoading, data, error:fetchError } = useFetchAuth(['admin-stock-item', id], `/admin/stock-items/${id}`);
 
     if (isLoading) {
         return <Loader />;

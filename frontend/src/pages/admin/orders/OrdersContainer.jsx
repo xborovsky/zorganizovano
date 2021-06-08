@@ -139,7 +139,7 @@ const OrdersContainer = () => {
 
             { reportErrorMsg && <Alert type="error">{reportErrorMsg}</Alert> }
 
-            <AuthDataFetcher url={`/admin/orders?shipped=${showShipped}&storno=${showStorno}`}>
+            <AuthDataFetcher queryId={['admin-orders', showShipped, showStorno]} url={`/admin/orders?shipped=${showShipped}&storno=${showStorno}`}>
                 { data => (
                     <OrdersTable 
                         orders={data}

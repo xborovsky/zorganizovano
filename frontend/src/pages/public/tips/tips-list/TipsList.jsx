@@ -13,7 +13,7 @@ const TipsList = () => (
                 co doufám, že by vám mohlo pomoci v organizaci domácnosti, rodiny a získání tak více volného času." />
         </Helmet>
         <BreadcrumbsNav items={[{ name : 'U nás doma' }]} />
-        <DataFetcher url='/blog/posts'>
+        <DataFetcher queryId='blog-posts' url='/blog/posts'>
             { data => (
                 <Grid container>
                     {

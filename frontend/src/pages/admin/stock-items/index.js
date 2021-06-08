@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Hidden } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Button } from '@material-ui/core';
+import { useQueryClient } from 'react-query';
 
 import StockItemListMdUp from './components/StockItemListMdUp';
 import StockItemListSmDown from './components/StockItemListSmDown';
@@ -15,8 +16,8 @@ import { removeAccents } from 'util/string-util';
 
 const StockItems = () => {
     const [ showCreateDialog, setShowCreateDialog ] = useState(false);
-    const [ refetchFlag, setRefetchFlag ] = useState(false);
-    const { isLoading, data, error } = useFetchAuth('/admin/stock-items', refetchFlag);
+    const { data, isLoading, error, refetch } = useFetchAuth('admin-stock-items', '/admin/stock-items');
+    const queryClient = useQueryClient();
     const [ alertMsg, setAlertMsg ] = useState(undefined);
     const [ stockItemToEdit, setStockItemToEdit ] = useState(undefined);
     const [ stockItemDetail, setStockItemDetail ] = useState(undefined);
@@ -35,13 +36,15 @@ const StockItems = () => {
 
     const handleCreateSuccess = () => {
         handleDialogClose();
-        setRefetchFlag(prev => !prev);
+        queryClient.invalidateQueries('admin-stock-items');
+        refetch();
         setAlertMsg({ type : 'success', message : 'Položka úspěšně vytvořena' });
     };
 
     const handleEditSuccess = () => {
         handleDialogClose();
-        setRefetchFlag(prev => !prev);
+        queryClient.invalidateQueries('admin-stock-items');
+        refetch();
         setAlertMsg({ type : 'success', message : 'Položka úspěšně editována' });
     };
 

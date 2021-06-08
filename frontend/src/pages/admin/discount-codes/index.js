@@ -4,7 +4,7 @@ import AuthDataFetcher from '../components/AuthDataFetcher';
 import DiscountCodesContainer from './components/DiscountCodesContainer';
 
 const DiscountCodes = () => (
-    <AuthDataFetcher url={`/admin/discount-codes`}>
+    <AuthDataFetcher queryId='admin-discount-codes' url={`/admin/discount-codes`}>
         { data => (
             <>
                 <DiscountCodesContainer discountCodes={data} />

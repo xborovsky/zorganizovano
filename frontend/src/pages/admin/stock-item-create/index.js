@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Button, Dialog, DialogContent, DialogTitle, Grid, IconButton, makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import SaveIcon from '@material-ui/icons/Save';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 
-import useFetch from 'hooks/use-fetch';
 import Loader from 'components/Loader';
 import StockItemCreateEditForm from './components/StockItemCreateEditForm';
 import Alert from 'components/Alert';
@@ -26,7 +27,9 @@ const StockItemCreateDialog = ({
  }) => {
     const classes = useStyles();
     const [ alert, setAlert ] = useState(undefined);
-    const { isLoading : isLoadingCategories, data : categories, error : categoriesLoadingError } = useFetch('/item-category');
+    const { isLoading : isLoadingCategories, data : categories, error : categoriesLoadingError } = useQuery('item-categories', () =>
+        axios.get('/item-category').then(res => res.data)
+    );
     const [ showLoadFromTemplateDialog, setShowLoadFromTemplateDialog ] = useState(false);
     const [ templateId, setTemplateId ] = useState(undefined);
     const { 

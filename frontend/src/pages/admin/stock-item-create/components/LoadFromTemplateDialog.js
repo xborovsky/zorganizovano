@@ -23,7 +23,7 @@ const LoadFromTemplateDialog = ({
     onSelect
 }) => {
     const classes = useStyles();
-    const { data, isLoading, error } = useFetchAuth('/admin/stock-items');
+    const { data, isLoading, error } = useFetchAuth('admin-stock-items', '/admin/stock-items');
     const handleSelectClick = id => e => onSelect(id);
 
     return (

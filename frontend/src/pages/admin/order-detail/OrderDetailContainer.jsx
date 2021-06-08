@@ -23,7 +23,7 @@ const OrderDetailContainer = () => {
     const classes = useStyles();
 
     return (
-        <AuthDataFetcher url={`/admin/orders/${id}`}>
+        <AuthDataFetcher queryId={['admin-order', id]} url={`/admin/orders/${id}`}>
             { data => (
                 <div className={classes.root}>
                     <span onClick={() => history.push("/admin/orders")} className={classes.backLink}>

@@ -5,6 +5,7 @@ import withStyles from '@material-ui/styles/withStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import * as Sentry from "@sentry/react";
 import { Cloudinary } from "@cloudinary/base";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import Loader from './components/Loader';
 
@@ -31,20 +32,24 @@ const cld = new Cloudinary({
   }
 });
 
+const queryClient = new QueryClient();
+
 const App = ({ classes }) => (
   <div className={classes.root}>
     <CssBaseline />
     <ThemeProvider theme={zorganizovanoTheme}>
       <Router>
         <Sentry.ErrorBoundary fallback={<ErrorPage middleOfScreen />}>
-          <CloudinaryContext.Provider value={{ cloudinary : cld }}>
-            <Suspense fallback={<Loader />}>
-              <Switch>
-                <Route path="/admin" component={AdminContainer} />
-                <Route component={PublicContainer} />
-              </Switch>
-            </Suspense>
-          </CloudinaryContext.Provider>
+          <QueryClientProvider client={queryClient}>
+            <CloudinaryContext.Provider value={{ cloudinary : cld }}>
+              <Suspense fallback={<Loader />}>
+                <Switch>
+                  <Route path="/admin" component={AdminContainer} />
+                  <Route component={PublicContainer} />
+                </Switch>
+              </Suspense>
+            </CloudinaryContext.Provider>
+          </QueryClientProvider>
         </Sentry.ErrorBoundary>
       </Router>
     </ThemeProvider>

@@ -15,7 +15,7 @@ const styles = theme => ({
 });
 
 const TipsListItemTitlePicture = ({ tipId, tipName, classes, width }) => (
-    <DataFetcher url={`/blog/posts/${tipId}/title-picture`}>
+    <DataFetcher queryId={['block-post-title-picture', tipId]} url={`/blog/posts/${tipId}/title-picture`}>
         {data => (
             <img
                 src={getImgServerUrl(data, ['xs', 'sm'].indexOf(width) > -1 ? 100 : 40)}

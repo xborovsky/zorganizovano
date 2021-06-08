@@ -4,6 +4,7 @@ import { Button, Checkbox, FormControl, FormControlLabel, FormHelperText, InputL
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useMutation } from 'react-query';
 
 import StockItemDetailsForm from './StockItemDetailsForm';
 import StockItemPicturesForm from './StockItemPicturesForm';
@@ -30,6 +31,42 @@ const StockItemCreateEditForm = ({
     const [ details, setDetails ] = useState(stockItem.itemDetails || []);
     const [ category, setCategory ] = useState(stockItem.itemCategory?.id || 1);
     const { auth } = useContext(AuthContext);
+    const createMutation = useMutation(
+        (data) => axios({
+            method : 'POST',
+            url : '/admin/stock-items',
+            headers : {
+                'Authorization' : `Bearer ${auth}`
+            },
+            data : data
+        }),
+        {
+            onSuccess : () => {
+                onSubmitSuccess();
+            },
+            onError : error => {
+                onSubmitError(error);
+            }
+        }
+    );
+    const editMutation = useMutation(
+        ({ id, data }) => axios({
+            method : 'POST',
+            url : `/admin/stock-items/${id}`,
+            headers : {
+                'Authorization' : `Bearer ${auth}`
+            },
+            data : data
+        }),
+        {
+            onSuccess : () => {
+                onSubmitSuccess();
+            },
+            onError : error => {
+                onSubmitError(error);
+            }
+        }
+    );
 
     const validationSchema = Yup.object().shape({
         name : Yup.string()
@@ -81,20 +118,26 @@ const StockItemCreateEditForm = ({
     const handleChangeCategory = e => setCategory(e.target.value);
 
     const handleFormSubmit = (values, { setSubmitting, setErrors }) => {
-        axios({
-            method : 'POST',
-            url : stockItem.id ? `/admin/stock-items/${stockItem.id}` : '/admin/stock-items',
-            headers : {
-                'Authorization' : `Bearer ${auth}`
-            },
-            data : { ...values, pictures, details, category }
-        }).then(res => onSubmitSuccess())
-            .catch(err => {
-                // TODO validation errors?
-                console.error(err);
-                onSubmitError(err);
-                setSubmitting(false);
-            });
+        const postData = { ...values, pictures, details, category };
+        if (stockItem.id) {
+            editMutation.mutate(
+                { id : stockItem.id, data : postData },
+                {
+                    onError : () => {
+                        setSubmitting(false);
+                    }
+                }
+            );
+        } else {
+            createMutation.mutate(
+                { data : postData },
+                {
+                    onError : () => {
+                        setSubmitting(false);
+                    }
+                }
+            );
+        }
     };
 
     return (

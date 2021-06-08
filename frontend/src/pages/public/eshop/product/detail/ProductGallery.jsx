@@ -40,7 +40,7 @@ const ProductGallery = ({ productId }) => {
         });
 
     return (
-        <DataFetcher url={`/picture-item/${productId}`}>
+        <DataFetcher queryId={['item-picture', productId]} url={`/picture-item/${productId}`}>
             { data => {
                 const images = data.length ?
                     getCloudinaryImages(data) :

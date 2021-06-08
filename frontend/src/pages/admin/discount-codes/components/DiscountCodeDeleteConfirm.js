@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { useMutation, useQueryClient } from 'react-query';
 
 import Loader from '../../../../components/Loader';
 import Alert from '../../../../components/Alert';
@@ -14,44 +15,41 @@ const DiscountCodeDeleteConfirm = ({
     onSuccess
 }) => {
     const { auth } = useContext(AuthContext);
-    const [ showLoader, setShowLoader ] = useState(false);
-    const [ error, setError ] = useState(undefined);
-
-    const handleDeleteConfirm = () => {
-        setShowLoader(true);
-        setError(undefined);
-
-        axios({
+    const queryClient = useQueryClient();
+    const deleteMutation = useMutation(
+        (discountCodeId) => axios({
             method : 'DELETE',
             url : `/admin/discount-codes/${discountCodeId}`,
             headers : {
                 'Authorization' : `Bearer ${auth}`
             }
-        }).then(_res => {
-            setShowLoader(false);
-            onSuccess();
-        }).catch(err => {
-            setShowLoader(false);
-            setError('Záznam se nepovedlo smazat!');
-        });
-    };
+        }),
+        {
+            onSuccess : () => {
+                queryClient.invalidateQueries('admin-discount-codes');
+                onSuccess();
+            }
+        }
+    );
+
+    const handleDeleteConfirm = () => deleteMutation.mutate(discountCodeId);
 
     return (
         <Dialog open onClose={onClose}>
             <DialogTitle>Opravdu si přejete smazat kód <strong>{discountCode}</strong>?</DialogTitle>
-            { error && 
+            { deleteMutation.isError && 
                 <DialogContent>
                     <DialogContentText>
-                        <Alert type="error">{ error }</Alert>
+                        <Alert type="error">Záznam se nepovedlo smazat!</Alert>
                     </DialogContentText>
                 </DialogContent>
             }
             <DialogActions>
-                <Button onClick={onClose} color="primary" disabled={showLoader}>
+                <Button onClick={onClose} color="primary" disabled={deleteMutation.isLoading}>
                     Zrušit
                 </Button>
-                <Button onClick={handleDeleteConfirm} color="primary" variant="contained" autoFocus disabled={showLoader}>
-                    { showLoader ? <Loader /> : 'Potvrdit' }
+                <Button onClick={handleDeleteConfirm} color="primary" variant="contained" autoFocus disabled={deleteMutation.isLoading}>
+                    { deleteMutation.isLoading ? <Loader /> : 'Potvrdit' }
                 </Button>
             </DialogActions>
         </Dialog>

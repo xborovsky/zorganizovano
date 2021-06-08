@@ -8,6 +8,7 @@ import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 import axios from 'axios';
 import { format, differenceInMilliseconds } from 'date-fns';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { AuthContext } from '../../AuthProvider';
 import Loader from '../../../../components/Loader';
@@ -46,6 +47,26 @@ const CreateDiscountCodeModal = ({
 }) => {
     const classes = useStyles();
     const { auth } = useContext(AuthContext);
+    const queryClient = useQueryClient();
+    const createQueryCodeMutation = useMutation(
+        (postData) => axios({
+            method : 'POST',
+            url : `/admin/discount-codes`,
+            headers : {
+                'Authorization' : `Bearer ${auth}`
+            },
+            data : postData
+        }),
+        {
+            onSuccess : res => {
+                queryClient.invalidateQueries('admin-discount-codes');
+                onSuccess(res.data)
+            },
+            onError : () => {
+                setError('Formulář se nepodařilo odeslat.');
+            }
+        }
+    );
     const [ error, setError ] = useState(undefined);
 
     const handleChangeValidUntil = setFieldValue => newVal => setFieldValue('validUntil', newVal);
@@ -64,23 +85,12 @@ const CreateDiscountCodeModal = ({
             setError('Formulář obsahuje chyby.');
             setSubmitting(false);
         } else {
-            axios({
-                method : 'POST',
-                url : `/admin/discount-codes`,
-                headers : {
-                    'Authorization' : `Bearer ${auth}`
-                },
-                data : {
+            createQueryCodeMutation.mutate(
+                {
                     ...values,
                     validUntil : format(values.validUntil, `yyyy-MM-dd'T'HH:mm:ss.SSS`)
                 }
-            })
-            .then(res => onSuccess(res.data))
-            .catch(err => {
-                console.error(err.response.data);
-                setError('Formulář obsahuje chyby.');
-                setSubmitting(false);
-            });
+            );
         }
     };
 
@@ -183,11 +193,11 @@ const CreateDiscountCodeModal = ({
                                 </FormGroup>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={onClose} color="primary" disabled={isSubmitting}>
+                                <Button onClick={onClose} color="primary" disabled={createQueryCodeMutation.isLoading}>
                                     Zrušit
                                 </Button>
-                                <Button type="submit" color="primary" variant="contained" autoFocus disabled={isSubmitting}>
-                                    { isSubmitting ? <Loader /> : 'Uložit' }
+                                <Button type="submit" color="primary" variant="contained" autoFocus disabled={createQueryCodeMutation.isLoading}>
+                                    { createQueryCodeMutation.isLoading ? <Loader /> : 'Uložit' }
                                 </Button>
                             </DialogActions>
                         </Form>
