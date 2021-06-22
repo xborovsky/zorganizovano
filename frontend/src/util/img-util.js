@@ -27,7 +27,7 @@ export const getImgServerPreviewUrl = (img) => {
 
 export const getCloudinaryImageName = path => {
     let res = path.substring(0, path.lastIndexOf('.'))
-        .replaceAll(/[_, ()]+/g, '_');
+        .replace(/[_, ()]+/g, '_');
 
     if (res[res.length - 1] === '_') {
         return res.substring(0, res.length - 1);
