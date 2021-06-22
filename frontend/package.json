@@ -35,7 +35,7 @@
     "react-image-gallery": "^1.0.9",
     "react-material": "^0.3.2",
     "react-query": "^3.16.1",
-    "react-recaptcha-v3": "^1.2.0",
+    "react-recaptcha-v3": "^2.0.1",
     "react-router-dom": "^5.2.0",
     "react-router-sitemap": "^1.2.0",
     "react-scripts": "^3.4.1",

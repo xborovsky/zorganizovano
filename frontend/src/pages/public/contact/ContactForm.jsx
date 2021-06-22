@@ -60,7 +60,7 @@ const ContactForm = ({ queryTypes, classes }) => {
     useEffect(() => {
         loadReCaptcha(RECAPTCHA_SITE_KEY);
         return () => {
-            const recaptchaScript = document.querySelector("script[src^='https://www.google.com/recaptcha/api.js']"),
+            const recaptchaScript = document.querySelector("script[src^='https://www.recaptcha.net/recaptcha/api.js']"),
                 recaptchaBadge = document.querySelector(".grecaptcha-badge").parentElement;
             document.body.removeChild(recaptchaScript);
             document.body.removeChild(recaptchaBadge);
