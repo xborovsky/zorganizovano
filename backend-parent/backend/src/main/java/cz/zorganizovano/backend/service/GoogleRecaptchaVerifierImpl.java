@@ -56,10 +56,8 @@ public class GoogleRecaptchaVerifierImpl implements GoogleRecaptchaVerifier {
                 JSONObject json = (JSONObject) parser.parse(response.toString());
 
                 Boolean success = (Boolean) json.get("success");
-                Double score = (Double) json.get("score");
 
-                //result should be sucessfull and spam score above 0.5
-                return (success && score >= 0.5);
+                return success;
             } catch (ParseException e) {
                 throw new IOException(e);
             }

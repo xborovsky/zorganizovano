@@ -24,7 +24,7 @@ const styles = theme => ({
   }
 });
 
-export const RECAPTCHA_SITE_KEY = '6LdrKsAUAAAAAPsXgJSwERT3AwtBDMage9E6YyTy';
+export const RECAPTCHA_SITE_KEY = '6LdTxdQbAAAAAD1xlbKK1XP4ceoA7qYUbVEcPqyS';
 
 const cld = new Cloudinary({
   cloud: {

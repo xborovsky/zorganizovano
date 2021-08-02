@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, createRef } from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -15,7 +15,7 @@ import * as Yup from 'yup';
 import withStyles from '@material-ui/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
-import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-v3';
+import ReCAPTCHA from "react-google-recaptcha";
 
 import CharacterCounter from 'components/CharacterCounter';
 import Alert from 'components/Alert';
@@ -57,16 +57,6 @@ const ContactForm = ({ queryTypes, classes }) => {
     const [ ajaxResult, setAjaxResult ] = useState({});
     const [ recaptchaToken, setRecaptchaToken ] = useState(undefined);
 
-    useEffect(() => {
-        loadReCaptcha(RECAPTCHA_SITE_KEY);
-        return () => {
-            const recaptchaScript = document.querySelector("script[src^='https://www.recaptcha.net/recaptcha/api.js']"),
-                recaptchaBadge = document.querySelector(".grecaptcha-badge").parentElement;
-            document.body.removeChild(recaptchaScript);
-            document.body.removeChild(recaptchaBadge);
-        };
-    }, []);
-
     const showAlert = () => {
         if (ajaxResult.success) {
             return <Alert type="success">{ajaxResult.success}</Alert>
@@ -76,7 +66,7 @@ const ContactForm = ({ queryTypes, classes }) => {
         return null;
     };
 
-    const verifyCallback = recaptchaToken => setRecaptchaToken(recaptchaToken);
+    const handleRecaptchaChange = value => setRecaptchaToken(value);
 
     return (
         <Paper className={classes.root}>
@@ -128,7 +118,6 @@ const ContactForm = ({ queryTypes, classes }) => {
                 }}>
                     {({
                         values,
-                        setFieldValue,
                         errors,
                         touched,
                         handleChange,
@@ -209,10 +198,10 @@ const ContactForm = ({ queryTypes, classes }) => {
                                         className={classes.characterCounter} />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <ReCaptcha
+                                    <ReCAPTCHA
+                                        id='recaptcha'
                                         sitekey={RECAPTCHA_SITE_KEY}
-                                        action='contact_form'
-                                        verifyCallback={verifyCallback}
+                                        onChange={handleRecaptchaChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12} className={classes.submitBtnWrapper}>
