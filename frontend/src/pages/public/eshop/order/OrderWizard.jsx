@@ -5,7 +5,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Hidden from '@material-ui/core/Hidden';
 import withStyles from '@material-ui/styles/withStyles';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 
 import CustomerForm from './steps/CustomerForm';
 import DeliveryForm from './steps/DeliveryForm';
@@ -84,6 +84,11 @@ const OrderWizard = ({ classes }) => {
     const goToPrev = () => {
         setCurrentStep(prevStep => prevStep - 1);
     };
+
+    if (!location.state?.shoppingCart) {
+        console.warn('Shopping cart is empty, cannot create order!');
+        return <Redirect to='/shopping-cart' />;
+    }
 
     return (
         <Paper className={classes.root}>
