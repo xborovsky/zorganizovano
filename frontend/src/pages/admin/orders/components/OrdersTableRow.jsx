@@ -5,9 +5,10 @@ import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/styles';
 import Price from 'components/Price';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, differenceInCalendarDays } from 'date-fns';
 
 import { DATE_TIME_FORMAT } from 'util/date-format-util';
+import { OrderState } from './OrderState';
 
 const useStyles = makeStyles({
     tr : {
@@ -16,19 +17,47 @@ const useStyles = makeStyles({
             background : '#f3f3f3'
         },
         '&.shipped' : {
-            background: '#ddd',
+            background : OrderState.SHIPPED.color,
             '&:hover' : {
-                background : '#ccc'
+                background : OrderState.SHIPPED.hoverColor
             }
         },
         '&.storno' : {
-            background: '#aaa',
+            background: OrderState.STORNO.color,
             '&:hover' : {
-                background : '#999'
+                background : OrderState.STORNO.hoverColor
+            }
+        },
+        '&.long-payment-waiting' : {
+            background: OrderState.LONG_PAYMENT_WAITING.color,
+            '&:hover' : {
+                background : OrderState.LONG_PAYMENT_WAITING.hoverColor
+            }
+        },
+        '&.payment-received' : {
+            background: OrderState.PAYMENT_RECEIVED.color,
+            '&:hover' : {
+                background : OrderState.PAYMENT_RECEIVED.hoverColor
             }
         }
     }
 });
+
+export const LONG_PAYMENT_WAITING = 6;
+
+const getAdditionalClass = order => {
+    if (order.storno) {
+        return 'storno';
+    } else if (order.shipped) {
+        return 'shipped';
+    } else if (order.paymentReceived) {
+        return 'payment-received';
+    } else if (!order.paymentReceived, differenceInCalendarDays(new Date(), parseISO(order.created)) > LONG_PAYMENT_WAITING) {
+        return 'long-payment-waiting';
+    }
+
+    return undefined;
+};
 
 const OrdersTableRow = ({
     rowNum,
@@ -48,7 +77,9 @@ const OrdersTableRow = ({
     onOrderCheckboxClick
 }) => {
     const classes = useStyles();
-    const additionalClass = storno ? 'storno' : shipped ? 'shipped' : undefined;
+    const additionalClass = getAdditionalClass({
+        storno, shipped, paymentReceived, created
+    });
 
     const handleRowClick = e => onGoToDetail(orderId);
 

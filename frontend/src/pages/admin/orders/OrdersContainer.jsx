@@ -11,12 +11,26 @@ import OrdersTable from './components/OrdersTable';
 import { AuthContext } from '../AuthProvider';
 import Alert from '../../../components/Alert';
 import ActionButtons from './components/ActionButtons';
+import OrdersTableLegend from './components/OrdersTableLegend';
 
 const useStyles = makeStyles(theme => ({
     filtersContainer : {
         width: '95vw',
         overflowX: 'auto',
         margin : '20px auto'
+    },
+    orderTableLegend : {
+        margin : '1rem auto 1rem',
+        width : '95vw',
+        [theme.breakpoints.up('sm')] : {
+            width : '75vw'
+        },
+        [theme.breakpoints.up('md')] : {
+            width : '65vw'
+        },
+        [theme.breakpoints.up('lg')] : {
+            width : '50vw'
+        }
     }
 }));
 
@@ -148,6 +162,8 @@ const OrdersContainer = () => {
                     />
                 ) }
             </AuthDataFetcher>
+
+            <OrdersTableLegend className={classes.orderTableLegend} />
         </>
     );
 };
