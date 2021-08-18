@@ -12,6 +12,8 @@ public class PaymentInfo implements PaymentDefaults {
     private String currency;
     private String message;
     private Date date;
+    private String iban;
+    private String bic;
 
     public PaymentInfo(String orderNumber, double amount, Date maturity) {
         this.accountNumber = ACCOUNT_NUMBER;
@@ -20,6 +22,8 @@ public class PaymentInfo implements PaymentDefaults {
         this.variableSymbol = orderNumber;
         this.amount = amount;
         this.date = maturity;
+        this.iban = IBAN;
+        this.bic = BIC;
     }
 
     public String getAccountNumber() {
@@ -77,7 +81,7 @@ public class PaymentInfo implements PaymentDefaults {
     public String getDateFormatted() {
         return new SimpleDateFormat("dd.MM.yyyy").format(date);
     }
-    
+
     public String getDateFormattedForQRCode() {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
@@ -86,5 +90,20 @@ public class PaymentInfo implements PaymentDefaults {
         this.date = date;
     }
 
+    public String getIban() {
+        return iban;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
+    public String getBic() {
+        return bic;
+    }
+
+    public void setBic(String bic) {
+        this.bic = bic;
+    }
 
 }

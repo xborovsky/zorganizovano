@@ -25,6 +25,17 @@ const PaymentInfo = ({ paymentData }) => (
                 <TableCell>Datum splatnosti:</TableCell>
                 <TableCell>{ new Date(paymentData.date).toLocaleDateString() }</TableCell>
             </TableRow>
+            <TableRow>
+                <TableCell colSpan={2}>Pouze pro zahraniční platbu použijte následující údaje:</TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell>IBAN:</TableCell>
+                <TableCell>{ paymentData.iban }</TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell>BIC:</TableCell>
+                <TableCell>{ paymentData.bic }</TableCell>
+            </TableRow>
         </TableBody>
     </Table>
 );

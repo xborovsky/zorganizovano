@@ -76,6 +76,21 @@ public abstract class OrderCreatedEmailBuilderAbs {
                         .append(paymentInfo.getDateFormatted())
                     .append("</td>")
                 .append("</tr>")
+                .append("<tr>")
+                    .append("<th colspan=\"2\" style=\"text-align: left; border : 1px solid #999;\">Pouze pro zahraniční platbu použijte následující údaje:</th>")
+                .append("</tr>")
+                .append("<tr>")
+                    .append("<th style=\"text-align: left; border : 1px solid #999;\">IBAN:</th>")
+                    .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\" nowrap=\"nowrap\">")
+                        .append(paymentInfo.getIban())
+                    .append("</td>")
+                .append("</tr>")
+                .append("<tr>")
+                    .append("<th style=\"text-align: left; border : 1px solid #999;\">BIC:</th>")
+                    .append("<td style=\"text-align: right; border-bottom : 1px solid #999;\" nowrap=\"nowrap\">")
+                        .append(paymentInfo.getBic())
+                    .append("</td>")
+                .append("</tr>")
             .append("</table>");
 
         return sb.toString();
