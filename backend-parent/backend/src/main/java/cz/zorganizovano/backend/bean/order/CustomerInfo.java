@@ -12,6 +12,7 @@ public class CustomerInfo {
     @NotBlank(message = "Pole Email je povinné")
     @Email(message = "Zadejte validní email")
     private String email;
+    private String phoneNoCode;
     @NotBlank(message = "Pole Telefonní číslo je povinné")
     private String phoneNo;
     private AddressDTO address;
@@ -40,6 +41,14 @@ public class CustomerInfo {
         this.email = email;
     }
 
+    public String getPhoneNoCode() {
+        return phoneNoCode;
+    }
+
+    public void setPhoneNoCode(String phoneNoCode) {
+        this.phoneNoCode = phoneNoCode;
+    }
+
     public String getPhoneNo() {
         return phoneNo;
     }
@@ -58,7 +67,7 @@ public class CustomerInfo {
 
     @Override
     public String toString() {
-        return "CustomerInfo{" + "firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNo=" + phoneNo + ", address=" + address + '}';
+        return "CustomerInfo{" + "firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNoCode=" + phoneNoCode + ", phoneNo=" + phoneNo + ", address=" + address + '}';
     }
 
 }

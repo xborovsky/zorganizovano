@@ -14,6 +14,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 import WizardButtons from '../components/WizardButtons';
 import OrderContext from '../OrderContext';
@@ -30,8 +31,8 @@ const CustomerFormSchema = Yup.object().shape({
     email: Yup.string()
         .email('Prosím, zadejte email ve správném tvaru.')
         .required('Prosím, zadejte email.'),
-    phoneNo : Yup.string()
-        .required('Prosím, zadejte telefonní číslo.'),
+    phoneNo : Yup.number()
+        .required('Prosím, zadejte platné telefonní číslo.'),
     street : Yup.string()
         .max(100, 'Zadaný údaj je moc dlouhý.')
         .required('Prosím, zadejte ulici a číslo popisné.'),
@@ -54,6 +55,7 @@ const EMPTY_CUSTOMER_INFO = {
     firstName : '',
     lastName : '',
     email : '',
+    phoneNoCode : '420',
     phoneNo : '',
     personalDataHandleApproval : false
 };
@@ -62,7 +64,7 @@ const EMPTY_CUSTOMER_ADDRESS = {
     street : '',
     zipCode : '',
     township : '',
-    country : '',
+    country : 'CESKA_REPUBLIKA',
 };
 
 const CustomerForm = ({ onGoToNextStep, onError }) => {
@@ -70,6 +72,10 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
     const initialCustomerInfo = customerInfo ? { ...customerInfo } : EMPTY_CUSTOMER_INFO;
     const initialCustomerAddress = customerAddress ? { ...customerAddress, country : customerAddress.country.enumName } : EMPTY_CUSTOMER_ADDRESS;
     const initialFormValues = { ...initialCustomerInfo, ...initialCustomerAddress };
+    const { data:phoneNoCodes, isLoading:isLoadingPhoneNoCodes, error:phoneNoCodesError } = useQuery('phone-number-codes', () =>
+        axios.get('/phone-number/codes').then(res => res.data)
+    );
+    console.log(phoneNoCodes);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -79,7 +85,7 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
         setSubmitting(true);
         axios.post('/order/customer', {...values})
             .then(_res => {
-                const customer = (({firstName, lastName, email, phoneNo, personalDataHandleApproval}) => ({firstName, lastName, email, phoneNo, personalDataHandleApproval}))(values);
+                const customer = (({firstName, lastName, email, phoneNo, phoneNoCode, personalDataHandleApproval}) => ({firstName, lastName, email, phoneNo, phoneNoCode, personalDataHandleApproval}))(values);
                 const address = (({street, township, zipCode}) => ({street, township, zipCode}))(values);
                 address.country = allowedDeliveryCountries.find(deliveryCountry => deliveryCountry.enumName === values.country);
 
@@ -91,8 +97,8 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
                 setSubmitting(false);
                 if (err.response && err.response.data && err.response.data.errors) {
                     let errors = {};
-                    err.response.data.errors.map(backendError => {
-                        errors[backendError.field] = backendError.defaultMessage;
+                    Object.keys(err.response.data.errors).forEach(field => {
+                        errors[field] = err.response.data.errors[field];
                     });
                     setErrors(errors);
                     onError('Formulář obsahuje chyby.');
@@ -168,17 +174,36 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={!!errors.phoneNo} fullWidth>
-                                            <InputLabel htmlFor="phoneNo">Telefon</InputLabel>
-                                            <Input
-                                                id="phoneNo"
-                                                name="phoneNo"
-                                                value={values.phoneNo}
-                                                autoComplete="phoneNo"
-                                                onChange={handleChange}
-                                            />
-                                            <FormHelperText id="phoneNo-error">{errors.phoneNo}</FormHelperText>
-                                        </FormControl>
+                                        <Grid container>
+                                            <Grid item xs={4} md={2}>
+                                                <FormControl>
+                                                    <InputLabel htmlFor="phoneNoCode"></InputLabel>
+                                                    <Select
+                                                        value={values.phoneNoCode}
+                                                        onChange={handleChange}
+                                                        id='phoneNoCode'
+                                                        renderValue={value => `+${value}`}
+                                                    >
+                                                        { phoneNoCodes?.map(phoneNoCode => 
+                                                            <MenuItem key={phoneNoCode.code} value={`${phoneNoCode.code}`}>{phoneNoCode.region} (+{phoneNoCode.code})</MenuItem>) 
+                                                        }
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={8} md={10}>
+                                                <FormControl error={!!errors.phoneNo} fullWidth>
+                                                    <InputLabel htmlFor="phoneNo">Telefon</InputLabel>
+                                                    <Input
+                                                        id="phoneNo"
+                                                        name="phoneNo"
+                                                        value={values.phoneNo}
+                                                        autoComplete="phoneNo"
+                                                        onChange={handleChange}
+                                                    />
+                                                    <FormHelperText id="phoneNo-error">{errors.phoneNo}</FormHelperText>
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>

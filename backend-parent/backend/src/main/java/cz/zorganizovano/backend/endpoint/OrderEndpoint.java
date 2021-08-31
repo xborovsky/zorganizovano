@@ -1,5 +1,9 @@
 package cz.zorganizovano.backend.endpoint;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+import cz.zorganizovano.backend.bean.CustomValidationError;
 import cz.zorganizovano.backend.bean.admin.order.DeliveryOptionsRequest;
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
 import cz.zorganizovano.backend.bean.order.OrderCreatedDTO;
@@ -21,6 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order")
 @Validated
 public class OrderEndpoint {
+
     private static final Logger LOG = LoggerFactory.getLogger(OrderEndpoint.class);
 
     @Autowired
@@ -42,10 +49,18 @@ public class OrderEndpoint {
     private StockItemDao stockItemDao;
 
     @PostMapping("/customer")
-    public void validateCustomer(@Valid @RequestBody CustomerInfo customer) {
-        // pouze validace, ok
+    public ResponseEntity<?> validateCustomer(@Valid @RequestBody CustomerInfo customer) {
+        // dodatecne validovat tel. cislo
+        PhoneNumber phoneNo = new PhoneNumber();
+        phoneNo.setCountryCode(Integer.parseInt(customer.getPhoneNoCode()));
+        phoneNo.setNationalNumber(Long.parseLong(customer.getPhoneNo()));
+        if (!PhoneNumberUtil.getInstance().isValidNumber(phoneNo)) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new CustomValidationError(ImmutableMap.of("phoneNo", "Telefonní číslo není platné.")));
+        }
+
+        return ResponseEntity.ok().build();
     }
-    
+
     @GetMapping("/delivery-countries")
     public ShipmentCountry[] getDeliveryCountries() {
         return ShipmentCountry.values();
@@ -63,44 +78,44 @@ public class OrderEndpoint {
 
         if (showOnlineShipmentOption) {
             return ShipmentType.getShipmentTypesByDeliveryCountry(request.getSelectedCountry()).stream()
-                .collect(Collectors.toList());
+                    .collect(Collectors.toList());
         }
 
         return ShipmentType.getShipmentTypesByDeliveryCountry(request.getSelectedCountry()).stream()
-            .filter(shipmentType -> shipmentType != ShipmentType.ONLINE)
-            .collect(Collectors.toList());
+                .filter(shipmentType -> shipmentType != ShipmentType.ONLINE)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/confirm")
     public OrderSuccessResponse createOrder(@Valid @RequestBody OrderFormBean order) {
         LOG.info("Create order handler", order);
         OrderCreatedDTO created = orderService.createOrder(
-            order.getCustomerInfo(),
-            order.getShippingAddress(),
-            order.getShoppingCart(),
-            order.getShipmentType(),
-            order.getDiscountCode()
+                order.getCustomerInfo(),
+                order.getShippingAddress(),
+                order.getShoppingCart(),
+                order.getShipmentType(),
+                order.getDiscountCode()
         );
-        
+
         PaymentInfo paymentInfo = new PaymentInfo(
-            String.valueOf(created.getOrder().getOrderNum()),
-            created.getTotalPrice(),
-            new Date()
+                String.valueOf(created.getOrder().getOrderNum()),
+                created.getTotalPrice(),
+                new Date()
         );
 
         eventPublisher.publishEvent(
-            new OrderCreatedEvent(
-                created.getOrder(), 
-                created.getOrderItems(), 
-                paymentInfo,
-                order.getShipmentType(),
-                created.getShippingAddress(),
-                order.getCustomerInfo()
-            )
+                new OrderCreatedEvent(
+                        created.getOrder(),
+                        created.getOrderItems(),
+                        paymentInfo,
+                        order.getShipmentType(),
+                        created.getShippingAddress(),
+                        order.getCustomerInfo()
+                )
         );
 
         LOG.info("Order successfully created.");
-        
+
         return new OrderSuccessResponse(created.getOrder().getOrderNum(), paymentInfo);
     }
 
