@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.stream.Collectors;
+import org.springframework.cache.annotation.Cacheable;
 
 @RestController
 @RequestMapping("/picture-item")
@@ -22,7 +23,8 @@ public class ItemPictureEndpoint {
     private StockItemDao stockItemDao;
     @Autowired
     private StockItemPictureDao stockItemPictureDao;
-    
+
+    @Cacheable(value = "item-picture", key = "#stockItemId")
     @GetMapping(value = "/{id}")
     public List<ItemPicture> getPicturesForGallery(@PathVariable("id") long stockItemId) {
         Optional<StockItem> stockItem = stockItemDao.findById(stockItemId);
@@ -38,6 +40,7 @@ public class ItemPictureEndpoint {
         }
     }
 
+    @Cacheable(value = "item-shopping-cart-thumbnail", key = "#stockItemId")
     @GetMapping(value = "/{id}/shopping-cart-thumbnail")
     public String getShoppingCartThumbnailLocation(@PathVariable("id") long stockItemId) {
         Optional<StockItem> stockItem = stockItemDao.findById(stockItemId);

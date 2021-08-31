@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,12 +81,14 @@ public class StockItemsEndpoint {
     }
 
     @PostMapping
+    @CacheEvict(value = "items", allEntries = true)
     public ResponseEntity<Void> createStockItem(@Valid @RequestBody CreateEditStockItem createStockItem) {
         stockItemService.createNewStockItem(createStockItem);
         return ResponseEntity.ok().build();
     }
     
     @PostMapping("/{id}")
+    @CacheEvict(value = "item", key = "#id" )
     public ResponseEntity updateStockItem(@PathVariable long id, @RequestBody CreateEditStockItem editStockItem) {
         Optional<Item> itemOpt = itemDao.findById(id);
         if (!itemOpt.isPresent()) {

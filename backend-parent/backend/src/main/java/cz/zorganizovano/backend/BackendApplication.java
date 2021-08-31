@@ -2,6 +2,7 @@ package cz.zorganizovano.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
@@ -11,6 +12,7 @@ import org.springframework.scheduling.support.TaskUtils;
 
 @SpringBootApplication
 @EnableScheduling
+@EnableCaching
 public class BackendApplication {
 
     public static void main(String[] args) {

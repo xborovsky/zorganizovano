@@ -75,7 +75,6 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
     const { data:phoneNoCodes, isLoading:isLoadingPhoneNoCodes, error:phoneNoCodesError } = useQuery('phone-number-codes', () =>
         axios.get('/phone-number/codes').then(res => res.data)
     );
-    console.log(phoneNoCodes);
 
     useEffect(() => {
         window.scrollTo(0, 0);

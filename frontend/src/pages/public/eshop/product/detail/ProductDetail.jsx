@@ -19,6 +19,8 @@ import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
+import useStockProductQuantity from '../hooks/use-stock-product-quantity';
+import Loader from 'components/Loader';
 
 const styles = theme => ({
     root : {
@@ -81,7 +83,9 @@ const ProductDetail = ({ product, classes, width }) => {
     const [ quantity, setQuantity ] = useState(1);
     const [ showSuccess, setShowSuccess ] = useState(undefined);
     const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;
-    const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
+    const { data:productQuantityInStock, isLoading:isLoadingProductQuantity } = useStockProductQuantity(product.id);
+    let stockQuantityLeft = productQuantityInStock - productQuantityInCart;
+    stockQuantityLeft = stockQuantityLeft < 0 ? 0 : stockQuantityLeft;
 
     const addItemToShoppingCart = item => {
         const shoppingCartItem = {
@@ -109,19 +113,19 @@ const ProductDetail = ({ product, classes, width }) => {
     };
 
     const getQuantityInput = tooltiped => {
-        return tooltiped && product.stockQuantity > 0 ?
-            <Tooltip title={`Do košíku je možno vložit pouze ${product.stockQuantity} kus${product.stockQuantity === 1 ? '' : product.stockQuantity > 4 ? 'ů' : 'y'}. Pro více kusů mě prosím kontaktujte, určitě se domluvíme.`}>
+        return tooltiped && productQuantityInStock > 0 ?
+            <Tooltip title={`Do košíku je možno vložit pouze ${productQuantityInStock} kus${productQuantityInStock === 1 ? '' : productQuantityInStock > 4 ? 'ů' : 'y'}. Pro více kusů mě prosím kontaktujte, určitě se domluvíme.`}>
                 <QuantityInput
                     value={quantity}
                     onChange={handleChangeQuantity}
-                    maxVal={product.stockQuantity}
+                    maxVal={productQuantityInStock}
                     className={classes.quantityInput}
                 />
             </Tooltip> :
             <QuantityInput
                 value={quantity}
                 onChange={handleChangeQuantity}
-                maxVal={product.stockQuantity}
+                maxVal={productQuantityInStock}
                 className={classes.quantityInput}
             />
     };
@@ -150,7 +154,9 @@ const ProductDetail = ({ product, classes, width }) => {
                             <Price value={product.price} size="xl" />
                         </Grid>
                         <Grid item xs={12} md={6} className={classes.shoppingCartWrapper}>
-                            { getQuantityInput(product.stockQuantity > 0) }
+                            { isLoadingProductQuantity ? <Loader /> :
+                                getQuantityInput(productQuantityInStock > 0)
+                            }
                         </Grid>
                         <Grid item xs={12} md={6} className={classes.shoppingCartWrapper}>
                             <ShoppingCartButton

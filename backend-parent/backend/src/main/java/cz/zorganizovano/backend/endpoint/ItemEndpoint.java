@@ -20,6 +20,7 @@ import cz.zorganizovano.backend.dao.ItemDetailDao;
 import cz.zorganizovano.backend.entity.ItemCategory;
 import cz.zorganizovano.backend.service.ItemCategoryService;
 import java.util.ArrayList;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -40,6 +41,7 @@ public class ItemEndpoint {
     @Autowired
     private ItemCategoryService itemCategoryService;
 
+    @Cacheable("items")
     @GetMapping
     public PaginatedData<ItemListEntry> getAllItems(
         @RequestParam(name = "categoryId", required = false) Long categoryId,
@@ -74,6 +76,7 @@ public class ItemEndpoint {
         );
     }
 
+    @Cacheable(value = "item", key = "#id")
     @GetMapping("/{id}")
     public ItemDetailDTO getItem(@PathVariable long id) {
         Optional<StockItem> stockItemMaybe = stockItemDao.findById(id);
@@ -82,6 +85,17 @@ public class ItemEndpoint {
             List<ItemDetail> itemDetails = stockItemDetailDao.findByItem(stockItem.getItem());
 
             return new ItemDetailDTO(stockItem, itemDetails);
+        } else {
+            throw new ResourceNotFoundException(MessageFormat.format("Item {0} not found!", id));
+        }
+    }
+    
+    @GetMapping("/{id}/quantity")
+    public int getItemQuantity(@PathVariable long id) {
+        Optional<StockItem> stockItemMaybe = stockItemDao.findById(id);
+        if (stockItemMaybe.isPresent()) {
+            StockItem stockItem = stockItemMaybe.get();
+            return stockItem.getQuantity();
         } else {
             throw new ResourceNotFoundException(MessageFormat.format("Item {0} not found!", id));
         }

@@ -24,6 +24,8 @@ import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
 import { getCloudinaryImageName } from 'util/img-util';
 import useCloudinary from 'hooks/use-cloudinary';
+import useStockProductQuantity from '../hooks/use-stock-product-quantity';
+import Loader from 'components/Loader';
 
 const styles = theme => ({
     card : {
@@ -99,7 +101,9 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
     const [ quantity, setQuantity ] = useState(1);
     const { state, dispatch } = useShoppingCartContext();
     const productQuantityInCart = (state.find(cartItem => cartItem.id === product.id) || {}).quantity || 0;
-    const stockQuantityLeft = product.stockQuantity - productQuantityInCart;
+    const { data:productQuantityInStock, isLoading:isLoadingProductQuantity } = useStockProductQuantity(product.id);
+    let stockQuantityLeft = productQuantityInStock - productQuantityInCart;
+    stockQuantityLeft = stockQuantityLeft < 0 ? 0 : stockQuantityLeft;
 
     const goToDetail = () => history.push(`/eshop/products/${product.id}`);
 
@@ -171,12 +175,15 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
                         <Grid item xs={12}>
                             <Grid container className={classes.quantityPriceWrapper} spacing={['lg', 'xl'].indexOf(width) !== -1 ? 1 : 0}>
                                 <Grid item xs={12} lg={8} xl={6} className={classes.quantityWrapper}>
-                                    <QuantityInput
-                                        value={quantity}
-                                        onChange={handleChangeQuantity}
-                                        maxVal={stockQuantityLeft}
-                                        className={classes.quantityInput}
-                                    />
+                                    { isLoadingProductQuantity ?
+                                        <Loader /> :
+                                        <QuantityInput
+                                            value={quantity}
+                                            onChange={handleChangeQuantity}
+                                            maxVal={stockQuantityLeft}
+                                            className={classes.quantityInput}
+                                        />
+                                    }
                                 </Grid>
                                 <Grid item xs={12} lg={4} xl={6} className={classes.orderActionWrapper}>
                                     <ShoppingCartButton
