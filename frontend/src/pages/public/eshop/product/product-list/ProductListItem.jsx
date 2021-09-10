@@ -134,7 +134,7 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
 
     const image = cloudinary
         .image(getCloudinaryImageName(product.thumbnailLocation))
-        .resize(pad().height(200).width(350))
+        .resize(pad().height(275).width(500))
         .delivery(format(auto()))
         .delivery(quality(qAuto()));
 
