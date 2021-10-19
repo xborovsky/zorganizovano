@@ -18,6 +18,7 @@ import { useQuery } from 'react-query';
 
 import WizardButtons from '../components/WizardButtons';
 import OrderContext from '../OrderContext';
+import Loader from 'components/Loader';
 
 const CustomerFormSchema = Yup.object().shape({
     firstName : Yup.string()
@@ -177,16 +178,20 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
                                             <Grid item xs={4} md={2}>
                                                 <FormControl>
                                                     <InputLabel htmlFor="phoneNoCode"></InputLabel>
-                                                    <Select
-                                                        value={values.phoneNoCode}
-                                                        onChange={handleChange}
-                                                        id='phoneNoCode'
-                                                        renderValue={value => `+${value}`}
-                                                    >
-                                                        { phoneNoCodes?.map(phoneNoCode => 
-                                                            <MenuItem key={phoneNoCode.code} value={`${phoneNoCode.code}`}>{phoneNoCode.region} (+{phoneNoCode.code})</MenuItem>) 
-                                                        }
-                                                    </Select>
+                                                    { isLoadingPhoneNoCodes ?
+                                                        <Loader /> :
+                                                        <Select
+                                                            value={values.phoneNoCode}
+                                                            onChange={handleChange}
+                                                            id='phoneNoCode'
+                                                            name="phoneNoCode"
+                                                            renderValue={value => `+${value}`}
+                                                        >
+                                                            { phoneNoCodes?.map(phoneNoCode => 
+                                                                <MenuItem key={phoneNoCode.code} value={`${phoneNoCode.code}`}>{phoneNoCode.region} (+{phoneNoCode.code})</MenuItem>) 
+                                                            }
+                                                        </Select>
+                                                    }
                                                 </FormControl>
                                             </Grid>
                                             <Grid item xs={8} md={10}>
