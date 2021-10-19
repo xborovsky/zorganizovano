@@ -33,7 +33,7 @@ public class OrderPaymentCheckTask {
     @Autowired
     private EmailService emailService;
 
-    @Scheduled(cron = "12 0 0 * * ?")
+    @Scheduled(cron = "0 0 12 * * ?")
     public void checkOrdersPayment() {
         LOG.info("--- checkOrdersPayment ---");
 
