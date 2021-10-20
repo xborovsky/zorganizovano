@@ -18,9 +18,9 @@ public class DateUtils {
     
     public long getDaysDiff(Date d1, Date d2) {
         long diffInMillies = Math.abs(d2.getTime() - d1.getTime());
-        return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.DAYS);
+        return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
-    
+
     public Date getTodayMidnight() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
