@@ -1,6 +1,7 @@
 import React from 'react';
-import { Paper, Grid, Typography } from '@material-ui/core';
+import { Paper, Grid, Typography, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import HelpIcon from '@material-ui/icons/Help';
 
 import { OrderState } from './OrderState';
 import { LONG_PAYMENT_WAITING } from './OrdersTableRow';
@@ -30,6 +31,11 @@ const useStyles = makeStyles({
                 background : OrderState.PAYMENT_RECEIVED.color
             }
         },
+        '&.storno-candidate' : {
+            '&>div' : {
+                background : OrderState.STORNO_CANDIDATE.color
+            }
+        },
         '&>div' : {
             width : 20,
             height : 20,
@@ -41,6 +47,11 @@ const useStyles = makeStyles({
             display : 'inline-block',
             verticalAlign : 'super'
         }
+    },
+    helpIcon : {
+        fontSize : '.9rem',
+        marginLeft : '.2rem',
+        verticalAlign : 'text-top'
     }
 });
 
@@ -68,6 +79,12 @@ const OrdersTableLegend = ({ ...rest }) => {
                 </LegendItem>
                 <LegendItem className={[classes.legendItem, 'storno'].join(' ')}>
                     Storno
+                </LegendItem>
+                <LegendItem className={[classes.legendItem, 'storno-candidate'].join(' ')}>
+                    Kandidát na stornování
+                    <Tooltip title='5 dnů (mimo víkendy) od odeslání emailu pro připomenutí platby'>
+                        <HelpIcon className={classes.helpIcon} />
+                    </Tooltip>
                 </LegendItem>
             </Grid>
         </Paper>

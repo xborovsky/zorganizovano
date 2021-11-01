@@ -14,5 +14,9 @@ export const OrderState = {
     LONG_PAYMENT_WAITING : {
         color : '#ffadad',
         hoverColor : '#ffc9c9'
+    },
+    STORNO_CANDIDATE : {
+        color : '#6d9fe3',
+        hoverColor : '#abcfff'
     }
 };

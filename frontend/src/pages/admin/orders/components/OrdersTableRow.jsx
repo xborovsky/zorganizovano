@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/styles';
 import Price from 'components/Price';
-import { format, parseISO, differenceInCalendarDays } from 'date-fns';
+import { format, parseISO, differenceInCalendarDays, addBusinessDays, addDays } from 'date-fns';
 
 import { DATE_TIME_FORMAT } from 'util/date-format-util';
 import { OrderState } from './OrderState';
@@ -34,6 +34,12 @@ const useStyles = makeStyles({
                 background : OrderState.LONG_PAYMENT_WAITING.hoverColor
             }
         },
+        '&.storno-candidate' : {
+            background: OrderState.STORNO_CANDIDATE.color,
+            '&:hover' : {
+                background : OrderState.STORNO_CANDIDATE.hoverColor
+            }
+        },
         '&.payment-received' : {
             background: OrderState.PAYMENT_RECEIVED.color,
             '&:hover' : {
@@ -44,6 +50,7 @@ const useStyles = makeStyles({
 });
 
 export const LONG_PAYMENT_WAITING = 6;
+export const STORNO_CANDIDATE_ADDITIONAL_WORKDAYS = 5;
 
 const getAdditionalClass = order => {
     if (order.storno) {
@@ -52,8 +59,13 @@ const getAdditionalClass = order => {
         return 'shipped';
     } else if (order.paymentReceived) {
         return 'payment-received';
-    } else if (!order.paymentReceived, differenceInCalendarDays(new Date(), parseISO(order.created)) > LONG_PAYMENT_WAITING) {
-        return 'long-payment-waiting';
+    } else if (!order.paymentReceived) {
+        const now = new Date();
+        const calendarDaysSinceOrderCreated = differenceInCalendarDays(now, parseISO(order.created));
+        if (calendarDaysSinceOrderCreated > LONG_PAYMENT_WAITING) {
+            const isStornoCandidate = differenceInCalendarDays(now, addBusinessDays(addDays(parseISO(order.created), LONG_PAYMENT_WAITING), STORNO_CANDIDATE_ADDITIONAL_WORKDAYS)) > 0;
+            return isStornoCandidate ? 'storno-candidate' : 'long-payment-waiting';
+        }
     }
 
     return undefined;
