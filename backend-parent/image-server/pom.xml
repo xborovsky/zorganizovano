@@ -10,7 +10,7 @@
     </parent>
     <groupId>cz.zorganizovano</groupId>
     <artifactId>image-server</artifactId>
-    <version>1.7.3-SNAPSHOT</version>
+    <version>1.7.3</version>
     <name>image-server</name>
     <description>Demo project for Spring Boot</description>
 
