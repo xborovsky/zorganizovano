@@ -14,6 +14,7 @@ const OrderDetail = React.lazy(() => import('./order-detail'));
 const StockItems = React.lazy(() => import('./stock-items'));
 const CreateStockItem = React.lazy(() => import('./stock-item-create'));
 const DiscountCodes = React.lazy(() => import('./discount-codes'));
+const Reports = React.lazy(() => import('./reports'));
 const NotFound = React.lazy(() => import('../not-found'));
 
 const AdminContainer = () => {
@@ -29,6 +30,7 @@ const AdminContainer = () => {
                         <Tab label="Objednávky" component={Link} to={`${match.path}/orders`} value={`${match.path}/orders`} />
                         <Tab label="Skladové položky" component={Link} to={`${match.path}/stock-items`} value={`${match.path}/stock-items`} />
                         <Tab label="Slevové kódy" component={Link} to={`${match.path}/discount-codes`} value={`${match.path}/discount-codes`} />
+                        <Tab label="Reporty" component={Link} to={`${match.path}/reports`} value={`${match.path}/reports`} />
                     </Tabs>
                 </AppBar>
             }
@@ -40,6 +42,7 @@ const AdminContainer = () => {
                     <ProtectedRoute path={`${match.path}/stock-items/create`} component={CreateStockItem} />
                     <ProtectedRoute path={`${match.path}/stock-items`} component={StockItems} />
                     <ProtectedRoute path={`${match.path}/discount-codes`} component={DiscountCodes} />
+                    <ProtectedRoute path={`${match.path}/reports`} component={Reports} />
                     <Route component={NotFound} />
                 </Switch>
             </Suspense>

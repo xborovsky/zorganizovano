@@ -19,4 +19,7 @@ public interface OrderDao extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o WHERE o.paymentReceived IS NULL AND o.storno IS NULL")
     List<Order> findUnpaidOrders();
 
+    @Query("SELECT DISTINCT year(o.created) AS createdYear FROM Order o ORDER BY createdYear DESC")
+    List<Integer> findDistinctYears();
+
 }

@@ -16,7 +16,7 @@ const ProductStockQuantity = ({
 }) => (
     stockQuantityLeft > 5 ?
         <Typography variant="body2" className={classes.warehouseCnt}>
-            Skladem > 5 kusů
+            Skladem &gt; 5 kusů
         </Typography> :
         stockQuantityLeft === 0 ?
             <Typography variant="body2" className={classes.warehouseCnt}>
