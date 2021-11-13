@@ -52,10 +52,15 @@ public class OrderEndpoint {
     @PostMapping("/customer")
     public ResponseEntity<?> validateCustomer(@Valid @RequestBody CustomerInfo customer) {
         // dodatecne validovat tel. cislo
-        PhoneNumber phoneNo = new PhoneNumber();
-        phoneNo.setCountryCode(Integer.parseInt(customer.getPhoneNoCode()));
-        phoneNo.setNationalNumber(Long.parseLong(customer.getPhoneNo()));
-        if (!PhoneNumberUtil.getInstance().isValidNumber(phoneNo)) {
+        try {
+            PhoneNumber phoneNo = new PhoneNumber();
+            phoneNo.setCountryCode(Integer.parseInt(customer.getPhoneNoCode()));
+            phoneNo.setNationalNumber(Long.parseLong(customer.getPhoneNo()));
+            if (!PhoneNumberUtil.getInstance().isValidNumber(phoneNo)) {
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new CustomValidationError(ImmutableMap.of("phoneNo", "Telefonní číslo není platné.")));
+            }
+        } catch (NumberFormatException e) {
+            LOG.error(e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new CustomValidationError(ImmutableMap.of("phoneNo", "Telefonní číslo není platné.")));
         }
 
