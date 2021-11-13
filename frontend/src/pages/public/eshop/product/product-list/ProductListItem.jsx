@@ -9,11 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
 import { useHistory } from 'react-router-dom';
-import { AdvancedImage, responsive, lazyload, placeholder } from '@cloudinary/react';
-import { pad } from "@cloudinary/base/actions/resize";
-import { auto } from "@cloudinary/base/qualifiers/format";
-import { format, quality } from "@cloudinary/base/actions/delivery";
-import { auto as qAuto } from "@cloudinary/base/qualifiers/quality";
 
 import { productShape } from '../product-prop-type';
 import Price from '../../../../../components/Price';
@@ -22,10 +17,9 @@ import { ADD_ITEM_TO_SHOPPING_CART } from '../../shopping-cart/state-management/
 import ShoppingCartButton from 'components/ShoppingCartButton';
 import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
-import { getCloudinaryImageName } from 'util/img-util';
-import useCloudinary from 'hooks/use-cloudinary';
 import useStockProductQuantity from '../hooks/use-stock-product-quantity';
 import Loader from 'components/Loader';
+import CdnImage from 'components/CdnImage';
 
 const styles = theme => ({
     card : {
@@ -96,7 +90,6 @@ const styles = theme => ({
 
 const ProductListItem = ({ product, onSuccess, classes, width }) => {
 
-    const cloudinary = useCloudinary();
     const history = useHistory();
     const [ quantity, setQuantity ] = useState(1);
     const { state, dispatch } = useShoppingCartContext();
@@ -132,12 +125,6 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
     const headerTitle = <Typography varian="h5" className={classes.headerTitle}>{product.name}</Typography>;
     const headerSubtitle = <Typography varian="h6" className={classes.headerSubtitle}>{product.subName}</Typography>;
 
-    const image = cloudinary
-        .image(getCloudinaryImageName(product.thumbnailLocation))
-        .resize(pad().height(275).width(500))
-        .delivery(format(auto()))
-        .delivery(quality(qAuto()));
-
     return (
         <Grid item xs={12} sm={6} md={4}>
             <Card className={classes.card}>
@@ -150,11 +137,11 @@ const ProductListItem = ({ product, onSuccess, classes, width }) => {
                     titleTypographyProps={classes.headerTitle}
                     subheaderTypographyProps={classes.headerSubtitle}
                 />
-                <AdvancedImage 
-                    cldImg={image} 
-                    plugins={[lazyload('30px 0px 30px 0px', 0.1), responsive(), placeholder('blur')]}
+                <CdnImage 
+                    name={product.thumbnailLocation}
+                    alt={product.thumbnailLocation}
                     onClick={goToDetail}
-                    height="200"
+                    style={{ objectFit : 'contain' }}
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>
                     <Typography variant="body2">{product.descriptionShort}</Typography>

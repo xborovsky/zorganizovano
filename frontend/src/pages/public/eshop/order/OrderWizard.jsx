@@ -78,6 +78,7 @@ const OrderWizard = ({ classes }) => {
     };
 
     const goToNext = () => {
+        setError(undefined);
         setCurrentStep(prevStep => prevStep + 1);
     };
 

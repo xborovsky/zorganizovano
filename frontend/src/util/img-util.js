@@ -24,14 +24,3 @@ export const getImgServerPreviewUrl = (img) => {
     
     return `${urlPrefix}/img-api/img/preview/${img}/`;
 };
-
-export const getCloudinaryImageName = path => {
-    let res = path.substring(0, path.lastIndexOf('.'))
-        .replace(/[_, ()]+/g, '_');
-
-    if (res[res.length - 1] === '_') {
-        return res.substring(0, res.length - 1);
-    }
-
-    return res;
-};

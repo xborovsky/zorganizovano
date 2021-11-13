@@ -119,7 +119,8 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
                     values,
                     errors,
                     handleChange,
-                    isSubmitting
+                    isSubmitting,
+                    setFieldValue
                 }) => (
                     <Form>
                         <Grid container spacing={10}>
@@ -203,6 +204,7 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
                                                         value={values.phoneNo}
                                                         autoComplete="phoneNo"
                                                         onChange={handleChange}
+                                                        onBlur={() => setFieldValue('phoneNo', values.phoneNo.replace(/\s/g,''))}
                                                     />
                                                     <FormHelperText id="phoneNo-error">{errors.phoneNo}</FormHelperText>
                                                 </FormControl>
