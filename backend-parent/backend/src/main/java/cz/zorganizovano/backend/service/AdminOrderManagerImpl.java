@@ -1,12 +1,16 @@
 package cz.zorganizovano.backend.service;
 
 import cz.zorganizovano.backend.dao.OrderDao;
+import cz.zorganizovano.backend.dao.OrderItemDao;
+import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.email.EmailService;
 import cz.zorganizovano.backend.email.builder.InvoiceCreatedEmail;
 import cz.zorganizovano.backend.email.builder.OrderShippedEmail;
 import cz.zorganizovano.backend.email.builder.OrderStornoEmail;
 import cz.zorganizovano.backend.email.builder.PaymentReceivedEmail;
 import cz.zorganizovano.backend.entity.Order;
+import cz.zorganizovano.backend.entity.OrderItem;
+import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.manager.TimeManager;
 import cz.zorganizovano.backend.report.InvoiceCreator;
 import java.io.File;
@@ -23,6 +27,10 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
     
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private OrderItemDao orderItemDao;
+    @Autowired
+    private StockItemDao stockItemDao;
     @Autowired
     private TimeManager timeManager;
     @Autowired
@@ -104,6 +112,12 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
         Date now = timeManager.getCurrentDate();
         order.setStorno(now);
         orderDao.save(order);
+
+        orderItemDao.findByOrder(order).forEach(orderItem -> {
+            var stockItem = stockItemDao.findByItem(orderItem.getItem());
+            stockItem.setQuantity(stockItem.getQuantity() + orderItem.getQuantity());
+            stockItemDao.save(stockItem);
+        });
 
         emailService.send(order.getCustomer().getEmail(), orderStornoEmail.getSubject(), orderStornoEmail.build(order));
 
