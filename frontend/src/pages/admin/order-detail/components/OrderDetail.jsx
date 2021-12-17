@@ -18,6 +18,7 @@ import OrderDetailItems from './OrderDetailItems';
 import Alert from 'components/Alert';
 import { AuthContext } from 'pages/admin/AuthProvider';
 import TrackingNumberInput from './TrackingNumberInput';
+import AdminNote from './AdminNote';
 
 const useStyles = makeStyles({
     root : {
@@ -93,6 +94,10 @@ const OrderDetail = ({ order }) => {
                 />
     );
 
+    const handleAdminNoteChanged = () => {
+        setAlertMessage({ type : 'success', message : 'Změna úspěšně uložena.' });
+    };
+
     return (
         <div className={classes.root}>
             { alertMessage && <Alert type={alertMessage.type}>{alertMessage.message}</Alert> }
@@ -155,6 +160,20 @@ const OrderDetail = ({ order }) => {
                                 </TableCell>
                             </TableRow>
                         }
+                        <TableRow>
+                            <TableCell className={classes.th}>Poznámka:</TableCell>
+                            <TableCell style={{whiteSpace: "pre-wrap"}}>{ order.customerNote || '' }</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell className={classes.th}>Moje poznámka:</TableCell>
+                            <TableCell style={{whiteSpace: "pre-wrap"}}>
+                                <AdminNote
+                                    orderId={order.orderId}
+                                    orderAdminNote={order.adminNote}
+                                    onChangeSuccess={handleAdminNoteChanged}
+                                />
+                            </TableCell>
+                        </TableRow>
                         <TableRow>
                             <TableCell className={classes.th}>Platba přijata:</TableCell>
                             <TableCell>{ dateOrCheckbox('paymentReceived') }</TableCell>

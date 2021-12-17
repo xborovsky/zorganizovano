@@ -17,4 +17,6 @@ public interface AdminOrderManager {
 
     Date updateStornoDate(Order order);
     
+    void updateAdminNote(Order order, String note);
+    
 }

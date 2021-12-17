@@ -622,5 +622,14 @@
             );
         </sql>
     </changeSet>
+    
+    <changeSet id="order_notes" author="borovsky">
+        <addColumn tableName="orders">
+            <column name="customer_note" type="TEXT" />
+        </addColumn>
+        <addColumn tableName="orders">
+            <column name="admin_note" type="TEXT" />
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

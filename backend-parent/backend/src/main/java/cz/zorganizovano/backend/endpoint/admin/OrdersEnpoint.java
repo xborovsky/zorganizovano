@@ -1,6 +1,7 @@
 package cz.zorganizovano.backend.endpoint.admin;
 
 import cz.zorganizovano.backend.bean.TrackingNumberRequest;
+import cz.zorganizovano.backend.bean.admin.order.AdminNoteRequestDto;
 import cz.zorganizovano.backend.bean.admin.order.AdminOrderDetail;
 import cz.zorganizovano.backend.bean.admin.order.AdminOrderListItem;
 import cz.zorganizovano.backend.bean.admin.order.AdminOrderProductItem;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -106,6 +108,17 @@ public class OrdersEnpoint {
                 LOG.warn(MessageFormat.format("Unknown property {0}!", dateProperty));
         }
         return null;
+    }
+
+    @PostMapping("/{id}/adminNote")
+    public ResponseEntity<Void> updateAdminNote(@PathVariable long id, @RequestBody AdminNoteRequestDto adminNoteRequestDto) {
+        Optional<Order> orderMaybe = orderDao.findById(id);
+        if (!orderMaybe.isPresent()) {
+            throw new ResourceNotFoundException(MessageFormat.format("Order {0} not found!", id));
+        }
+
+        adminOrderManager.updateAdminNote(orderMaybe.get(), adminNoteRequestDto.getAdminNote());
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -5,6 +5,7 @@ import { Formik, Form } from 'formik';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { Link } from 'react-router-dom';
 import Hidden from '@material-ui/core/Hidden';
@@ -76,7 +77,8 @@ const OrderConfirmation = ({
             shoppingCart : {
                 items : serverDataShoppingCart
             },
-            discountCode : discountCode?.code
+            discountCode : discountCode?.code,
+            note : values.note?.trim()
          }).then(res => {
             setSubmitting(false);
             dispatch({ type : EMPTY_SHOPPING_CART });
@@ -94,15 +96,9 @@ const OrderConfirmation = ({
          });
     };
 
-    const onFormKeyDown = e => {
-        if ((e.charCode || e.keyCode) === 13) {
-            e.preventDefault();
-        }
-    };
-
     return (
         <Formik
-            initialValues={{ orderTermsApproval : false }}
+            initialValues={{ orderTermsApproval : false, note : '' }}
             validate={values => {
                 let errors = {};
 
@@ -120,7 +116,7 @@ const OrderConfirmation = ({
                     handleChange,
                     isSubmitting
                 }) => (
-                    <Form onKeyDown={onFormKeyDown}>
+                    <Form>
                         <div>
                             <Section title='Objednáváte si tyto položky'>
                                 <Hidden smDown>
@@ -146,6 +142,18 @@ const OrderConfirmation = ({
                                 Celková cena: { cartSum.totalSum },- Kč
                             </Section>
                         </div>
+                        <TextField
+                            id="note"
+                            name="note"
+                            label="Poznámka"
+                            fullWidth
+                            multiline
+                            rows={4}
+                            value={values.note}
+                            onChange={handleChange}
+                            margin="normal"
+                            variant='outlined'
+                        />
                         <FormControl error={touched.orderTermsApproval && !!errors.orderTermsApproval} fullWidth style={{ alignItems : 'flex-end', marginBottom : '-3rem' }}>
                             <FormControlLabel
                                 control={

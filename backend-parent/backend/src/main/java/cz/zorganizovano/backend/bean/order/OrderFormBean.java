@@ -12,6 +12,7 @@ public class OrderFormBean {
     @Valid
     private ShoppingCart shoppingCart;
     private String discountCode;
+    private String note;
 
     public CustomerInfo getCustomerInfo() {
         return customerInfo;
@@ -51,6 +52,14 @@ public class OrderFormBean {
 
     public void setDiscountCode(String discountCode) {
         this.discountCode = discountCode;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override

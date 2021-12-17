@@ -26,6 +26,8 @@ public class AdminOrderDetail {
     private final List<AdminOrderProductItem> orderItems;
     private final double discountValue;
     private final String discountCode;
+    private final String customerNote;
+    private final String adminNote;
 
     public AdminOrderDetail(Order order, double totalPrice, InvoiceAddress invoiceAddress, ShipmentAddress shipmentAddress, Customer customer, List<AdminOrderProductItem> orderItems) {
         this.orderId = order.getId();
@@ -44,6 +46,8 @@ public class AdminOrderDetail {
         this.orderItems = orderItems;
         this.discountValue = order.getDiscountValue();
         this.discountCode = order.getDiscountCode() == null ? null : order.getDiscountCode().getCode();
+        this.customerNote = order.getCustomerNote();
+        this.adminNote = order.getAdminNote();
     }
 
     public long getOrderId() {
@@ -108,6 +112,14 @@ public class AdminOrderDetail {
 
     public Date getStorno() {
         return storno;
+    }
+
+    public String getCustomerNote() {
+        return customerNote;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
     }
 
 }

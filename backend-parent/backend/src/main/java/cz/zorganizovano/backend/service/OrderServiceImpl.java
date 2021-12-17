@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderCreatedDTO createOrder(CustomerInfo customerInfo, AddressDTO shippingAddress,
-            ShoppingCart shoppingCart, ShipmentType shipmentType, String discountCode) {
+            ShoppingCart shoppingCart, ShipmentType shipmentType, String discountCode, String note) {
         DiscountCode discountCodeEntity = null;
         if (discountCode != null) {
             Optional<DiscountCode> discountCodeEntityMaybe = discountCodeDao.findByCode(discountCode);
@@ -77,6 +77,7 @@ public class OrderServiceImpl implements OrderService {
         order.setShipmentType(shipmentType);
         order.setShipmentPrice(shipmentType.getPrice());
         order.setDiscountCode(discountCodeEntity);
+        order.setCustomerNote(note);
 
         Customer customer = createCustomer(customerInfo);
         order.setCustomer(customer);

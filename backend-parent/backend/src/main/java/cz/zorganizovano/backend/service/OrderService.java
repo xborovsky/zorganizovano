@@ -13,7 +13,7 @@ public interface OrderService {
     int DEFAULT_MATURITY = 5;
 
     OrderCreatedDTO createOrder(CustomerInfo customer, AddressDTO shippingAddress,
-            ShoppingCart shoppingCart, ShipmentType shipmentType, String discountCode);
+            ShoppingCart shoppingCart, ShipmentType shipmentType, String discountCode, String note);
 
     double calculateTotalPrice(Order order, DiscountCode discountCode);
 

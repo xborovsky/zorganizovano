@@ -9,8 +9,6 @@ import cz.zorganizovano.backend.email.builder.OrderShippedEmail;
 import cz.zorganizovano.backend.email.builder.OrderStornoEmail;
 import cz.zorganizovano.backend.email.builder.PaymentReceivedEmail;
 import cz.zorganizovano.backend.entity.Order;
-import cz.zorganizovano.backend.entity.OrderItem;
-import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.manager.TimeManager;
 import cz.zorganizovano.backend.report.InvoiceCreator;
 import java.io.File;
@@ -122,6 +120,13 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
         emailService.send(order.getCustomer().getEmail(), orderStornoEmail.getSubject(), orderStornoEmail.build(order));
 
         return now;
+    }
+
+    @Override
+    @Transactional
+    public void updateAdminNote(Order order, String note) {
+        order.setAdminNote(note);
+        orderDao.save(order);
     }
     
 }
