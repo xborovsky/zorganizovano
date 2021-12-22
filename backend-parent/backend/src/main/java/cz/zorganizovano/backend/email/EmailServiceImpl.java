@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
     }
     
     @Override
-    public void send(String to, String subject, String text, File attachment) throws MailException, IOException {
+    public void send(String to, String subject, String text, File attachment) throws IOException {
          try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
@@ -46,8 +46,8 @@ public class EmailServiceImpl implements EmailService {
             messageHelper.addAttachment(attachment.getName(), attachment);
 
             emailSender.send(mimeMessage);
-        } catch (MessagingException ex) {
-            throw new MailSendException(ex.getMessage(), ex);
+        } catch (MessagingException | MailException ex) {
+            throw new IOException(ex.getMessage(), ex);
         }
     }
 

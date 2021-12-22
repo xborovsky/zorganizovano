@@ -1,8 +1,5 @@
 package cz.zorganizovano.backend.endpoint;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 import cz.zorganizovano.backend.bean.CustomValidationError;
 import cz.zorganizovano.backend.bean.admin.order.DeliveryOptionsRequest;
 import cz.zorganizovano.backend.bean.order.CustomerInfo;
@@ -16,6 +13,7 @@ import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.event.OrderCreatedEvent;
 import cz.zorganizovano.backend.payment.PaymentInfo;
 import cz.zorganizovano.backend.service.OrderService;
+import cz.zorganizovano.backend.validator.CustomerDataValidator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -48,20 +46,14 @@ public class OrderEndpoint {
     private ApplicationEventPublisher eventPublisher;
     @Autowired
     private StockItemDao stockItemDao;
+    @Autowired
+    private CustomerDataValidator customerDataValidator;
 
     @PostMapping("/customer")
     public ResponseEntity<?> validateCustomer(@Valid @RequestBody CustomerInfo customer) {
-        // dodatecne validovat tel. cislo
-        try {
-            PhoneNumber phoneNo = new PhoneNumber();
-            phoneNo.setCountryCode(Integer.parseInt(customer.getPhoneNoCode()));
-            phoneNo.setNationalNumber(Long.parseLong(customer.getPhoneNo()));
-            if (!PhoneNumberUtil.getInstance().isValidNumber(phoneNo)) {
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new CustomValidationError(ImmutableMap.of("phoneNo", "Telefonní číslo není platné.")));
-            }
-        } catch (NumberFormatException e) {
-            LOG.error(e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new CustomValidationError(ImmutableMap.of("phoneNo", "Telefonní číslo není platné.")));
+        CustomValidationError customValidationError = customerDataValidator.validate(customer);
+        if (customValidationError != null) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(customValidationError);
         }
 
         return ResponseEntity.ok().build();
@@ -102,7 +94,7 @@ public class OrderEndpoint {
                 order.getShoppingCart(),
                 order.getShipmentType(),
                 order.getDiscountCode(),
-                order.getNote()
+                order.getNote() == null || order.getNote().trim().equals("") ? null : order.getNote()
         );
 
         PaymentInfo paymentInfo = new PaymentInfo(

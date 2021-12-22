@@ -46,19 +46,20 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
 
     @Value("${zorganizovano.invoice.export.location}")
     private String invoicesFolderLocation;
-    
+
     @Override
     @Transactional
     public Date updatePaymentReceivedDate(Order order) {
         Date now = timeManager.getCurrentDate();
-        order.setPaymentReceived(now);
-        orderDao.save(order);
 
         emailService.send(order.getCustomer().getEmail(), paymentReceivedEmail.getSubject(), paymentReceivedEmail.build(order));
 
+        order.setPaymentReceived(now);
+        orderDao.save(order);
+
         return now;
     }
-    
+
     @Override
     @Transactional
     public Date updateReadyToShipDate(Order order) {
@@ -73,8 +74,6 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
     @Transactional
     public Date updateInvoiceSentDate(Order order) throws IOException, SQLException {
         Date now = timeManager.getCurrentDate();
-        order.setInvoiceSent(now);
-        orderDao.save(order);
         
         invoiceCreator.exportInvoice(order);
         emailService.send(
@@ -84,6 +83,9 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
             new File(invoicesFolderLocation + File.separator + order.getOrderNum() + ".pdf")
         );
 
+        order.setInvoiceSent(now);
+        orderDao.save(order);
+
         return now;
     }
 
@@ -91,15 +93,17 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
     @Transactional
     public Date updateShippedDate(Order order, String trackingNumber) {
         Date now = timeManager.getCurrentDate();
-        order.setShipped(now);
         if (trackingNumber != null) {
             order.setTrackingNumber(trackingNumber);
         }
-        orderDao.save(order);
+        
 
         if (trackingNumber != null) {
             emailService.send(order.getCustomer().getEmail(), orderShippedEmail.getSubject(), orderShippedEmail.build(order, trackingNumber));
         }
+
+        order.setShipped(now);
+        orderDao.save(order);
 
         return now;
     }
@@ -108,8 +112,6 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
     @Transactional
     public Date updateStornoDate(Order order) {
         Date now = timeManager.getCurrentDate();
-        order.setStorno(now);
-        orderDao.save(order);
 
         orderItemDao.findByOrder(order).forEach(orderItem -> {
             var stockItem = stockItemDao.findByItem(orderItem.getItem());
@@ -119,6 +121,9 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
 
         emailService.send(order.getCustomer().getEmail(), orderStornoEmail.getSubject(), orderStornoEmail.build(order));
 
+        order.setStorno(now);
+        orderDao.save(order);
+        
         return now;
     }
 

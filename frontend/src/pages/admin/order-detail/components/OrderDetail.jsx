@@ -138,6 +138,13 @@ const OrderDetail = ({ order }) => {
                                 {`${order.customer.firstName} ${order.customer.lastName}`}<br />
                                 {order.customer.email}<br />
                                 {order.customer.phoneNo}
+                                { order.customer.company &&
+                                    <>
+                                        <br />Název firmy: {order.customer.companyName}
+                                        <br />IČ: {order.customer.ico}
+                                        { order.customer.dic && <><br />DIČ: {order.customer.dic}</> }
+                                    </>
+                                }
                             </TableCell>
                         </TableRow>
                         <TableRow>

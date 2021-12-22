@@ -10,6 +10,6 @@ public interface EmailService {
 
     void send(String to, String subject, String text) throws MailException;
     
-    void send(String to, String subject, String text, File attachment) throws MailException, IOException;
+    void send(String to, String subject, String text, File attachment) throws IOException;
 
 }

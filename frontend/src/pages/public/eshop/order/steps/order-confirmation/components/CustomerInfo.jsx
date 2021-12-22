@@ -37,6 +37,18 @@ const CustomerInfo = ({
                             {customerInfo.firstName} {customerInfo.lastName}<br />
                             {customerInfo.email}<br />
                             {customerInfo.phoneNo}<br />
+                            {customerInfo.isCompany &&
+                                <>
+                                    Název firmy: {customerInfo.companyName}<br />
+                                    IČ: {customerInfo.ico}
+                                    { customerInfo.dic &&
+                                        <>
+                                            <br />
+                                            DIČ: {customerInfo.dic}
+                                        </>
+                                    }
+                                </>
+                            }
                         </Typography>
                     </CardContent>
                 </Card>

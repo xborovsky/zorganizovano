@@ -15,10 +15,22 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { makeStyles } from '@material-ui/core';
 
 import WizardButtons from '../components/WizardButtons';
 import OrderContext from '../OrderContext';
 import Loader from 'components/Loader';
+
+const useStyles = makeStyles(theme => ({
+    personalDataHandleApproval : {
+        textAlign : 'right', 
+        marginTop : '-4rem', 
+        marginBottom : '-2rem',
+        [theme.breakpoints.down('sm')] : {
+            textAlign : 'left'
+        }
+    }
+}));
 
 const CustomerFormSchema = Yup.object().shape({
     firstName : Yup.string()
@@ -49,7 +61,22 @@ const CustomerFormSchema = Yup.object().shape({
         .required('Prosím, zadejte zemi.'),
     personalDataHandleApproval : Yup.bool()
         .oneOf([true], 'Tento údaj je povinný.')
-        .required('Tento údaj je povinný.')
+        .required('Tento údaj je povinný.'),
+    isCompany : Yup.bool(),
+    companyName : Yup.string()
+        .max(100, 'Zadaný údaj je moc dlouhý.')
+        .when('isCompany', {
+            is : true,
+            then : Yup.string().required('Tento údaj je povinný.')
+        }),
+    ico : Yup.string().matches(/^[0-9]{8}$/, 'Prosím zadejte IČ ve správném tvaru.')
+        .when('isCompany', {
+            is : true,
+            then : Yup.string().required('Tento údaj je povinný.')
+        }),
+    dic : Yup.string()
+        .min(2, 'Zadaný údaj je moc krátký.')
+        .max(20, 'Zadaný údaj je moc dlouhý.')
 });
 
 const EMPTY_CUSTOMER_INFO = {
@@ -58,7 +85,11 @@ const EMPTY_CUSTOMER_INFO = {
     email : '',
     phoneNoCode : '420',
     phoneNo : '',
-    personalDataHandleApproval : false
+    personalDataHandleApproval : false,
+    isCompany : false,
+    companyName : '',
+    ico : '',
+    dic : ''
 };
 
 const EMPTY_CUSTOMER_ADDRESS = {
@@ -69,6 +100,7 @@ const EMPTY_CUSTOMER_ADDRESS = {
 };
 
 const CustomerForm = ({ onGoToNextStep, onError }) => {
+    const classes = useStyles();
     const { customerInfo, customerAddress, setCustomerInfo, setCustomerAddress, allowedDeliveryCountries } = useContext(OrderContext);
     const initialCustomerInfo = customerInfo ? { ...customerInfo } : EMPTY_CUSTOMER_INFO;
     const initialCustomerAddress = customerAddress ? { ...customerAddress, country : customerAddress.country.enumName } : EMPTY_CUSTOMER_ADDRESS;
@@ -85,7 +117,7 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
         setSubmitting(true);
         axios.post('/order/customer', {...values})
             .then(_res => {
-                const customer = (({firstName, lastName, email, phoneNo, phoneNoCode, personalDataHandleApproval}) => ({firstName, lastName, email, phoneNo, phoneNoCode, personalDataHandleApproval}))(values);
+                const customer = (({firstName, lastName, email, phoneNo, phoneNoCode, isCompany, companyName, ico, dic, personalDataHandleApproval}) => ({firstName, lastName, email, phoneNo, phoneNoCode, isCompany, companyName, ico, dic, personalDataHandleApproval}))(values);
                 const address = (({street, township, zipCode}) => ({street, township, zipCode}))(values);
                 address.country = allowedDeliveryCountries.find(deliveryCountry => deliveryCountry.enumName === values.country);
 
@@ -109,209 +141,274 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
     };
 
     return (
-        <Formik
-            initialValues={initialFormValues}
-            validationSchema={CustomerFormSchema}
-            validateOnChange={false}
-            validateOnBlur={false}
-            onSubmit={handleFormSubmit}>
-                {({
-                    values,
-                    errors,
-                    handleChange,
-                    isSubmitting,
-                    setFieldValue
-                }) => (
-                    <Form>
-                        <Grid container spacing={10}>
-                            <Grid item xs={12} sm={6}>
-                                <Typography variant="h6" gutterBottom>
-                                    Osobní údaje
-                                </Typography>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12}>
-                                        <FormControl error={!!errors.firstName} fullWidth>
-                                            <InputLabel htmlFor="firstName">Jméno</InputLabel>
-                                            <Input
-                                                id="firstName"
-                                                name="firstName"
-                                                value={values.firstName}
-                                                autoComplete="fname"
-                                                onChange={handleChange}
-                                                inputProps={{
-                                                    maxLength : 50
-                                                }}
-                                            />
-                                            <FormHelperText id="firstName-error">{errors.firstName}</FormHelperText>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControl error={!!errors.lastName} fullWidth>
-                                            <InputLabel htmlFor="lastName">Příjmení</InputLabel>
-                                            <Input
-                                                id="lastName"
-                                                name="lastName"
-                                                value={values.lastName}
-                                                autoComplete="lname"
-                                                onChange={handleChange}
-                                                inputProps={{
-                                                    maxLength : 50
-                                                }}
-                                            />
-                                            <FormHelperText id="lastName-error">{errors.lastName}</FormHelperText>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControl error={!!errors.email} fullWidth>
-                                            <InputLabel htmlFor="email">Email</InputLabel>
-                                            <Input
-                                                id="email"
-                                                name="email"
-                                                value={values.email}
-                                                autoComplete="email"
-                                                onChange={handleChange}
-                                            />
-                                            <FormHelperText id="email-error">{errors.email}</FormHelperText>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid container>
-                                            <Grid item xs={4} md={2}>
-                                                <FormControl>
-                                                    <InputLabel htmlFor="phoneNoCode"></InputLabel>
-                                                    { isLoadingPhoneNoCodes ?
-                                                        <Loader /> :
-                                                        <Select
-                                                            value={values.phoneNoCode}
+        <>
+            <Formik
+                initialValues={initialFormValues}
+                validationSchema={CustomerFormSchema}
+                validateOnChange={false}
+                validateOnBlur={false}
+                onSubmit={handleFormSubmit}>
+                    {({
+                        values,
+                        errors,
+                        handleChange,
+                        isSubmitting,
+                        setFieldValue
+                    }) => (
+                        <Form>
+                            <Grid container spacing={10}>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="h6" gutterBottom>
+                                        Osobní údaje
+                                    </Typography>
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={12}>
+                                            <FormControl error={!!errors.firstName} fullWidth>
+                                                <InputLabel htmlFor="firstName">Jméno *</InputLabel>
+                                                <Input
+                                                    id="firstName"
+                                                    name="firstName"
+                                                    value={values.firstName}
+                                                    autoComplete="fname"
+                                                    onChange={handleChange}
+                                                    inputProps={{
+                                                        maxLength : 50
+                                                    }}
+                                                />
+                                                <FormHelperText id="firstName-error">{errors.firstName}</FormHelperText>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControl error={!!errors.lastName} fullWidth>
+                                                <InputLabel htmlFor="lastName">Příjmení *</InputLabel>
+                                                <Input
+                                                    id="lastName"
+                                                    name="lastName"
+                                                    value={values.lastName}
+                                                    autoComplete="lname"
+                                                    onChange={handleChange}
+                                                    inputProps={{
+                                                        maxLength : 50
+                                                    }}
+                                                />
+                                                <FormHelperText id="lastName-error">{errors.lastName}</FormHelperText>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControl error={!!errors.email} fullWidth>
+                                                <InputLabel htmlFor="email">Email *</InputLabel>
+                                                <Input
+                                                    id="email"
+                                                    name="email"
+                                                    value={values.email}
+                                                    autoComplete="email"
+                                                    onChange={handleChange}
+                                                />
+                                                <FormHelperText id="email-error">{errors.email}</FormHelperText>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Grid container>
+                                                <Grid item xs={4} md={2}>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="phoneNoCode"></InputLabel>
+                                                        { isLoadingPhoneNoCodes ?
+                                                            <Loader /> :
+                                                            <Select
+                                                                value={values.phoneNoCode}
+                                                                onChange={handleChange}
+                                                                id='phoneNoCode'
+                                                                name="phoneNoCode"
+                                                                renderValue={value => `+${value}`}
+                                                            >
+                                                                { phoneNoCodes?.map(phoneNoCode => 
+                                                                    <MenuItem key={phoneNoCode.code} value={`${phoneNoCode.code}`}>{phoneNoCode.region} (+{phoneNoCode.code})</MenuItem>) 
+                                                                }
+                                                            </Select>
+                                                        }
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={8} md={10}>
+                                                    <FormControl error={!!errors.phoneNo} fullWidth>
+                                                        <InputLabel htmlFor="phoneNo">Telefon *</InputLabel>
+                                                        <Input
+                                                            id="phoneNo"
+                                                            name="phoneNo"
+                                                            value={values.phoneNo}
+                                                            autoComplete="phoneNo"
                                                             onChange={handleChange}
-                                                            id='phoneNoCode'
-                                                            name="phoneNoCode"
-                                                            renderValue={value => `+${value}`}
-                                                        >
-                                                            { phoneNoCodes?.map(phoneNoCode => 
-                                                                <MenuItem key={phoneNoCode.code} value={`${phoneNoCode.code}`}>{phoneNoCode.region} (+{phoneNoCode.code})</MenuItem>) 
-                                                            }
-                                                        </Select>
+                                                            onBlur={() => setFieldValue('phoneNo', values.phoneNo.replace(/\s/g,''))}
+                                                        />
+                                                        <FormHelperText id="phoneNo-error">{errors.phoneNo}</FormHelperText>
+                                                    </FormControl>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControl fullWidth>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            id="isCompany"
+                                                            name="isCompany"
+                                                            checked={values.isCompany}
+                                                            onChange={handleChange}
+                                                            color="primary"
+                                                        />
                                                     }
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={8} md={10}>
-                                                <FormControl error={!!errors.phoneNo} fullWidth>
-                                                    <InputLabel htmlFor="phoneNo">Telefon</InputLabel>
-                                                    <Input
-                                                        id="phoneNo"
-                                                        name="phoneNo"
-                                                        value={values.phoneNo}
-                                                        autoComplete="phoneNo"
-                                                        onChange={handleChange}
-                                                        onBlur={() => setFieldValue('phoneNo', values.phoneNo.replace(/\s/g,''))}
-                                                    />
-                                                    <FormHelperText id="phoneNo-error">{errors.phoneNo}</FormHelperText>
-                                                </FormControl>
-                                            </Grid>
+                                                    label='Nakupuji na firmu'
+                                                />
+                                            </FormControl>
+                                        </Grid>
+                                        { values.isCompany &&
+                                            <>
+                                                <Grid item xs={12}>
+                                                    <FormControl error={!!errors.companyName} fullWidth>
+                                                        <InputLabel htmlFor="companyName">Název firmy *</InputLabel>
+                                                        <Input
+                                                            id="companyName"
+                                                            name="companyName"
+                                                            value={values.companyName}
+                                                            autoComplete="companyName"
+                                                            onChange={handleChange}
+                                                        />
+                                                        <FormHelperText id="companyName-error">{errors.companyName}</FormHelperText>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <FormControl error={!!errors.ico} fullWidth>
+                                                        <InputLabel htmlFor="ico">IČ *</InputLabel>
+                                                        <Input
+                                                            id="ico"
+                                                            name="ico"
+                                                            value={values.ico}
+                                                            autoComplete="ico"
+                                                            onChange={handleChange}
+                                                            inputProps={{
+                                                                maxLength : 8
+                                                            }}
+                                                        />
+                                                        <FormHelperText id="ico-error">{errors.ico}</FormHelperText>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <FormControl fullWidth>
+                                                        <InputLabel htmlFor="ico">DIČ</InputLabel>
+                                                        <Input
+                                                            id="dic"
+                                                            name="dic"
+                                                            value={values.dic}
+                                                            autoComplete="dic"
+                                                            onChange={handleChange}
+                                                        />
+                                                        <FormHelperText id="dic-error">{errors.dic}</FormHelperText>
+                                                    </FormControl>
+                                                </Grid>
+                                            </>
+                                        }
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="h6" gutterBottom>
+                                        Doručovací adresa
+                                    </Typography>
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={12}>
+                                            <FormControl error={!!errors.street} fullWidth>
+                                                <InputLabel htmlFor="lastName">Ulice a č.p. *</InputLabel>
+                                                <Input
+                                                    id="street"
+                                                    name="street"
+                                                    value={values.street}
+                                                    autoComplete="billing street"
+                                                    onChange={handleChange}
+                                                    inputProps={{
+                                                        maxLength : 100
+                                                    }}
+                                                />
+                                                <FormHelperText id="street-error">{errors.street}</FormHelperText>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControl error={!!errors.zipCode} fullWidth>
+                                                <InputLabel htmlFor="zipCode">PSČ *</InputLabel>
+                                                <Input
+                                                    id="zipCode"
+                                                    name="zipCode"
+                                                    value={values.zipCode}
+                                                    autoComplete="billing zipCode"
+                                                    onChange={handleChange}
+                                                    inputProps={{
+                                                        maxLength : 5
+                                                    }}
+                                                />
+                                                <FormHelperText id="zipCode-error">{errors.zipCode}</FormHelperText>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControl error={!!errors.township} fullWidth>
+                                                <InputLabel htmlFor="township">Obec *</InputLabel>
+                                                <Input
+                                                    id="township"
+                                                    name="township"
+                                                    value={values.township}
+                                                    autoComplete="billing township"
+                                                    onChange={handleChange}
+                                                    inputProps={{
+                                                        maxLength : 100
+                                                    }}
+                                                />
+                                                <FormHelperText id="township-error">{errors.township}</FormHelperText>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControl error={!!errors.country} fullWidth>
+                                                <InputLabel htmlFor="country">Země *</InputLabel>
+                                                <Select
+                                                    value={values.country}
+                                                    onChange={handleChange}
+                                                    inputProps={{
+                                                        name: 'country',
+                                                        id: 'country'
+                                                    }}>
+                                                        { allowedDeliveryCountries.map(deliveryCountry => (
+                                                            <MenuItem value={deliveryCountry.enumName} key={deliveryCountry.enumName}>{deliveryCountry.name}</MenuItem>
+                                                        )) }
+                                                </Select>
+                                                <FormHelperText id="country-error">{errors.country}</FormHelperText>
+                                            </FormControl>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <Typography variant="h6" gutterBottom>
-                                    Doručovací adresa
-                                </Typography>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12}>
-                                        <FormControl error={!!errors.street} fullWidth>
-                                            <InputLabel htmlFor="lastName">Ulice a č.p.</InputLabel>
-                                            <Input
-                                                id="street"
-                                                name="street"
-                                                value={values.street}
-                                                autoComplete="billing street"
-                                                onChange={handleChange}
-                                                inputProps={{
-                                                    maxLength : 100
-                                                }}
-                                            />
-                                            <FormHelperText id="street-error">{errors.street}</FormHelperText>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControl error={!!errors.zipCode} fullWidth>
-                                            <InputLabel htmlFor="zipCode">PSČ</InputLabel>
-                                            <Input
-                                                id="zipCode"
-                                                name="zipCode"
-                                                value={values.zipCode}
-                                                autoComplete="billing zipCode"
-                                                onChange={handleChange}
-                                                inputProps={{
-                                                    maxLength : 5
-                                                }}
-                                            />
-                                            <FormHelperText id="zipCode-error">{errors.zipCode}</FormHelperText>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControl error={!!errors.township} fullWidth>
-                                            <InputLabel htmlFor="township">Obec</InputLabel>
-                                            <Input
-                                                id="township"
-                                                name="township"
-                                                value={values.township}
-                                                autoComplete="billing township"
-                                                onChange={handleChange}
-                                                inputProps={{
-                                                    maxLength : 100
-                                                }}
-                                            />
-                                            <FormHelperText id="township-error">{errors.township}</FormHelperText>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControl error={!!errors.country} fullWidth>
-                                            <InputLabel htmlFor="country">Země</InputLabel>
-                                            <Select
-                                                value={values.country}
-                                                onChange={handleChange}
-                                                inputProps={{
-                                                    name: 'country',
-                                                    id: 'country'
-                                                }}>
-                                                    { allowedDeliveryCountries.map(deliveryCountry => (
-                                                        <MenuItem value={deliveryCountry.enumName} key={deliveryCountry.enumName}>{deliveryCountry.name}</MenuItem>
-                                                    )) }
-                                            </Select>
-                                            <FormHelperText id="country-error">{errors.country}</FormHelperText>
-                                        </FormControl>
-                                    </Grid>
+                                <Grid item xs={12} className={classes.personalDataHandleApproval}>
+                                    <FormControl error={!!errors.personalDataHandleApproval} fullWidth style={{ alignItems : 'flex-end' }}>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    id="personalDataHandleApproval"
+                                                    name="personalDataHandleApproval"
+                                                    checked={values.personalDataHandleApproval}
+                                                    onChange={handleChange}
+                                                    color="primary"
+                                                />
+                                            }
+                                            label={<Link to='/eshop/personal-data-protection-terms' target="_blank">Souhlasím se zpracováním osobních údajů *</Link>}
+                                        />
+                                        <FormHelperText id="personalDataHandleApproval-error">
+                                            {errors.personalDataHandleApproval}
+                                        </FormHelperText>
+                                    </FormControl>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} style={{ textAlign : 'right', marginTop : '-4rem', marginBottom : '-2rem' }}>
-                                <FormControl error={!!errors.personalDataHandleApproval} fullWidth style={{ alignItems : 'flex-end' }}>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                id="personalDataHandleApproval"
-                                                name="personalDataHandleApproval"
-                                                checked={values.personalDataHandleApproval}
-                                                onChange={handleChange}
-                                                color="primary"
-                                            />
-                                        }
-                                        label={<Link to='/eshop/personal-data-protection-terms' target="_blank">Souhlasím se zpracováním osobních údajů</Link>}
-                                    />
-                                    <FormHelperText id="personalDataHandleApproval-error">
-                                        {errors.personalDataHandleApproval}
-                                    </FormHelperText>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <WizardButtons
-                            prev={{ show : false }}
-                            next={{ show : true, loading : isSubmitting }}
-                        />
-                    </Form>
-                )}
-        </Formik>
+                            <WizardButtons
+                                prev={{ show : false }}
+                                next={{ show : true, loading : isSubmitting }}
+                            />
+                        </Form>
+                    )}
+            </Formik>
+            <div>* - povinné pole</div>
+        </>
     );
 };
 

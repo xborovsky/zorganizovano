@@ -26,6 +26,14 @@ public class Customer implements Serializable {
     private String email;
     @Column(name = "phone_no", nullable = false)
     private String phoneNo;
+    @Column(name = "is_company", nullable = false)
+    private boolean company = false;
+    @Column(name = "ico")
+    private String ico;
+    @Column(name = "dic")
+    private String dic;
+    @Column(name = "company_name")
+    private String companyName;
 
     public Customer() {
     }
@@ -72,6 +80,38 @@ public class Customer implements Serializable {
 
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
+    }
+
+    public boolean isCompany() {
+        return company;
+    }
+
+    public void setCompany(boolean company) {
+        this.company = company;
+    }
+
+    public String getIco() {
+        return ico;
+    }
+
+    public void setIco(String ico) {
+        this.ico = ico;
+    }
+
+    public String getDic() {
+        return dic;
+    }
+
+    public void setDic(String dic) {
+        this.dic = dic;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     @Override

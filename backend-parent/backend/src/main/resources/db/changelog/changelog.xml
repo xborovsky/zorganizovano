@@ -632,4 +632,21 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="company_orders" author="borovsky">
+        <addColumn tableName="customers">
+            <column name="is_company" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+        <addColumn tableName="customers">
+            <column name="company_name" type="varchar(100)" />
+        </addColumn>
+        <addColumn tableName="customers">
+            <column name="ico" type="varchar(10)" />
+        </addColumn>
+        <addColumn tableName="customers">
+            <column name="dic" type="varchar(20)" />
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

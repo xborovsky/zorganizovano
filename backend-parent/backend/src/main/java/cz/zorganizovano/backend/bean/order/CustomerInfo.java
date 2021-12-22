@@ -15,6 +15,10 @@ public class CustomerInfo {
     private String phoneNoCode;
     @NotBlank(message = "Pole Telefonní číslo je povinné")
     private String phoneNo;
+    private boolean isCompany;
+    private String ico;
+    private String dic;
+    private String companyName;
     private AddressDTO address;
 
     public String getFirstName() {
@@ -65,9 +69,45 @@ public class CustomerInfo {
         this.address = address;
     }
 
+    public boolean isCompany() {
+        return isCompany;
+    }
+
+    public void setIsCompany(boolean isCompany) {
+        this.isCompany = isCompany;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getIco() {
+        return ico;
+    }
+
+    public void setIco(String ico) {
+        this.ico = ico;
+    }
+
+    public String getDic() {
+        return dic;
+    }
+
+    public void setDic(String dic) {
+        this.dic = dic;
+    }
+
     @Override
     public String toString() {
-        return "CustomerInfo{" + "firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNoCode=" + phoneNoCode + ", phoneNo=" + phoneNo + ", address=" + address + '}';
+        return "CustomerInfo{" + "firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNoCode=" + phoneNoCode + 
+                ", phoneNo=" + phoneNo + ", isCompany=" + isCompany + ", ico=" + ico + ", dic=" + dic + ", companyName=" + companyName + 
+                ", address=" + address + '}';
     }
+
+    
 
 }

@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 @Service
 public class InvoiceCreatorImpl implements InvoiceCreator {
@@ -127,14 +126,21 @@ public class InvoiceCreatorImpl implements InvoiceCreator {
     
     private String buildCustomerInfo(Order order) throws SQLException {
         InvoiceAddress invoiceAddress = invoiceAddressDao.findByOrder(order);
-        
-        return new StringBuilder()
-            .append(order.getCustomer().getFirstName()).append(" ").append(order.getCustomer().getLastName())
+        StringBuilder builder = new StringBuilder();
+        builder.append(order.getCustomer().getFirstName()).append(" ").append(order.getCustomer().getLastName())
             .append("\n")
             .append(invoiceAddress.getStreet())
             .append("\n")
-            .append(invoiceAddress.getZipCode()).append(" ").append(invoiceAddress.getTownship())
-            .toString();
+            .append(invoiceAddress.getZipCode()).append(" ").append(invoiceAddress.getTownship());
+
+        if (order.getCustomer().isCompany()) {
+            builder.append("\n").append("Název firmy: ").append(order.getCustomer().getCompanyName())
+                .append("\n").append("IČ: ").append(order.getCustomer().getIco());
+            if (order.getCustomer().getDic() != null) {
+                builder.append("\n").append("DIČ: ").append(order.getCustomer().getDic());
+            }
+        }
+        return builder.toString();
     }
     
 }

@@ -156,6 +156,10 @@ public class OrderServiceImpl implements OrderService {
         customer.setLastName(customerInfo.getLastName());
         customer.setEmail(customerInfo.getEmail());
         customer.setPhoneNo(customerInfo.getPhoneNo());
+        customer.setCompany(customerInfo.isCompany());
+        customer.setCompanyName(customerInfo.getCompanyName());
+        customer.setIco(customerInfo.getIco());
+        customer.setDic(customerInfo.getDic());
 
         customerDao.save(customer);
 
