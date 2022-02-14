@@ -6,7 +6,7 @@ const ZORGANIZOVANO_URL = 'zorganizovano.cz';
 const PRODUCTS_PATH = 'img/produkty';
 const DEFAULT_HEIGHT = 200;
 
-export const buildCdnUrl = (imageName, height = DEFAULT_HEIGHT) => `${CND_URL}/${ZORGANIZOVANO_URL}/f=auto,h=${height}/${PRODUCTS_PATH}/${imageName}`;
+export const buildCdnUrl = (imageName, height = DEFAULT_HEIGHT) => `${CND_URL}/${ZORGANIZOVANO_URL}/h=${height},f=auto/${PRODUCTS_PATH}/${imageName}`;
 
 const CdnImage = ({ 
     name,
