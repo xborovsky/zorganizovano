@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CND_URL = 'https://cdn.statically.io/img';
+const CND_URL = `${process.env.NODE_ENV === "production" ? 'https://zorganizovano.cz:8082' : 'http://localhost:8082'}/img-api/img/products`;
 const ZORGANIZOVANO_URL = 'zorganizovano.cz';
 const PRODUCTS_PATH = 'img/produkty';
 const DEFAULT_HEIGHT = 200;
 
-export const buildCdnUrl = (imageName, height = DEFAULT_HEIGHT) => `${CND_URL}/${ZORGANIZOVANO_URL}/h=${height},f=auto/${PRODUCTS_PATH}/${imageName}`;
+export const buildCdnUrl = (imageName, height = DEFAULT_HEIGHT) => `${CND_URL}/${imageName}/${height}`;
 
 const CdnImage = ({ 
     name,

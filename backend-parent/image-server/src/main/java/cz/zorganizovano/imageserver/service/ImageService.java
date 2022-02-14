@@ -9,4 +9,6 @@ public interface ImageService {
 
     BufferedImage scale(BufferedImage img, int screenWidth, double widthPct, double dpr);
 
+    BufferedImage scale(BufferedImage img, int height);
+
 }

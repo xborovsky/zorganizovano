@@ -53,12 +53,11 @@ public class ImageController {
         return getImagePreview("products/" + imageName);
     }
 
-    @GetMapping("/products/{imageName}/{screenWidth}")
+    @GetMapping("/products/{imageName}/{height}")
     public ResponseEntity<byte[]> getProductImage(
             @PathVariable("imageName") String imageName,
-            @PathVariable("screenWidth") int screenWidth,
-            @MatrixVariable Map<String, String> matrixConfig) throws IOException {
-        return getImage("products/" + imageName, screenWidth, matrixConfig);
+            @PathVariable("height") int height) throws IOException {
+        return getImage("products/" + imageName, height);
     }
 
     @GetMapping("/blog/{imageName}/{screenWidth}")
@@ -98,6 +97,34 @@ public class ImageController {
                 screenWidth,
                 matrixConfig.get("widthPct") == null ? ImageService.DEFAULT_WIDTH_PCT : Double.valueOf(matrixConfig.get("widthPct")),
                 matrixConfig.get("dpr") == null ? ImageService.DEFAULT_DPR : Double.valueOf(matrixConfig.get("dpr"))
+        );
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(scaledImage, getFileExtension(image), baos);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(fileTypeMap.getContentType(image.getName())))
+                .cacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
+                .body(baos.toByteArray());
+    }
+
+    public ResponseEntity<byte[]> getImage(String imageName, int height) throws IOException {
+        LOG.info(
+            MessageFormat.format(
+                "Get image imageName={0}, height={1}",
+                imageName, height
+            )
+        );
+
+        File image = new File(imagesFolder.getPath() + File.separator + imageName);
+        if (!image.exists()) {
+            LOG.warn(MessageFormat.format("Image {0} not found!", image.getPath()));
+            return ResponseEntity.notFound().build();
+        }
+
+        BufferedImage scaledImage = imageService.scale(
+                ImageIO.read(image),
+                height
         );
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
