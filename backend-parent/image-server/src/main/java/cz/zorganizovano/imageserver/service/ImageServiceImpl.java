@@ -24,7 +24,7 @@ public class ImageServiceImpl implements ImageService {
         BufferedImage scaledImage = img;
 
         if (img.getHeight()> height)  {
-            scaledImage = Scalr.resize(img, Scalr.Mode.FIT_TO_HEIGHT, height);
+            scaledImage = Scalr.resize(img, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_HEIGHT, height);
         }
 
         return scaledImage;

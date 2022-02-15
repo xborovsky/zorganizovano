@@ -17,10 +17,3 @@ export const getImgServerUrl = (img, widthPct = 100) => {
 
     return url;
 };
-
-export const getImgServerPreviewUrl = (img) => {
-    const urlPrefix = process.env.NODE_ENV === "production" ? 
-        "https://zorganizovano.cz:8082" : "http://localhost:8082";
-    
-    return `${urlPrefix}/img-api/img/preview/${img}/`;
-};

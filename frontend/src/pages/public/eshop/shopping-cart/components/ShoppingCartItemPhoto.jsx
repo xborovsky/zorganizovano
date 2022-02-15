@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Avatar from '@material-ui/core/Avatar';
 
 import useFetch from 'hooks/use-fetch';
 import Loader from 'components/Loader';
@@ -17,12 +18,14 @@ const ShoppingCartItemPhoto = ({ itemId, className }) => {
     }
 
     return (
-        <CdnImage 
-            name={data}
-            alt={data}
-            className={className}
-            height={40}
-        />
+        <Avatar>
+            <CdnImage 
+                name={data}
+                alt={data}
+                className={className}
+                height={40}
+            />
+        </Avatar>
     );
 };
 

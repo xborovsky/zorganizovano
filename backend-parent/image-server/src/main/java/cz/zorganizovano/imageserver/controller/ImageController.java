@@ -52,11 +52,6 @@ public class ImageController {
             );
         }
     }
-    
-    @GetMapping("/preview/products/{imageName}/")
-    public ResponseEntity<byte[]> getProductImage(@PathVariable("imageName") String imageName) throws IOException {
-        return getImagePreview("products/" + imageName);
-    }
 
     @GetMapping("/products/{imageName}/{height}")
     public CompletableFuture<ResponseEntity<byte[]>> getProductImage(
@@ -83,7 +78,6 @@ public class ImageController {
         return getImage("other/" + imageName, screenWidth, matrixConfig);
     }
 
-    // TODO still needed?
     public ResponseEntity<byte[]> getImage(String imageName, int screenWidth, Map<String, String> matrixConfig) throws IOException {
         LOG.info(
             MessageFormat.format(
@@ -146,27 +140,6 @@ public class ImageController {
                 return ResponseEntity.unprocessableEntity().body(null);
             }
         }, executor);
-    }
-    
-    // TODO still needed?
-    public ResponseEntity<byte[]> getImagePreview(String imageName) throws IOException {
-        LOG.info(MessageFormat.format("Get image preview imageName={0}",imageName));
-
-        File image = new File(imagesFolder.getPath() + File.separator + imageName);
-        if (!image.exists()) {
-            LOG.warn(MessageFormat.format("Image {0} not found!", image.getPath()));
-            return ResponseEntity.notFound().build();
-        }
-
-        BufferedImage scaledImage = imageService.scale(ImageIO.read(image), 50, 50, 1);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(scaledImage, getFileExtension(image), baos);
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(fileTypeMap.getContentType(image.getName())))
-                .cacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
-                .body(baos.toByteArray());
     }
 
     protected String getFileExtension(File file) {
