@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
@@ -34,6 +37,8 @@ public class ImageController {
     private String imagesFolderLocation;
     private File imagesFolder;
     private final MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+    
+    private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
     @Autowired
     private ImageService imageService;
@@ -54,9 +59,9 @@ public class ImageController {
     }
 
     @GetMapping("/products/{imageName}/{height}")
-    public ResponseEntity<byte[]> getProductImage(
+    public CompletableFuture<ResponseEntity<byte[]>> getProductImage(
             @PathVariable("imageName") String imageName,
-            @PathVariable("height") int height) throws IOException {
+            @PathVariable("height") int height) {
         return getImage("products/" + imageName, height);
     }
 
@@ -78,6 +83,7 @@ public class ImageController {
         return getImage("other/" + imageName, screenWidth, matrixConfig);
     }
 
+    // TODO still needed?
     public ResponseEntity<byte[]> getImage(String imageName, int screenWidth, Map<String, String> matrixConfig) throws IOException {
         LOG.info(
             MessageFormat.format(
@@ -108,34 +114,41 @@ public class ImageController {
                 .body(baos.toByteArray());
     }
 
-    public ResponseEntity<byte[]> getImage(String imageName, int height) throws IOException {
-        LOG.info(
-            MessageFormat.format(
-                "Get image imageName={0}, height={1}",
-                imageName, height
-            )
-        );
+    public CompletableFuture<ResponseEntity<byte[]>> getImage(String imageName, int height) {
+        return CompletableFuture.supplyAsync(() -> {
+            LOG.info(
+                MessageFormat.format(
+                    "Get image imageName={0}, height={1}",
+                    imageName, height
+                )
+            );
 
-        File image = new File(imagesFolder.getPath() + File.separator + imageName);
-        if (!image.exists()) {
-            LOG.warn(MessageFormat.format("Image {0} not found!", image.getPath()));
-            return ResponseEntity.notFound().build();
-        }
+            File image = new File(imagesFolder.getPath() + File.separator + imageName);
+            if (!image.exists()) {
+                LOG.warn(MessageFormat.format("Image {0} not found!", image.getPath()));
+                return ResponseEntity.notFound().build();
+            }
 
-        BufferedImage scaledImage = imageService.scale(
-                ImageIO.read(image),
-                height
-        );
+            try {
+                BufferedImage scaledImage = imageService.scale(
+                        ImageIO.read(image),
+                        height
+                );
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(scaledImage, getFileExtension(image), baos);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(scaledImage, getFileExtension(image), baos);
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(fileTypeMap.getContentType(image.getName())))
-                .cacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
-                .body(baos.toByteArray());
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(fileTypeMap.getContentType(image.getName())))
+                        .cacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
+                        .body(baos.toByteArray());
+            } catch (IOException e) {
+                return ResponseEntity.unprocessableEntity().body(null);
+            }
+        }, executor);
     }
     
+    // TODO still needed?
     public ResponseEntity<byte[]> getImagePreview(String imageName) throws IOException {
         LOG.info(MessageFormat.format("Get image preview imageName={0}",imageName));
 
