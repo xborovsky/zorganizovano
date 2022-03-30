@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.endpoint;
 
+import cz.zorganizovano.backend.endpoint.exception.ResourceNotFoundException;
 import cz.zorganizovano.backend.dao.ServerNotificationDao;
 import cz.zorganizovano.backend.entity.ServerNotification;
 import java.util.Optional;

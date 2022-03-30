@@ -15,7 +15,7 @@ const StockItemDetailsTable = ({ details }) => (
             <TableBody>
                 { details?.length > 0 ?
                     details.map(detail =>
-                        <TableRow>
+                        <TableRow key={detail.key}>
                             <TableCell>{ detail.key }</TableCell>
                             <TableCell>{ detail.value }</TableCell>
                             <TableCell>{ detail.priorityOrder }</TableCell>

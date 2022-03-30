@@ -105,7 +105,7 @@ const CustomerForm = ({ onGoToNextStep, onError }) => {
     const initialCustomerInfo = customerInfo ? { ...customerInfo } : EMPTY_CUSTOMER_INFO;
     const initialCustomerAddress = customerAddress ? { ...customerAddress, country : customerAddress.country.enumName } : EMPTY_CUSTOMER_ADDRESS;
     const initialFormValues = { ...initialCustomerInfo, ...initialCustomerAddress };
-    const { data:phoneNoCodes, isLoading:isLoadingPhoneNoCodes, error:phoneNoCodesError } = useQuery('phone-number-codes', () =>
+    const { data:phoneNoCodes, isLoading:isLoadingPhoneNoCodes } = useQuery('phone-number-codes', () =>
         axios.get('/phone-number/codes').then(res => res.data)
     );
 

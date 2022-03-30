@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Dialog, DialogContent, DialogTitle, Grid, IconButton, makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 import Alert from 'components/Alert';
 import Loader from 'components/Loader';
@@ -30,6 +30,7 @@ const StockItemEditDialog = ({
         axios.get('/item-category').then(res => res.data)
     );
     const { isLoading, data, error:fetchError } = useFetchAuth(['admin-stock-item', id], `/admin/stock-items/${id}`);
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         if (categoriesLoadingError || fetchError) {
@@ -38,6 +39,11 @@ const StockItemEditDialog = ({
     }, [categoriesLoadingError, fetchError]);
 
     const handleSubmitError = () => setAlert({ type : 'error', message :'Chyba při ukládání dat.' });
+
+    const handleSuccess = () => {
+        queryClient.invalidateQueries(['admin-stock-item', id]);
+        onSuccess();
+    };
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth='sm' fullWidth maxWidth='lg'>
@@ -61,7 +67,7 @@ const StockItemEditDialog = ({
                                     stockItem={data}
                                     categories={categories}
                                     onSubmitError={handleSubmitError}
-                                    onSubmitSuccess={onSuccess}
+                                    onSubmitSuccess={handleSuccess}
                                 />
                         }
                     </Grid>

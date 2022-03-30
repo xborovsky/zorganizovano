@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, makeStyles, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { CSVLink } from "react-csv";
 
 import AuthDataFetcher from '../../../components/AuthDataFetcher';
@@ -54,7 +52,7 @@ const ProductsByYearDataTable = ({ year }) => {
                                 </TableHead>
                                 <TableBody>
                                     { data.map(item => (
-                                        <TableRow key={item.itemName}>
+                                        <TableRow key={item.itemId}>
                                             <TableCell>{ item.itemName }</TableCell>
                                             <TableCell>{ item.quantity }</TableCell>
                                         </TableRow>

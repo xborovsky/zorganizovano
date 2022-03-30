@@ -1,4 +1,4 @@
-package cz.zorganizovano.backend.endpoint;
+package cz.zorganizovano.backend.endpoint.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

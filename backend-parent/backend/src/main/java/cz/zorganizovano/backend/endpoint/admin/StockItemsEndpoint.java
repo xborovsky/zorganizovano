@@ -3,17 +3,19 @@ package cz.zorganizovano.backend.endpoint.admin;
 import cz.zorganizovano.backend.bean.admin.stock.AdminStockItem;
 import cz.zorganizovano.backend.bean.admin.stock.AdminStockItemDetail;
 import cz.zorganizovano.backend.bean.admin.stock.CreateEditStockItem;
+import cz.zorganizovano.backend.bean.admin.stock.CreateStockItemMultiple;
 import cz.zorganizovano.backend.bean.admin.stock.UpdateStockItemRequest;
 import cz.zorganizovano.backend.dao.ItemDao;
 import cz.zorganizovano.backend.dao.ItemDetailDao;
 import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.dao.StockItemPictureDao;
-import cz.zorganizovano.backend.endpoint.ResourceNotFoundException;
+import cz.zorganizovano.backend.endpoint.exception.ResourceNotFoundException;
 import cz.zorganizovano.backend.entity.Item;
 import cz.zorganizovano.backend.entity.ItemDetail;
 import cz.zorganizovano.backend.entity.StockItem;
 import cz.zorganizovano.backend.entity.StockItemPicture;
 import cz.zorganizovano.backend.service.StockItemService;
+import cz.zorganizovano.backend.service.StockItemServiceMultiple;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +45,8 @@ public class StockItemsEndpoint {
     private StockItemPictureDao stockItemPictureDao;
     @Autowired
     private StockItemService stockItemService;
+    @Autowired
+    private StockItemServiceMultiple stockItemServiceMultiple;
     @Autowired
     private ItemDao itemDao;
     
@@ -88,7 +93,10 @@ public class StockItemsEndpoint {
     }
     
     @PostMapping("/{id}")
-    @CacheEvict(value = "item", key = "#id" )
+    @Caching(evict = {
+        @CacheEvict(value = "items", allEntries = true),
+        @CacheEvict(value = "item", key = "#id" )
+    })
     public ResponseEntity updateStockItem(@PathVariable long id, @RequestBody CreateEditStockItem editStockItem) {
         Optional<Item> itemOpt = itemDao.findById(id);
         if (!itemOpt.isPresent()) {
@@ -96,6 +104,13 @@ public class StockItemsEndpoint {
         }
         
         stockItemService.updateStockItem(itemOpt.get(), editStockItem);
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/multiple")
+    @CacheEvict(value = "items", allEntries = true)
+    public ResponseEntity<Void> createStockItemMultiple(@Valid @RequestBody CreateStockItemMultiple createStockItem) {
+        stockItemServiceMultiple.createNewStockItems(createStockItem);
         return ResponseEntity.ok().build();
     }
     

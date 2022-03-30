@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.endpoint;
 
+import cz.zorganizovano.backend.endpoint.exception.ResourceNotFoundException;
 import cz.zorganizovano.backend.bean.PaginatedData;
 import cz.zorganizovano.backend.bean.item.ItemDetailDTO;
 import cz.zorganizovano.backend.bean.item.ItemListEntry;

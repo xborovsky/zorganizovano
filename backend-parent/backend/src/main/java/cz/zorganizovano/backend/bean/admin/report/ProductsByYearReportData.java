@@ -2,14 +2,24 @@ package cz.zorganizovano.backend.bean.admin.report;
 
 public class ProductsByYearReportData {
 
+    private long itemId;
     private String itemName;
     private long quantity;
     
     public ProductsByYearReportData() {}
     
-    public ProductsByYearReportData(String itemName, long quantity) {
+    public ProductsByYearReportData(long itemId, String itemName, long quantity) {
+        this.itemId = itemId;
         this.itemName = itemName;
         this.quantity = quantity;
+    }
+
+    public long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
     }
 
     public String getItemName() {

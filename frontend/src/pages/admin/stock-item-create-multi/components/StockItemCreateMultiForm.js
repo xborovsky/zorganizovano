@@ -1,44 +1,47 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Checkbox, FormControl, FormControlLabel, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
+import { Button, FormControl, InputLabel, TextField, Select, MenuItem, Grid } from '@material-ui/core';
+import StockItemDetailsForm from 'pages/admin/stock-item-create/components/StockItemDetailsForm';
 import { useMutation } from 'react-query';
+import axios from 'axios';
+import * as Yup from 'yup';
 
-import StockItemDetailsForm from './StockItemDetailsForm';
-import StockItemPicturesForm from './StockItemPicturesForm';
+import NamesFormSection from './NamesFormSection';
 import Loader from 'components/Loader';
 import { AuthContext } from 'pages/admin/AuthProvider';
+import { getChainedCategories } from 'util/category-chaining-util';
+import GeneratedImageNames from './GeneratedImageNames';
 
 const initialFormData = {
-    name : '',
     subName : '',
     description : '',
     metaTitle : '',
     price : 0,
-    enableOnlineShipment : false,
-    thumbnailLocation : ''
+    quantity : 0,
+    newSubcategories : '',
+    imageNamePrefix : '',
+    imageNameSuffix : ''
 };
 
-const StockItemCreateEditForm = ({
-    stockItem = initialFormData,
+const StockItemCreateMultiForm = ({
     categories,
-    onSubmitSuccess,
-    onSubmitError
+    onSubmitError,
+    onSubmitSuccess
 }) => {
-    const [ pictures, setPictures ] = useState(stockItem.pictures || []);
-    const [ details, setDetails ] = useState(stockItem.itemDetails || []);
-    const [ category, setCategory ] = useState(stockItem.itemCategory?.id || 1);
+    const [ names, setNames ] = useState(['']);
+    const [ details, setDetails ] = useState([]);
+    const [ category, setCategory ] = useState(categories[0].id);
+
     const { auth } = useContext(AuthContext);
     const createMutation = useMutation(
         (data) => axios({
             method : 'POST',
-            url : '/admin/stock-items',
+            url : '/admin/stock-items/multiple',
             headers : {
                 'Authorization' : `Bearer ${auth}`
             },
-            data : data
+            ...data
         }),
         {
             onSuccess : () => {
@@ -49,41 +52,35 @@ const StockItemCreateEditForm = ({
             }
         }
     );
-    const editMutation = useMutation(
-        ({ id, data }) => axios({
-            method : 'POST',
-            url : `/admin/stock-items/${id}`,
-            headers : {
-                'Authorization' : `Bearer ${auth}`
-            },
-            data : data
-        }),
-        {
-            onSuccess : () => {
-                onSubmitSuccess();
-            },
-            onError : error => {
-                onSubmitError(error);
-            }
-        }
-    );
-
     const validationSchema = Yup.object().shape({
-        name : Yup.string()
-            .max(100, 'Název může obsahovat maximálně 100 znaků.')
-            .required('Název je povinný.'),
         subName : Yup.string()
-            .max(200, 'Podnázev může obsahovat maximálně 200 znaků.')
+            .max(200, 'Podnázev je omezený na 200 znaků.')
             .required('Podnázev je povinný.'),
         description : Yup.string()
             .required('Popis je povinný.'),
         metaTitle : Yup.string()
             .required('SEO popis je povinný.'),
         price : Yup.number()
-            .min(1, 'Cena musí být kladné číslo.'),
-        thumbnailLocation : Yup.string()
-            .required('Cloudinary název obrázku pro náhled je povinný.')
+            .min(1, 'Cena musí být kladná.'),
+        quantity : Yup.number()
+            .min(0, 'Počet kusů musí být kladný, nebo 0.'),
+        quantity : Yup.number()
+            .min(0, 'Počet kusů musí být kladný, nebo 0.')
     });
+
+    const handleAddNameField = () => setNames([...names, '']);
+
+    const handleDeleteNameField = idx => e => {
+        const namesCpy = [...names];
+        namesCpy.splice(idx, 1);
+        setNames(namesCpy);
+    };
+
+    const handleChangeNameField = idx => e => {
+        const namesCpy = [...names];
+        namesCpy[idx] = e.currentTarget.value;
+        setNames(namesCpy);
+    };
 
     const handleDetailAddClick = e =>
         setDetails(prev => ([ ...prev, { key : '', value : '', priorityOrder : 0 } ]));
@@ -98,52 +95,41 @@ const StockItemCreateEditForm = ({
         const detailsCpy = [...details];
         detailsCpy[cnt][field] = field == 'priorityOrder' ? +value : value;
         setDetails(detailsCpy);
-    }
-
-    const handlePictureChange = (cnt, field, value) => {
-        const picturesCpy = [...pictures];
-        picturesCpy[cnt][field] = value;
-        setPictures(picturesCpy);
-    }
-
-    const handlePictureAddClick = e =>
-        setPictures(prev => ([ ...prev, { src : '', main : false } ]));
-
-    const handlePictureDeleteClick = idx => {
-        const picturesCpy = [...pictures];
-        picturesCpy.splice(idx, 1);
-        setPictures(picturesCpy);
     };
 
     const handleChangeCategory = e => setCategory(e.target.value);
 
     const handleFormSubmit = (values, { setSubmitting, setErrors }) => {
-        const postData = { ...values, pictures, details, category };
-        if (stockItem.id) {
-            editMutation.mutate(
-                { id : stockItem.id, data : postData },
-                {
-                    onError : () => {
-                        setSubmitting(false);
-                    }
+        const postData = { ...values, names, details, category };
+        createMutation.mutate(
+            {data : { ...postData}},
+            {
+                onError : error => {
+                    setSubmitting(false);
+                    setErrors(error.response?.data?.errors);
                 }
-            );
-        } else {
-            createMutation.mutate(
-                { ...postData },
-                {
-                    onError : () => {
-                        setSubmitting(false);
-                    }
-                }
-            );
-        }
+            }
+        );
+    };
+
+    const additionalValidation = values => {
+        let errors = {};
+
+        names.forEach((name, cnt) => {
+            if (name.trim().length == 0) {
+                errors[`name${cnt}`] = 'Jméno je povinné';
+                return false;
+            }
+        });
+
+        return errors;
     };
 
     return (
         <Formik
-            initialValues={stockItem}
+            initialValues={initialFormData}
             validationSchema={validationSchema}
+            validate={additionalValidation}
             onSubmit={handleFormSubmit}>
                 {({
                     values,
@@ -153,23 +139,15 @@ const StockItemCreateEditForm = ({
                     isSubmitting
                 }) => (
                     <Form>
-                        <TextField
-                            id="name"
-                            name="name"
-                            label="Název"
-                            value={values.name}
-                            margin="normal"
-                            variant="outlined"
-                            fullWidth
-                            error={touched.name && !!errors.name}
-                            helperText={touched.name && errors.name}
-                            onChange={handleChange}
-                            InputProps={{
-                                inputProps : {
-                                    maxLength : 100
-                                }
-                            }}
+                        <NamesFormSection
+                            names={names}
+                            onAddClick={handleAddNameField}
+                            onChange={handleChangeNameField}
+                            onDelete={handleDeleteNameField}
+                            errors={errors}
+                            touched={touched}
                         />
+
                         <TextField
                             id="subName"
                             name="subName"
@@ -221,12 +199,31 @@ const StockItemCreateEditForm = ({
                             id="price"
                             name="price"
                             label="Cena"
+                            type="number"
                             value={values.price}
                             margin="normal"
                             variant="outlined"
                             fullWidth
                             error={touched.price && !!errors.price}
                             helperText={touched.price && errors.price}
+                            onChange={handleChange}
+                            InputProps={{
+                                inputProps : {
+                                    min : 0
+                                }
+                            }}
+                        />
+                        <TextField
+                            id="quantity"
+                            name="quantity"
+                            label="Počet kusů"
+                            type="number"
+                            value={values.quantity}
+                            margin="normal"
+                            variant="outlined"
+                            fullWidth
+                            error={touched.quantity && !!errors.quantity}
+                            helperText={touched.quantity && errors.quantity}
                             onChange={handleChange}
                             InputProps={{
                                 inputProps : {
@@ -245,85 +242,88 @@ const StockItemCreateEditForm = ({
                                     id: 'category'
                                 }}
                             >
-                                { categories.map(category => (
+                                { getChainedCategories(categories).map(category => (
                                     <MenuItem value={category.id} key={category.id}>
                                         { category.name }
                                     </MenuItem>        
                                 )) }
                             </Select>
                         </FormControl>
-                        <FormControl error={touched.enableOnlineShipment && !!errors.enableOnlineShipment} fullWidth>
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={values.enableOnlineShipment}
-                                    onChange={handleChange}
-                                    name="enableOnlineShipment"
-                                    color="primary"
-                                />
-                                }
-                                label="Povolit online doručení"
-                            />
-                            <FormHelperText id="enableOnlineShipment-error">{touched.enableOnlineShipment && errors.enableOnlineShipment}</FormHelperText>
-                        </FormControl>
                         <TextField
-                            id="thumbnailLocation"
-                            name="thumbnailLocation"
-                            label="Cloudinary název obrázku pro náhled"
-                            value={values.thumbnailLocation}
+                            id="newSubcategories"
+                            name="newSubcategories"
+                            label="Nová podkategorie"
+                            value={values.newSubcategories}
                             margin="normal"
                             variant="outlined"
                             fullWidth
-                            error={touched.thumbnailLocation && !!errors.thumbnailLocation}
-                            helperText={touched.thumbnailLocation && errors.thumbnailLocation}
+                            error={touched.newSubcategories && !!errors.newSubcategories}
+                            helperText={(touched.newSubcategories && errors.newSubcategories) || 'Jako oddělovač podkategorií použijte kombinaci znaků "->"'}
                             onChange={handleChange}
+                        />
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    id="imageNamePrefix"
+                                    name="imageNamePrefix"
+                                    label="Prefix názvu obrázku"
+                                    value={values.imageNamePrefix}
+                                    multiline
+                                    margin="normal"
+                                    variant="outlined"
+                                    error={touched.imageNamePrefix && !!errors.imageNamePrefix}
+                                    helperText={(touched.imageNamePrefix && errors.imageNamePrefix) || 'Bez "_" na konci'}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    id="imageNameSuffix"
+                                    name="imageNameSuffix"
+                                    label="Suffix názvu obrázku"
+                                    value={values.imageNameSuffix}
+                                    multiline
+                                    margin="normal"
+                                    variant="outlined"
+                                    error={touched.imageNameSuffix && !!errors.imageNameSuffix}
+                                    helperText={(touched.imageNameSuffix && errors.imageNameSuffix) || 'Bez "_" na začátku'}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                            </Grid>
+                        </Grid>
+                        <h3 style={{ marginTop : '3rem' }}>Generované jména obrázků</h3>
+                        <GeneratedImageNames 
+                            namePrefix={values.imageNamePrefix}
+                            nameSuffix={values.imageNameSuffix}
+                            itemNames={names}
                         />
 
                         <h3 style={{ marginTop : '3rem' }}>Detaily</h3>
-                        <StockItemDetailsForm 
+                        <StockItemDetailsForm
                             details={details}
                             onDeleteClick={handleDetailDeleteClick}
                             onAddClick={handleDetailAddClick}
                             onChange={handleDetailChange}
                         />
 
-                        <h3 style={{ marginTop : '3rem' }}>Obrázky</h3>
-                        <StockItemPicturesForm
-                            pictures={pictures}
-                            onDeleteClick={handlePictureDeleteClick}
-                            onAddClick={handlePictureAddClick}
-                            onChange={handlePictureChange}
-                        />
-
                         <div style={{ marginTop : '3rem', textAlign : 'center', marginBottom : '2rem' }}>
-                            <Button 
+                            <Button
                                 type="submit" 
                                 color="primary" 
                                 variant="contained"
                                 disabled={isSubmitting}>
-                                { isSubmitting ? <Loader /> : 'Uložit položku do databáze' }
+                                { isSubmitting ? <Loader /> : 'Uložit do databáze' }
                             </Button>
                         </div>
                     </Form>
                 )}
-            </Formik>
+        </Formik>
     );
 };
 
-StockItemCreateEditForm.propTypes = {
-    stockItem : PropTypes.shape({
-        id : PropTypes.number,
-        name : PropTypes.string.isRequired,
-        subName : PropTypes.string.isRequired,
-        description : PropTypes.string.isRequired,
-        metaTitle : PropTypes.string.isRequired,
-        price : PropTypes.number.isRequired,
-        enableOnlineShipment : PropTypes.bool.isRequired,
-        thumbnailLocation : PropTypes.string.isRequired,
-        itemCategory : PropTypes.shape({
-            id : PropTypes.number.isRequired
-        }).isRequired
-    }),
+StockItemCreateMultiForm.propTypes = {
     categories : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
         name : PropTypes.string.isRequired
@@ -332,4 +332,4 @@ StockItemCreateEditForm.propTypes = {
     onSubmitError : PropTypes.func.isRequired
 };
 
-export default StockItemCreateEditForm;
+export default StockItemCreateMultiForm;

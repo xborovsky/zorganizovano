@@ -1,5 +1,6 @@
 package cz.zorganizovano.backend.endpoint;
 
+import cz.zorganizovano.backend.endpoint.exception.ResourceNotFoundException;
 import cz.zorganizovano.backend.bean.item.ItemPicture;
 import cz.zorganizovano.backend.dao.StockItemDao;
 import cz.zorganizovano.backend.dao.StockItemPictureDao;

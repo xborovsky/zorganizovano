@@ -15,7 +15,7 @@ const StockItemPicturesForm = ({
             <TableHead style={{ backgroundColor : '#e8e8e8' }}>
                 <TableRow>
                     <TableCell width="5%"></TableCell>
-                    <TableCell width="85%">Název v Cloudinary</TableCell>
+                    <TableCell width="85%">Název</TableCell>
                     <TableCell width="5%">Hlavní</TableCell>
                     <TableCell width="5%"></TableCell>
                 </TableRow>
@@ -28,7 +28,7 @@ const StockItemPicturesForm = ({
                             <TextField
                                 id={`picture-src-${cnt}`}
                                 name={`picture-src-${cnt}`}
-                                label="Název v Cloudinary"
+                                label="Název"
                                 value={picture.src}
                                 margin="normal"
                                 fullWidth
@@ -49,7 +49,7 @@ const StockItemPicturesForm = ({
                 }
                 <TableRow>
                     <TableCell colSpan={4}>
-                        <Button onClick={onAddClick} color="primary" variant="contained" onClick={onAddClick}>
+                        <Button onClick={onAddClick} color="primary" variant="contained">
                             <AddCircleIcon />&nbsp;&nbsp;Přidat
                         </Button>
                     </TableCell>

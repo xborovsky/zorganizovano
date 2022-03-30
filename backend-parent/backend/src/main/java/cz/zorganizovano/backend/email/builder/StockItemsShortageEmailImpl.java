@@ -1,6 +1,6 @@
 package cz.zorganizovano.backend.email.builder;
 
-import cz.zorganizovano.backend.endpoint.ResourceNotFoundException;
+import cz.zorganizovano.backend.endpoint.exception.ResourceNotFoundException;
 import cz.zorganizovano.backend.entity.StockItem;
 import java.io.StringWriter;
 import java.util.List;

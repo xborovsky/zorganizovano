@@ -12,7 +12,7 @@ import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.dao.OrderItemDao;
 import cz.zorganizovano.backend.dao.ShipmentAddressDao;
 import cz.zorganizovano.backend.dao.StockItemDao;
-import cz.zorganizovano.backend.endpoint.StockQuantityNotAvailableException;
+import cz.zorganizovano.backend.endpoint.exception.StockQuantityNotAvailableException;
 import cz.zorganizovano.backend.entity.Customer;
 import cz.zorganizovano.backend.entity.DiscountCode;
 import cz.zorganizovano.backend.entity.Order;

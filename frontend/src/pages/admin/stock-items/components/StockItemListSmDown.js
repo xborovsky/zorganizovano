@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core';
+import { makeStyles, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField } from '@material-ui/core';
 
 import StockItemContainer from './StockItemContainer';
 
@@ -23,7 +23,11 @@ const StockItemListSmDown = ({
     searchFilter,
     onSearchFilterChange,
     onEditClick,
-    onDetailClick
+    onDetailClick,
+    rowsPerPage,
+    page,
+    onPageChange,
+    onRowsPerPageChange
 }) => {
     const classes = useStyles();
 
@@ -43,20 +47,30 @@ const StockItemListSmDown = ({
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    { data.map((stockItem, cnt) => (
-                        <StockItemContainer
-                            id={stockItem.id}
-                            itemId={stockItem.itemId}
-                            name={stockItem.name}
-                            quantity={stockItem.quantity}
-                            rowNum={cnt + 1}
-                            key={stockItem.id}
-                            onEditClick={onEditClick}
-                            onDetailClick={onDetailClick}
-                        />
+                    { data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((stockItem, cnt) => (
+                            <StockItemContainer
+                                id={stockItem.id}
+                                itemId={stockItem.itemId}
+                                name={stockItem.name}
+                                quantity={stockItem.quantity}
+                                rowNum={cnt + 1}
+                                key={stockItem.id}
+                                onEditClick={onEditClick}
+                                onDetailClick={onDetailClick}
+                            />
                     )) }
                 </TableBody>
             </Table>
+            <TablePagination 
+                rowsPerPageOptions={[10, 25, 50, 100]}
+                component="div"
+                count={data.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={onPageChange}
+                onChangeRowsPerPage={onRowsPerPageChange}
+            />
         </Paper>
     );
 };
@@ -71,7 +85,11 @@ StockItemListSmDown.propTypes = {
     searchFilter : PropTypes.string,
     onSearchFilterChange : PropTypes.func.isRequired,
     onEditClick : PropTypes.func.isRequired,
-    onDetailClick : PropTypes.func.isRequired
+    onDetailClick : PropTypes.func.isRequired,
+    rowsPerPage : PropTypes.number.isRequired,
+    page : PropTypes.number.isRequired,
+    onPageChange : PropTypes.func.isRequired,
+    onRowsPerPageChange : PropTypes.func.isRequired
 };
 
 export default StockItemListSmDown;

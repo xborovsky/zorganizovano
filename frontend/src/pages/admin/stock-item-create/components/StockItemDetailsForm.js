@@ -53,7 +53,7 @@ const StockItemDetailsForm = ({
                                 name={`detail-priorityOrder-${cnt}`}
                                 label="Priorita řazení"
                                 type="number"
-                                value={detail.priorityOrder}
+                                value={detail.priorityOrder || 1000}
                                 margin="normal"
                                 fullWidth
                                 InputProps={{

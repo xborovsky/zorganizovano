@@ -15,7 +15,7 @@ public interface OrderItemDao extends JpaRepository<OrderItem, Long> {
     List<OrderItem> findByOrder(Order order);
 
     @Query("SELECT "
-            + "new cz.zorganizovano.backend.bean.admin.report.ProductsByYearReportData(i.name, SUM(oi.quantity)) "
+            + "new cz.zorganizovano.backend.bean.admin.report.ProductsByYearReportData(i.id, i.name, SUM(oi.quantity)) "
             + "FROM OrderItem oi "
             + "LEFT JOIN Order o ON (oi.order.id = o.id) "
             + "LEFT JOIN Item i ON (i.id = oi.item.id) "

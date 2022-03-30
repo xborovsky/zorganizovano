@@ -132,8 +132,8 @@ const DiscountCodesTable = ({
                             <TableCell>{ discountCode.validUntil && format(new Date(discountCode.validUntil), 'dd.MM.yyyy HH:mm:ss') }</TableCell>
                             <TableCell>
                                 { discountCode.oneTime ?
-                                    <CheckIcon accessTitle="Jednorázový" /> :
-                                    <ClearIcon accessTitle="Na více použití" />
+                                    <CheckIcon titleAccess="Jednorázový" /> :
+                                    <ClearIcon titleAccess="Na více použití" />
                                 }
                             </TableCell>
                             <TableCell>

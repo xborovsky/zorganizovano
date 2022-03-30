@@ -7,7 +7,7 @@ import Loader from 'components/Loader';
 import CdnImage from 'components/CdnImage';
 
 const ShoppingCartItemPhoto = ({ itemId, className }) => {
-    const { data, isLoading, error } = useFetch(`/picture-item/${itemId}/shopping-cart-thumbnail`);
+    const { data, isLoading } = useFetch(`/picture-item/${itemId}/shopping-cart-thumbnail`);
 
     if (isLoading) {
         return <Loader />;

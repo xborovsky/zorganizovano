@@ -8,7 +8,6 @@ import { useQuery } from 'react-query';
 import ProductList from './ProductList';
 import ItemCategoriesFilter from './item-categories-filter';
 import Alert from 'components/Alert';
-import useFetch from '../../../../../hooks/use-fetch';
 import ProductBreadcrumbs from '../common/ProductBreadcrumbs';
 import PaginationContext from './pagination/PaginationContext';
 import BottomPaginationPanel from './pagination/BottomPaginationPanel';

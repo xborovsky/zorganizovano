@@ -9,7 +9,7 @@ import cz.zorganizovano.backend.dao.InvoiceAddressDao;
 import cz.zorganizovano.backend.dao.OrderDao;
 import cz.zorganizovano.backend.dao.OrderItemDao;
 import cz.zorganizovano.backend.dao.ShipmentAddressDao;
-import cz.zorganizovano.backend.endpoint.ResourceNotFoundException;
+import cz.zorganizovano.backend.endpoint.exception.ResourceNotFoundException;
 import cz.zorganizovano.backend.entity.InvoiceAddress;
 import cz.zorganizovano.backend.entity.Order;
 import cz.zorganizovano.backend.entity.ShipmentAddress;
