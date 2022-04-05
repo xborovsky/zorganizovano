@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { Button, InputAdornment, TextField } from '@material-ui/core';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, InputAdornment, TextField } from '@mui/material';
 
 const NamesFormSection = ({
     names,

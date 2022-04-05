@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import FormHelperText from '@mui/material/FormHelperText';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Input from '@mui/material/Input';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import withStyles from '@material-ui/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import withStyles from '@mui/styles/withStyles';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -126,7 +126,7 @@ const ContactForm = ({ queryTypes, classes }) => {
                         <Form>
                             <Grid container>
                                 <Grid item xs={12}>
-                                    <FormControl error={touched.name && !!errors.name} fullWidth>
+                                    <FormControl error={touched.name && !!errors.name} fullWidth variant='standard'>
                                         <InputLabel htmlFor="name">Jméno</InputLabel>
                                         <Input
                                             id="name"
@@ -139,7 +139,7 @@ const ContactForm = ({ queryTypes, classes }) => {
                                     </FormControl>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <FormControl error={touched.email && !!errors.email} fullWidth>
+                                    <FormControl error={touched.email && !!errors.email} fullWidth variant='standard'>
                                         <InputLabel htmlFor="email">Email</InputLabel>
                                         <Input
                                             id="email"
@@ -164,6 +164,7 @@ const ContactForm = ({ queryTypes, classes }) => {
                                         helperText={touched.type && errors.type}
                                         error={touched.type && !!errors.type}
                                         margin="normal"
+                                        variant='standard'
                                     >
                                         { queryTypes.map(option => (
                                             <MenuItem key={option.id} value={option.id}>
@@ -184,7 +185,7 @@ const ContactForm = ({ queryTypes, classes }) => {
                                         variant="outlined"
                                         fullWidth
                                         rows={5}
-                                        rowsMax={20}
+                                        maxRows={20}
                                         error={touched.query && !!errors.query}
                                         helperText={touched.query && errors.query}
                                         inputProps={{

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import Checkbox from '@material-ui/core/Checkbox';
-import { makeStyles } from '@material-ui/styles';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import Checkbox from '@mui/material/Checkbox';
+import { makeStyles } from '@mui/styles';
 import Price from 'components/Price';
 import { format, parseISO, differenceInCalendarDays, addBusinessDays, addDays } from 'date-fns';
 

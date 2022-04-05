@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
     root : {
@@ -20,7 +22,7 @@ const YearSelect = ({ availableYears, onYearChange }) => {
     }
 
     return (
-        <FormControl className={classes.root}>
+        <FormControl className={classes.root} variant='standard'>
             <InputLabel id="year-label">Vyberte rok:</InputLabel>
             <Select
                 labelId="year-label"
@@ -28,6 +30,7 @@ const YearSelect = ({ availableYears, onYearChange }) => {
                 value={year}
                 label="Year"
                 onChange={handleYearChange}
+                variant="standard"
             >
                 { availableYears.map(year => <MenuItem value={year} key={year}>{year}</MenuItem>) }
             </Select>

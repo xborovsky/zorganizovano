@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, CircularProgress, TextField } from '@material-ui/core';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import axios from 'axios';
 
 import { AuthContext } from 'pages/admin/AuthProvider';

@@ -1,9 +1,24 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormGroup, FormHelperText, IconButton, Input, InputLabel, makeStyles } from '@material-ui/core';
+import {
+    Button,
+    Checkbox,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    FormHelperText,
+    IconButton,
+    Input,
+    InputLabel,
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@mui/icons-material/Close';
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 import axios from 'axios';
@@ -111,7 +126,7 @@ const CreateDiscountCodeModal = ({
                         <Form>
                             <DialogTitle>
                                 Nový slevový kód
-                                <IconButton onClick={onClose} className={classes.closeButton}>
+                                <IconButton onClick={onClose} className={classes.closeButton} size="large">
                                     <CloseIcon />
                                 </IconButton>
                             </DialogTitle>
@@ -129,6 +144,7 @@ const CreateDiscountCodeModal = ({
                                             maxLength : 20
                                         }}
                                         fullWidth
+                                        variant='standard'
                                     />
                                     <FormHelperText id="code-error">{touched.code && errors.code}</FormHelperText>
                                 </FormControl>
@@ -145,12 +161,13 @@ const CreateDiscountCodeModal = ({
                                             step : 5
                                         }}
                                         fullWidth
+                                        variant='standard'
                                     />
                                     <FormHelperText id="discount-error">{touched.discount && errors.discount}</FormHelperText>
                                 </FormControl>
                                 <FormGroup row>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <FormControl error={touched.validUntil && !!errors.validUntil} fullWidth>
+                                        <FormControl error={touched.validUntil && !!errors.validUntil} fullWidth variant='standard'>
                                             <DateTimePicker
                                                 label="Platnost do"
                                                 inputVariant="standard"

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Checkbox, FormControl, FormControlLabel, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { Button, Checkbox, FormControl, FormControlLabel, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -197,7 +197,7 @@ const StockItemCreateEditForm = ({
                             variant="outlined"
                             fullWidth
                             rows={5}
-                            rowsMax={20}
+                            maxRows={20}
                             error={touched.description && !!errors.description}
                             helperText={touched.description && errors.description}
                             onChange={handleChange}
@@ -212,7 +212,7 @@ const StockItemCreateEditForm = ({
                             variant="outlined"
                             fullWidth
                             rows={5}
-                            rowsMax={20}
+                            maxRows={20}
                             error={touched.metaTitle && !!errors.metaTitle}
                             helperText={touched.metaTitle && errors.metaTitle}
                             onChange={handleChange}
@@ -244,6 +244,7 @@ const StockItemCreateEditForm = ({
                                     name: 'category',
                                     id: 'category'
                                 }}
+                                variant="standard"
                             >
                                 { categories.map(category => (
                                     <MenuItem value={category.id} key={category.id}>
@@ -252,7 +253,7 @@ const StockItemCreateEditForm = ({
                                 )) }
                             </Select>
                         </FormControl>
-                        <FormControl error={touched.enableOnlineShipment && !!errors.enableOnlineShipment} fullWidth>
+                        <FormControl error={touched.enableOnlineShipment && !!errors.enableOnlineShipment} fullWidth variant='standard'>
                             <FormControlLabel
                                 control={
                                 <Checkbox

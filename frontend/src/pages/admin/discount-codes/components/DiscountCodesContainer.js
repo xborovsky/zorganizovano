@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { Button, Grid } from '@material-ui/core';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Button, Grid } from '@mui/material';
 
 import Alert from '../../../../components/Alert';
 import DiscountCodesTable from './DiscountCodesTable';

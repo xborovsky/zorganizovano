@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Hidden } from '@material-ui/core';
+import { Hidden } from '@mui/material';
 
 import { AuthContext } from '../../AuthProvider';
 import StockItemMdUp from './StockItemMdUp';
@@ -70,7 +70,7 @@ const StockItemContainer = ({
 
     return (
         <StockItemContext.Provider value={{ showSaveCancel, showSaveProgress, error, showSuccess }}>
-            <Hidden smDown>
+            <Hidden mdDown>
                 <StockItemMdUp
                     itemId={id}
                     name={name}

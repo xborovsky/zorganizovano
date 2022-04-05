@@ -1,21 +1,21 @@
 import React, { useState, useContext } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import { withStyles } from '@material-ui/styles';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Input from '@mui/material/Input';
+import { withStyles } from '@mui/styles';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import Alert from 'components/Alert';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
+import FormHelperText from '@mui/material/FormHelperText';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
 import { useHistory } from 'react-router-dom';
 
 import { AuthContext } from '../AuthProvider';
@@ -99,7 +99,7 @@ const Login = ({ classes }) => {
                             <Form className={classes.form}>
                                 <Grid container>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.username && !!errors.username} fullWidth>
+                                        <FormControl error={touched.username && !!errors.username} fullWidth variant='standard'>
                                             <InputLabel htmlFor="username">Uživatel</InputLabel>
                                             <Input
                                                 id="username"
@@ -112,7 +112,7 @@ const Login = ({ classes }) => {
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl error={touched.password && !!errors.password} fullWidth>
+                                        <FormControl error={touched.password && !!errors.password} fullWidth variant='standard'>
                                             <InputLabel htmlFor="password">Heslo</InputLabel>
                                             <Input
                                                 id="password"

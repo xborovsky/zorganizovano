@@ -1,6 +1,6 @@
 import React from 'react';
-import withStyles from '@material-ui/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
+import withStyles from '@mui/styles/withStyles';
+import Typography from '@mui/material/Typography';
 import { productDetailShape } from '../product-prop-type';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import ReactHtmlParser from 'react-html-parser';

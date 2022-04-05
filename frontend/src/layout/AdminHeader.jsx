@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from 'pages/admin/AuthProvider';
@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     toolbar: {
         display : 'flex',
         alignItems : 'stretch',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             flexDirection : 'column',
             justifyContent : 'center',
             paddingLeft : '0 !important',
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft : '2vw',
         display : 'flex',
         alignItems : 'center',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             margin : '.7rem auto .7rem 1rem',
             display : 'block',
             flexGrow : 0
@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
         '&:hover' : {
             backgroundColor : '#777'
         },
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             justifyContent : 'center',
             paddingTop : '.5rem',
             paddingBottom : '.5rem'

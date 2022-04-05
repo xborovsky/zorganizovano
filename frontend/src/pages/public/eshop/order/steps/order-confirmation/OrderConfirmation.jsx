@@ -1,14 +1,14 @@
 import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles';
 import { Formik, Form } from 'formik';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+import FormHelperText from '@mui/material/FormHelperText';
 import { Link } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
+import Hidden from '@mui/material/Hidden';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -30,7 +30,7 @@ const styles = theme => ({
         fontWeight : 'bold',
         fontSize : '1.8rem',
         marginTop : '2rem',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             fontSize : '1.2rem',
             marginTop : '1rem'
         }
@@ -119,7 +119,7 @@ const OrderConfirmation = ({
                     <Form>
                         <div>
                             <Section title='Objednáváte si tyto položky'>
-                                <Hidden smDown>
+                                <Hidden mdDown>
                                     <ShoppingCart
                                         intermediateSum={cartSum.cartIntermediateSum}
                                         totalSum={cartSum.totalSum}
@@ -154,7 +154,7 @@ const OrderConfirmation = ({
                             margin="normal"
                             variant='outlined'
                         />
-                        <FormControl error={touched.orderTermsApproval && !!errors.orderTermsApproval} fullWidth style={{ alignItems : 'flex-end', marginBottom : '-3rem' }}>
+                        <FormControl error={touched.orderTermsApproval && !!errors.orderTermsApproval} fullWidth style={{ alignItems : 'flex-end', marginBottom : '-3rem' }} variant='standard'>
                             <FormControlLabel
                                 control={
                                     <Checkbox

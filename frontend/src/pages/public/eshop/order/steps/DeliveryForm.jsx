@@ -1,14 +1,14 @@
 import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import { Formik, Form } from 'formik';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import { CircularProgress } from '@material-ui/core';
+import FormHelperText from '@mui/material/FormHelperText';
+import { CircularProgress } from '@mui/material';
 
 import WizardButtons from '../components/WizardButtons';
 import ZasilkovnaInfo from '../components/ZasilkovnaInfo';
@@ -86,7 +86,7 @@ const DeliveryForm = ({
                                 <Typography variant="h6" gutterBottom>
                                     Vyberte typ dopravy
                                 </Typography>
-                                <FormControl component="fieldset" error={touched.deliveryOption && !!errors.deliveryOption}>
+                                <FormControl component="fieldset" error={touched.deliveryOption && !!errors.deliveryOption} variant='standard'>
                                     <RadioGroup aria-label="delivery option" name="deliveryOption" value={values.deliveryOption} onChange={handleChange}>
                                         {
                                             deliveryOptions.filter(deliveryOption => deliveryOption.deliveryCountries.includes(customerAddress.country.enumName)).map(deliveryOption => (
@@ -129,7 +129,7 @@ const DeliveryForm = ({
                                 <Typography variant="h6" gutterBottom>
                                     Platba
                                 </Typography>
-                                <FormControl component="fieldset" error={touched.paymentMethod && !!errors.paymentMethod}>
+                                <FormControl component="fieldset" error={touched.paymentMethod && !!errors.paymentMethod} variant='standard'>
                                     <RadioGroup aria-label="delivery option" name="paymentMethod" value={values.paymentMethod} onChange={handleChange}>
                                         <FormControlLabel
                                             value="bankTransfer"

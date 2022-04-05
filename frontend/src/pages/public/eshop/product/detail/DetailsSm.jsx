@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import withStyles from '@material-ui/styles/withStyles';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import withStyles from '@mui/styles/withStyles';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import ReactHtmlParser from 'react-html-parser';
 
 import { productDetailShape } from '../product-prop-type';
@@ -18,14 +18,14 @@ const styles = theme => ({
         border : 'none',
         fontWeight : 'bold',
         verticalAlign : 'top',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             padding : 5
         }
     },
     tdCell : {
         border : 'none',
         textAlign : 'justify',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             padding : 5
         }
     }

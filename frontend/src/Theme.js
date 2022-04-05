@@ -1,8 +1,8 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createTheme();
 
-let zorganizovanoTheme = createMuiTheme({
+let zorganizovanoTheme = createTheme({
   palette: {
     primary: {
       main: '#971c3c'
@@ -16,7 +16,7 @@ let zorganizovanoTheme = createMuiTheme({
     body1: {
       fontSize: '1.1rem',
       color: '#4a4a4a',
-      [defaultTheme.breakpoints.down('lg')]: {
+      [defaultTheme.breakpoints.down('xl')]: {
         fontSize: '0.9rem'
       },
     },
@@ -26,20 +26,20 @@ let zorganizovanoTheme = createMuiTheme({
     h1: {
       fontSize: '3rem',
       marginBottom: '1rem',
-      [defaultTheme.breakpoints.down('lg')]: {
+      [defaultTheme.breakpoints.down('xl')]: {
         fontSize: '2rem'
       },
-      [defaultTheme.breakpoints.down('xs')]: {
+      [defaultTheme.breakpoints.down('sm')]: {
         fontSize: '1.2rem',
         marginBottom : '0.3rem'
       }
     },
     h2: {
       fontSize: '2.3rem',
-      [defaultTheme.breakpoints.down('lg')]: {
+      [defaultTheme.breakpoints.down('xl')]: {
         fontSize: '1.4rem'
       },
-      [defaultTheme.breakpoints.down('xs')]: {
+      [defaultTheme.breakpoints.down('sm')]: {
         fontSize: '0.9rem'
       }
     },
@@ -51,19 +51,19 @@ let zorganizovanoTheme = createMuiTheme({
     },
     h5: {
       fontSize: '1.6rem',
-      [defaultTheme.breakpoints.down('lg')]: {
+      [defaultTheme.breakpoints.down('xl')]: {
         fontSize: '1.3rem',
       },
-      [defaultTheme.breakpoints.down('sm')]: {
+      [defaultTheme.breakpoints.down('md')]: {
         fontSize: '1.1rem',
       }
     },
     h6: {
       fontSize: '1.3rem',
-      [defaultTheme.breakpoints.down('lg')]: {
+      [defaultTheme.breakpoints.down('xl')]: {
         fontSize: '1.1rem',
       },
-      [defaultTheme.breakpoints.down('sm')]: {
+      [defaultTheme.breakpoints.down('md')]: {
         fontSize: '0.9rem',
       }
     }

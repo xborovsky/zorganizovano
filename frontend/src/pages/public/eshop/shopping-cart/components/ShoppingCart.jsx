@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import withStyles from '@material-ui/styles/withStyles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import withStyles from '@mui/styles/withStyles';
 import { useHistory } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
+import Hidden from '@mui/material/Hidden';
 
 import Actions from './Actions';
 import ShoppingCartItem from './ShoppingCartItem';
@@ -19,7 +19,7 @@ const styles = theme => ({
         width: '100%',
         overflowX: 'auto',
         marginBottom : '3rem',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             marginBottom : '1rem'
         }
     },
@@ -60,54 +60,52 @@ const ShoppingCart = ({
          });
     };
 
-    return (
-        <>
-            <Paper className={classes.root}>
-                <Table className={classes.table}>
-                    <Hidden smDown>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell></TableCell>
-                                <TableCell>Položka</TableCell>
-                                <TableCell align="center">Počet kusů</TableCell>
-                                <TableCell align="center">Cena za kus</TableCell>
-                                <TableCell align="center">Cena celkem</TableCell>
-                                <TableCell align="center"></TableCell>
-                            </TableRow>
-                        </TableHead>
-                    </Hidden>
-                    <TableBody>
-                        {
-                            (!items || !items.length) ?
-                                renderEmpty() :
-                                items.map(item => (
-                                    <Fragment key={item.id}>
-                                        <Hidden smDown>
-                                            <ShoppingCartItem
-                                                item={item}
-                                                onChangeQuantity={onChangeQuantity}
-                                                onDelete={onDelete}
-                                            />
-                                        </Hidden>
-                                        <Hidden mdUp>
-                                            <ShoppingCartItemSm
-                                                item={item}
-                                                onChangeQuantity={onChangeQuantity}
-                                                onDelete={onDelete}
-                                            />
-                                        </Hidden>
-                                    </Fragment>
-                                ) )
-                        }
-                    </TableBody>
-                </Table>
-            </Paper>
-            <Actions
-                disableProceedToOrder={!items || !items.length}
-                onEmptyShoppingCart={onEmptyShoppingCart}
-                onGoToOrder={goToOrder} />
-        </>
-    );
+    return <>
+        <Paper className={classes.root}>
+            <Table className={classes.table}>
+                <Hidden mdDown>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>Položka</TableCell>
+                            <TableCell align="center">Počet kusů</TableCell>
+                            <TableCell align="center">Cena za kus</TableCell>
+                            <TableCell align="center">Cena celkem</TableCell>
+                            <TableCell align="center"></TableCell>
+                        </TableRow>
+                    </TableHead>
+                </Hidden>
+                <TableBody>
+                    {
+                        (!items || !items.length) ?
+                            renderEmpty() :
+                            items.map(item => (
+                                <Fragment key={item.id}>
+                                    <Hidden mdDown>
+                                        <ShoppingCartItem
+                                            item={item}
+                                            onChangeQuantity={onChangeQuantity}
+                                            onDelete={onDelete}
+                                        />
+                                    </Hidden>
+                                    <Hidden mdUp>
+                                        <ShoppingCartItemSm
+                                            item={item}
+                                            onChangeQuantity={onChangeQuantity}
+                                            onDelete={onDelete}
+                                        />
+                                    </Hidden>
+                                </Fragment>
+                            ) )
+                    }
+                </TableBody>
+            </Table>
+        </Paper>
+        <Actions
+            disableProceedToOrder={!items || !items.length}
+            onEmptyShoppingCart={onEmptyShoppingCart}
+            onGoToOrder={goToOrder} />
+    </>;
 };
 
 ShoppingCart.propTypes = {

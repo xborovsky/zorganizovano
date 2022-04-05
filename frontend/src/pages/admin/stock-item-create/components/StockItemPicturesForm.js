@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
-import CancelIcon from '@material-ui/icons/Cancel';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { Button, Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StockItemPicturesForm = ({ 
     pictures = [],
@@ -31,6 +31,7 @@ const StockItemPicturesForm = ({
                                 label="Název"
                                 value={picture.src}
                                 margin="normal"
+                                variant='standard'
                                 fullWidth
                                 onChange={e => onChange(cnt, 'src', e.target.value)}
                             />

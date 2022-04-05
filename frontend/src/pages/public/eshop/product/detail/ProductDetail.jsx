@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import Grid from '@material-ui/core/grid';
-import withStyles from '@material-ui/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@mui/material/Grid';
+import { makeStyles } from '@mui/styles';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Tooltip from '@mui/material/Tooltip';
 import { Helmet } from 'react-helmet';
 
 import ProductSpec from './ProductSpec';
@@ -21,15 +20,16 @@ import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
 import useStockProductQuantity from '../hooks/use-stock-product-quantity';
 import Loader from 'components/Loader';
+import useWidth from 'hooks/use-width';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     root : {
         margin : 0,
         padding : '7vh 3rem',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             padding : '3vh 2rem'
         },
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             padding : '2vh 1rem'
         }
     },
@@ -55,16 +55,13 @@ const styles = theme => ({
     shoppingCartButton : {
         flex : 1
     },
-    quantityInput : {
-        marginTop : '4px !important'
-    },
     ideaPromptWrapper : {
         marginTop : '3vh'
     },
     ideaPrompt : {
         width: '70%',
         margin : '0 auto',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             width : '100%'
         }
     },
@@ -72,13 +69,15 @@ const styles = theme => ({
         padding : '0 1rem 2rem',
         display : 'flex',
         flexDirection : 'column',
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             padding : '0 .6rem .5rem',
         }
     }
-});
+}));
 
-const ProductDetail = ({ product, classes, width }) => {
+const ProductDetail = ({ product }) => {
+    const classes = useStyles();
+    const width = useWidth();
     const { state, dispatch } = useShoppingCartContext();
     const [ quantity, setQuantity ] = useState(1);
     const [ showSuccess, setShowSuccess ] = useState(undefined);
@@ -191,4 +190,4 @@ ProductDetail.propTypes = {
     product : productDetailShape.isRequired
 };
 
-export default withStyles(styles)(withWidth()(ProductDetail));
+export default ProductDetail;

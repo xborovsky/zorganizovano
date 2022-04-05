@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Button, Grid } from '@material-ui/core';
-import PanoramaIcon from '@material-ui/icons/Panorama';
+import { makeStyles } from '@mui/styles';
+import { Button, Grid } from '@mui/material';
+import PanoramaIcon from '@mui/icons-material/Panorama';
 
 const useStyles = makeStyles(theme => ({
     root : {

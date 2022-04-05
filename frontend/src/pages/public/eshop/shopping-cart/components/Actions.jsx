@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import withStyles from '@material-ui/styles/withStyles';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import withStyles from '@mui/styles/withStyles';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 const styles = theme => ({
     root : {
         marginTop : '0.5rem',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             marginTop : 0
         }
     },
@@ -26,7 +26,7 @@ const styles = theme => ({
         marginRight : 5
     },
     btn : {
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             width : '100%',
             marginBottom : '0.5rem'
         }

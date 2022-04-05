@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import InfoIcon from '@material-ui/icons/Info';
-import { Typography } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
+import InfoIcon from '@mui/icons-material/Info';
+import { Typography } from '@mui/material';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({

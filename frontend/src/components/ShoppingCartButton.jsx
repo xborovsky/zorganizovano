@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import withStyles from '@material-ui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles';
 
 const styles = theme => ({
     root : {
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             width : '100%',
             paddingTop : 12,
             paddingBottom : 12
@@ -15,7 +15,7 @@ const styles = theme => ({
     },
     onlyIcon : {
         fontSize : '16pt',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             width : '100%',
             paddingTop : 12,
             paddingBottom : 12

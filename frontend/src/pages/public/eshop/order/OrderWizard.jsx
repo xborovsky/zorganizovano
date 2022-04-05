@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Hidden from '@material-ui/core/Hidden';
-import withStyles from '@material-ui/styles/withStyles';
+import Paper from '@mui/material/Paper';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Hidden from '@mui/material/Hidden';
+import withStyles from '@mui/styles/withStyles';
 import { useLocation, Redirect } from 'react-router-dom';
 
 import CustomerForm from './steps/CustomerForm';
@@ -24,14 +24,14 @@ const styles = theme => ({
         paddingBottom: theme.spacing(4),
         paddingLeft: theme.spacing(8),
         paddingRight: theme.spacing(8),
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             margin : '0 1vw 2vh',
             padding : '10px 20px'
         }
     },
     stepper : {
         marginBottom : '3rem',
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             marginBottom : '1rem',
         }
     }
@@ -93,7 +93,7 @@ const OrderWizard = ({ classes }) => {
 
     return (
         <Paper className={classes.root}>
-            <Hidden xsDown>
+            <Hidden smDown>
                 <Stepper activeStep={currentStep} className={classes.stepper}>
                     {
                         steps.map(label => {

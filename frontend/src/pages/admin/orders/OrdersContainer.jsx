@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormGroup from '@material-ui/core/FormGroup';
-import { makeStyles } from '@material-ui/core';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 
 

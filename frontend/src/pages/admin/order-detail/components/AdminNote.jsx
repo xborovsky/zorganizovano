@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import axios from 'axios';
 
 import Loader from 'components/Loader';

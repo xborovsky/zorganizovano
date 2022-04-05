@@ -1,6 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField } from '@material-ui/core';
+import {
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TablePagination,
+    TableRow,
+    TextField,
+} from '@mui/material';
+
+import { makeStyles } from '@mui/styles';
 
 import StockItemContainer from './StockItemContainer';
 
@@ -45,6 +56,7 @@ const StockItemListMdUp = ({
                                 placeholder="Vyhledejte položku"
                                 onChange={onSearchFilterChange}
                                 fullWidth
+                                variant='standard'
                             />
                         </TableCell>
                     </TableRow>
@@ -76,8 +88,8 @@ const StockItemListMdUp = ({
                 count={data.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={onPageChange}
-                onChangeRowsPerPage={onRowsPerPageChange}
+                onPageChange={onPageChange}
+                onRowsPerPageChange={onRowsPerPageChange}
             />
         </Paper>
     );

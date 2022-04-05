@@ -6,7 +6,7 @@ import { AuthProvider } from './AuthProvider';
 import AdminHeader from 'layout/AdminHeader';
 
 import ProtectedRoute from 'components/ProtectedRoute';
-import { AppBar, Tab, Tabs } from '@material-ui/core';
+import { AppBar, Tab, Tabs } from '@mui/material';
 
 const Login = React.lazy(() => import('./login'));
 const Orders = React.lazy(() => import('./orders'));
@@ -26,7 +26,7 @@ const AdminContainer = () => {
             <AdminHeader />
             { (!location.pathname.endsWith('/login') && !location.pathname.endsWith('/admin')) &&
                 <AppBar position="static">
-                    <Tabs value={location.pathname} variant="scrollable" scrollButtons="auto">
+                    <Tabs value={location.pathname} variant="scrollable" scrollButtons="auto" indicatorColor="secondary" textColor="inherit">
                         <Tab label="Objednávky" component={Link} to={`${match.path}/orders`} value={`${match.path}/orders`} />
                         <Tab label="Skladové položky" component={Link} to={`${match.path}/stock-items`} value={`${match.path}/stock-items`} />
                         <Tab label="Slevové kódy" component={Link} to={`${match.path}/discount-codes`} value={`${match.path}/discount-codes`} />

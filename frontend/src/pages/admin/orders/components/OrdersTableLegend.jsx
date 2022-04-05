@@ -1,7 +1,7 @@
 import React from 'react';
-import { Paper, Grid, Typography, Tooltip } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import HelpIcon from '@material-ui/icons/Help';
+import { Paper, Grid, Typography, Tooltip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import HelpIcon from '@mui/icons-material/Help';
 
 import { OrderState } from './OrderState';
 import { LONG_PAYMENT_WAITING } from './OrdersTableRow';

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/styles/withStyles';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import withStyles from '@mui/styles/withStyles';
 import ReactHtmlParser from 'react-html-parser';
 
 import { getCountryName } from '../../../../../util/country-util';

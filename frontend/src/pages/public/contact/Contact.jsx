@@ -1,10 +1,10 @@
 import React from 'react';
-import withStyles from '@material-ui/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import withStyles from '@mui/styles/withStyles';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-apollo';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress } from '@mui/material';
 import { gql } from 'apollo-boost';
 
 import SocialLinks from 'components/SocialLinks';
@@ -19,12 +19,12 @@ const styles = theme => ({
     },
     contactWrapper : {
         alignSelf : 'center',
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             textAlign : 'center'
         }
     },
     contactPhotoWrapper : {
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             textAlign : 'center',
             marginTop : '2vh',
             marginBottom : '3vh'

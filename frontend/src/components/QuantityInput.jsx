@@ -1,16 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { withStyles } from '@material-ui/styles';
-import Button from '@material-ui/core/Button';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import Button from '@mui/material/Button';
+import { makeStyles } from '@mui/styles';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     input : {
+        '&>div' : {
+            height: 40
+        },
         '&>div>input' : {
             color : '#000'
         },
-        flex : 1
+        marginBottom: 0,
+        [theme.breakpoints.down('lg')]: {
+            flex: 1
+        }
     },
     minusBtn : {
         cursor : 'pointer',
@@ -18,7 +24,14 @@ const styles = theme => ({
         paddingBottom : 7,
         backgroundColor : '#ddd',
         width : '40px !important',
-        minWidth : '40px !important'
+        minWidth : '40px !important',
+        color: 'rgba(0, 0, 0, 0.87)',
+        border: '1px solid rgba(0, 0, 0, 0.23)',
+        '&:hover': {
+            color: 'rgba(0, 0, 0, 0.87)',
+            border: '1px solid rgba(0, 0, 0, 0.23)',
+            backgroundColor: 'rgba(0, 0, 0, 0.04)'
+        }
     },
     plusBtn : {
         cursor : 'pointer',
@@ -26,19 +39,36 @@ const styles = theme => ({
         paddingBottom : 7,
         backgroundColor : '#ddd',
         width : '40px !important',
-        minWidth : '40px !important'
+        minWidth : '40px !important',
+        color: 'rgba(0, 0, 0, 0.87)',
+        border: '1px solid rgba(0, 0, 0, 0.23)',
+        '&:hover': {
+            color: 'rgba(0, 0, 0, 0.87)',
+            border: '1px solid rgba(0, 0, 0, 0.23)',
+            backgroundColor: 'rgba(0, 0, 0, 0.04)'
+        }
+    },
+    wrapper : {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        [theme.breakpoints.down('lg')]: {
+            marginBottom: '.2rem',
+            justifyContent: 'stretch',
+            width: '100%'
+        },
     }
-});
+}));
 
 const QuantityInput = ({
     value,
     onChange,
     maxVal,
     className,
-    classes,
     ...rest
 }) => {
     const inputRef = useRef();
+    const classes = useStyles();
 
     useEffect(() => {
         if (inputRef?.current) {
@@ -68,7 +98,7 @@ const QuantityInput = ({
     };
 
     return (
-        <>
+        <div className={classes.wrapper}>
             <Button onClick={handleMinus} variant="outlined" className={classes.minusBtn} disabled={value === 1}>-</Button>
             <TextField
                 value={value}
@@ -90,7 +120,7 @@ const QuantityInput = ({
                 {...rest}
             />
             <Button onClick={handlePlus} variant="outlined" className={classes.plusBtn} disabled={value >= maxVal}>+</Button>
-        </>
+        </div>
     );
 };
 
@@ -100,4 +130,4 @@ QuantityInput.propTypes = {
     maxVal : PropTypes.number.isRequired
 };
 
-export default withStyles(styles)(QuantityInput);
+export default QuantityInput;

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid, Hidden, makeStyles } from '@material-ui/core';
+import { Grid, Hidden } from '@mui/material';
+
+import { makeStyles } from '@mui/styles';
 
 import Pagination from './Pagination';
 import PaginationInfo from './PaginationInfo';
@@ -20,30 +22,28 @@ const useStyles = makeStyles((theme) => ({
 const BottomPaginationPanel = () => {
     const classes = useStyles();
 
-    return (
-        <>
-            <Hidden smDown>
-                <Grid container className={classes.container}>
-                    <Grid item>
-                        <PaginationInfo />
-                    </Grid>
-                    <Grid item style={{ float : 'right' }}>
-                        <Pagination />
-                    </Grid>
+    return <>
+        <Hidden mdDown>
+            <Grid container className={classes.container}>
+                <Grid item>
+                    <PaginationInfo />
                 </Grid>
-            </Hidden>
-            <Hidden mdUp>
-                <Grid container className={classes.containerSmDown}>
-                    <Grid item xs={12} style={{ float : 'right' }}>
-                        <Pagination />
-                    </Grid>
-                    <Grid item xs={12} style={{ float : 'right', marginTop : 10 }}>
-                        <PaginationInfo />
-                    </Grid>
+                <Grid item style={{ float : 'right' }}>
+                    <Pagination />
                 </Grid>
-            </Hidden>
-        </>
-    );
+            </Grid>
+        </Hidden>
+        <Hidden mdUp>
+            <Grid container className={classes.containerSmDown}>
+                <Grid item xs={12} style={{ float : 'right' }}>
+                    <Pagination />
+                </Grid>
+                <Grid item xs={12} style={{ float : 'right', marginTop : 10 }}>
+                    <PaginationInfo />
+                </Grid>
+            </Grid>
+        </Hidden>
+    </>;
 };
 
 export default BottomPaginationPanel;

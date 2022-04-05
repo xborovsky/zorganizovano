@@ -1,9 +1,10 @@
+import useWidth from 'hooks/use-width';
 import React from 'react';
 
 import { getImgServerUrl } from 'util/img-util';
-import { withWidth } from '@material-ui/core';
 
-const ContactPhoto = ({ className, width }) => {
+const ContactPhoto = ({ className }) => {
+    const width = useWidth();
     const getLinkButtonWidthPct = () => {
         switch (width) {
             case 'xl':
@@ -24,4 +25,4 @@ const ContactPhoto = ({ className, width }) => {
     );
 };
 
-export default withWidth()(ContactPhoto);
+export default ContactPhoto;

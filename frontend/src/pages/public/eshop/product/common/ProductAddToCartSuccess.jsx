@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
-import withStyles from '@material-ui/styles/withStyles';
-import Button from '@material-ui/core/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
+import withStyles from '@mui/styles/withStyles';
+import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 const styles = theme => ({
     root : {},
@@ -18,14 +18,14 @@ const styles = theme => ({
         marginRight : 10
     },
     btnWrapper : {
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             textAlign : 'center',
             margin : '.5rem auto'
         }
     },
     shoppingCartBtnWrapper : {
         textAlign : 'right',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             textAlign : 'center',
             margin : '.5rem auto'
         }

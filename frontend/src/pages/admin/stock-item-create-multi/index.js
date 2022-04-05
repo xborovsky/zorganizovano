@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Dialog, DialogContent, DialogTitle, Grid, IconButton, makeStyles } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { Dialog, DialogContent, DialogTitle, Grid, IconButton } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
@@ -38,7 +39,7 @@ const StockItemCreateMultiDialog = ({
         <Dialog open={true} onClose={onClose} maxWidth='sm' fullWidth maxWidth='lg'>
             <DialogTitle>
                 Nové skladové položky
-                <IconButton onClick={onClose} className={classes.closeButton}>
+                <IconButton onClick={onClose} className={classes.closeButton} size="large">
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
@@ -68,8 +69,8 @@ const StockItemCreateMultiDialog = ({
     );
  };
 
- StockItemCreateMultiDialog.propTypes = {
-    onClose : PropTypes.func.isRequired
+StockItemCreateMultiDialog.propTypes = {
+   onClose : PropTypes.func.isRequired
 };
 
 export default StockItemCreateMultiDialog;

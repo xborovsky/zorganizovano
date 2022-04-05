@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Dialog, DialogTitle, IconButton, DialogContent } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { Dialog, DialogTitle, IconButton, DialogContent } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import CloseIcon from '@mui/icons-material/Close';
 
 import StockItemDetail from './components/StockItemDetail';
 
@@ -20,11 +21,11 @@ const StockItemDetailDialog = ({
 }) => {
     const classes = useStyles();
 
-    return(
+    return (
         <Dialog open={true} onClose={onClose} maxWidth='sm' fullWidth maxWidth='lg'>
             <DialogTitle>
                 Upravit skladovou položku
-                <IconButton onClick={onClose} className={classes.closeButton}>
+                <IconButton onClick={onClose} className={classes.closeButton} size="large">
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>

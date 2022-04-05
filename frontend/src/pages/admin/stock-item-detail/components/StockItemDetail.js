@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Paper, Table, TableCell, TableBody, TableRow, makeStyles } from '@material-ui/core';
+import { Paper, Table, TableCell, TableBody, TableRow } from '@mui/material';
+
+import { makeStyles } from '@mui/styles';
 
 import useFetchAuth from '../../../../hooks/use-fetch-auth';
 import Loader from 'components/Loader';

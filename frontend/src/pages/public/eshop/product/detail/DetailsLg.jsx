@@ -1,10 +1,10 @@
 import React from 'react';
-import withStyles from '@material-ui/styles/withStyles';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import withStyles from '@mui/styles/withStyles';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import ReactHtmlParser from 'react-html-parser';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 import { productDetailShape } from '../product-prop-type';
 

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CloseIcon from '@material-ui/icons/Close';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import { Dialog, DialogContent, DialogTitle, Grid, IconButton, ListItemText, makeStyles } from '@material-ui/core';
+import CloseIcon from '@mui/icons-material/Close';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import { Dialog, DialogContent, DialogTitle, Grid, IconButton, ListItemText } from '@mui/material';
+
+import { makeStyles } from '@mui/styles';
 
 import useFetchAuth from '../../../../hooks/use-fetch-auth';
 import Loader from 'components/Loader';
@@ -30,7 +32,7 @@ const LoadFromTemplateDialog = ({
         <Dialog open={true} onClose={onClose} maxWidth='md' fullWidth>
             <DialogTitle>
                 Vyberte položku jako šablonu
-                <IconButton onClick={onClose} className={classes.closeButton}>
+                <IconButton onClick={onClose} className={classes.closeButton} size="large">
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>

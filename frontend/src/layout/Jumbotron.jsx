@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
-import withStyles from '@material-ui/styles/withStyles';
+import Paper from '@mui/material/Paper';
+import withStyles from '@mui/styles/withStyles';
 
 import { getImgServerUrl } from 'util/img-util';
 
@@ -13,10 +13,10 @@ const styles = theme => ({
         marginBottom: 0,
         height : 250,
         borderRadius : 0,
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             height : 200
         },
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             height : 150
         }
     },

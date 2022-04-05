@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, CircularProgress, Grid, makeStyles, TextField } from '@material-ui/core';
+import { Button, CircularProgress, Grid, TextField } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 
 import useShoppingCartContext from '../../../../shopping-cart/state-management/use-shopping-cart-context';
@@ -13,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(1),
     },
     button : {
-        marginTop : theme.spacing(1)
+        marginTop : theme.spacing(1),
+        height: '84%'
     }
   }));
 

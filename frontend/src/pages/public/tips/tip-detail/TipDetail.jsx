@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import ReactHtmlParser from 'react-html-parser';
-import withStyles from '@material-ui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles';
 import { Link } from 'react-router-dom';
 import format from 'string-template';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Helmet } from 'react-helmet';
 
 import BreadcrumbsNav from 'components/BreadcrumbsNav';
@@ -25,7 +25,7 @@ const styles = theme => ({
         overflow : 'hidden',
         '&>p' : {
             textIndent : '3rem',
-            [theme.breakpoints.down('xs')] : {
+            [theme.breakpoints.down('sm')] : {
                 textIndent : '2rem'
             }
         }
@@ -40,10 +40,10 @@ const styles = theme => ({
         '&>img' : {
             width : '100%'
         },
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             width : '70%'
         },
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             width : '50%'
         }
     }

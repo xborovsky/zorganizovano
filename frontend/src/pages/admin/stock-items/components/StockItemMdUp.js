@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, makeStyles, TableCell, TableRow, TextField } from '@material-ui/core';
-import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
-import ErrorIcon from '@material-ui/icons/Error';
-import EditIcon from '@material-ui/icons/Edit';
+import { Button, TableCell, TableRow, TextField } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import ErrorIcon from '@mui/icons-material/Error';
+import EditIcon from '@mui/icons-material/Edit';
 
 import Loader from '../../../../components/Loader';
 import { StockItemContext } from './StockItemContext';

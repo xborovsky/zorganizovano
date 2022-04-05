@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { makeStyles, MenuItem, Select } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { MenuItem, Select } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { useTheme } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import PaginationContext from './PaginationContext';
 
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RowsPerPageSelect = () => {
     const theme = useTheme();
-    const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+    const isSmDown = useMediaQuery(theme.breakpoints.down('md'));
     const classes = useStyles();
     const { pageSize, setPageSize } = useContext(PaginationContext);
 
@@ -33,7 +34,8 @@ const RowsPerPageSelect = () => {
             <Select
                 value={pageSize}
                 onChange={handlePageSizeChange}
-                disableUnderline>
+                disableUnderline
+                variant="standard">
                     { PAGE_SIZES.map(pageSize => (
                         <MenuItem value={pageSize} key={pageSize}>{pageSize}</MenuItem>
                     )) }

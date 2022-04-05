@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import withStyles from '@material-ui/styles/withStyles';
+import Grid from '@mui/material/Grid';
+import withStyles from '@mui/styles/withStyles';
 
 import ProductListItem from './ProductListItem';
 import { productShape } from '../product-prop-type';
@@ -10,7 +10,7 @@ import ProductAddToCartSuccess from '../common/ProductAddToCartSuccess';
 const styles = theme => ({
     root : {
         margin : '0 5vw',
-        [theme.breakpoints.down('md')] : {
+        [theme.breakpoints.down('lg')] : {
             margin : 0
         }
     },

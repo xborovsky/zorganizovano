@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Dialog, DialogContent, DialogTitle, Grid, IconButton, makeStyles } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import SaveIcon from '@material-ui/icons/Save';
+import { Button, Dialog, DialogContent, DialogTitle, Grid, IconButton } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import CloseIcon from '@mui/icons-material/Close';
+import SaveIcon from '@mui/icons-material/Save';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
@@ -62,7 +63,7 @@ const StockItemCreateDialog = ({
         <Dialog open={true} onClose={onClose} maxWidth='sm' fullWidth maxWidth='lg'>
             <DialogTitle>
                 Nová skladová položka
-                <IconButton onClick={onClose} className={classes.closeButton}>
+                <IconButton onClick={onClose} className={classes.closeButton} size="large">
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>

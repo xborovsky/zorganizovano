@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
 import { useHistory } from 'react-router-dom';
 
 import { productShape } from '../product-prop-type';
@@ -20,8 +18,10 @@ import ProductStockQuantity from '../common/ProductStockQuantity';
 import useStockProductQuantity from '../hooks/use-stock-product-quantity';
 import Loader from 'components/Loader';
 import CdnImage from 'components/CdnImage';
+import { makeStyles } from '@mui/styles';
+import useWidth from 'hooks/use-width';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     card : {
         display : 'flex',
         flexDirection : 'column',
@@ -56,7 +56,7 @@ const styles = theme => ({
     content : {
         cursor : 'pointer',
         textAlign : 'justify',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             paddingBottom : 0
         }
     },
@@ -80,16 +80,14 @@ const styles = theme => ({
         marginLeft : 15,
         marginTop : 'auto'
     },
-    quantityInput : {
-        marginTop : '4px !important'
-    },
     shoppingCartButton : {
         flex : 1
     }
-});
+}));
 
-const ProductListItem = ({ product, onSuccess, classes, width }) => {
-
+const ProductListItem = ({ product, onSuccess }) => {
+    const classes = useStyles();
+    const width = useWidth();
     const history = useHistory();
     const [ quantity, setQuantity ] = useState(1);
     const { state, dispatch } = useShoppingCartContext();
@@ -193,4 +191,4 @@ ProductListItem.propTypes = {
     onSuccess : PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(withWidth()(ProductListItem));
+export default ProductListItem;

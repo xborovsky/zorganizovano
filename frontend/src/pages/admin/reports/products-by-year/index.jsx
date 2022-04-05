@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 import YearSelect from './components/YearSelect';
 import ProductsByYearDataTable from './components/ProductsByYearDataTable';

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import ErrorIcon from '@material-ui/icons/Error';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import WarningIcon from '@material-ui/icons/Warning';
-import withStyles from '@material-ui/styles/withStyles';
-import InfoIcon from '@material-ui/icons/Info';
-import { amber, green, red, blue } from '@material-ui/core/colors';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import WarningIcon from '@mui/icons-material/Warning';
+import withStyles from '@mui/styles/withStyles';
+import InfoIcon from '@mui/icons-material/Info';
+import { amber, green, red, blue } from '@mui/material/colors';
 
 const styles = theme => ({
     root : {

@@ -1,7 +1,7 @@
 import React from 'react';
-import withStyles from '@material-ui/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import withStyles from '@mui/styles/withStyles';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 
 import SocialLinks from '../components/SocialLinks';
@@ -14,14 +14,14 @@ const styles = theme => ({
         backgroundColor : '#cfcfcf',
         color : '#000',
         textAlign : 'center',
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             paddingTop : '1rem',
             paddingBottom : '1rem'
         }
     },
     left : {
         textAlign : 'left',
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             paddingTop : '.7rem',
             textAlign : 'center'
         }
@@ -49,7 +49,7 @@ const styles = theme => ({
     },
     year : {
         textAlign : 'right',
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             textAlign : 'center'
         }
     },

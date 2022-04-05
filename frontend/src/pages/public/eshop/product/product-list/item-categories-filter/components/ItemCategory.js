@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
-import { Button, Grid } from '@material-ui/core';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import LabelIcon from '@material-ui/icons/Label';
-import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import ImageIcon from '@material-ui/icons/Image';
+import { makeStyles } from '@mui/styles';
+import { Button, Grid } from '@mui/material';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import LabelIcon from '@mui/icons-material/Label';
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import ImageIcon from '@mui/icons-material/Image';
 
 const useStyles = makeStyles(theme => ({
     root : {
@@ -16,7 +16,14 @@ const useStyles = makeStyles(theme => ({
     btn : {
         backgroundColor : '#ddd',
         paddingTop : '0.6rem',
-        paddingBottom : '0.6rem'
+        paddingBottom : '0.6rem',
+        color: 'rgba(0, 0, 0, 0.87)',
+        border: '1px solid rgba(0, 0, 0, 0.23)',
+        '&:hover' : {
+            color: 'rgba(0, 0, 0, 0.87)',
+            border: '1px solid rgba(0, 0, 0, 0.23)',
+            backgroundColor: 'rgba(0, 0, 0, 0.04)'
+        }
     }
 }));
 

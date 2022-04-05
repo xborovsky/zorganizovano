@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid } from '@mui/material';
+
+import { makeStyles } from '@mui/styles';
 
 import Pagination from './Pagination';
 import RowsPerPageSelect from './RowsPerPageSelect';

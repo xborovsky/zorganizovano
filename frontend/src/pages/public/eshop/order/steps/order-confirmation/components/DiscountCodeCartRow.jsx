@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableCell, TableRow } from '@material-ui/core';
+import { TableCell, TableRow } from '@mui/material';
 
 import useShoppingCartContext from '../../../../shopping-cart/state-management/use-shopping-cart-context';
 import Price from 'components/Price';

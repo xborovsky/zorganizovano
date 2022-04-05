@@ -1,7 +1,7 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
+import Typography from '@mui/material/Typography';
+import withStyles from '@mui/styles/withStyles';
+import Paper from '@mui/material/Paper';
 import { Helmet } from 'react-helmet';
 
 import ContactEmail from 'components/ContactEmail';
@@ -9,7 +9,7 @@ import ContactEmail from 'components/ContactEmail';
 const styles = theme => ({
     root : {
         padding : '2rem 4rem',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             padding : '2rem 1rem'
         }
     },
@@ -32,7 +32,7 @@ const styles = theme => ({
             display : 'block',
             fontSize : 16,
             marginTop : '0.5rem',
-            [theme.breakpoints.down('xs')] : {
+            [theme.breakpoints.down('sm')] : {
                 marginLeft : '-1rem'
             },
             '&:before' : {
@@ -47,7 +47,7 @@ const styles = theme => ({
                 fontWeight : 'normal',
                 display : 'block',
                 fontSize : 14,
-                [theme.breakpoints.down('xs')] : {
+                [theme.breakpoints.down('sm')] : {
                     marginLeft : '-1rem'
                 },
                 '&:before' : {

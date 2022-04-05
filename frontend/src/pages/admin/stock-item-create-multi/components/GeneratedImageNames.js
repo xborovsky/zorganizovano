@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, ListItem, Paper } from '@material-ui/core';
+import { List, ListItem, Paper } from '@mui/material';
 
 const buildImageName = (imageName, prefix, suffix) => {
     let ret = '';

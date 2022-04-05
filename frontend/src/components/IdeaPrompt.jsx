@@ -1,18 +1,18 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import withStyles from '@material-ui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles';
 
 const styles = theme => ({
     question : {
         fontSize : '1.8rem',
-        [theme.breakpoints.down('sm')] : {
+        [theme.breakpoints.down('md')] : {
             fontSize : '1.2rem'
         },
-        [theme.breakpoints.down('xs')] : {
+        [theme.breakpoints.down('sm')] : {
             fontSize : '1rem'
         }
     }

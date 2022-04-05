@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel, TextField } from '@material-ui/core';
+import {
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TablePagination,
+    TableRow,
+    TableSortLabel,
+    TextField,
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { format } from 'date-fns';
-import DeleteIcon from '@material-ui/icons/Delete';
-import CheckIcon from '@material-ui/icons/Check';
-import ClearIcon from '@material-ui/icons/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const useStyles = makeStyles({
     root: {
@@ -32,7 +43,7 @@ function descendingComparator(a, b, orderBy) {
     }
     return 0;
   }
-  
+
 const getComparator = (order, orderBy) => {
     if (orderBy === 'validUntil') {
         return order === 'asc' ? 
@@ -44,7 +55,7 @@ const getComparator = (order, orderBy) => {
         (a, b) => descendingComparator(a, b, orderBy) :
         (a, b) => -descendingComparator(a, b, orderBy);
 };
-  
+
 const stableSort = (array, comparator) => {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -101,6 +112,7 @@ const DiscountCodesTable = ({
                                 value={searchFilter}
                                 placeholder="Vyhledejte slevový kód"
                                 onChange={handleSearchFilterChange}
+                                variant='standard'
                                 fullWidth
                             />
                         </TableCell>
@@ -153,8 +165,8 @@ const DiscountCodesTable = ({
                 count={discountCodesFiltered.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
             />
         </Paper>
     );
