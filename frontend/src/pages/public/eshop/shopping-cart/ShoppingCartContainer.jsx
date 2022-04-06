@@ -36,12 +36,12 @@ const ShoppingCartContainer = () => {
             state.map(item => item.id)
         ).then(res => {
             const serverVerifiedItems = res.data;
-            const resultItems = state.map(sessionStorageItem => {
-                const verifiedItemIdx = serverVerifiedItems.findIndex(serverItem => serverItem.id === sessionStorageItem.id);
+            const resultItems = state.map(storageItem => {
+                const verifiedItemIdx = serverVerifiedItems.findIndex(serverItem => serverItem.id === storageItem.id);
                 if (verifiedItemIdx === -1) {
                     dispatch({
                         type : REMOVE_ITEM_FROM_SHOPPING_CART,
-                        payload : { id : sessionStorageItem.id }
+                        payload : { id : storageItem.id }
                     });
                     return false;
                 } else {
@@ -50,7 +50,7 @@ const ShoppingCartContainer = () => {
                         name : serverVerifiedItems[verifiedItemIdx].name,
                         subName : serverVerifiedItems[verifiedItemIdx].subName,
                         priceSingle : serverVerifiedItems[verifiedItemIdx].priceSingle,
-                        quantity : sessionStorageItem.quantity,
+                        quantity : storageItem.quantity,
                         warehouseCnt : serverVerifiedItems[verifiedItemIdx].warehouseCnt
                     };
                 }
