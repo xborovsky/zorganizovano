@@ -7,7 +7,17 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import LabelIcon from '@mui/icons-material/Label';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
+import ContentCutIcon from '@mui/icons-material/ContentCut';
 import ImageIcon from '@mui/icons-material/Image';
+import BuildIcon from '@mui/icons-material/Build';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import GirlIcon from '@mui/icons-material/Girl';
+import SchoolIcon from '@mui/icons-material/School';
+import ChildCareIcon from '@mui/icons-material/ChildCare';
+import SanitizerIcon from '@mui/icons-material/Sanitizer';
 
 const useStyles = makeStyles(theme => ({
     root : {
@@ -32,8 +42,21 @@ const getIcon = name => { // TODO toto asi casom inak...
         case 'kalendáře': return <EventNoteIcon />;
         case 'diáře': return <MenuBookIcon />;
         case 'plánovače': return <PlaylistAddCheckIcon />;
-        case 'štítky': return <LabelIcon />;
+        case 'štítky české':
+        case 'štítky obrázkové':
+        case 'štítky slovenské': 
+            return <LabelIcon />;
         case 'poukazy': return <CardGiftcardIcon />;
+        case 'dětský pokoj': return <ChildFriendlyIcon />;
+        case 'tvoření': return <ContentCutIcon />;
+        case 'stavebnice': return <BuildIcon />;
+        case 'doprava': return <DirectionsBusIcon />;
+        case 'výuka': return <SchoolIcon />;
+        case 'profese': return <LocalPoliceIcon />;
+        case 'figurky': return <ChildCareIcon />;
+        case 'hra': return <SportsEsportsIcon />;
+        case 'děvčata': return <GirlIcon />;
+        case 'rozprašovače': return <SanitizerIcon />;
         default: return <ImageIcon />;
     }
 };
