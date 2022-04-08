@@ -17,8 +17,10 @@ const Contact = React.lazy(() => import('./contact'));
 const ShoppingCart = React.lazy(() => import('./eshop/shopping-cart'));
 const NotFound = React.lazy(() => import('../not-found'));
 
+const SHOPPING_CART_STORAGE_NAME = 'shoppingCart';
+
 const getInitialShoppingCartState = () => {
-    const storage = window.sessionStorage.getItem('shoppingCart') ? JSON.parse(window.sessionStorage.getItem('shoppingCart')) : [];
+    const storage = window.localStorage.getItem(SHOPPING_CART_STORAGE_NAME) ? JSON.parse(window.localStorage.getItem(SHOPPING_CART_STORAGE_NAME)) : [];
     const storageDeduplicated = [];
 
     storage.forEach(item => {
@@ -27,7 +29,7 @@ const getInitialShoppingCartState = () => {
       }
     });
 
-    window.sessionStorage.setItem("shoppingCart", JSON.stringify(storageDeduplicated));
+    window.localStorage.setItem(SHOPPING_CART_STORAGE_NAME, JSON.stringify(storageDeduplicated));
     return storageDeduplicated;
 };
 
@@ -36,7 +38,7 @@ const PublicContainer = () => {
     const [ discountCode, setDiscountCode ] = useSessionStorage('discountCode');
 
     useEffect(() => {
-        window.sessionStorage.setItem("shoppingCart", JSON.stringify(state));
+        window.localStorage.setItem(SHOPPING_CART_STORAGE_NAME, JSON.stringify(state));
     }, [state]);
 
     return (
