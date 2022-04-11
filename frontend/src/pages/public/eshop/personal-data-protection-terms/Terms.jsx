@@ -29,8 +29,10 @@ const Terms = ({ classes }) => (
         <Typography variant="h1">Podmínky ochrany osobních údajů</Typography>
         <Typography className={classes.font} component="div">
             <p>
-                Barbora Borovská, V Jamkách 354, Čakovičky 250 63<br />
-                IČO: 01707736<br />
+                ZORGANIZOVÁNO s.r.o.,<br />
+                IČ: 14433125,<br />
+                sídlem Čakovičky, V Jamkách 354, PSČ 250 63,<br />
+                zapsaná v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 365600<br />
                 e-mail: <ContactEmail /><br /><br />
                 dále jen <strong>„Správce“</strong>
             </p>

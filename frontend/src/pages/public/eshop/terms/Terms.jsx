@@ -64,14 +64,16 @@ const Terms = ({ classes }) => (
     <Paper className={classes.root}>
         <Helmet>
             <meta name="description" content='Tyto obchodní podmínky platí pro nákup v internetovém obchodě www.zorganizovano.cz, jehož provozovatelem je
-                Barbora Borovská, V Jamkách 354, Čakovičky 250 63, IČO: 01707736. Provozovatel není plátce DPH.' />
+                ZORGANIZOVÁNO s.r.o., IČ: 14433125, sídlem Čakovičky, V Jamkách 354, PSČ 250 63, zapsaná v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 365600.
+                Provozovatel není plátce DPH.' />
         </Helmet>
         <Typography variant="h1">Obchodní podmínky</Typography>
         <Typography className={classes.font} component="div">
             <p>
                 Tyto obchodní podmínky platí pro nákup v internetovém obchodě
-                www.zorganizovano.cz, jehož provozovatelem je<br /> <strong>Barbora Borovská, V Jamkách
-                354, Čakovičky 250 63, IČO: 01707736</strong>.<br />
+                www.zorganizovano.cz, jehož provozovatelem je<br /> <strong>ZORGANIZOVÁNO s.r.o., IČ: 14433125, 
+                sídlem Čakovičky, V Jamkách 354, PSČ 250 63, zapsaná v obchodním rejstříku vedeném Městským soudem v Praze, 
+                oddíl C, vložka 365600</strong>.<br />
                 <strong>Provozovatel není plátce DPH.</strong><br />
                 Obchodní podmínky určují a upřesňují práva a povinnosti prodávajícího a jeho zákazníků (dále jen kupujících).
             </p>
@@ -110,7 +112,8 @@ const Terms = ({ classes }) => (
                         </li>
                         <li>
                             Prodávajícím a provozovatelem internetového obchodu www.zorganizovano.cz
-                            je Barbora Borovská, V Jamkách 354, Čakovičky 250 63, IČO: 01707736.
+                            je ZORGANIZOVÁNO s.r.o., IČ: 14433125, sídlem Čakovičky, V Jamkách 354, PSČ 250 63,
+                            zapsaná v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 365600.
                         </li>
                         <li>
                             Ustanovení odchylná od obchodních podmínek je možné sjednat v kupní
@@ -209,8 +212,8 @@ const Terms = ({ classes }) => (
                         <li>
                             Cenu zboží a případné náklady spojené s dodáním zboží dle kupní smlouvy
                             může kupující uhradit prodávajícímu bezhotovostně převodem na účet prodávajícího
-                            č.1957478013/3030, Iban CZ93 3030 0000 0019 5747 8013, BIC AIRACZPP vedený
-                            u společnosti Air Bank a.s. (dále jen „účet prodávajícího“).
+                            č.2902178632/2010, IBAN CZ57 2010 0000 0029 0217 8632, BIC FIOBCZPPXXX vedený
+                            u společnosti Fio banka, a.s. (dále jen „účet prodávajícího“).
                         </li>
                         <li>
                             Společně s kupní cenou je kupující povinen zaplatit prodávajícímu také náklady

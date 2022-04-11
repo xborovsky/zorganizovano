@@ -2,10 +2,10 @@ package cz.zorganizovano.backend.payment;
 
 public interface PaymentDefaults {
 
-    String ACCOUNT_NUMBER = "1957478013";
-    String BANK_CODE = "3030";
+    String ACCOUNT_NUMBER = "2902178632";
+    String BANK_CODE = "2010";
     String CURRENCY = "CZK";
-    String IBAN = "CZ93 3030 0000 0019 5747 8013";
-    String BIC = "AIRACZPP";
+    String IBAN = "CZ57 2010 0000 0029 0217 8632";
+    String BIC = "FIOBCZPPXXX";
 
 }
