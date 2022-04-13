@@ -21,9 +21,9 @@ public class ItemDetail implements Serializable {
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
-    @Column(name = "key", nullable = false)
+    @Column(name = "`key`", nullable = false)
     private String key;
-    @Column(name = "value", nullable = false, columnDefinition = "text")
+    @Column(name = "`value`", nullable = false, columnDefinition = "text")
     private String value;
     @Column(name = "priority_order", nullable = false)
     private int priorityOrder = -1;
