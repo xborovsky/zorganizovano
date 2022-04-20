@@ -31,7 +31,7 @@ const StockItemCreateMultiForm = ({
 }) => {
     const [ names, setNames ] = useState(['']);
     const [ details, setDetails ] = useState([]);
-    const [ category, setCategory ] = useState(categories[0].id);
+    const [ category, setCategory ] = useState(1);
 
     const { auth } = useContext(AuthContext);
     const createMutation = useMutation(

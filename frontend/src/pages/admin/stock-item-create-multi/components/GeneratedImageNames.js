@@ -20,18 +20,24 @@ const GeneratedImageNames = ({
     namePrefix = '',
     nameSuffix = '',
     itemNames = []
-}) => (
-    <Paper elevation={3} style={{ backgroundColor : '#eee' }}>
-        <List>
-            { itemNames.map(itemName => (
-                !!itemName &&
-                    <ListItem key={itemName}>
-                        { buildImageName(itemName, namePrefix, nameSuffix) }
-                    </ListItem>
-            ))}
-        </List>
-    </Paper>
-);
+}) => {
+    if (((itemNames.length === 0) || itemNames.length === 1 && itemNames[0].length === 0)) {
+        return <>Zatím nic...</>;
+    }
+
+    return (
+        <Paper elevation={3} style={{ backgroundColor : '#eee' }}>
+            <List>
+                { itemNames.map(itemName => (
+                    !!itemName &&
+                        <ListItem key={itemName}>
+                            { buildImageName(itemName, namePrefix, nameSuffix) }
+                        </ListItem>
+                ))}
+            </List>
+        </Paper>
+    );
+};
 
 GeneratedImageNames.propTypes =  {
     namePrefix : PropTypes.string,

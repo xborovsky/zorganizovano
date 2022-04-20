@@ -1,5 +1,5 @@
 export const getChainedCategories = categories => {
-    return categories.map(category => categoryToChain(category));
+    return categories.map(category => categoryToChain(category)).sort((a, b) => a.name.localeCompare(b.name));
 };
 
 const categoryToChain = category => {

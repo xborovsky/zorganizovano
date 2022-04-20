@@ -56,7 +56,7 @@ public class StockItemServiceMultipleImpl implements StockItemServiceMultiple {
                     ItemCategory newItemCategory = new ItemCategory();
                     newItemCategory.setName(newCategory);
                     newItemCategory.setParent(itemCategory);
-                    itemCategory = itemCategoryDao.saveAndFlush(itemCategory);
+                    itemCategory = itemCategoryDao.saveAndFlush(newItemCategory);
                 }
             }
         }
@@ -126,11 +126,11 @@ public class StockItemServiceMultipleImpl implements StockItemServiceMultiple {
     
     private String generateImageName(String itemName, String prefix, String suffix) {
         StringBuilder sb = new StringBuilder();
-        if (prefix != null) {
+        if (prefix != null && !prefix.isBlank()) {
             sb = sb.append(prefix).append("_");
         }
         sb = sb.append(itemName);
-        if (suffix != null) {
+        if (suffix != null && !suffix.isBlank()) {
             sb = sb.append("_").append(suffix);
         }
         sb = sb.append(".jpg");
