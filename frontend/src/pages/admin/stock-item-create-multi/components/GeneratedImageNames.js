@@ -7,7 +7,7 @@ const buildImageName = (imageName, prefix, suffix) => {
     if (prefix) {
         ret += `${prefix}_`;
     }
-    ret += imageName;
+    ret += imageName.normalize("NFD").replace(/\p{Diacritic}/gu, "");
     if (suffix) {
         ret += `_${suffix}`;
     }

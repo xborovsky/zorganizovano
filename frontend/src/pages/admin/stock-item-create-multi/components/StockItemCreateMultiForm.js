@@ -125,6 +125,12 @@ const StockItemCreateMultiForm = ({
         return errors;
     };
 
+    const onKeyDown = keyEvent => {
+        if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+          keyEvent.preventDefault();
+        }
+    };
+
     return (
         <Formik
             initialValues={initialFormData}
@@ -138,7 +144,7 @@ const StockItemCreateMultiForm = ({
                     handleChange,
                     isSubmitting
                 }) => (
-                    <Form>
+                    <Form onKeyDown={onKeyDown}>
                         <NamesFormSection
                             names={names}
                             onAddClick={handleAddNameField}

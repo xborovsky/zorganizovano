@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,7 +130,7 @@ public class StockItemServiceMultipleImpl implements StockItemServiceMultiple {
         if (prefix != null && !prefix.isBlank()) {
             sb = sb.append(prefix).append("_");
         }
-        sb = sb.append(itemName);
+        sb = sb.append(StringUtils.stripAccents(itemName));
         if (suffix != null && !suffix.isBlank()) {
             sb = sb.append("_").append(suffix);
         }
