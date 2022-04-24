@@ -108,7 +108,10 @@ public class StockItemsEndpoint {
     }
     
     @PostMapping("/multiple")
-    @CacheEvict(value = "items", allEntries = true)
+    @Caching(evict = {
+        @CacheEvict(value = "items", allEntries = true),
+        @CacheEvict(value = "item-categories", allEntries = true)
+    })
     public ResponseEntity<Void> createStockItemMultiple(@Valid @RequestBody CreateStockItemMultiple createStockItem) {
         stockItemServiceMultiple.createNewStockItems(createStockItem);
         return ResponseEntity.ok().build();

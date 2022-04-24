@@ -53,6 +53,7 @@ const StockItems = () => {
     const handleCreateSuccess = () => {
         handleDialogClose();
         queryClient.invalidateQueries('admin-stock-items');
+        queryClient.invalidateQueries('categories');
         refetch();
         setAlertMsg({ type : 'success', message : 'Položka úspěšně vytvořena' });
     };
