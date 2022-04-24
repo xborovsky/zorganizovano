@@ -130,7 +130,7 @@ public class StockItemServiceMultipleImpl implements StockItemServiceMultiple {
         if (prefix != null && !prefix.isBlank()) {
             sb = sb.append(prefix).append("_");
         }
-        sb = sb.append(StringUtils.stripAccents(itemName));
+        sb = sb.append(StringUtils.stripAccents(itemName.replaceAll("\\s+", "_")));
         if (suffix != null && !suffix.isBlank()) {
             sb = sb.append("_").append(suffix);
         }
