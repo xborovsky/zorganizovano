@@ -55,7 +55,6 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
         emailService.send(order.getCustomer().getEmail(), paymentReceivedEmail.getSubject(), paymentReceivedEmail.build(order));
 
         order.setPaymentReceived(now);
-        orderDao.save(order);
 
         return now;
     }
@@ -65,7 +64,6 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
     public Date updateReadyToShipDate(Order order) {
         Date now = timeManager.getCurrentDate();
         order.setReadyToShip(now);
-        orderDao.save(order);
 
         return now;
     }
@@ -84,7 +82,6 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
         );
 
         order.setInvoiceSent(now);
-        orderDao.save(order);
 
         return now;
     }
@@ -103,7 +100,6 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
         }
 
         order.setShipped(now);
-        orderDao.save(order);
 
         return now;
     }
@@ -122,7 +118,6 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
         emailService.send(order.getCustomer().getEmail(), orderStornoEmail.getSubject(), orderStornoEmail.build(order));
 
         order.setStorno(now);
-        orderDao.save(order);
         
         return now;
     }
@@ -131,7 +126,6 @@ public class AdminOrderManagerImpl implements AdminOrderManager {
     @Transactional
     public void updateAdminNote(Order order, String note) {
         order.setAdminNote(note);
-        orderDao.save(order);
     }
     
 }
