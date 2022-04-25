@@ -31,7 +31,7 @@ public class ItemCategoryServiceImpl implements ItemCategoryService {
         List<ItemCategory> result = new ArrayList<>(categories);
 
         for (ItemCategory category : categories) {
-            List<ItemCategory> subCategories = itemCategoryDao.findByParentId(category.getId());
+            List<ItemCategory> subCategories = itemCategoryDao.findByParentIdOrderByName(category.getId());
             if (!subCategories.isEmpty()) {
                 result.addAll(findAllSubCategoryIdsForCategoryRecursive(subCategories));
             }

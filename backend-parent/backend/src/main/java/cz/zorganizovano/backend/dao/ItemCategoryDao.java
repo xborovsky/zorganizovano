@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ItemCategoryDao extends JpaRepository<ItemCategory, Long> {
     
-    List<ItemCategory> findByParentId(long parentCategoryId);
+    List<ItemCategory> findByParentIdOrderByName(long parentCategoryId);
 
     @Query("SELECT ic FROM ItemCategory ic WHERE ic.parent = ?1 AND lower(ic.name) = lower(?2)")
     Optional<ItemCategory> findByParentAndName(ItemCategory itemCategory, String name);

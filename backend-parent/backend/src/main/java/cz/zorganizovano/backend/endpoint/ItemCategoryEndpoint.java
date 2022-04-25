@@ -22,7 +22,7 @@ public class ItemCategoryEndpoint {
     @Cacheable(value = "item-categories", key = "#parentCategoryId")
     @GetMapping("/{parentCategoryId}/children")
     public List<ItemCategory> getCategories(@PathVariable("parentCategoryId") long parentCategoryId) {
-        return itemCategoryDao.findByParentId(parentCategoryId);
+        return itemCategoryDao.findByParentIdOrderByName(parentCategoryId);
     }
 
     @GetMapping("/{id}")
