@@ -124,7 +124,7 @@ const ProductListItem = ({ product, onSuccess }) => {
     const headerSubtitle = <Typography varian="h6" className={classes.headerSubtitle}>{product.subName}</Typography>;
 
     return (
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={4} xl={3}>
             <Card className={classes.card}>
                 <CardHeader
                     title={headerTitle}
@@ -159,7 +159,7 @@ const ProductListItem = ({ product, onSuccess }) => {
                         </Grid>
                         <Grid item xs={12}>
                             <Grid container className={classes.quantityPriceWrapper} spacing={['lg', 'xl'].indexOf(width) !== -1 ? 1 : 0}>
-                                <Grid item xs={12} lg={8} xl={6} className={classes.quantityWrapper}>
+                                <Grid item xs={12} lg={8} className={classes.quantityWrapper}>
                                     { isLoadingProductQuantity ?
                                         <Loader /> :
                                         <QuantityInput
@@ -170,7 +170,7 @@ const ProductListItem = ({ product, onSuccess }) => {
                                         />
                                     }
                                 </Grid>
-                                <Grid item xs={12} lg={4} xl={6} className={classes.orderActionWrapper}>
+                                <Grid item xs={12} lg={4} className={classes.orderActionWrapper}>
                                     <ShoppingCartButton
                                         onClick={() => addToShoppingCart(product)}
                                         onlyIcon={['xs', 'sm', 'md'].indexOf(width) === -1}

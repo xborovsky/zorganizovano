@@ -9,8 +9,8 @@ const styles = theme => ({
     root : {
         [theme.breakpoints.down('md')] : {
             width : '100%',
-            paddingTop : 12,
-            paddingBottom : 12
+            paddingTop : 8,
+            paddingBottom : 8
         }
     },
     onlyIcon : {
