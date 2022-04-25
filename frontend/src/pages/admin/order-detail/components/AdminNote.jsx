@@ -60,7 +60,7 @@ const AdminNote = ({
                 fullWidth
                 multiline
                 rows={4}
-                value={adminNote}
+                value={adminNote || ''}
                 onChange={handleChange}
                 margin="normal"
                 variant='outlined'
