@@ -22,9 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AdminOrderManagerImpl implements AdminOrderManager {
-    
-    @Autowired
-    private OrderDao orderDao;
+
     @Autowired
     private OrderItemDao orderItemDao;
     @Autowired
