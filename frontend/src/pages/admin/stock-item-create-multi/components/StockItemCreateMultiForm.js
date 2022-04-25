@@ -126,7 +126,7 @@ const StockItemCreateMultiForm = ({
     };
 
     const onKeyDown = keyEvent => {
-        if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+        if (keyEvent.target.id !== 'add-item-btn' && (keyEvent.charCode || keyEvent.keyCode) === 13) {
           keyEvent.preventDefault();
         }
     };

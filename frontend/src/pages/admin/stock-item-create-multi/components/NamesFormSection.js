@@ -49,6 +49,7 @@ const NamesFormSection = ({
                 type="button" 
                 color="primary" 
                 variant="contained"
+                id="add-item-btn"
                 onClick={onAddClick}
             >
                 Přidat další
