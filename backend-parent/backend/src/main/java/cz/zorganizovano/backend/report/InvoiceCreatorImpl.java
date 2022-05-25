@@ -127,20 +127,29 @@ public class InvoiceCreatorImpl implements InvoiceCreator {
     private String buildCustomerInfo(Order order) throws SQLException {
         InvoiceAddress invoiceAddress = invoiceAddressDao.findByOrder(order);
         StringBuilder builder = new StringBuilder();
-        builder.append(order.getCustomer().getFirstName()).append(" ").append(order.getCustomer().getLastName())
-            .append("\n")
-            .append(invoiceAddress.getStreet())
-            .append("\n")
-            .append(invoiceAddress.getZipCode()).append(" ").append(invoiceAddress.getTownship());
-
+        String invoiceAddressStr = buildInvoiceAddress(invoiceAddress);
         if (order.getCustomer().isCompany()) {
             builder.append("\n").append("Název firmy: ").append(order.getCustomer().getCompanyName())
+                .append("\n")
+                .append(invoiceAddressStr)
                 .append("\n").append("IČ: ").append(order.getCustomer().getIco());
             if (order.getCustomer().getDic() != null) {
                 builder.append("\n").append("DIČ: ").append(order.getCustomer().getDic());
             }
+        } else {
+            builder.append(order.getCustomer().getFirstName()).append(" ").append(order.getCustomer().getLastName())
+                .append("\n")
+                .append(invoiceAddressStr);
         }
         return builder.toString();
+    }
+    
+    private String buildInvoiceAddress(InvoiceAddress invoiceAddress) {
+        StringBuilder result = new StringBuilder();
+        result.append(invoiceAddress.getStreet())
+            .append("\n")
+            .append(invoiceAddress.getZipCode()).append(" ").append(invoiceAddress.getTownship());
+        return result.toString();
     }
     
 }
