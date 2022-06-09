@@ -10,6 +10,7 @@ import Loader from './components/Loader';
 
 import zorganizovanoTheme from './Theme';
 import ErrorPage from 'components/ErrorPage';
+import MyCookieConsent from './MyCookieConsent';
 
 const AdminContainer = React.lazy(() => import("./pages/admin/AdminContainer"));
 const PublicContainer = React.lazy(() => import("./pages/public/PublicContainer"));
@@ -42,6 +43,7 @@ const App = () => {
                       <Route component={PublicContainer} />
                     </Switch>
                   </Suspense>
+                  <MyCookieConsent />
               </QueryClientProvider>
             </Sentry.ErrorBoundary>
           </Router>
