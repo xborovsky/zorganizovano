@@ -24,3 +24,7 @@ yarn-error.log*
 
 # secret
 **/keys.js
+ 
+# images - products
+/public/img/product-list
+/public/img/product-details

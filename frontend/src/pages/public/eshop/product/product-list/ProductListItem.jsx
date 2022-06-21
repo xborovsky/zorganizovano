@@ -17,7 +17,6 @@ import QuantityInput from 'components/QuantityInput';
 import ProductStockQuantity from '../common/ProductStockQuantity';
 import useStockProductQuantity from '../hooks/use-stock-product-quantity';
 import Loader from 'components/Loader';
-import CdnImage from 'components/CdnImage';
 import { makeStyles } from '@mui/styles';
 import useWidth from 'hooks/use-width';
 
@@ -135,11 +134,11 @@ const ProductListItem = ({ product, onSuccess }) => {
                     titleTypographyProps={classes.headerTitle}
                     subheaderTypographyProps={classes.headerSubtitle}
                 />
-                <CdnImage 
-                    name={product.thumbnailLocation}
+                <img 
+                    src={`img/product-list/${product.thumbnailLocation}`} 
                     alt={product.thumbnailLocation}
                     onClick={goToDetail}
-                    style={{ objectFit : 'contain' }}
+                    style={{ objectFit : 'contain', height : 200 }}
                 />
                 <CardContent onClick={goToDetail} className={classes.content}>
                     <Typography variant="body2">{product.descriptionShort}</Typography>
