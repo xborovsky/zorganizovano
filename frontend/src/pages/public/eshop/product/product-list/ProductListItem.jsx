@@ -84,6 +84,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const URL = `${process.env.NODE_ENV === "production" ? 'https://zorganizovano.cz' : 'http://localhost:3000'}/img/product-list`;
+
 const ProductListItem = ({ product, onSuccess }) => {
     const classes = useStyles();
     const width = useWidth();
@@ -135,7 +137,7 @@ const ProductListItem = ({ product, onSuccess }) => {
                     subheaderTypographyProps={classes.headerSubtitle}
                 />
                 <img 
-                    src={`img/product-list/${product.thumbnailLocation}`} 
+                    src={`${URL}/${product.thumbnailLocation}`} 
                     alt={product.thumbnailLocation}
                     onClick={goToDetail}
                     style={{ objectFit : 'contain', height : 200 }}
