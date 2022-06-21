@@ -648,5 +648,38 @@
             <column name="dic" type="varchar(20)" />
         </addColumn>
     </changeSet>
+    
+    <changeSet id="todo-items" author="borovsky">
+        <createTable tableName="todo_items">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="version" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="todo_items_created_idx" tableName="todo_items">
+            <column name="created" type="TIMESTAMP"/>
+        </createIndex>
+        <createIndex indexName="todo_items_updated_idx" tableName="todo_items">
+            <column name="updated" type="TIMESTAMP"/>
+        </createIndex>
+    </changeSet>
 
 </databaseChangeLog>
